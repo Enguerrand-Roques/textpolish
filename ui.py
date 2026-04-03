@@ -111,6 +111,7 @@ class TextPolishPanel(NSObject):
         self._panel.setLevel_(NSFloatingWindowLevel)
         self._panel.setHidesOnDeactivate_(False)
         self._panel.setCollectionBehavior_(_COLLECTION)
+        self._panel.setDelegate_(self)   # pour windowShouldClose_
         self._build_views()
 
     @objc.python_method
@@ -180,6 +181,13 @@ class TextPolishPanel(NSObject):
         scroll.setDocumentView_(self._text_view)
         cv.addSubview_(scroll)
 
+        # Bouton invisible — capte Echap pour fermer le panel
+        esc_btn = NSButton.alloc().initWithFrame_(NSMakeRect(0, 0, 0, 0))
+        esc_btn.setKeyEquivalent_("\x1b")
+        esc_btn.setTarget_(self)
+        esc_btn.setAction_("onClose:")
+        cv.addSubview_(esc_btn)
+
     @objc.python_method
     def _make_btn_(self, title, frame):
         btn = NSButton.alloc().initWithFrame_(frame)
@@ -197,6 +205,14 @@ class TextPolishPanel(NSObject):
 
     def onCustom_(self, sender):
         self._open_custom_dialog()
+
+    def onClose_(self, sender):
+        self._hide()
+
+    def windowShouldClose_(self, sender):
+        """Appelé par le bouton rouge (traffic light) — cache le panel sans le détruire."""
+        self._hide()
+        return False
 
     def applyCustom_(self, sender):
         prompt = self._custom_input.string().strip()
@@ -231,7 +247,7 @@ class TextPolishPanel(NSObject):
         self._status.setTextColor_(NSColor.secondaryLabelColor())
 
         self._panel.center()
-        self._panel.orderFrontRegardless()
+        self._panel.makeKeyAndOrderFront_(None)
 
     @objc.python_method
     def _hide(self):

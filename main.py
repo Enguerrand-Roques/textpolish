@@ -10,10 +10,16 @@ Permissions macOS requises :
   • Automatisation (pour osascript / keystroke)
 """
 
-import signal
 import sys
 
-from AppKit import NSApplication, NSApp, NSApplicationActivationPolicyAccessory
+from AppKit import (
+    NSApplication,
+    NSApp,
+    NSApplicationActivationPolicyAccessory,
+    NSDate,
+    NSDefaultRunLoopMode,
+    NSEventMaskAny,
+)
 from pynput import keyboard
 
 from config import SHORTCUT
@@ -21,9 +27,10 @@ from ui import setup as setup_panel
 
 
 def main() -> None:
-    # NSApplication doit être initialisé avant tout appel AppKit
     NSApplication.sharedApplication()
     NSApp.setActivationPolicy_(NSApplicationActivationPolicyAccessory)
+    # Indispensable avant de dispatcher des événements manuellement
+    NSApp.finishLaunching()
 
     panel = setup_panel()
 
@@ -37,10 +44,24 @@ def main() -> None:
     print(f"TextPolish démarré — raccourci actif : {SHORTCUT}")
     print("Appuie sur Ctrl+C dans ce terminal pour quitter.")
 
-    # Permet Ctrl+C de quitter proprement depuis le terminal
-    signal.signal(signal.SIGINT, lambda *_: (hotkeys.stop(), sys.exit(0)))
-
-    NSApp.run()
+    # Boucle Cocoa complète : dispatche les NSEvent (clics, clavier, etc.)
+    # Timeout de 0.5 s pour que Python capte KeyboardInterrupt (Ctrl+C).
+    try:
+        while True:
+            event = NSApp.nextEventMatchingMask_untilDate_inMode_dequeue_(
+                NSEventMaskAny,
+                NSDate.dateWithTimeIntervalSinceNow_(0.5),
+                NSDefaultRunLoopMode,
+                True,
+            )
+            if event is not None:
+                NSApp.sendEvent_(event)
+                NSApp.updateWindows()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        hotkeys.stop()
+        sys.exit(0)
 
 
 if __name__ == "__main__":
