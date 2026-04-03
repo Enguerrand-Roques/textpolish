@@ -20,9 +20,9 @@ from AppKit import (
     NSDefaultRunLoopMode,
     NSEventMaskAny,
 )
-from pynput import keyboard
 
 from config import SHORTCUT
+from hotkey import install as install_hotkey
 from ui import setup as setup_panel
 
 
@@ -34,12 +34,7 @@ def main() -> None:
 
     panel = setup_panel()
 
-    def on_shortcut():
-        panel.trigger_polish()
-
-    hotkeys = keyboard.GlobalHotKeys({SHORTCUT: on_shortcut})
-    hotkeys.daemon = True
-    hotkeys.start()
+    install_hotkey(SHORTCUT, panel.trigger_polish)
 
     print(f"TextPolish démarré — raccourci actif : {SHORTCUT}")
     print("Appuie sur Ctrl+C dans ce terminal pour quitter.")
@@ -59,9 +54,7 @@ def main() -> None:
                 NSApp.updateWindows()
     except KeyboardInterrupt:
         pass
-    finally:
-        hotkeys.stop()
-        sys.exit(0)
+    sys.exit(0)
 
 
 if __name__ == "__main__":
