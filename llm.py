@@ -5,7 +5,12 @@ Ollama local backend — sends text to a local model and returns the polished ve
 import os
 import logging
 import requests
-from config import OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
+from config import (
+    OLLAMA_BASE_URL,
+    OLLAMA_MODEL,
+    OLLAMA_TIMEOUT,
+    OLLAMA_KEEP_ALIVE,
+)
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -28,7 +33,7 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     Args:
         text:          The raw text to polish.
         mode:          "pro" | "casual" — selects the matching prompt file.
-        custom_prompt: If provided, used as the system prompt instead of a file.
+        custom_prompt: If provided, applied through the custom prompt template.
 
     Returns:
         The polished text string.
@@ -36,14 +41,24 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     if not text.strip():
         return text
 
+    prompt_name = "custom" if custom_prompt else mode
+    system = _load_prompt(prompt_name)
+
     if custom_prompt:
-        system = custom_prompt
+        prompt_text = (
+            f"{system}\n\n"
+            "Instruction personnalisée à appliquer :\n"
+            f"{custom_prompt.strip()}\n\n"
+            "Texte à réécrire :\n"
+            f"{text}"
+        )
     else:
-        system = _load_prompt(mode)
+        prompt_text = f"{system}\n\nTexte à réécrire :\n{text}"
 
     payload = {
         "model": OLLAMA_MODEL,
-        "prompt": f"{system}\n\n{text}",
+        "prompt": prompt_text,
+        "keep_alive": OLLAMA_KEEP_ALIVE,
         "stream": False,
     }
 

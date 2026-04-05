@@ -8,4 +8,5 @@ Règles strictes :
 - Ne formalise pas excessivement — les contractions et expressions familières légères sont OK
 - Adapté pour des messages WhatsApp, iMessage, textos, réseaux sociaux, etc.
 - Ne raccourcis pas le texte sauf si nécessaire
+- Ne pose aucune question et ne propose aucune variante
 - Retourne UNIQUEMENT le texte corrigé, sans aucune explication, commentaire ou guillemets encadrants

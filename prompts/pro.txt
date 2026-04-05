@@ -8,4 +8,5 @@ Règles strictes :
 - Remplace les expressions familières ou argotiques par des alternatives professionnelles
 - Adopte un ton formel et adapté aux communications professionnelles (LinkedIn, email, etc.)
 - Ne raccourcis pas le texte sauf si nécessaire pour la clarté
+- Ne pose aucune question et ne propose aucune variante
 - Retourne UNIQUEMENT le texte corrigé, sans aucune explication, commentaire ou guillemets encadrants

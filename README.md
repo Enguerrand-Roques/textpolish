@@ -39,6 +39,7 @@ Edit `config.py` if you want to change:
 - `OLLAMA_BASE_URL`
 - `OLLAMA_MODEL`
 - `OLLAMA_TIMEOUT`
+- `OLLAMA_KEEP_ALIVE`
 - `SHORTCUT`
 
 Default example:
@@ -47,6 +48,7 @@ Default example:
 OLLAMA_BASE_URL = "http://localhost:11434"
 OLLAMA_MODEL = "gemma3:4b"
 OLLAMA_TIMEOUT = 60
+OLLAMA_KEEP_ALIVE = 0
 SHORTCUT = "<cmd>+<shift>+p"
 ```
 
@@ -97,6 +99,7 @@ When TextPolish starts, use the configured shortcut to capture the selected text
 - `Cannot connect to Ollama`: start Ollama with `ollama serve`
 - `Model not found`: install it with `ollama pull <model>`
 - Timeout errors: use a smaller model or increase `OLLAMA_TIMEOUT`
+- High idle RAM/CPU usage after a request: set `OLLAMA_KEEP_ALIVE = 0` to unload the model immediately
 - Global shortcut not detected: re-check macOS Accessibility permissions
 - Text is not pasted back: make sure the source app still has focus and clipboard permissions are allowed
 
