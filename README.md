@@ -103,6 +103,51 @@ When TextPolish starts, use the configured shortcut to capture the selected text
 - Global shortcut not detected: re-check macOS Accessibility permissions
 - Text is not pasted back: make sure the source app still has focus and clipboard permissions are allowed
 
+## Benchmark Models
+
+Compare latency and output quality across multiple local Ollama models:
+
+```bash
+python benchmark_models.py --models gemma3:4b llama3.2:3b qwen2.5:3b
+```
+
+Test cases are defined in `benchmarks/cases.json` (id, label, mode, input_text).
+Results land in `benchmarks/results/` as three files per run:
+
+| File | Contents |
+|------|----------|
+| `results_<timestamp>.json` | Full results — model, case, input, output, timing, judge scores |
+| `summary_<timestamp>.csv` | Per-model stats: timing + avg quality scores when judging |
+| `review_<timestamp>.md` | Human-readable side-by-side output comparison with scores |
+
+A timing (and quality) summary is also printed to the terminal at the end of the run.
+
+### LLM-as-judge (optional)
+
+Add `--judge` to score each output with Claude on three dimensions (1–5): spelling/grammar correction, tone appropriateness, and meaning preservation.
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+python benchmark_models.py --models gemma3:4b llama3.2:3b --judge
+```
+
+By default the judge uses `claude-opus-4-6`. Use `--judge-model` to pick a cheaper model:
+
+```bash
+python benchmark_models.py --models gemma3:4b --judge --judge-model claude-haiku-4-5
+```
+
+Options:
+```
+--models MODEL [MODEL ...]   Ollama model names to benchmark (required)
+--cases PATH                 Cases file (default: benchmarks/cases.json)
+--output-dir PATH            Output directory (default: benchmarks/results)
+--ollama-url URL             Ollama base URL (default: from config.py or http://localhost:11434)
+--timeout SECONDS            Request timeout (default: from config.py or 120)
+--judge                      Score outputs with Claude (requires ANTHROPIC_API_KEY)
+--judge-model MODEL          Claude model used as judge (default: claude-opus-4-6)
+```
+
 ## Notes
 
 - `config.py` is intentionally excluded from Git.
