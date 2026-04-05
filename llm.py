@@ -1,11 +1,11 @@
 """
-Anthropic API wrapper — sends text to Claude and returns the polished version.
+Ollama local backend — sends text to a local model and returns the polished version.
 """
 
 import os
 import logging
-import anthropic
-from config import ANTHROPIC_API_KEY
+import requests
+from config import OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -23,7 +23,7 @@ def _load_prompt(name: str) -> str:
 
 def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) -> str:
     """
-    Send *text* to Claude and return the corrected version.
+    Send *text* to a local Ollama model and return the corrected version.
 
     Args:
         text:          The raw text to polish.
@@ -41,25 +41,39 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     else:
         system = _load_prompt(mode)
 
-    if not ANTHROPIC_API_KEY:
-        raise ValueError("ANTHROPIC_API_KEY est vide — définis la variable d'environnement.")
+    payload = {
+        "model": OLLAMA_MODEL,
+        "prompt": f"{system}\n\n{text}",
+        "stream": False,
+    }
 
-    logging.debug("Appel API Claude | mode=%s | %d caractères", mode, len(text))
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    logging.debug("Calling Ollama | model=%s | mode=%s | %d chars", OLLAMA_MODEL, mode, len(text))
 
     try:
-        message = client.messages.create(
-            model="claude-opus-4-5",
-            max_tokens=2048,
-            system=system,
-            messages=[{"role": "user", "content": text}],
+        response = requests.post(
+            f"{OLLAMA_BASE_URL}/api/generate",
+            json=payload,
+            timeout=OLLAMA_TIMEOUT,
         )
-    except anthropic.AuthenticationError as e:
-        logging.error("401 Authentification échouée : %s", e)
-        raise
-    except anthropic.APIError as e:
-        logging.error("Erreur API Anthropic (%s) : %s", type(e).__name__, e)
-        raise
+        response.raise_for_status()
+    except requests.exceptions.ConnectionError:
+        raise RuntimeError(
+            "Cannot connect to Ollama. Make sure it is running: `ollama serve`"
+        )
+    except requests.exceptions.Timeout:
+        raise RuntimeError(
+            f"Ollama request timed out after {OLLAMA_TIMEOUT}s. "
+            "Try a smaller model or increase OLLAMA_TIMEOUT in config.py."
+        )
+    except requests.exceptions.HTTPError as e:
+        if e.response is not None and e.response.status_code == 404:
+            raise RuntimeError(
+                f"Model '{OLLAMA_MODEL}' not found. "
+                f"Install it with: `ollama pull {OLLAMA_MODEL}`"
+            )
+        raise RuntimeError(f"Ollama returned an error: {e}")
 
-    logging.debug("Réponse reçue — %d tokens", message.usage.output_tokens)
-    return message.content[0].text.strip()
+    data = response.json()
+    result = data.get("response", "").strip()
+    logging.debug("Response received — %d chars", len(result))
+    return result
