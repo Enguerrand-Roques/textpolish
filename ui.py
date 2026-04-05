@@ -4,6 +4,7 @@ Remplace CustomTkinter pour apparaître correctement au-dessus des apps en plein
 """
 
 import threading
+import time
 import objc
 from Foundation import NSObject
 from AppKit import (
@@ -94,6 +95,7 @@ class TextPolishPanel(NSObject):
         self._app_ref = None
         self._custom_dialog = None
         self._custom_input = None
+        self._status_job = 0
         self._create_panel()
         return self
 
@@ -264,7 +266,32 @@ class TextPolishPanel(NSObject):
         if not self._selected_text.strip():
             return
         self._set_enabled(False)
-        self._status.setStringValue_("Correction en cours…")
+        self._status_job += 1
+        job_id = self._status_job
+        self._set_status("Preparation de la correction.")
+
+        def status_worker():
+            steps = [
+                (1.0, "Preparation de la correction"),
+                (3.0, "Chargement du modele local"),
+                (6.0, "Reecriture du texte"),
+                (9999.0, "Finalisation de la reponse"),
+            ]
+            start = time.monotonic()
+            last_message = None
+
+            while job_id == self._status_job:
+                elapsed = time.monotonic() - start
+                for threshold, label in steps:
+                    if elapsed < threshold:
+                        break
+
+                dots = "." * ((int(elapsed * 3) % 3) + 1)
+                message = f"{label}{dots}"
+                if message != last_message:
+                    _on_main(lambda msg=message, jid=job_id: self._update_status_if_current(jid, msg))
+                    last_message = message
+                time.sleep(0.35)
 
         def worker():
             try:
@@ -273,19 +300,32 @@ class TextPolishPanel(NSObject):
             except Exception as exc:
                 _on_main(lambda e=exc: self._on_error(str(e)))
 
+        threading.Thread(target=status_worker, daemon=True).start()
         threading.Thread(target=worker, daemon=True).start()
 
     @objc.python_method
     def _on_success(self, result: str):
+        self._status_job += 1
         self._hide()
         paste_text(result, self._app_ref)
 
     @objc.python_method
     def _on_error(self, message: str):
+        self._status_job += 1
         short = message[:60] + ("…" if len(message) > 60 else "")
         self._status.setStringValue_(f"Erreur : {short}")
         self._status.setTextColor_(NSColor.systemRedColor())
         self._set_enabled(True)
+
+    @objc.python_method
+    def _set_status(self, message: str):
+        self._status.setStringValue_(message)
+        self._status.setTextColor_(NSColor.secondaryLabelColor())
+
+    @objc.python_method
+    def _update_status_if_current(self, job_id: int, message: str):
+        if job_id == self._status_job:
+            self._set_status(message)
 
     @objc.python_method
     def _open_custom_dialog(self):
