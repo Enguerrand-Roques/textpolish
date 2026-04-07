@@ -27,28 +27,30 @@ pip install -r requirements.txt
 cp config.example.py config.py
 ```
 
-Install and start Ollama, then pull the default model:
+Install and start Ollama, then pull the two default models:
 
 ```bash
 ollama serve
-ollama pull gemma3:4b
+ollama pull gemma3:1b   # casual mode
+ollama pull gemma3:4b   # pro mode
 ```
 
-Edit `config.py` if you want to change:
+Edit `config.py` if you want to change models or other settings:
 
-- `OLLAMA_BASE_URL`
-- `OLLAMA_MODEL`
-- `OLLAMA_TIMEOUT`
-- `OLLAMA_KEEP_ALIVE`
-- `SHORTCUT`
+- `OLLAMA_MODEL_CASUAL` — model used for casual/SMS mode (default: `gemma3:1b`)
+- `OLLAMA_MODEL_PRO` — model used for professional mode (default: `gemma3:4b`)
+- `OLLAMA_MODEL` — fallback model for custom mode
+- `OLLAMA_BASE_URL`, `OLLAMA_TIMEOUT`, `OLLAMA_KEEP_ALIVE`, `SHORTCUT`
 
 Default example:
 
 ```python
 OLLAMA_BASE_URL = "http://localhost:11434"
-OLLAMA_MODEL = "gemma3:4b"
+OLLAMA_MODEL_CASUAL = "gemma3:1b"
+OLLAMA_MODEL_PRO = "gemma3:4b"
+OLLAMA_MODEL = OLLAMA_MODEL_CASUAL
 OLLAMA_TIMEOUT = 60
-OLLAMA_KEEP_ALIVE = 0
+OLLAMA_KEEP_ALIVE = 300
 SHORTCUT = "<cmd>+<shift>+p"
 ```
 
@@ -79,9 +81,11 @@ When TextPolish starts, use the configured shortcut to capture the selected text
 
 ## Available Modes
 
-- `pro`: cleaner and more professional phrasing
-- `casual`: lighter and more natural phrasing
-- `custom`: custom prompt entered from the panel UI
+| Mode | Model | Description |
+|------|-------|-------------|
+| `pro` | `OLLAMA_MODEL_PRO` (`gemma3:4b`) | Fixes grammar and rewrites for professional contexts (email, LinkedIn) |
+| `casual` | `OLLAMA_MODEL_CASUAL` (`gemma3:1b`) | Fixes typos only, keeps the original tone and structure (SMS, WhatsApp) |
+| `custom` | `OLLAMA_MODEL` | Applies a free-form instruction entered from the panel UI |
 
 ## Project Structure
 
@@ -99,7 +103,7 @@ When TextPolish starts, use the configured shortcut to capture the selected text
 - `Cannot connect to Ollama`: start Ollama with `ollama serve`
 - `Model not found`: install it with `ollama pull <model>`
 - Timeout errors: use a smaller model or increase `OLLAMA_TIMEOUT`
-- High idle RAM/CPU usage after a request: set `OLLAMA_KEEP_ALIVE = 0` to unload the model immediately
+- High idle RAM/CPU usage after a request: set `OLLAMA_KEEP_ALIVE = 0` in `config.py` to unload models immediately after each request
 - Global shortcut not detected: re-check macOS Accessibility permissions
 - Text is not pasted back: make sure the source app still has focus and clipboard permissions are allowed
 
