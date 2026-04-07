@@ -1,254 +1,62 @@
 [
   {
-    "id": "fr_pro_01",
-    "label": "Email professionnel avec fautes",
+    "id": "fr_pro_short",
+    "label": "Short email with errors",
     "mode": "pro",
     "input_text": "bonjour, je voudrais savoir si vous avez bien recu mon dossier car jai pas eu de nouvelle depuis 2 semaine. merci de me repondre rapidement."
   },
   {
-    "id": "fr_pro_02",
-    "label": "Message LinkedIn informel",
-    "mode": "pro",
-    "input_text": "Salut, j'ai vu ton profil et je pense qu'on pourrait faire des trucs cool ensemble, t'as 5min pour qu'on se parle?"
-  },
-  {
-    "id": "fr_pro_03",
-    "label": "Rapport avec ponctuation manquante",
-    "mode": "pro",
-    "input_text": "suite a notre reunion de lundi dernier voici un resume des actions a mener en priorite premierement mettre a jour la documentation deuxiemement contacter les parties prenantes et troisiemement preparer le bilan trimestriel"
-  },
-  {
-    "id": "fr_pro_04",
-    "label": "Relance client maladroite",
-    "mode": "pro",
-    "input_text": "Bonjour, je me permet de revenir vers vous parce que sans retour de votre part on peut pas avancer sur le projet et ca commence a etre un peu bloquant pour les equipes."
-  },
-  {
-    "id": "fr_pro_05",
-    "label": "Compte rendu très brouillon",
-    "mode": "pro",
-    "input_text": "pour le point de ce matin en gros ya eu plusieurs sujet le budget qui explose un peu les delais qui glissent encore et aussi le fait que personne a vraiment valide la version finale donc il faut reprendre ca vite sinon on va se retrouver en retard pour la mise en prod"
-  },
-  {
-    "id": "fr_pro_06",
-    "label": "Demande de rendez-vous polie mais fautive",
-    "mode": "pro",
-    "input_text": "Bonjour Madame, est ce qu'il serais possible d'organiser un rendez vous la semaine prochaine afin de discuter de ma candidature et des suites possible."
-  },
-  {
-    "id": "fr_pro_07",
-    "label": "Email long de justification de retard",
+    "id": "fr_pro_long",
+    "label": "Long justification email",
     "mode": "pro",
     "input_text": "Bonjour, je voulais vous prévenir que nous n'allons probablement pas tenir la date annoncée initialement pour la livraison de la fonctionnalité. En fait en regardant plus en détail on s'est rendu compte qu'il y avait plusieurs dépendances techniques qui n'avaient pas été anticipées, notamment sur la partie synchronisation et sur les droits utilisateurs. On essaye de rattraper mais si on force maintenant on risque surtout de livrer quelque chose de fragile. L'idée serait plutot de décaler de quelques jours pour sécuriser les tests et éviter un incident derrière."
   },
   {
-    "id": "fr_pro_08",
-    "label": "Mail RH trop direct",
+    "id": "fr_pro_linkedin",
+    "label": "Informal LinkedIn message",
     "mode": "pro",
-    "input_text": "bonjour, je vous envoie mon cv comme convenu. dites moi si le poste est toujours ouvert parce que jai besoin d'une reponse assez vite."
+    "input_text": "Salut, j'ai vu ton profil et je pense qu'on pourrait faire des trucs cool ensemble, t'as 5min pour qu'on se parle?"
   },
   {
-    "id": "fr_pro_09",
-    "label": "Demande support technique confuse",
-    "mode": "pro",
-    "input_text": "Bonjour, depuis la derniere mise a jour certains utilisateurs peuvent plus se connecter sauf parfois si ils reessayent plusieurs fois donc on sait pas trop d'ou ca vient mais il faudrait regarder rapidement."
-  },
-  {
-    "id": "fr_pro_10",
-    "label": "Message commercial trop familier",
-    "mode": "pro",
-    "input_text": "Hello, je t'ecris parce qu'on a une offre qui pourrait franchement bien matcher avec vos besoins et faire gagner pas mal de temps a ton equipe."
-  },
-  {
-    "id": "fr_pro_11",
-    "label": "Texte long sans structure",
-    "mode": "pro",
-    "input_text": "bonjour a tous suite aux retours des derniers jours on va devoir ajuster le planning general parce que plusieurs sujets se telescopent en meme temps entre la finalisation du design les validations juridiques et les demandes du client qui ont encore evolue hier soir du coup ce que je propose c'est qu'on revoie les priorites aujourd'hui qu'on gèle le perimetre sur la v1 et qu'on reporte le reste au sprint suivant sinon on continue a tout melanger et on perd du temps sur chaque arbitrage"
-  },
-  {
-    "id": "fr_pro_12",
-    "label": "Excuses après oubli de réponse",
-    "mode": "pro",
-    "input_text": "Bonjour, désolé je reviens seulement maintenant vers vous je pensais vous avoir répondu mais visiblement mon mail est jamais parti."
-  },
-  {
-    "id": "fr_casual_01",
-    "label": "SMS avec fautes typiques",
+    "id": "fr_casual_sms",
+    "label": "SMS with typical typos",
     "mode": "casual",
     "input_text": "slt tu fait quoi ce soir ? on peut se retrouver genre vers 19h pour manger un truc ?"
   },
   {
-    "id": "fr_casual_02",
-    "label": "Message WhatsApp décousu",
-    "mode": "casual",
-    "input_text": "ah ouais jsp trop enfin je veux dire cest pas que jai pas envie mais la flemme tu vois haha"
-  },
-  {
-    "id": "fr_casual_03",
-    "label": "Invitation entre amis bâclée",
-    "mode": "casual",
-    "input_text": "yo on fait un apero chez moi demain si t chaud ramene juste un truc a boire et voila"
-  },
-  {
-    "id": "fr_casual_04",
-    "label": "Annulation de dernière minute",
-    "mode": "casual",
-    "input_text": "desole je vais etre grave en retard enfaite jai zappé un truc et la je suis encore bloqué dehors"
-  },
-  {
-    "id": "fr_casual_05",
-    "label": "Message affectif avec fautes",
-    "mode": "casual",
-    "input_text": "j'espere que ta bien dormi moi jetais ko hier soir mais ca ma fait trop plaisir de te voir"
-  },
-  {
-    "id": "fr_casual_06",
-    "label": "Demande d'avis confuse",
-    "mode": "casual",
-    "input_text": "tu pense que c une bonne idee ou pas parce que moi je suis chaud mais en meme temps jhesite de fou"
-  },
-  {
-    "id": "fr_casual_07",
-    "label": "Long message vocal retranscrit",
+    "id": "fr_casual_long",
+    "label": "Long transcribed voice message",
     "mode": "casual",
     "input_text": "franchement la journée a ete trop bizarre au debut ca allait puis apres ya eu cette reunion inutile qui a duré mille ans ensuite jai raté mon metro et quand je suis enfin rentré jai vu ton message donc oui jsuis un peu saoulé mais si tu veux on s'appelle plus tard ca me fera du bien de parler d'autre chose"
   },
   {
-    "id": "fr_casual_08",
-    "label": "Message de groupe",
-    "mode": "casual",
-    "input_text": "les gars faut quon se decide pr ce week end pcq si on reserve trop tard on va encore se retrouver avec un plan nul"
-  },
-  {
-    "id": "fr_casual_09",
-    "label": "Message bref plein d'abréviations",
+    "id": "fr_casual_abbrev",
+    "label": "Message full of abbreviations",
     "mode": "casual",
     "input_text": "tkt c bon g geré, jte redis ds 10 min"
   },
   {
-    "id": "fr_casual_10",
-    "label": "Message de remerciement spontané",
-    "mode": "casual",
-    "input_text": "merci encore pr hier ct trop cool jai vraiment passé une super soirée"
-  },
-  {
-    "id": "fr_casual_11",
-    "label": "Conflit léger entre amis",
-    "mode": "casual",
-    "input_text": "j'avoue jai un peu mal pris ton message de tout a lheure mais bon cest pas grave on en reparle tranquille"
-  },
-  {
-    "id": "fr_casual_12",
-    "label": "Texte long avec hésitations",
-    "mode": "casual",
-    "input_text": "je sais pas trop comment te dire ca sans que ca fasse bizarre mais en gros ces derniers temps je suis un peu a l'ouest et je reponds mal a tout le monde donc si j'ai ete distant c'etait pas contre toi du tout c'est juste que jai besoin de souffler un peu et de remettre de l'ordre dans ma tete"
-  },
-  {
-    "id": "en_pro_01",
+    "id": "en_pro_followup",
     "label": "English professional follow-up",
     "mode": "pro",
     "input_text": "hi just checking in on the proposal i sent last week, let me know if you need anything else from my end thanks"
   },
   {
-    "id": "en_pro_02",
-    "label": "Status update with grammar issues",
+    "id": "en_pro_long",
+    "label": "English status update with errors",
     "mode": "pro",
     "input_text": "Hello team, we made good progress on the migration but there is still some blockers on the infra side and we probably need one more day before saying it is fully stable."
   },
   {
-    "id": "en_pro_03",
-    "label": "Client apology email",
-    "mode": "pro",
-    "input_text": "sorry for the delay getting back to you, things got a bit messy on our side and i wanted to make sure i had the right information before answering."
-  },
-  {
-    "id": "en_pro_04",
-    "label": "Long internal update",
-    "mode": "pro",
-    "input_text": "Following our discussions this week, I think we should pause the rollout to the remaining users until we have clearer visibility on the error rate. Right now the issue does not seem catastrophic, but the pattern is inconsistent enough that shipping further could create avoidable support load. My recommendation would be to keep the current cohort, collect another full day of logs, and decide tomorrow morning with actual data instead of assumptions."
-  },
-  {
-    "id": "en_pro_05",
-    "label": "Sales outreach too casual",
-    "mode": "pro",
-    "input_text": "Hey, reaching out because i think what we're building could be pretty useful for your team and maybe save you a bunch of manual work every week."
-  },
-  {
-    "id": "en_pro_06",
-    "label": "Support escalation unclear",
-    "mode": "pro",
-    "input_text": "The customer is still unhappy because they say the fix didn't really fix it and now they are asking if we tested this properly before release."
-  },
-  {
-    "id": "en_casual_01",
+    "id": "en_casual_sms",
     "label": "English casual text message",
     "mode": "casual",
     "input_text": "hey r u coming tmrw?? lmk asap bc i need to book the table thx"
   },
   {
-    "id": "en_casual_02",
-    "label": "Late reply excuse",
+    "id": "en_casual_long",
+    "label": "English casual long message",
     "mode": "casual",
-    "input_text": "sry just saw this now, my phone was dead all afternoon"
-  },
-  {
-    "id": "en_casual_03",
-    "label": "Messy group chat planning",
-    "mode": "casual",
-    "input_text": "idk if we're still doing brunch sunday but if yes can we not do too early bc i'm dead in the morning lately"
-  },
-  {
-    "id": "en_casual_04",
-    "label": "Long emotional message",
-    "mode": "casual",
-    "input_text": "not gonna lie i've been a bit overwhelmed lately and i know i've been weird in my replies, it's not about you at all, i just have too much going on in my head and i'm trying to get back to normal"
-  },
-  {
-    "id": "en_casual_05",
-    "label": "Short enthusiastic invite",
-    "mode": "casual",
-    "input_text": "yo come thru tonight if u want, nothing fancy just drinks music and whoever shows up"
-  },
-  {
-    "id": "mix_pro_01",
-    "label": "Franglais professionnel",
-    "mode": "pro",
-    "input_text": "Bonjour team, petit follow up suite au call de ce matin: on a un vrai sujet sur le delivery timing et il faut qu'on realigne les priorites avant vendredi."
-  },
-  {
-    "id": "mix_casual_01",
-    "label": "Franglais casual",
-    "mode": "casual",
-    "input_text": "franchement le resto etait trop bien hier, thanks encore pour l'idee c'etait trop cool"
-  },
-  {
-    "id": "fr_pro_13",
-    "label": "Texte avec répétitions et hésitations",
-    "mode": "pro",
-    "input_text": "Bonjour, je reviens vers vous concernant le document partagé hier parce que je pense qu'il faudrait peut etre peut etre clarifier certains points avant de le transmettre au client final."
-  },
-  {
-    "id": "fr_casual_13",
-    "label": "Texte sans accents ni ponctuation",
-    "mode": "casual",
-    "input_text": "je suis en bas depche toi sinon le train va partir sans nous"
-  },
-  {
-    "id": "fr_pro_14",
-    "label": "Demande de validation pressante",
-    "mode": "pro",
-    "input_text": "Bonjour, on aurait besoin d'une validation aujourd'hui idealement avant 16h sinon toute la suite du planning risque de glisser."
-  },
-  {
-    "id": "en_pro_07",
-    "label": "Executive summary poorly phrased",
-    "mode": "pro",
-    "input_text": "In short the launch went mostly fine but we still had enough issues that i would not call it fully successful yet."
-  },
-  {
-    "id": "en_casual_06",
-    "label": "Awkward apology to a friend",
-    "mode": "casual",
-    "input_text": "my bad for yesterday i was in a terrible mood and probably sounded harsher than i meant to"
+    "input_text": "honestly today was so weird first it was fine but then there was this pointless meeting that took forever and i missed my train so when i finally got home i saw your message so yeah im a bit done but if you want we can call later it would be nice to talk about something else"
   }
 ]
