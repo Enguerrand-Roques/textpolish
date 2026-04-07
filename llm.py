@@ -21,6 +21,23 @@ logging.basicConfig(
 
 _PROMPTS_DIR = os.path.join(os.path.dirname(__file__), "prompts")
 
+# Track the last model used so we can unload it when switching models.
+# Two models loaded simultaneously on 16 GB causes heavy swap usage.
+_active_model: str | None = None
+
+
+def _unload_model(model: str) -> None:
+    """Ask Ollama to evict *model* from RAM (best-effort, non-blocking)."""
+    try:
+        requests.post(
+            f"{OLLAMA_BASE_URL}/api/generate",
+            json={"model": model, "keep_alive": 0},
+            timeout=5,
+        )
+        logging.debug("Unloaded model from RAM: %s", model)
+    except Exception:
+        pass
+
 
 def _load_prompt(name: str) -> str:
     path = os.path.join(_PROMPTS_DIR, f"{name}.txt")
@@ -40,6 +57,8 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     Returns:
         The polished text string.
     """
+    global _active_model
+
     if not text.strip():
         return text
 
@@ -52,6 +71,12 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
         model = OLLAMA_MODEL_CASUAL
     else:
         model = OLLAMA_MODEL
+
+    # If switching to a different model, unload the previous one first
+    # to avoid both models occupying RAM simultaneously.
+    if _active_model and _active_model != model:
+        _unload_model(_active_model)
+    _active_model = model
 
     if custom_prompt:
         prompt_text = (
