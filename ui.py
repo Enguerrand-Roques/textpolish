@@ -1,6 +1,6 @@
 """
 TextPolish panel — native NSPanel via PyObjC.
-Remplace CustomTkinter pour apparaître correctement au-dessus des apps en plein écran.
+Replaces CustomTkinter to appear correctly above fullscreen apps.
 """
 
 import threading
@@ -44,7 +44,7 @@ _COLLECTION = (
 )
 
 # ---------------------------------------------------------------------------
-# Thread bridge — schedules Python callables on the AppKit main thread safely
+# Thread bridge — schedules Python callables on the AppKit main thread
 # ---------------------------------------------------------------------------
 
 class _MainThreadBridge(NSObject):
@@ -113,7 +113,7 @@ class TextPolishPanel(NSObject):
         self._panel.setLevel_(NSFloatingWindowLevel)
         self._panel.setHidesOnDeactivate_(False)
         self._panel.setCollectionBehavior_(_COLLECTION)
-        self._panel.setDelegate_(self)   # pour windowShouldClose_
+        self._panel.setDelegate_(self)   # for windowShouldClose_
         self._build_views()
 
     @objc.python_method
@@ -136,7 +136,7 @@ class TextPolishPanel(NSObject):
         btn_w = (W - 2 * pad - 2 * gap) / 3
         btn_y = pad
 
-        self._btn_pro = self._make_btn_("Professionnel", NSMakeRect(pad, btn_y, btn_w, btn_h))
+        self._btn_pro = self._make_btn_("Professional", NSMakeRect(pad, btn_y, btn_w, btn_h))
         self._btn_pro.setTarget_(self)
         self._btn_pro.setAction_("onPro:")
         cv.addSubview_(self._btn_pro)
@@ -146,7 +146,7 @@ class TextPolishPanel(NSObject):
         self._btn_casual.setAction_("onCasual:")
         cv.addSubview_(self._btn_casual)
 
-        self._btn_custom = self._make_btn_("Personnalisé", NSMakeRect(pad + 2 * (btn_w + gap), btn_y, btn_w, btn_h))
+        self._btn_custom = self._make_btn_("Custom", NSMakeRect(pad + 2 * (btn_w + gap), btn_y, btn_w, btn_h))
         self._btn_custom.setTarget_(self)
         self._btn_custom.setAction_("onCustom:")
         cv.addSubview_(self._btn_custom)
@@ -183,7 +183,7 @@ class TextPolishPanel(NSObject):
         scroll.setDocumentView_(self._text_view)
         cv.addSubview_(scroll)
 
-        # Bouton invisible — capte Echap pour fermer le panel
+        # Hidden button — catches Escape to close the panel
         esc_btn = NSButton.alloc().initWithFrame_(NSMakeRect(0, 0, 0, 0))
         esc_btn.setKeyEquivalent_("\x1b")
         esc_btn.setTarget_(self)
@@ -212,7 +212,7 @@ class TextPolishPanel(NSObject):
         self._hide()
 
     def windowShouldClose_(self, sender):
-        """Appelé par le bouton rouge (traffic light) — cache le panel sans le détruire."""
+        """Called by the red close button — hides the panel without destroying it."""
         self._hide()
         return False
 
@@ -241,7 +241,7 @@ class TextPolishPanel(NSObject):
             self._text_view.setTextColor_(NSColor.secondaryLabelColor())
             self._set_enabled(True)
         else:
-            self._text_view.setString_("Aucun texte sélectionné — sélectionne du texte d'abord")
+            self._text_view.setString_("No text selected — select text first")
             self._text_view.setTextColor_(NSColor.tertiaryLabelColor())
             self._set_enabled(False)
 
@@ -268,14 +268,14 @@ class TextPolishPanel(NSObject):
         self._set_enabled(False)
         self._status_job += 1
         job_id = self._status_job
-        self._set_status("Preparation de la correction.")
+        self._set_status("Preparing correction.")
 
         def status_worker():
             steps = [
-                (1.0, "Preparation de la correction"),
-                (3.0, "Chargement du modele local"),
-                (6.0, "Reecriture du texte"),
-                (9999.0, "Finalisation de la reponse"),
+                (1.0,   "Preparing correction"),
+                (3.0,   "Loading local model"),
+                (6.0,   "Rewriting text"),
+                (9999.0, "Finalising response"),
             ]
             start = time.monotonic()
             last_message = None
@@ -313,7 +313,7 @@ class TextPolishPanel(NSObject):
     def _on_error(self, message: str):
         self._status_job += 1
         short = message[:60] + ("…" if len(message) > 60 else "")
-        self._status.setStringValue_(f"Erreur : {short}")
+        self._status.setStringValue_(f"Error: {short}")
         self._status.setTextColor_(NSColor.systemRedColor())
         self._set_enabled(True)
 
@@ -345,7 +345,7 @@ class TextPolishPanel(NSObject):
             NSBackingStoreBuffered,
             False,
         )
-        dlg.setTitle_("Instruction personnalisée")
+        dlg.setTitle_("Custom instruction")
         dlg.setLevel_(NSFloatingWindowLevel)
         dlg.setCollectionBehavior_(_COLLECTION)
 
@@ -353,7 +353,7 @@ class TextPolishPanel(NSObject):
         W, H, pad = 400, 200, 16
 
         lbl = NSTextField.alloc().initWithFrame_(NSMakeRect(pad, H - 38, W - 2 * pad, 22))
-        lbl.setStringValue_("Décris comment corriger le texte :")
+        lbl.setStringValue_("Describe how to rewrite the text:")
         lbl.setEditable_(False)
         lbl.setBordered_(False)
         lbl.setDrawsBackground_(False)
@@ -362,7 +362,7 @@ class TextPolishPanel(NSObject):
         cv.addSubview_(lbl)
 
         apply_btn = NSButton.alloc().initWithFrame_(NSMakeRect((W - 110) / 2, pad, 110, 34))
-        apply_btn.setTitle_("Appliquer")
+        apply_btn.setTitle_("Apply")
         apply_btn.setBezelStyle_(1)
         apply_btn.setTarget_(self)
         apply_btn.setAction_("applyCustom:")
@@ -375,7 +375,7 @@ class TextPolishPanel(NSObject):
         scroll.setBorderType_(2)
 
         text_input = NSTextView.alloc().initWithFrame_(NSMakeRect(0, 0, W - 2 * pad, 80))
-        text_input.setString_("Corrige ce texte en conservant mon style, rends-le plus percutant.")
+        text_input.setString_("Rewrite this text keeping my style, make it punchier.")
         text_input.setFont_(NSFont.systemFontOfSize_(12))
         scroll.setDocumentView_(text_input)
         cv.addSubview_(scroll)

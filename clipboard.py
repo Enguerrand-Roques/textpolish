@@ -24,7 +24,7 @@ def get_app_and_copy() -> tuple[object, str]:
     """
     app_ref = get_frontmost_app()
     app_name = app_ref.localizedName() if app_ref else "?"
-    logging.debug("App source : %r", app_name)
+    logging.debug("Source app: %r", app_name)
 
     try:
         before = pyperclip.paste() or ""
@@ -40,13 +40,13 @@ def get_app_and_copy() -> tuple[object, str]:
     try:
         text = pyperclip.paste() or ""
     except Exception as e:
-        logging.error("Erreur lecture clipboard : %s", e)
+        logging.error("Clipboard read error: %s", e)
         return app_ref, ""
 
     if text == before:
-        logging.warning("Le presse-papier n'a pas changé après Cmd+C")
+        logging.warning("Clipboard unchanged after Cmd+C")
 
-    logging.debug("Texte copié (%d chars) : %r", len(text), text[:60])
+    logging.debug("Copied text (%d chars): %r", len(text), text[:60])
     return app_ref, text
 
 
@@ -55,7 +55,7 @@ def paste_text(text: str, app_ref=None) -> None:
     Write *text* to the clipboard, reactivate the source app via NSWorkspace,
     then simulate Cmd+V.
     """
-    logging.debug("Collage (%d chars)", len(text))
+    logging.debug("Pasting (%d chars)", len(text))
     pyperclip.copy(text)
     time.sleep(0.05)
 
@@ -67,4 +67,4 @@ def paste_text(text: str, app_ref=None) -> None:
         _kbd.press('v')
         _kbd.release('v')
 
-    logging.debug("Cmd+V envoyé")
+    logging.debug("Cmd+V sent")

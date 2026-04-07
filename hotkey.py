@@ -1,8 +1,9 @@
 """
-Global hotkey listener using CGEventTap (Quartz) — contournement du bug
-pynput/Python 3.13 où Thread._handle est écrasé par un ThreadHandle.
+Global hotkey listener using CGEventTap (Quartz).
+Workaround for the pynput/Python 3.13 bug where Thread._handle is
+overwritten by a ThreadHandle.
 
-Supporte le format pynput : "<cmd>+<shift>+p"
+Supports pynput format: "<cmd>+<shift>+p"
 """
 
 import threading
@@ -27,7 +28,7 @@ from Quartz import (
     kCGEventFlagMaskControl,
 )
 
-# Keycodes macOS pour les lettres a-z
+# macOS keycodes for a-z
 _KEY_CODES: dict[str, int] = {
     'a': 0,  's': 1,  'd': 2,  'f': 3,  'h': 4,  'g': 5,  'z': 6,  'x': 7,
     'c': 8,  'v': 9,  'b': 11, 'q': 12, 'w': 13, 'e': 14, 'r': 15, 'y': 16,
@@ -43,7 +44,7 @@ _MODIFIER_MAP: dict[str, int] = {
     'ctrl':   kCGEventFlagMaskControl,
 }
 
-# Masque des modificateurs pertinents (ignore CapsLock, NumLock, etc.)
+# Relevant modifier mask (ignores CapsLock, NumLock, etc.)
 _MOD_MASK = (
     kCGEventFlagMaskCommand
     | kCGEventFlagMaskShift
@@ -54,8 +55,8 @@ _MOD_MASK = (
 
 def _parse_shortcut(shortcut: str) -> tuple[int, int]:
     """
-    Parse un raccourci style pynput (ex: "<cmd>+<shift>+p")
-    et retourne (modifier_mask, keycode).
+    Parse a pynput-style shortcut (e.g. "<cmd>+<shift>+p")
+    and return (modifier_mask, keycode).
     """
     modifiers = 0
     keycode = None
@@ -66,19 +67,19 @@ def _parse_shortcut(shortcut: str) -> tuple[int, int]:
         elif part in _KEY_CODES:
             keycode = _KEY_CODES[part]
         else:
-            raise ValueError(f"Touche non reconnue : {part!r}")
+            raise ValueError(f"Unrecognised key: {part!r}")
     if keycode is None:
-        raise ValueError(f"Aucune touche principale trouvée dans : {shortcut!r}")
+        raise ValueError(f"No main key found in shortcut: {shortcut!r}")
     return modifiers, keycode
 
 
 def install(shortcut: str, callback) -> None:
     """
-    Installe un raccourci clavier global.
+    Install a global keyboard shortcut.
 
     Args:
-        shortcut: Format pynput, ex. "<cmd>+<shift>+p"
-        callback: Fonction appelée (depuis un thread daemon) quand le raccourci est détecté.
+        shortcut: pynput format, e.g. "<cmd>+<shift>+p"
+        callback: Function called (from a daemon thread) when the shortcut fires.
     """
     target_mods, target_keycode = _parse_shortcut(shortcut)
 
@@ -90,7 +91,7 @@ def install(shortcut: str, callback) -> None:
                 try:
                     callback()
                 except Exception as e:
-                    print(f"[hotkey] Erreur dans le callback : {e}")
+                    print(f"[hotkey] Error in callback: {e}")
         return event
 
     def _run():
@@ -104,8 +105,8 @@ def install(shortcut: str, callback) -> None:
         )
         if tap is None:
             print(
-                "[hotkey] Impossible de créer l'event tap.\n"
-                "→ Vérifie les permissions Accessibilité dans Préférences Système."
+                "[hotkey] Could not create event tap.\n"
+                "→ Check Accessibility permissions in System Settings."
             )
             return
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-TextPolish — point d'entrée principal.
+TextPolish — main entry point.
 
-Lance un listener de raccourci global (Cmd+Shift+P) et affiche un NSPanel
-natif au-dessus de toutes les fenêtres, y compris les apps en plein écran.
+Starts a global shortcut listener (Cmd+Shift+P) and displays a native NSPanel
+that stays visible above all windows, including fullscreen apps.
 
-Permissions macOS requises :
-  • Accessibilité  (pour pynput / GlobalHotKeys)
-  • Automatisation (pour osascript / keystroke)
+Required macOS permissions:
+  - Accessibility  (for pynput / GlobalHotKeys)
+  - Automation     (for osascript / keystroke)
 """
 
 import sys
@@ -29,18 +29,18 @@ from ui import setup as setup_panel
 def main() -> None:
     NSApplication.sharedApplication()
     NSApp.setActivationPolicy_(NSApplicationActivationPolicyAccessory)
-    # Indispensable avant de dispatcher des événements manuellement
+    # Required before manually dispatching events
     NSApp.finishLaunching()
 
     panel = setup_panel()
 
     install_hotkey(SHORTCUT, panel.trigger_polish)
 
-    print(f"TextPolish démarré — raccourci actif : {SHORTCUT}")
-    print("Appuie sur Ctrl+C dans ce terminal pour quitter.")
+    print(f"TextPolish started — shortcut active: {SHORTCUT}")
+    print("Press Ctrl+C in this terminal to quit.")
 
-    # Boucle Cocoa complète : dispatche les NSEvent (clics, clavier, etc.)
-    # Timeout de 0.5 s pour que Python capte KeyboardInterrupt (Ctrl+C).
+    # Full Cocoa run loop: dispatches NSEvents (clicks, keyboard, etc.)
+    # 0.5s timeout so Python can catch KeyboardInterrupt (Ctrl+C).
     try:
         while True:
             event = NSApp.nextEventMatchingMask_untilDate_inMode_dequeue_(
