@@ -8,6 +8,8 @@ import requests
 from config import (
     OLLAMA_BASE_URL,
     OLLAMA_MODEL,
+    OLLAMA_MODEL_PRO,
+    OLLAMA_MODEL_CASUAL,
     OLLAMA_TIMEOUT,
     OLLAMA_KEEP_ALIVE,
 )
@@ -44,25 +46,33 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     prompt_name = "custom" if custom_prompt else mode
     system = _load_prompt(prompt_name)
 
+    if mode == "pro":
+        model = OLLAMA_MODEL_PRO
+    elif mode == "casual":
+        model = OLLAMA_MODEL_CASUAL
+    else:
+        model = OLLAMA_MODEL
+
     if custom_prompt:
         prompt_text = (
             f"{system}\n\n"
-            "Instruction personnalisée à appliquer :\n"
+            "Custom instruction to apply:\n"
             f"{custom_prompt.strip()}\n\n"
-            "Texte à réécrire :\n"
+            "Text to rewrite:\n"
             f"{text}"
         )
     else:
-        prompt_text = f"{system}\n\nTexte à réécrire :\n{text}"
+        prompt_text = f"{system}\n\nText to rewrite:\n{text}"
 
     payload = {
-        "model": OLLAMA_MODEL,
+        "model": model,
         "prompt": prompt_text,
         "keep_alive": OLLAMA_KEEP_ALIVE,
         "stream": False,
+        "options": {"num_ctx": 1024},
     }
 
-    logging.debug("Calling Ollama | model=%s | mode=%s | %d chars", OLLAMA_MODEL, mode, len(text))
+    logging.debug("Calling Ollama | model=%s | mode=%s | %d chars", model, mode, len(text))
 
     try:
         response = requests.post(
@@ -83,8 +93,8 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     except requests.exceptions.HTTPError as e:
         if e.response is not None and e.response.status_code == 404:
             raise RuntimeError(
-                f"Model '{OLLAMA_MODEL}' not found. "
-                f"Install it with: `ollama pull {OLLAMA_MODEL}`"
+                f"Model '{model}' not found. "
+                f"Install it with: `ollama pull {model}`"
             )
         raise RuntimeError(f"Ollama returned an error: {e}")
 
