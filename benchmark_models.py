@@ -265,6 +265,101 @@ def _write_markdown(
                 f.write(f"**`{model}`** ({t}s){scores_str}\n> {match['output']}\n\n")
 
 
+_VERDICT_THRESHOLDS = {
+    "excellent": 4.5,
+    "good":      3.8,
+    "average":   3.0,
+}
+
+def _verdict(score: float) -> str:
+    if score >= _VERDICT_THRESHOLDS["excellent"]:
+        return "Excellent"
+    if score >= _VERDICT_THRESHOLDS["good"]:
+        return "Good"
+    if score >= _VERDICT_THRESHOLDS["average"]:
+        return "Average"
+    return "Poor"
+
+
+def _write_constat(
+    models: list,
+    by_model: dict,
+    scores_by_model: dict,
+    timestamp: str,
+    path: str,
+) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(f"# Model Assessment — {timestamp}\n\n")
+        f.write(
+            "Evaluation of each model on the TextPolish corpus "
+            "(spelling correction, tone appropriateness, meaning preservation).\n\n"
+        )
+        f.write("---\n\n")
+
+        for model in models:
+            sc = scores_by_model[model]
+            timing = by_model[model]
+
+            f.write(f"## `{model}`\n\n")
+
+            if not sc:
+                f.write("*No results available (timeouts or errors).*\n\n")
+                continue
+
+            avgs = {
+                dim: round(statistics.mean(x[dim] for x in sc if dim in x), 2)
+                for dim in ("correction", "tone", "preservation", "overall")
+            }
+            lat = _compute_stats(timing) if timing else {}
+
+            # Scores table
+            f.write("| Criterion | Avg score | Verdict |\n")
+            f.write("|-----------|----------:|--------:|\n")
+            for dim, label in (
+                ("correction", "Spelling & grammar"),
+                ("tone", "Tone appropriateness"),
+                ("preservation", "Meaning preservation"),
+                ("overall", "**Overall**"),
+            ):
+                v = avgs[dim]
+                f.write(f"| {label} | {v}/5 | {_verdict(v)} |\n")
+
+            if lat:
+                f.write(f"\n**Latency** — median {lat['median']}s · P95 {lat['p95']}s · min {lat['min']}s · max {lat['max']}s\n\n")
+
+            # Strengths / weaknesses from judge notes
+            notes = [x["note"] for x in sc if x.get("note")]
+            low = [x for x in sc if x.get("overall", 5) < 3.5]
+            high = [x for x in sc if x.get("overall", 0) >= 4.5]
+
+            if high:
+                f.write("**Strengths:**\n")
+                for x in high[:3]:
+                    f.write(f"- `{x.get('case_id', '')}` — {x['note']}\n")
+                f.write("\n")
+
+            if low:
+                f.write("**Weaknesses:**\n")
+                for x in low[:3]:
+                    f.write(f"- `{x.get('case_id', '')}` — {x['note']}\n")
+                f.write("\n")
+
+            # Recommendation
+            overall = avgs["overall"]
+            f.write("**Recommendation for TextPolish:**  \n")
+            if overall >= 4.5:
+                f.write("Recommended — excellent quality across all modes.\n\n")
+            elif overall >= 3.8:
+                f.write("Usable — good overall quality with minor weaknesses.\n\n")
+            elif overall >= 3.0:
+                f.write("Average — acceptable for occasional use, "
+                        "but notable errors on some cases.\n\n")
+            else:
+                f.write("Insufficient — too many tone or meaning errors for production use.\n\n")
+
+            f.write("---\n\n")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Benchmark multiple Ollama models on TextPolish cases.",
@@ -290,43 +385,73 @@ def main() -> None:
                         help="Score each output with Claude (requires ANTHROPIC_API_KEY)")
     parser.add_argument("--judge-model", default=_JUDGE_DEFAULT_MODEL,
                         help=f"Claude model used as judge (default: {_JUDGE_DEFAULT_MODEL})")
+    parser.add_argument("--resume", metavar="TIMESTAMP",
+                        help="Resume an interrupted run (e.g. --resume 20260406_123456)")
     args = parser.parse_args()
 
     with open(args.cases, "r", encoding="utf-8") as f:
         cases = json.load(f)
 
     os.makedirs(args.output_dir, exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # --- Resume support ---
+    if args.resume:
+        timestamp = args.resume
+        json_path = os.path.join(args.output_dir, f"results_{timestamp}.json")
+        with open(json_path, "r", encoding="utf-8") as f:
+            all_results = json.load(f)
+        done_keys = {(r["model"], r["case_id"]) for r in all_results}
+        print(f"Resuming run {timestamp} — {len(all_results)} results already done.")
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        all_results = []
+        done_keys: set = set()
+
+    json_path = os.path.join(args.output_dir, f"results_{timestamp}.json")
+    csv_path = os.path.join(args.output_dir, f"summary_{timestamp}.csv")
+    md_path = os.path.join(args.output_dir, f"review_{timestamp}.md")
 
     # --- Run Ollama inference ---
-    all_results: list = []
     total = len(args.models) * len(cases)
-    done = 0
+    done = len(done_keys)
 
     for model in args.models:
+        pending = [c for c in cases if (model, c["id"]) not in done_keys]
+        if not pending:
+            print(f"\n=== {model} — already complete, skipping ===")
+            continue
         print(f"\n=== {model} ===")
-        for case in cases:
+        for case in pending:
             done += 1
             print(f"  [{done}/{total}] {case['id']} ({case['mode']}) ...", end=" ", flush=True)
             result = run_case(model, case, args.ollama_url, args.timeout)
             if result["error"]:
-                print(f"ERROR: {result['error']}")
+                print(f"ERROR: {result['error'][:80]}")
             else:
                 print(f"{result['wall_time_s']}s")
             all_results.append(result)
+            done_keys.add((model, case["id"]))
+            # Save after every case so interruption loses nothing
+            _write_json(all_results, json_path)
 
     # --- Claude judge pass ---
     if args.judge:
-        scoreable = [r for r in all_results if not r["error"] and r["output"]]
-        print(f"\n=== Judging {len(scoreable)} outputs with {args.judge_model} ===")
-        for i, result in enumerate(scoreable, 1):
-            print(f"  [{i}/{len(scoreable)}] {result['model']} / {result['case_id']} ...", end=" ", flush=True)
-            scores = judge_result(result, args.judge_model)
-            result["judge"] = scores
-            if "error" in scores:
-                print(f"ERROR: {scores['error']}")
-            else:
-                print(f"overall {scores['overall']}/5")
+        scoreable = [r for r in all_results if not r["error"] and r["output"] and r.get("judge") is None]
+        if scoreable:
+            print(f"\n=== Judging {len(scoreable)} outputs with {args.judge_model} ===")
+            for i, result in enumerate(scoreable, 1):
+                print(f"  [{i}/{len(scoreable)}] {result['model']} / {result['case_id']} ...", end=" ", flush=True)
+                scores = judge_result(result, args.judge_model)
+                scores["case_id"] = result["case_id"]
+                result["judge"] = scores
+                if "error" in scores:
+                    print(f"ERROR: {scores['error'][:80]}")
+                else:
+                    print(f"overall {scores['overall']}/5")
+                # Save after every judge call too
+                _write_json(all_results, json_path)
+        else:
+            print("\n=== All outputs already judged, skipping ===")
 
     # --- Aggregate stats ---
     by_model: dict = defaultdict(list)
@@ -337,22 +462,24 @@ def main() -> None:
         if r.get("judge") and "error" not in (r["judge"] or {}):
             scores_by_model[r["model"]].append(r["judge"])
 
-    # --- Write outputs ---
-    json_path = os.path.join(args.output_dir, f"results_{timestamp}.json")
-    csv_path = os.path.join(args.output_dir, f"summary_{timestamp}.csv")
-    md_path = os.path.join(args.output_dir, f"review_{timestamp}.md")
-
     _write_json(all_results, json_path)
     _write_summary_csv(args.models, by_model, scores_by_model, csv_path)
     _write_markdown(
         args.models, cases, all_results, by_model, scores_by_model,
         timestamp, args.judge_model if args.judge else None, md_path,
     )
+    if args.judge and any(scores_by_model.values()):
+        constat_path = os.path.join(args.output_dir, f"constat_{timestamp}.md")
+        _write_constat(args.models, by_model, scores_by_model, timestamp, constat_path)
+    else:
+        constat_path = None
 
     print(f"\nResults saved to {args.output_dir}/")
     print(f"  {os.path.basename(json_path)}  — full results (JSON)")
     print(f"  {os.path.basename(csv_path)}  — timing summary (CSV)")
     print(f"  {os.path.basename(md_path)}  — human-readable review (Markdown)")
+    if constat_path:
+        print(f"  {os.path.basename(constat_path)}  — model verdict (Markdown)")
 
     # --- Inline timing summary ---
     print("\n--- Timing Summary (wall time, seconds) ---")
