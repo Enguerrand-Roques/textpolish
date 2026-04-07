@@ -131,6 +131,12 @@ def judge_result(result: dict, judge_model: str) -> dict:
             messages=[{"role": "user", "content": user_content}],
         )
         raw = response.content[0].text.strip()
+        # Strip markdown code fences if the model adds them despite instructions
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.strip()
         scores = json.loads(raw)
         scores["overall"] = round(
             (scores["correction"] + scores["tone"] + scores["preservation"]) / 3, 2
