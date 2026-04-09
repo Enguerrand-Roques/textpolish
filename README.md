@@ -1,5 +1,7 @@
 # TextPolish
 
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+
 **TextPolish** polishes your text using a local AI model — no internet, no subscription, no data sent anywhere.
 
 Select text in any app, press a shortcut, pick a rewrite mode, and the corrected text is pasted back instantly. Runs silently in the menubar / system tray.
