@@ -186,6 +186,21 @@ textpolish/
 
 ---
 
+## Background
+
+This project started as a way to understand how to integrate a language model into a real personal tool — not just a script that calls an API, but something actually usable every day.
+
+Building it surfaced a few things that tutorials don't really cover:
+
+- **Model size vs. latency** — a 4B model rewrites better but takes 5–8s; a 1B model is nearly instant but misses nuance. The right choice depends on the use case, not just benchmarks.
+- **Keeping a model in RAM** — loading a model from disk on every request adds 2–3s of overhead. `keep_alive` keeps it warm between requests, but costs RAM permanently. It's a trade-off you have to tune per machine.
+- **Local vs. cloud latency** — a local model on an M-series chip is often faster than a cloud API for short texts, once the model is loaded. Network round-trips add up.
+- **Integrating an LLM into an OS-level tool** — the LLM part ended up being the simplest piece. The hard parts were the global shortcut, clipboard handling, and making a window appear above fullscreen apps.
+
+The companion project [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) explores the same use case but with a cloud API (Google Gemini), which removes the local model complexity entirely in exchange for an internet dependency.
+
+---
+
 ## Related
 
 - [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) — same tool, powered by Google Gemini (no local model, free API)
