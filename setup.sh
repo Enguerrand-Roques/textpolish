@@ -18,11 +18,7 @@ fi
 echo "  ✓ Dependencies installed"
 
 # ── 2. Detect the real Python binary (bypass venv symlink for launchd) ──────
-REAL_PYTHON=$(python3 -c "
-import sysconfig, os
-exe = sysconfig.get_config_var('BINDIR') + '/python3'
-print(os.path.realpath(exe))
-" 2>/dev/null || python3 -c "import sys; print(sys.executable)")
+REAL_PYTHON=$(python3 -c "import os, sys; print(os.path.realpath(sys.executable))")
 
 SITE_PACKAGES="$REPO_DIR/venv/lib/$(ls "$REPO_DIR/venv/lib/")/site-packages"
 
