@@ -45,6 +45,29 @@ def _load_prompt(name: str) -> str:
         return f.read().strip()
 
 
+_FRENCH_CHARS = set("éèêëàâùûüîïôœæç")
+_FRENCH_STOP_WORDS = {
+    "le", "la", "les", "de", "du", "un", "une", "et", "en",
+    "je", "tu", "il", "elle", "nous", "vous", "ils", "elles",
+    "que", "qui", "ne", "pas", "sur", "par", "pour", "avec",
+}
+
+
+def _detect_language(text: str) -> str:
+    """Return 'fr' if the text is likely French, 'en' otherwise.
+
+    Uses two signals in order of priority:
+    1. French-specific accented characters (é, è, ç, œ…) — very reliable.
+    2. French stop words — catches unaccented French text.
+    """
+    if any(c in _FRENCH_CHARS for c in text.lower()):
+        return "fr"
+    words = set(text.lower().split())
+    if len(words & _FRENCH_STOP_WORDS) >= 2:
+        return "fr"
+    return "en"
+
+
 def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) -> str:
     """
     Send *text* to a local Ollama model and return the corrected version.
@@ -78,16 +101,27 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
         _unload_model(_active_model)
     _active_model = model
 
+    # Small models (gemma3:1b) ignore the "same language" rule in the system
+    # prompt when the task is cognitively demanding (e.g. pro rewriting).
+    # We detect the input language and prepend an explicit override so the
+    # model cannot miss it — this was validated in benchmark Round 2.
+    lang = _detect_language(text)
+    lang_names = {"fr": "French", "en": "English"}
+    lang_instruction = (
+        f"IMPORTANT: The input text is in {lang_names[lang]}. "
+        f"You MUST output in {lang_names[lang]} only.\n\n"
+    )
+
     if custom_prompt:
         prompt_text = (
-            f"{system}\n\n"
+            f"{lang_instruction}{system}\n\n"
             "Custom instruction to apply:\n"
             f"{custom_prompt.strip()}\n\n"
             "Text to rewrite:\n"
             f"{text}"
         )
     else:
-        prompt_text = f"{system}\n\nText to rewrite:\n{text}"
+        prompt_text = f"{lang_instruction}{system}\n\nText to rewrite:\n{text}"
 
     payload = {
         "model": model,
