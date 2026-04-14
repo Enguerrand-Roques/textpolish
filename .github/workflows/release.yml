@@ -1,0 +1,68 @@
+name: Release
+
+# Triggered by pushing a version tag, e.g.:
+#   git tag v1.1.0 && git push origin v1.1.0
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to create GitHub Releases
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create release archive
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          ARCHIVE="textpolish-${VERSION}.zip"
+
+          # Package the repo without venv, cache, and local config
+          zip -r "$ARCHIVE" . \
+            --exclude "*.pyc" \
+            --exclude "*/__pycache__/*" \
+            --exclude "*/venv/*" \
+            --exclude "config.py" \
+            --exclude "benchmarks/results/*" \
+            --exclude ".git/*"
+
+          echo "ARCHIVE=$ARCHIVE" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "TextPolish ${{ env.VERSION }}"
+          body: |
+            ## Install
+
+            **macOS** — extract the zip, then:
+            ```bash
+            cd textpolish-${{ env.VERSION }}
+            bash setup.sh
+            ```
+            `setup.sh` creates a Python venv, installs dependencies, and puts **TextPolish.app** on your Desktop.
+
+            **Windows** — extract the zip, then:
+            ```bash
+            cd textpolish-${{ env.VERSION }}
+            pip install -r requirements-windows.txt
+            python main.py
+            ```
+
+            Then pull the AI models (one-time, ~2 GB):
+            ```bash
+            ollama pull gemma3:1b
+            ollama pull gemma3:4b
+            ```
+
+            See [README](https://github.com/Enguerrand-Roques/textpolish#readme) for full instructions.
+          files: ${{ env.ARCHIVE }}
+          draft: false
+          prerelease: false

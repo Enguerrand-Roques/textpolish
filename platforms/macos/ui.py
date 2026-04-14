@@ -7,6 +7,8 @@ import threading
 import time
 import objc
 from Foundation import NSObject
+import datetime
+
 from AppKit import (
     NSApp,
     NSPanel,
@@ -31,6 +33,7 @@ from AppKit import (
     NSMenu,
     NSMenuItem,
     NSImage,
+    NSPasteboard,
 )
 
 from clipboard import get_app_and_copy, paste_text
@@ -80,6 +83,60 @@ class _MainThreadBridge(NSObject):
 
 _bridge: _MainThreadBridge | None = None
 
+# ---------------------------------------------------------------------------
+# History — last 10 corrections (in-memory)
+# ---------------------------------------------------------------------------
+
+_history: list[dict] = []   # [{"original": str, "corrected": str, "mode": str, "ts": str}]
+_history_menu: NSMenu | None = None
+
+
+class _HistoryHandler(NSObject):
+    """Handles clicks on history menu items — copies corrected text to clipboard."""
+
+    def copyText_(self, sender):
+        corrected = sender.representedObject()
+        if corrected:
+            pb = NSPasteboard.generalPasteboard()
+            pb.clearContents()
+            pb.setString_forType_(str(corrected), "public.utf8-plain-text")
+
+
+_history_handler: _HistoryHandler | None = None
+
+
+def _add_to_history(original: str, corrected: str, mode: str) -> None:
+    """Prepend a new entry to the history and refresh the menubar submenu."""
+    global _history
+    ts = datetime.datetime.now().strftime("%H:%M")
+    _history.insert(0, {"original": original, "corrected": corrected, "mode": mode, "ts": ts})
+    _history = _history[:10]
+    _update_history_menu()
+
+
+def _update_history_menu() -> None:
+    """Rebuild the History submenu from the current _history list."""
+    if _history_menu is None:
+        return
+    _history_menu.removeAllItems()
+    if not _history:
+        empty = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("No corrections yet", None, "")
+        empty.setEnabled_(False)
+        _history_menu.addItem_(empty)
+        return
+    for entry in _history:
+        orig_short = entry["original"][:40].replace("\n", " ")
+        if len(entry["original"]) > 40:
+            orig_short += "…"
+        label = f"[{entry['mode']}] {entry['ts']} — {orig_short}"
+        item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(
+            label, "copyText:", ""
+        )
+        item.setTarget_(_history_handler)
+        item.setRepresentedObject_(entry["corrected"])
+        item.setToolTip_(f"Click to copy corrected text\n\n{entry['corrected'][:200]}")
+        _history_menu.addItem_(item)
+
 
 def _on_main(fn):
     assert _bridge is not None, "call ui.setup() first"
@@ -101,6 +158,7 @@ class TextPolishPanel(NSObject):
         self._custom_dialog = None
         self._custom_input = None
         self._status_job = 0
+        self._current_mode = "pro"
         self._create_panel()
         return self
 
@@ -270,6 +328,7 @@ class TextPolishPanel(NSObject):
     def _start_process(self, mode: str, custom_prompt: str | None = None):
         if not self._selected_text.strip():
             return
+        self._current_mode = mode
         self._set_enabled(False)
         self._status_job += 1
         job_id = self._status_job
@@ -313,6 +372,7 @@ class TextPolishPanel(NSObject):
         self._status_job += 1
         self._hide()
         paste_text(result, self._app_ref)
+        _add_to_history(self._selected_text, result, self._current_mode)
 
     @objc.python_method
     def _on_error(self, message: str):
@@ -398,8 +458,9 @@ class TextPolishPanel(NSObject):
 
 def setup() -> TextPolishPanel:
     """Initialize bridge and panel. Must be called from the main thread."""
-    global _bridge, _status_item
+    global _bridge, _status_item, _history_handler
     _bridge = _MainThreadBridge.alloc().init()
+    _history_handler = _HistoryHandler.alloc().init()
     _status_item = _create_status_item()
     return TextPolishPanel.alloc().init()
 
@@ -417,11 +478,28 @@ def _create_status_item():
     item.button().setToolTip_("TextPolish")
 
     menu = NSMenu.alloc().init()
+
+    # History submenu
+    history_item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("History", None, "")
+    submenu = NSMenu.alloc().initWithTitle_("History")
+    empty = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("No corrections yet", None, "")
+    empty.setEnabled_(False)
+    submenu.addItem_(empty)
+    menu.addItem_(history_item)
+    menu.setSubmenu_forItem_(submenu, history_item)
+
+    menu.addItem_(NSMenuItem.separatorItem())
+
     quit_item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(
         "Quit TextPolish", "terminate:", "q"
     )
     menu.addItem_(quit_item)
     item.setMenu_(menu)
+
+    # Store submenu reference for dynamic updates
+    global _history_menu
+    _history_menu = submenu
+
     return item  # must stay referenced or it disappears
 
 
