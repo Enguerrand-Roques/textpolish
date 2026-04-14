@@ -1,10 +1,14 @@
 # TextPolish
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Tests](https://github.com/Enguerrand-Roques/textpolish/actions/workflows/tests.yml/badge.svg)
 
 **TextPolish** polishes your text using a local AI model — no internet, no subscription, no data sent anywhere.
 
 Select text in any app, press a shortcut, pick a rewrite mode, and the corrected text is pasted back instantly. Runs silently in the menubar / system tray.
+
+<!-- demo.gif: record with Kap (https://getkap.co) — select text, Cmd+Shift+P, click Pro, watch paste -->
+<!-- ![TextPolish demo](demo.gif) -->
 
 > **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
 
@@ -183,6 +187,30 @@ textpolish/
         ├── main.py
         └── hotkey.py
 ```
+
+---
+
+## How models were chosen
+
+TextPolish uses different models per mode — not out of preference, but based on measured results.
+
+Two benchmark rounds were run on Apple M2 16 GB, using 10 representative cases (French + English, short + long, pro + casual) and Claude Haiku as an automated quality judge (scoring correction, tone, and preservation on a 1–5 scale).
+
+**Final configuration after Round 2:**
+
+| Mode | Model | Median latency | Overall score |
+|------|-------|---------------:|:-------------:|
+| Casual | `gemma3:1b` | 1.87 s | 4.53 / 5 |
+| Professional | `gemma3:4b` | 4.50 s | 4.74 / 5 |
+
+Key findings that shaped this choice:
+
+- **QAT quantization** (`gemma3:4b-it-qat`) is 30 % faster than the standard Q4_K_M build at the same parameter count — worth switching to if latency matters more than model size.
+- **`num_ctx: 1024`** reduces KV-cache RAM from ~2 GB to ~16 MB with zero quality impact on short texts (the longest test case was 544 tokens).
+- **`keep_alive: 300 s`** eliminates the 3–5 s cold-start penalty within a session.
+- **gemma3:1b fails on French professional text** — the model is too small to simultaneously follow "write professionally" and "stay in the input language" when driven by an English prompt. gemma3:4b handles both correctly. This is why the two modes use different models.
+
+→ Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
 
 ---
 
