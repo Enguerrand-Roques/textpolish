@@ -3,6 +3,8 @@ TextPolish panel — native NSPanel via PyObjC.
 Replaces CustomTkinter to appear correctly above fullscreen apps.
 """
 
+import os
+import re
 import threading
 import time
 import objc
@@ -38,6 +40,35 @@ from AppKit import (
 
 from clipboard import get_app_and_copy, paste_text
 from llm import polish_text
+
+# Path to config.py (two directories up from this file: platforms/macos/ → root)
+_CONFIG_PATH = os.path.normpath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "config.py")
+)
+
+
+def _read_shortcut_from_config() -> str:
+    try:
+        with open(_CONFIG_PATH) as f:
+            content = f.read()
+        m = re.search(r'SHORTCUT\s*=\s*"([^"]*)"', content)
+        if m:
+            return m.group(1)
+    except Exception:
+        pass
+    return "<cmd>+<alt>+g"
+
+
+def _write_shortcut_to_config(shortcut: str) -> None:
+    with open(_CONFIG_PATH) as f:
+        content = f.read()
+    new_content = re.sub(
+        r'(SHORTCUT\s*=\s*)"[^"]*"',
+        f'\\1"{shortcut}"',
+        content,
+    )
+    with open(_CONFIG_PATH, "w") as f:
+        f.write(new_content)
 
 _PANEL_STYLE = (
     NSWindowStyleMaskTitled
@@ -105,6 +136,115 @@ class _HistoryHandler(NSObject):
 _history_handler: _HistoryHandler | None = None
 
 
+# ---------------------------------------------------------------------------
+# Preferences dialog — shortcut editor
+# ---------------------------------------------------------------------------
+
+class _PrefsHandler(NSObject):
+    """Handles the Preferences panel (live shortcut editing)."""
+
+    def init(self):
+        self = objc.super(_PrefsHandler, self).init()
+        if self is None:
+            return None
+        self._dialog = None
+        self._field = None
+        self._error_label = None
+        return self
+
+    @objc.python_method
+    def open(self):
+        if self._dialog is not None:
+            self._dialog.makeKeyAndOrderFront_(None)
+            return
+
+        style = (
+            NSWindowStyleMaskTitled
+            | NSWindowStyleMaskClosable
+            | NSWindowStyleMaskUtilityWindow
+            | NSWindowStyleMaskNonactivatingPanel
+        )
+        dlg = NSPanel.alloc().initWithContentRect_styleMask_backing_defer_(
+            NSMakeRect(0, 0, 390, 160),
+            style,
+            NSBackingStoreBuffered,
+            False,
+        )
+        dlg.setTitle_("Preferences")
+        dlg.setLevel_(NSFloatingWindowLevel)
+        dlg.setCollectionBehavior_(_COLLECTION)
+
+        cv = dlg.contentView()
+        W, H, pad = 390, 160, 16
+
+        lbl = NSTextField.alloc().initWithFrame_(NSMakeRect(pad, H - 46, W - 2 * pad, 22))
+        lbl.setStringValue_("Keyboard shortcut (pynput format, e.g. <cmd>+<alt>+g):")
+        lbl.setEditable_(False)
+        lbl.setBordered_(False)
+        lbl.setDrawsBackground_(False)
+        lbl.setFont_(NSFont.systemFontOfSize_(12))
+        lbl.setTextColor_(NSColor.secondaryLabelColor())
+        cv.addSubview_(lbl)
+
+        field = NSTextField.alloc().initWithFrame_(NSMakeRect(pad, H - 80, W - 2 * pad, 26))
+        field.setStringValue_(_read_shortcut_from_config())
+        field.setFont_(NSFont.systemFontOfSize_(13))
+        cv.addSubview_(field)
+
+        err = NSTextField.alloc().initWithFrame_(NSMakeRect(pad, H - 106, W - 2 * pad, 18))
+        err.setStringValue_("")
+        err.setEditable_(False)
+        err.setBordered_(False)
+        err.setDrawsBackground_(False)
+        err.setFont_(NSFont.systemFontOfSize_(11))
+        err.setTextColor_(NSColor.systemRedColor())
+        cv.addSubview_(err)
+
+        cancel_btn = NSButton.alloc().initWithFrame_(NSMakeRect(W - pad - 196, pad, 88, 34))
+        cancel_btn.setTitle_("Cancel")
+        cancel_btn.setBezelStyle_(1)
+        cancel_btn.setTarget_(self)
+        cancel_btn.setAction_("cancelPrefs:")
+        cv.addSubview_(cancel_btn)
+
+        save_btn = NSButton.alloc().initWithFrame_(NSMakeRect(W - pad - 100, pad, 100, 34))
+        save_btn.setTitle_("Save")
+        save_btn.setBezelStyle_(1)
+        save_btn.setKeyEquivalent_("\r")
+        save_btn.setTarget_(self)
+        save_btn.setAction_("saveShortcut:")
+        cv.addSubview_(save_btn)
+
+        self._dialog = dlg
+        self._field = field
+        self._error_label = err
+
+        dlg.center()
+        dlg.makeKeyAndOrderFront_(None)
+
+    def saveShortcut_(self, sender):
+        shortcut = self._field.stringValue().strip()
+        try:
+            from platforms.macos import hotkey as _hotkey
+            _hotkey.update_shortcut(shortcut)  # raises ValueError if invalid
+        except ValueError as e:
+            self._error_label.setStringValue_(str(e))
+            return
+        _write_shortcut_to_config(shortcut)
+        self._dialog.orderOut_(None)
+        self._dialog = None
+
+    def cancelPrefs_(self, sender):
+        self._dialog.orderOut_(None)
+        self._dialog = None
+
+    def openPrefs_(self, sender):
+        self.open()
+
+
+_prefs_handler: _PrefsHandler | None = None
+
+
 def _add_to_history(original: str, corrected: str, mode: str) -> None:
     """Prepend a new entry to the history and refresh the menubar submenu."""
     global _history
@@ -159,6 +299,8 @@ class TextPolishPanel(NSObject):
         self._custom_input = None
         self._status_job = 0
         self._current_mode = "pro"
+        self._stream_job = 0        # tracks which streaming request is active
+        self._streaming_started = False
         self._create_panel()
         return self
 
@@ -332,6 +474,8 @@ class TextPolishPanel(NSObject):
         self._set_enabled(False)
         self._status_job += 1
         job_id = self._status_job
+        self._stream_job = job_id
+        self._streaming_started = False
         self._set_status("Preparing correction.")
 
         def status_worker():
@@ -357,15 +501,32 @@ class TextPolishPanel(NSObject):
                     last_message = message
                 time.sleep(0.35)
 
+        def on_token(token: str):
+            _on_main(lambda t=token, jid=job_id: self._update_streaming(t, jid))
+
         def worker():
             try:
-                result = polish_text(self._selected_text, mode, custom_prompt)
+                result = polish_text(self._selected_text, mode, custom_prompt, on_token=on_token)
                 _on_main(lambda: self._on_success(result))
             except Exception as exc:
                 _on_main(lambda e=exc: self._on_error(str(e)))
 
         threading.Thread(target=status_worker, daemon=True).start()
         threading.Thread(target=worker, daemon=True).start()
+
+    @objc.python_method
+    def _update_streaming(self, token: str, job_id: int):
+        """Append a streamed token to the text view. Called on the main thread."""
+        if job_id != self._stream_job:
+            return  # stale token from a cancelled request
+        if not self._streaming_started:
+            self._streaming_started = True
+            self._status_job += 1  # stops status_worker animation
+            self._status.setStringValue_("")
+            self._text_view.setTextColor_(NSColor.labelColor())
+            self._text_view.setString_("")
+        current = str(self._text_view.string())
+        self._text_view.setString_(current + token)
 
     @objc.python_method
     def _on_success(self, result: str):
@@ -458,9 +619,10 @@ class TextPolishPanel(NSObject):
 
 def setup() -> TextPolishPanel:
     """Initialize bridge and panel. Must be called from the main thread."""
-    global _bridge, _status_item, _history_handler
+    global _bridge, _status_item, _history_handler, _prefs_handler
     _bridge = _MainThreadBridge.alloc().init()
     _history_handler = _HistoryHandler.alloc().init()
+    _prefs_handler = _PrefsHandler.alloc().init()
     _status_item = _create_status_item()
     return TextPolishPanel.alloc().init()
 
@@ -478,6 +640,15 @@ def _create_status_item():
     item.button().setToolTip_("TextPolish")
 
     menu = NSMenu.alloc().init()
+
+    # Preferences
+    prefs_item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(
+        "Preferences…", "openPrefs:", ","
+    )
+    prefs_item.setTarget_(_prefs_handler)
+    menu.addItem_(prefs_item)
+
+    menu.addItem_(NSMenuItem.separatorItem())
 
     # History submenu
     history_item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("History", None, "")

@@ -3,6 +3,7 @@ Ollama local backend — sends text to a local model and returns the polished ve
 """
 
 import os
+import json
 import logging
 import requests
 from config import (
@@ -68,7 +69,12 @@ def _detect_language(text: str) -> str:
     return "en"
 
 
-def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) -> str:
+def polish_text(
+    text: str,
+    mode: str = "pro",
+    custom_prompt: str | None = None,
+    on_token=None,
+) -> str:
     """
     Send *text* to a local Ollama model and return the corrected version.
 
@@ -76,6 +82,10 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
         text:          The raw text to polish.
         mode:          "pro" | "casual" — selects the matching prompt file.
         custom_prompt: If provided, applied through the custom prompt template.
+        on_token:      Optional callback(token: str) called for each streamed
+                       token. When provided, streaming mode is used and tokens
+                       are delivered as they arrive. The full result is still
+                       returned at the end.
 
     Returns:
         The polished text string.
@@ -123,21 +133,24 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
     else:
         prompt_text = f"{lang_instruction}{system}\n\nText to rewrite:\n{text}"
 
+    is_streaming = on_token is not None
     payload = {
         "model": model,
         "prompt": prompt_text,
         "keep_alive": OLLAMA_KEEP_ALIVE,
-        "stream": False,
+        "stream": is_streaming,
         "options": {"num_ctx": 1024},
     }
 
-    logging.debug("Calling Ollama | model=%s | mode=%s | %d chars", model, mode, len(text))
+    logging.debug("Calling Ollama | model=%s | mode=%s | %d chars | stream=%s",
+                  model, mode, len(text), is_streaming)
 
     try:
         response = requests.post(
             f"{OLLAMA_BASE_URL}/api/generate",
             json=payload,
             timeout=OLLAMA_TIMEOUT,
+            stream=is_streaming,
         )
         response.raise_for_status()
     except requests.exceptions.ConnectionError:
@@ -157,7 +170,22 @@ def polish_text(text: str, mode: str = "pro", custom_prompt: str | None = None) 
             )
         raise RuntimeError(f"Ollama returned an error: {e}")
 
-    data = response.json()
-    result = data.get("response", "").strip()
+    if is_streaming:
+        parts: list[str] = []
+        for raw_line in response.iter_lines():
+            if not raw_line:
+                continue
+            chunk = json.loads(raw_line)
+            token = chunk.get("response", "")
+            if token:
+                on_token(token)
+                parts.append(token)
+            if chunk.get("done"):
+                break
+        result = "".join(parts).strip()
+    else:
+        data = response.json()
+        result = data.get("response", "").strip()
+
     logging.debug("Response received — %d chars", len(result))
     return result

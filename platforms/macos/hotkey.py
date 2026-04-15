@@ -73,21 +73,44 @@ def _parse_shortcut(shortcut: str) -> tuple[int, int]:
     return modifiers, keycode
 
 
+# Mutable dict holding the active shortcut target — updated live by update_shortcut().
+# The event handler reads from this dict on every keypress so changes take effect
+# immediately without restarting the CGEventTap thread.
+_current_target: dict = {"mods": 0, "keycode": None}
+
+
+def update_shortcut(shortcut: str) -> None:
+    """Update the active shortcut without restarting the listener.
+
+    Args:
+        shortcut: pynput format, e.g. "<cmd>+<alt>+g"
+
+    Raises:
+        ValueError: if the shortcut string cannot be parsed.
+    """
+    mods, keycode = _parse_shortcut(shortcut)
+    _current_target["mods"] = mods
+    _current_target["keycode"] = keycode
+    print(f"[hotkey] Shortcut updated to: {shortcut}")
+
+
 def install(shortcut: str, callback) -> None:
     """
     Install a global keyboard shortcut.
 
     Args:
-        shortcut: pynput format, e.g. "<cmd>+<shift>+p"
+        shortcut: pynput format, e.g. "<cmd>+<alt>+g"
         callback: Function called (from a daemon thread) when the shortcut fires.
     """
-    target_mods, target_keycode = _parse_shortcut(shortcut)
+    mods, keycode = _parse_shortcut(shortcut)
+    _current_target["mods"] = mods
+    _current_target["keycode"] = keycode
 
     def _event_handler(proxy, event_type, event, refcon):
         if event_type == kCGEventKeyDown:
             flags = CGEventGetFlags(event) & _MOD_MASK
             keycode = int(CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode))
-            if flags == target_mods and keycode == target_keycode:
+            if flags == _current_target["mods"] and keycode == _current_target["keycode"]:
                 try:
                     callback()
                 except Exception as e:
