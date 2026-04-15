@@ -2,6 +2,7 @@
 TextPolish panel — Windows implementation using PyQt6.
 """
 
+import datetime
 import threading
 import time
 
@@ -16,9 +17,10 @@ from PyQt6.QtWidgets import (
     QDialog,
     QSystemTrayIcon,
     QMenu,
+    QAction,
 )
 from PyQt6.QtCore import Qt, QObject, pyqtSignal
-from PyQt6.QtGui import QIcon, QPixmap, QPainter, QFont, QColor
+from PyQt6.QtGui import QIcon, QPixmap, QPainter, QFont, QColor, QClipboard
 
 from clipboard import get_app_and_copy, paste_text
 from llm import polish_text
@@ -48,6 +50,43 @@ def _on_main(fn):
 
 
 # ---------------------------------------------------------------------------
+# History — last 10 corrections (in-memory)
+# ---------------------------------------------------------------------------
+
+_history: list[dict] = []   # [{"original": str, "corrected": str, "mode": str, "ts": str}]
+_history_menu: QMenu | None = None
+
+
+def _add_to_history(original: str, corrected: str, mode: str) -> None:
+    global _history
+    ts = datetime.datetime.now().strftime("%H:%M")
+    _history.insert(0, {"original": original, "corrected": corrected, "mode": mode, "ts": ts})
+    _history = _history[:10]
+    _update_history_menu()
+
+
+def _update_history_menu() -> None:
+    if _history_menu is None:
+        return
+    _history_menu.clear()
+    if not _history:
+        act = _history_menu.addAction("No corrections yet")
+        act.setEnabled(False)
+        return
+    for entry in _history:
+        orig_short = entry["original"][:40].replace("\n", " ")
+        if len(entry["original"]) > 40:
+            orig_short += "…"
+        label = f"[{entry['mode']}] {entry['ts']} — {orig_short}"
+        act = _history_menu.addAction(label)
+        act.setToolTip(entry["corrected"][:200])
+        corrected = entry["corrected"]
+        act.triggered.connect(
+            lambda checked=False, c=corrected: QApplication.clipboard().setText(c)
+        )
+
+
+# ---------------------------------------------------------------------------
 # Panel widget (hides instead of closing)
 # ---------------------------------------------------------------------------
 
@@ -68,6 +107,9 @@ class TextPolishPanel(QObject):
         self._selected_text = ""
         self._app_ref = None
         self._status_job = 0
+        self._current_mode = "pro"
+        self._stream_job = 0
+        self._streaming_started = False
         self._create_panel()
 
     # ----------------------------------------------------------------- setup
@@ -157,9 +199,12 @@ class TextPolishPanel(QObject):
     def _start_process(self, mode: str, custom_prompt: str | None = None):
         if not self._selected_text.strip():
             return
+        self._current_mode = mode
         self._set_enabled(False)
         self._status_job += 1
         job_id = self._status_job
+        self._stream_job = job_id
+        self._streaming_started = False
         self._set_status("Preparing correction.")
 
         def status_worker():
@@ -185,9 +230,12 @@ class TextPolishPanel(QObject):
                     last_message = message
                 time.sleep(0.35)
 
+        def on_token(token: str):
+            _on_main(lambda t=token, jid=job_id: self._update_streaming(t, jid))
+
         def worker():
             try:
-                result = polish_text(self._selected_text, mode, custom_prompt)
+                result = polish_text(self._selected_text, mode, custom_prompt, on_token=on_token)
                 _on_main(lambda: self._on_success(result))
             except Exception as exc:
                 _on_main(lambda e=exc: self._on_error(str(e)))
@@ -195,10 +243,22 @@ class TextPolishPanel(QObject):
         threading.Thread(target=status_worker, daemon=True).start()
         threading.Thread(target=worker, daemon=True).start()
 
+    def _update_streaming(self, token: str, job_id: int):
+        if job_id != self._stream_job:
+            return
+        if not self._streaming_started:
+            self._streaming_started = True
+            self._status_job += 1  # stops status animation
+            self._status.setText("")
+            self._text_view.setStyleSheet("")
+            self._text_view.setText("")
+        self._text_view.insertPlainText(token)
+
     def _on_success(self, result: str):
         self._status_job += 1
         self._hide()
         paste_text(result, self._app_ref)
+        _add_to_history(self._selected_text, result, self._current_mode)
 
     def _on_error(self, message: str):
         self._status_job += 1
@@ -266,10 +326,22 @@ def _make_tray_icon() -> QIcon:
 
 
 def _create_tray(panel: TextPolishPanel) -> QSystemTrayIcon:
+    global _history_menu
+
     tray = QSystemTrayIcon(_make_tray_icon())
     tray.setToolTip("TextPolish")
 
     menu = QMenu()
+
+    # History submenu
+    history_menu = QMenu("History")
+    no_history = history_menu.addAction("No corrections yet")
+    no_history.setEnabled(False)
+    menu.addMenu(history_menu)
+    _history_menu = history_menu
+
+    menu.addSeparator()
+
     quit_action = menu.addAction("Quit TextPolish")
     quit_action.triggered.connect(QApplication.instance().quit)
     tray.setContextMenu(menu)

@@ -7,10 +7,23 @@
 
 Select text in any app, press a shortcut, pick a rewrite mode, and the corrected text is pasted back instantly. Runs silently in the menubar / system tray.
 
-<!-- demo.gif: record with Kap (https://getkap.co) — select text, Cmd+Shift+P, click Pro, watch paste -->
+<!-- demo.gif: record with Kap (https://getkap.co) — select text, Cmd+Option+G, click Pro, watch paste -->
 <!-- ![TextPolish demo](demo.gif) -->
 
 > **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
+
+---
+
+## Features
+
+| Feature | Description |
+|---------|-------------|
+| **Three rewrite modes** | Professional (full rewrite), Casual (light touch, keeps tone), Custom (any instruction) |
+| **Streaming output** | Corrected text appears word by word in the panel as the model generates — no waiting for the full response |
+| **Correction history** | Last 10 corrections available in the ✏️ menu → History. Click any entry to copy the corrected text |
+| **Configurable shortcut** | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed |
+| **Fully private** | Everything runs on your machine. No API key, no telemetry, no data ever leaves your computer |
+| **System-level** | Works in any app — VS Code, Notion, Mail, Slack. Panel stays above fullscreen apps |
 
 ---
 

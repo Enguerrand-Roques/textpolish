@@ -12,7 +12,6 @@ from Foundation import NSObject
 import datetime
 
 from AppKit import (
-    NSApp,
     NSPanel,
     NSButton,
     NSTextField,

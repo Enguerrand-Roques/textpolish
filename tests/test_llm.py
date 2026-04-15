@@ -114,3 +114,37 @@ class TestPolishText:
             polish_text("Hello world", mode="pro")
             payload = mock_post.call_args.kwargs["json"]
             assert "English" in payload["prompt"]
+
+    def test_streaming_calls_on_token_for_each_token(self):
+        """on_token callback must be called once per token chunk."""
+        import json as _json
+        chunks = [
+            _json.dumps({"response": "Hello", "done": False}).encode(),
+            _json.dumps({"response": " world", "done": False}).encode(),
+            _json.dumps({"response": "", "done": True}).encode(),
+        ]
+        mock_resp = MagicMock()
+        mock_resp.raise_for_status.return_value = None
+        mock_resp.iter_lines.return_value = iter(chunks)
+
+        tokens: list[str] = []
+        with patch("llm.requests.post", return_value=mock_resp):
+            polish_text("Hi", mode="casual", on_token=tokens.append)
+
+        assert tokens == ["Hello", " world"]
+
+    def test_streaming_returns_concatenated_result(self):
+        """polish_text must return the full concatenated + stripped result when streaming."""
+        import json as _json
+        chunks = [
+            _json.dumps({"response": "  Fixed", "done": False}).encode(),
+            _json.dumps({"response": " text.  ", "done": True}).encode(),
+        ]
+        mock_resp = MagicMock()
+        mock_resp.raise_for_status.return_value = None
+        mock_resp.iter_lines.return_value = iter(chunks)
+
+        with patch("llm.requests.post", return_value=mock_resp):
+            result = polish_text("broken text", mode="pro", on_token=lambda t: None)
+
+        assert result == "Fixed text."
