@@ -141,41 +141,38 @@ Note: the benchmark runner calls Ollama directly and does **not** pass through `
 | `gemma3:4b-it-qat` | 5.27s | 5.89s | 9.35s | 4.20s | 9.35s |
 | `gemma3:4b` | **4.23s** | 4.54s | 7.60s | 3.31s | 7.60s |
 
-### Quality Assessment (qualitative — judge failed, no API key in env)
+### Quality Scores (judge: claude-opus-4-6, run 2026-04-15)
 
-Manual review of raw outputs from `review_20260414_151134.md`:
+| Model | Median | Correction | Tone | Preservation | **Overall** |
+|-------|-------:|----------:|-----:|-------------:|------------:|
+| `gemma3:1b-it-qat` | **1.77s** | 4.3/5 | 4.7/5 | 4.6/5 | **4.53/5** |
+| `gemma3:1b` | 1.96s | 4.0/5 | 4.9/5 | 4.5/5 | 4.47/5 |
+| `gemma3:4b-it-qat` | 5.79s | 4.6/5 | 4.8/5 | 4.9/5 | **4.77/5** |
+| `gemma3:4b` | 4.94s | 4.1/5 | 4.9/5 | 5.0/5 | 4.67/5 |
 
-| Model | French pro (language) | French pro (quality) | English |
-|---|---|---|---|
-| `gemma3:1b-it-qat` | ❌ Translates to English | Good phrasing | ✅ Correct |
-| `gemma3:1b` | ❌ Translates to English | Good phrasing | ✅ Correct |
-| `gemma3:4b-it-qat` | ✅ Stays in French | Excellent | ✅ Correct |
-| `gemma3:4b` | ✅ Stays in French | Excellent | ✅ Correct |
-
-Both 1b models still translate French professional text to English — same raw-model limitation as Round 2. This is expected: the fix lives in `llm.py`, not in the model itself.
+Note: benchmark runs models without the `_detect_language()` injection from `llm.py` — both 1b models translate French pro text to English in raw mode. In the actual app, the language fix is active.
 
 ### Key Findings
 
-**1. QAT advantage disappears at `num_ctx: 1024`**
-In Round 1, QAT was 30% faster than Q4_K_M (`gemma3:4b-it-qat` 6.1s vs `gemma3:4b` 8.7s). In Round 3, the order **reverses**: `gemma3:4b-it-qat` (5.27s) is now **25% slower** than `gemma3:4b` (4.23s). The Round 1 QAT advantage was driven primarily by the smaller KV cache at `num_ctx: 1024`, not by quantization speed. With the cache already reduced, QAT provides no benefit and slightly increases latency for the 4b model.
+**1. `gemma3:1b-it-qat` beats `gemma3:1b` on both axes**
+Faster (1.77s vs 1.96s, −9%) and better quality (4.53 vs 4.47, +0.06). Clear config switch for casual mode.
 
-**2. `gemma3:1b-it-qat` is marginally faster than `gemma3:1b`**
-1.69s vs 1.84s median — a 0.15s improvement. Not enough to justify switching given identical language behavior.
+**2. `gemma3:4b-it-qat` is higher quality but slower than `gemma3:4b`**
+Quality: 4.77 vs 4.67 (+0.10). Latency: 5.79s vs 4.94s (+17%). The quality gain doesn't justify the latency cost for pro mode.
 
-**3. No config change warranted**
-The current split (`gemma3:1b` for casual, `gemma3:4b` for pro) remains the optimal configuration. QAT variants would add ~5 GB of storage for no latency or quality gain under the current settings.
+**3. QAT advantage at `num_ctx: 1024` is model-size dependent**
+For the 1b model, QAT is a strict improvement. For the 4b model, QAT is slower at this context size. The 30% gain found in Round 1 for 4b-it-qat was driven by the default `num_ctx: 131072` — not by quantization speed.
 
-### Current configuration (post Round 3 — unchanged)
+### Current configuration (updated after Round 3)
 
 | Setting | Value | Rationale |
 |---------|-------|-----------|
-| `OLLAMA_MODEL_CASUAL` | `gemma3:1b` | 1.84s median, handles FR+EN casual correctly |
-| `OLLAMA_MODEL_PRO` | `gemma3:4b` | 4.23s median, handles FR+EN pro correctly |
+| `OLLAMA_MODEL_CASUAL` | `gemma3:1b-it-qat` | 1.77s median, faster + better quality than gemma3:1b |
+| `OLLAMA_MODEL_PRO` | `gemma3:4b` | 4.94s median, best quality/speed ratio for pro |
 | `OLLAMA_KEEP_ALIVE` | `300s` | Avoid cold-start penalty within a session |
 | `num_ctx` | `1024` | Max corpus token count is ~544; 1024 is safe margin |
-| Language injection | enabled (`llm.py`) | Fixes French pro mode for gemma3:1b in the app pipeline |
+| Language injection | enabled (`llm.py`) | Fixes French pro mode for 1b models in the app pipeline |
 
 ### Next steps
 
 - Re-run when `gemma4` variants become available on Ollama
-- Re-run Round 3 judge scoring with a valid `ANTHROPIC_API_KEY` in environment to get quality scores for QAT variants

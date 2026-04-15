@@ -115,7 +115,14 @@ def judge_result(result: dict, judge_model: str) -> dict:
     except ImportError:
         return {"error": "anthropic package not installed — run: pip install anthropic"}
 
-    client = anthropic.Anthropic()
+    # Try to load API key from config.py, fall back to ANTHROPIC_API_KEY env var
+    api_key = None
+    try:
+        from config import ANTHROPIC_API_KEY as _key  # type: ignore
+        api_key = _key
+    except ImportError:
+        pass
+    client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
 
     user_content = (
         f"Mode: {result['mode']}\n\n"

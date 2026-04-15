@@ -53,7 +53,7 @@ A ✏️ icon appears in the menubar — the app is running.
 
 ### Shortcut
 
-`Cmd + Shift + P`
+`Cmd + Option + G`
 
 ### Permissions
 
@@ -124,7 +124,7 @@ A ✏️ icon appears in the system tray — the app is running.
 
 ### Shortcut
 
-`Ctrl + Shift + P`
+`Ctrl + Alt + G`
 
 ### Troubleshooting
 
@@ -134,7 +134,7 @@ A ✏️ icon appears in the system tray — the app is running.
 | `Model not found` | Run `ollama pull gemma3:4b` |
 | Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
 | High RAM after use | Set `OLLAMA_KEEP_ALIVE = 0` in `config.py` |
-| Shortcut not working | Make sure no other app uses Ctrl+Shift+P |
+| Shortcut not working | Make sure no other app uses Ctrl+Alt+G |
 | Text not pasted back | Keep the source app focused |
 
 </details>
@@ -152,7 +152,7 @@ OLLAMA_MODEL_PRO    = "gemma3:4b"   # slower — full rewrite
 OLLAMA_MODEL        = OLLAMA_MODEL_CASUAL  # used for Custom mode
 OLLAMA_TIMEOUT      = 60
 OLLAMA_KEEP_ALIVE   = 300
-SHORTCUT            = "<cmd>+<shift>+p"   # auto-mapped to Ctrl on Windows
+SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+Alt+G
 ```
 
 ---
@@ -200,8 +200,8 @@ Two benchmark rounds were run on Apple M2 16 GB, using 10 representative cases (
 
 | Mode | Model | Median latency | Overall score |
 |------|-------|---------------:|:-------------:|
-| Casual | `gemma3:1b` | 1.87 s | 4.53 / 5 |
-| Professional | `gemma3:4b` | 4.50 s | 4.74 / 5 |
+| Casual | `gemma3:1b-it-qat` | 1.77 s | 4.53 / 5 |
+| Professional | `gemma3:4b` | 4.94 s | 4.67 / 5 |
 
 Key findings that shaped this choice:
 
