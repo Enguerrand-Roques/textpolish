@@ -5,8 +5,12 @@ Injects a synthetic `config` module so llm.py can be imported in CI
 without a real config.py file.
 """
 
+import os
 import sys
 import types
+
+# Add project root to sys.path so `import llm` works in CI
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 _config = types.ModuleType("config")
 _config.OLLAMA_BASE_URL = "http://localhost:11434"
