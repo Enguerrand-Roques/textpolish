@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<title>TextPolish Cloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #060c14;
+    --panel:    #0d1b2a;
+    --titlebar: #0a1622;
+    --ink:      #e6ecf3;
+    --ink-dim:  #8a9bb0;
+    --ink-faint:#5a6a7e;
+    --stroke:   rgba(255,255,255,0.06);
+    --stroke-2: rgba(255,255,255,0.10);
+    --pro:    #5b8db8;
+    --casual: #6a9e7f;
+    --custom: #8b8fc7;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+    --accent: var(--pro);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #0b1726 0%, transparent 60%),
+      radial-gradient(900px 500px at 50% 110%, #0a1322 0%, transparent 60%),
+      var(--bg);
+    padding: 48px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* header */
+  .header {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(145deg, #15283f, #0c1a2b);
+    border: 1px solid var(--stroke-2);
+    display: grid; place-items: center;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 20px -10px rgba(0,0,0,.6);
+  }
+  .brand-mark svg { width: 20px; height: 20px; }
+  .brand-text { display: flex; flex-direction: column; gap: 1px; }
+  .brand-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand-sub { font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.02em; }
+  .header-right { display: flex; align-items: center; gap: 8px; }
+  .settings-btn {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--stroke-2);
+    color: var(--ink-faint); font-size: 14px; cursor: pointer;
+    display: grid; place-items: center; transition: color 0.15s;
+  }
+  .settings-btn:hover { color: var(--ink); }
+  .home-link {
+    font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint);
+    text-decoration: none; padding: 4px 8px; border-radius: 5px;
+    border: 1px solid var(--stroke-2); transition: color 0.15s;
+  }
+  .home-link:hover { color: var(--ink-dim); text-decoration: none; }
+
+  /* panel wrapper */
+  .panel-outer {
+    width: 100%;
+    max-width: 480px;
+  }
+  .panel-outer[data-mode="pro"]    { --accent: var(--pro); }
+  .panel-outer[data-mode="casual"] { --accent: var(--casual); }
+  .panel-outer[data-mode="custom"] { --accent: var(--custom); }
+
+  .panel {
+    width: 100%;
+    background: var(--panel);
+    border-radius: 14px;
+    border: 1px solid var(--stroke);
+    overflow: hidden;
+    position: relative;
+  }
+  .panel::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent); z-index: 3;
+  }
+  .panel-outer[data-mode="pro"]    .panel { box-shadow: 0 0 0 1px rgba(91,141,184,0.10), 0 0 42px -8px rgba(91,141,184,0.28), 0 30px 60px -24px rgba(0,0,0,0.75); }
+  .panel-outer[data-mode="casual"] .panel { box-shadow: 0 0 0 1px rgba(106,158,127,0.10), 0 0 42px -8px rgba(106,158,127,0.26), 0 30px 60px -24px rgba(0,0,0,0.75); }
+  .panel-outer[data-mode="custom"] .panel { box-shadow: 0 0 0 1px rgba(139,143,199,0.12), 0 0 46px -8px rgba(139,143,199,0.32), 0 30px 60px -24px rgba(0,0,0,0.75); }
+
+  /* titlebar */
+  .titlebar {
+    height: 28px;
+    background: linear-gradient(180deg, #0d1b2a 0%, #0a1622 100%);
+    display: flex; align-items: center; padding: 0 12px; gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .lights { display: flex; gap: 8px; }
+  .light { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.25); }
+  .light.r { background: #ff5f57; }
+  .light.y { background: #febc2e; }
+  .light.g { background: #28c840; }
+  .title-caption {
+    margin: 0 auto;
+    font-family: var(--font-mono); font-size: 10.5px;
+    color: var(--ink-faint); letter-spacing: 0.04em;
+    padding-right: 36px;
+  }
+
+  /* panel body — light variant */
+  .pbody {
+    padding: 14px;
+    display: flex; flex-direction: column; gap: 12px;
+    background: #f6f7f9;
+    color: #1a2330;
+  }
+
+  /* mascot row */
+  .mascot-row {
+    display: flex; align-items: center; justify-content: space-between; padding: 2px;
+  }
+  .pip-wrap { display: flex; align-items: center; justify-content: center; }
+  .pip-wrap.pip { width: 48px; height: 48px; }
+  .pip-wrap svg { image-rendering: pixelated; image-rendering: crisp-edges; }
+  .pip-wrap[data-mode="pro"]    { --pb:#5b8db8;--pb2:#3e6b91;--pb3:#7aa7cf;--pb4:#8ab6d8;--pb5:#3a5f7f; }
+  .pip-wrap[data-mode="casual"] { --pb:#6a9e7f;--pb2:#4d7a5e;--pb3:#8cbb9e;--pb4:#9dc7ae;--pb5:#3f6a51; }
+  .pip-wrap[data-mode="custom"] { --pb:#8b8fc7;--pb2:#696ea6;--pb3:#aaadd8;--pb4:#b9bce0;--pb5:#545890; }
+  .mode-block { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .mode-name {
+    font-size: 13px; font-weight: 600; letter-spacing: -0.005em; color: #1a2330;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .accent-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 6px var(--accent);
+  }
+  .kbd {
+    font-family: var(--font-mono); font-size: 10px; color: #3a475a;
+    background: #eceff3; border: 1px solid #dde1e7;
+    padding: 2px 6px; border-radius: 4px; letter-spacing: 0.04em;
+  }
+
+  /* section label */
+  .section-label {
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #6f7a8a; display: flex; align-items: center; justify-content: space-between; padding: 0 2px;
+  }
+  .section-label .hint { color: color-mix(in oklab, var(--accent) 70%, #6f7a8a); }
+
+  /* text boxes */
+  .tbox {
+    background: #ffffff; border: 1px solid #e3e6eb; border-radius: 8px;
+    padding: 10px 11px; font-size: 12px; line-height: 1.5;
+    color: #1a2330; box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+  .tbox textarea {
+    width: 100%; background: none; border: none; outline: none;
+    font-family: var(--font-sans); font-size: 12px; line-height: 1.5;
+    color: #3a475a; resize: vertical; min-height: 72px; display: block;
+  }
+  .tbox textarea::placeholder { color: #9da8b5; }
+  .tbox.output {
+    background: color-mix(in oklab, var(--accent) 8%, #ffffff);
+    border-color: color-mix(in oklab, var(--accent) 28%, #e3e6eb);
+    color: #1a2330; min-height: 72px;
+  }
+  .output-content { font-size: 12px; line-height: 1.5; white-space: pre-wrap; }
+  .cursor {
+    display: inline-block; width: 7px; height: 13px;
+    background: var(--accent); vertical-align: -2px; margin-left: 2px;
+    animation: blink 1.05s steps(1) infinite; border-radius: 1px;
+  }
+  @keyframes blink { 0%,50%{opacity:1} 50.01%,100%{opacity:0} }
+  .cursor.hidden { display: none; }
+  .status-text { font-family: var(--font-mono); font-size: 10.5px; color: #9da8b5; }
+
+  /* instruction field */
+  .instruct-wrap { display: none; flex-direction: column; gap: 6px; }
+  .instruct-wrap.visible { display: flex; }
+  .instruct {
+    display: flex; align-items: center; gap: 8px;
+    background: #ffffff; border: 1px solid #e3e6eb; border-radius: 8px;
+    padding: 8px 10px;
+  }
+  .i-icon {
+    width: 14px; height: 14px; border-radius: 4px; flex: 0 0 auto;
+    background: color-mix(in oklab, var(--accent) 14%, #ffffff);
+    border: 1px solid color-mix(in oklab, var(--accent) 35%, #e3e6eb);
+    color: color-mix(in oklab, var(--accent) 60%, #1a2330);
+    font-size: 10px; display: grid; place-items: center; font-weight: 600;
+    font-family: var(--font-mono);
+  }
+  .instruct input {
+    flex: 1; background: none; border: none; outline: none;
+    font-family: var(--font-mono); font-size: 11px; color: #3a475a;
+  }
+  .instruct input::placeholder { color: #9da8b5; }
+  .i-send { font-family: var(--font-mono); font-size: 10px; color: #8a96a6; padding-left: 6px; border-left: 1px solid #e3e6eb; }
+
+  /* chips */
+  .chips {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    background: #eceff3; padding: 4px; border-radius: 8px;
+    border: 1px solid #dde1e7;
+  }
+  .chip {
+    font-family: var(--font-sans); font-size: 11.5px; font-weight: 500; color: #5a6a7e;
+    background: transparent; border: none; padding: 7px 0; border-radius: 6px;
+    text-align: center; letter-spacing: -0.005em; cursor: pointer; transition: all 0.15s;
+  }
+  .chip.active {
+    background: color-mix(in oklab, var(--accent) 22%, #ffffff);
+    color: #1a2330;
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 50%, transparent);
+  }
+
+  /* repolish button */
+  .btn-polish {
+    width: 100%; padding: 11px 14px; border-radius: 9px;
+    border: 1px solid color-mix(in oklab, var(--accent) 50%, rgba(255,255,255,0.06));
+    background: linear-gradient(180deg,
+      color-mix(in oklab, var(--accent) 78%, #0c1a2b) 0%,
+      color-mix(in oklab, var(--accent) 62%, #0c1a2b) 100%);
+    color: #fff; font-size: 13px; font-weight: 600; letter-spacing: -0.005em;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 0 0 1px rgba(0,0,0,0.05),
+      0 8px 18px -10px color-mix(in oklab, var(--accent) 70%, transparent);
+    transition: opacity 0.15s;
+  }
+  .btn-polish:hover { opacity: 0.9; }
+  .btn-polish:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-polish .spark { font-size: 12px; opacity: 0.95; }
+  .btn-polish .sub { margin-left: auto; font-family: var(--font-mono); font-size: 10px; opacity: 0.7; font-weight: 500; }
+
+  /* history bar */
+  .history {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2px 4px 0; font-family: var(--font-mono); font-size: 10px; color: #8a96a6;
+  }
+  .history-left { display: flex; align-items: center; gap: 8px; }
+  .history-left .pill {
+    background: #eceff3; border: 1px solid #dde1e7; border-radius: 999px;
+    padding: 2px 7px; color: #3a475a; font-size: 9.5px; letter-spacing: 0.04em;
+    cursor: pointer; transition: background 0.1s;
+  }
+  .history-left .pill:hover { background: #e3e6eb; }
+  .history-dots { display: flex; gap: 3px; }
+  .history-dots i { width: 4px; height: 4px; border-radius: 50%; background: #dde1e7; display: inline-block; }
+  .history-dots i.filled { background: color-mix(in oklab, var(--accent) 60%, #c9cdd4); }
+  .history-dots i.current { background: var(--accent); box-shadow: 0 0 5px var(--accent); }
+
+  /* history drawer */
+  .history-drawer {
+    background: #f0f2f5;
+    border-top: 1px solid #dde1e7;
+    border-radius: 0 0 13px 13px;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+  .history-drawer.open { max-height: 260px; overflow-y: auto; }
+  .history-item {
+    padding: 8px 14px; font-size: 11px; color: #3a475a; cursor: pointer;
+    border-bottom: 1px solid #e3e6eb;
+    display: flex; gap: 10px; align-items: baseline;
+    transition: background 0.1s;
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-item:hover { background: #e8ebef; }
+  .h-num { font-family: var(--font-mono); font-size: 9px; color: var(--accent); flex: 0 0 auto; }
+  .h-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* api warning */
+  .api-warn {
+    padding: 9px 12px; background: #fff8ec;
+    border: 1px solid #f5c84a; border-radius: 8px;
+    font-size: 11.5px; color: #6b4c00;
+    display: none; align-items: center; gap: 8px;
+  }
+  .api-warn.visible { display: flex; }
+  .api-warn button {
+    margin-left: auto; background: #f5c84a; border: none; border-radius: 5px;
+    padding: 3px 8px; font-size: 11px; font-weight: 600; color: #6b4c00; cursor: pointer;
+  }
+
+  /* copy button */
+  .copy-btn {
+    display: none; align-self: flex-end;
+    font-family: var(--font-mono); font-size: 10px; color: #8a96a6;
+    background: none; border: 1px solid #e3e6eb; border-radius: 5px;
+    padding: 3px 8px; cursor: pointer; transition: all 0.15s;
+  }
+  .copy-btn.visible { display: block; }
+  .copy-btn:hover { color: #3a475a; border-color: #c5cad3; }
+
+  /* settings modal */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: #f6f7f9; border-radius: 14px; padding: 24px;
+    width: 360px; max-width: calc(100vw - 48px);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+  .modal h2 { font-size: 14px; font-weight: 600; color: #1a2330; margin-bottom: 4px; }
+  .modal p { font-size: 11.5px; color: #6f7a8a; margin-bottom: 16px; }
+  .modal label {
+    font-size: 10px; color: #6f7a8a; font-family: var(--font-mono);
+    text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 6px;
+  }
+  .modal input[type="text"] {
+    width: 100%; padding: 9px 12px; border: 1px solid #dde1e7; border-radius: 8px;
+    font-size: 12px; font-family: var(--font-mono); color: #1a2330; background: #fff;
+    outline: none; margin-bottom: 16px;
+  }
+  .modal input[type="text"]:focus { border-color: var(--pro); }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .modal-cancel {
+    padding: 8px 16px; border-radius: 7px; border: 1px solid #dde1e7;
+    background: #eceff3; color: #3a475a; font-size: 12px; cursor: pointer;
+  }
+  .modal-save {
+    padding: 8px 16px; border-radius: 7px; border: none;
+    background: var(--pro); color: #fff; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+
+  /* footer */
+  .footer {
+    font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint);
+    letter-spacing: 0.04em; text-align: center;
+  }
+  .footer a { color: var(--ink-faint); text-decoration: none; }
+  .footer a:hover { color: var(--ink-dim); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 18l10-10 2 2L6 20H4v-2z" stroke="#9fb4cd" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 9l3-3 2 2-3 3" stroke="#e6ecf3" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="18.5" cy="5.5" r="0.9" fill="#e6ecf3"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <div class="brand-name">TextPolish Cloud</div>
+      <div class="brand-sub">gemini · fr/en</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="settings-btn" onclick="openSettings()" title="Paramètres API">⚙</button>
+  </div>
+</div>
+
+<div class="panel-outer" id="panelOuter" data-mode="pro">
+  <div class="panel">
+    <div class="titlebar">
+      <div class="lights">
+        <span class="light r"></span><span class="light y"></span><span class="light g"></span>
+      </div>
+      <div class="title-caption">textpolish cloud</div>
+    </div>
+    <div class="pbody">
+
+      <!-- mascot + mode -->
+      <div class="mascot-row">
+        <div class="pip-wrap pip" data-mode="pro" id="pipEl">
+          <svg viewBox="0 0 32 32" width="48" height="48" class="pip-svg" data-hat="pro"></svg>
+        </div>
+        <div class="mode-block">
+          <div class="mode-name"><span class="accent-dot"></span><span id="modeLabel">Professionnel</span></div>
+          <span class="kbd">⌘↵ pour polir</span>
+        </div>
+      </div>
+
+      <!-- api key warning -->
+      <div class="api-warn" id="apiWarn">
+        ⚠ Clé Gemini non configurée.
+        <button onclick="openSettings()">Configurer</button>
+      </div>
+
+      <!-- input -->
+      <div class="section-label">
+        <span>Texte à polir</span>
+        <span class="hint" id="inputHint">collez ou tapez</span>
+      </div>
+      <div class="tbox">
+        <textarea id="inputText" placeholder="Collez ou tapez votre texte ici…"></textarea>
+      </div>
+
+      <!-- instruction (custom mode only) -->
+      <div class="instruct-wrap" id="instructWrap">
+        <div class="section-label">
+          <span>Instruction</span>
+          <span class="hint">votre requête</span>
+        </div>
+        <div class="instruct">
+          <span class="i-icon">/</span>
+          <input type="text" id="instructionText" placeholder="ex : traduire en anglais, ton neutre"/>
+          <span class="i-send">↵</span>
+        </div>
+      </div>
+
+      <!-- output -->
+      <div class="section-label">
+        <span>Réécriture</span>
+        <span class="hint" id="outputHint">gemini</span>
+      </div>
+      <div class="tbox output" id="outputBox">
+        <span class="status-text" id="statusText">En attente…</span>
+        <span class="output-content" id="outputContent" style="display:none"></span>
+        <span class="cursor hidden" id="cursor"></span>
+      </div>
+
+      <button class="copy-btn" id="copyBtn" onclick="copyOutput()">copier ↗</button>
+
+      <!-- mode chips -->
+      <div class="chips">
+        <button class="chip active" data-mode="pro"    onclick="setMode('pro')">Pro</button>
+        <button class="chip"        data-mode="casual" onclick="setMode('casual')">Décontracté</button>
+        <button class="chip"        data-mode="custom" onclick="setMode('custom')">Perso</button>
+      </div>
+
+      <!-- repolish button -->
+      <button class="btn-polish" id="polishBtn" onclick="polish()">
+        <span class="spark">✦</span>
+        <span>Repolir</span>
+        <span class="sub">⌘↵</span>
+      </button>
+
+      <!-- history -->
+      <div class="history">
+        <div class="history-left">
+          <span class="pill" onclick="toggleHistory()">HISTORIQUE</span>
+          <span id="historyLabel">0 sur 10</span>
+        </div>
+        <div class="history-dots" id="historyDots"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- history drawer (outside pbody, inside panel-outer) -->
+  <div class="history-drawer" id="historyDrawer"></div>
+</div>
+
+<div class="footer">
+  TEXTPOLISH CLOUD · GEMINI ·
+  <a href="index.html">textpolish local</a> ·
+  <a href="https://github.com/Enguerrand-Roques/textpolish">github</a>
+</div>
+
+<!-- settings modal -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="onBackdropClick(event)">
+  <div class="modal">
+    <h2>Clé API Gemini</h2>
+    <p>Votre clé est stockée uniquement dans votre navigateur (localStorage). Elle n'est jamais envoyée ailleurs.</p>
+    <label for="apiKeyInput">Clé API</label>
+    <input type="text" id="apiKeyInput" placeholder="AIzaSy…" autocomplete="off" spellcheck="false"/>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeSettings()">Annuler</button>
+      <button class="modal-save" onclick="saveSettings()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- Pip mascot data ----
+const SVG_NS = "http://www.w3.org/2000/svg";
+const BODY = [
+  [10, 7, 12, 1, "$pb"],  [ 9, 8, 14,17, "$pb"],  [10,25, 12, 1, "$pb"],
+  [11,26, 10, 1, "$pb"],  [12,27,  8, 1, "$pb"],
+  [13,28,  6, 1, "#7d8794"], [14,29,  4, 1, "#5d6773"], [15,30,  2, 1, "#3f4651"],
+  [21, 8,  2,17, "$pb2"], [20,25,  2, 1, "$pb2"], [19,26,  2, 1, "$pb2"], [18,27,  2, 1, "$pb2"],
+  [ 9, 9,  1,15, "$pb3"],
+  [ 9,21, 14, 1, "$pb4"], [ 9,22, 14, 1, "$pb5"],
+  [10, 9, 12,12, "#c9cdd4"], [21, 9,  1,12, "#9ea4ae"], [10,20, 12, 1, "#9ea4ae"],
+  [10, 9, 11, 1, "#dcdfe4"], [10,10,  1,10, "#d4d8df"],
+  [12,11,  3, 1, "#8a8f98"], [17,11,  3, 1, "#8a8f98"],
+  [12,12,  3, 3, "#0a1422"], [17,12,  3, 3, "#0a1422"],
+  [12,12,  1, 1, "#ffffff"], [17,12,  1, 1, "#ffffff"],
+  [14,14,  1, 1, "#5a6a7e"], [19,14,  1, 1, "#5a6a7e"],
+  [14,18,  4, 1, "#0a1422"],
+  [13,17,  1, 1, "#0a1422"], [18,17,  1, 1, "#0a1422"],
+  [12,16,  1, 1, "#0a1422"], [19,16,  1, 1, "#0a1422"],
+  [11,15,  1, 1, "#b5b9c1"], [20,15,  1, 1, "#b5b9c1"],
+];
+const HATS = {
+  pro: [
+    [10, 7, 12, 1, "#0a1422"], [ 8, 5, 16, 2, "#162a47"], [ 9, 4, 14, 1, "#162a47"],
+    [10, 3, 12, 1, "#162a47"], [12, 2,  8, 1, "#162a47"],
+    [23, 5,  2, 2, "#1f3a5f"], [24, 4,  1, 2, "#1f3a5f"],
+    [11, 3,  3, 1, "#2a4973"], [12, 4,  4, 1, "#223e64"], [13, 5,  3, 1, "#2a4973"],
+    [15, 1,  2, 1, "#0a1422"],
+    [15,19,  2, 1, "#0a1422"], [14,20,  4, 1, "#0a1422"],
+    [15,21,  2, 2, "#0a1422"], [15,21,  2, 1, "#13233a"], [16,21,  1, 1, "#0a1422"],
+  ],
+  casual: [
+    [10, 6, 12, 2, "#162a47"], [10, 5, 12, 1, "#1a3052"], [11, 4, 10, 1, "#1f3a5f"],
+    [12, 3,  8, 1, "#1f3a5f"], [13, 2,  6, 1, "#1f3a5f"], [16, 2,  1, 4, "#2a4973"],
+    [18, 7, 10, 1, "#13233a"], [19, 8,  9, 1, "#0a1422"], [21, 9,  5, 1, "#0a1422"],
+    [23, 8,  2, 1, "#c9cdd4"], [15, 5,  2, 1, "#6a9e7f"], [16, 4,  1, 1, "#8cbb9e"],
+    [15, 1,  2, 1, "#0a1422"],
+  ],
+  custom: [
+    [ 7, 7, 18, 1, "#3a2f6b"], [ 8, 8, 16, 1, "#2b2352"],
+    [ 9, 6, 14, 1, "#4a3f80"], [10, 5, 12, 1, "#4a3f80"], [11, 4, 10, 1, "#4a3f80"],
+    [12, 3,  8, 1, "#4a3f80"], [13, 2,  6, 1, "#4a3f80"], [14, 1,  4, 1, "#4a3f80"],
+    [15, 0,  2, 1, "#4a3f80"],
+    [19, 5,  3, 1, "#33295e"], [18, 4,  3, 1, "#33295e"], [17, 3,  3, 1, "#33295e"],
+    [16, 2,  3, 1, "#33295e"], [16, 1,  2, 1, "#33295e"],
+    [11, 5,  1, 1, "#6159a0"], [12, 4,  1, 1, "#6159a0"], [13, 3,  1, 1, "#6159a0"], [14, 2,  1, 1, "#6159a0"],
+    [14, 5,  3, 1, "#e8c25a"], [15, 4,  1, 3, "#e8c25a"], [15, 5,  1, 1, "#fff2b8"], [18, 3,  1, 1, "#fff2b8"],
+  ],
+};
+const fillTok = t => (t && t[0] === "$") ? "var(--" + t.slice(1) + ")" : t;
+function mkRect(d) {
+  const r = document.createElementNS(SVG_NS, "rect");
+  r.setAttribute("x", d[0]); r.setAttribute("y", d[1]);
+  r.setAttribute("width", d[2]); r.setAttribute("height", d[3]);
+  r.setAttribute("fill", fillTok(d[4]));
+  return r;
+}
+function renderPip(svg) {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  BODY.forEach(d => svg.appendChild(mkRect(d)));
+  (HATS[svg.getAttribute("data-hat")] || []).forEach(d => svg.appendChild(mkRect(d)));
+}
+document.querySelectorAll("svg.pip-svg").forEach(renderPip);
+
+// ---- Prompts ----
+const PROMPTS = {
+  pro: `You are a professional text editor for business communications (email, LinkedIn, reports).
+
+Rules:
+1. Output in the SAME language as the input. If the input is English, output English. If French, output French.
+2. Fix all spelling, grammar, and punctuation errors.
+3. Improve clarity and professionalism while preserving the original meaning and intent.
+4. Replace informal or slang expressions with professional alternatives.
+5. Use a formal tone appropriate for professional contexts.
+6. Do NOT shorten the text unless required for clarity.
+7. Return ONLY the rewritten text. No explanations, no quotes, no alternatives.`,
+
+  casual: `You are a spell-checker for casual messages (SMS, WhatsApp, iMessage, social media).
+
+Rules:
+1. Output in the SAME language as the input. If the input is English, output English. If French, output French.
+2. Fix only: spelling mistakes, missing accents, obvious typos.
+3. Keep the original structure exactly — same sentences, same order, same length.
+4. Keep the casual tone, contractions, and informal expressions. Do NOT formalize.
+5. Do NOT rewrite, rephrase, add, or remove content.
+6. Return ONLY the corrected text. No explanations, no quotes, no alternatives.`,
+
+  custom: `You are a text rewriting engine driven by a custom instruction.
+
+Rules:
+1. Apply the custom instruction provided to the input text.
+2. Return only the final rewritten text.
+3. Do not add any introduction, explanation, comment, or conclusion.
+4. Do not ask questions or propose alternatives.
+5. Do not add lists, headings, tags, or markdown unless explicitly requested.
+6. Do not wrap the response in quotes.
+7. Never describe what you changed.
+8. Keep the same language as the input unless the instruction explicitly says otherwise.
+9. Preserve the meaning, intent, and format as much as possible.`,
+};
+
+const MODE_LABELS = { pro: "Professionnel", casual: "Décontracté", custom: "Personnalisé" };
+const MODE_HINTS  = { pro: "style professionnel", casual: "style décontracté", custom: "style personnalisé" };
+
+// ---- State ----
+let currentMode = "pro";
+let history = [];
+try { history = JSON.parse(localStorage.getItem("tp_history") || "[]"); } catch {}
+let isPolishing = false;
+
+// ---- Mode ----
+function _applyMode(mode) {
+  currentMode = mode;
+  document.getElementById("panelOuter").setAttribute("data-mode", mode);
+  document.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c.dataset.mode === mode));
+
+  const pipEl = document.getElementById("pipEl");
+  pipEl.setAttribute("data-mode", mode);
+  const svg = pipEl.querySelector("svg");
+  svg.setAttribute("data-hat", mode);
+  renderPip(svg);
+
+  document.getElementById("modeLabel").textContent = MODE_LABELS[mode];
+  document.getElementById("inputHint").textContent = MODE_HINTS[mode];
+  document.getElementById("instructWrap").classList.toggle("visible", mode === "custom");
+}
+
+function setMode(mode) {
+  _applyMode(mode);
+}
+
+// ---- History ----
+function addHistory(text) {
+  history.unshift(text);
+  if (history.length > 10) history = history.slice(0, 10);
+  try { localStorage.setItem("tp_history", JSON.stringify(history)); } catch {}
+  renderHistoryUI();
+}
+
+function renderHistoryUI() {
+  const n = history.length;
+  document.getElementById("historyLabel").textContent = n + " sur 10" + (n > 0 ? " · ↵ pour coller" : "");
+
+  const dots = document.getElementById("historyDots");
+  dots.innerHTML = "";
+  for (let i = 0; i < 6; i++) {
+    const d = document.createElement("i");
+    if (i === n - 1 && n > 0) d.classList.add("current");
+    else if (i < n) d.classList.add("filled");
+    dots.appendChild(d);
+  }
+
+  const drawer = document.getElementById("historyDrawer");
+  drawer.innerHTML = "";
+  history.forEach((text, i) => {
+    const el = document.createElement("div");
+    el.className = "history-item";
+    el.innerHTML = `<span class="h-num">${String(i + 1).padStart(2, "0")}</span><span class="h-text">${esc(text.slice(0, 100))}${text.length > 100 ? "…" : ""}</span>`;
+    el.onclick = () => {
+      showOutput(text);
+      toggleHistory(false);
+    };
+    drawer.appendChild(el);
+  });
+}
+
+function toggleHistory(force) {
+  const drawer = document.getElementById("historyDrawer");
+  const open = force !== undefined ? force : !drawer.classList.contains("open");
+  drawer.classList.toggle("open", open);
+}
+
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// ---- Output display ----
+function showOutput(text) {
+  const content = document.getElementById("outputContent");
+  const status  = document.getElementById("statusText");
+  const cursor  = document.getElementById("cursor");
+  const copyBtn = document.getElementById("copyBtn");
+  content.textContent = text;
+  content.style.display = "inline";
+  status.style.display  = "none";
+  cursor.classList.add("hidden");
+  copyBtn.classList.add("visible");
+}
+
+function copyOutput() {
+  const text = document.getElementById("outputContent").textContent;
+  navigator.clipboard.writeText(text).catch(() => {});
+  const btn = document.getElementById("copyBtn");
+  btn.textContent = "copié ✓";
+  setTimeout(() => { btn.textContent = "copier ↗"; }, 1500);
+}
+
+// ---- Settings ----
+function openSettings() {
+  document.getElementById("apiKeyInput").value = localStorage.getItem("tp_gemini_key") || "";
+  document.getElementById("modalBackdrop").classList.add("open");
+  setTimeout(() => document.getElementById("apiKeyInput").focus(), 50);
+}
+function closeSettings() {
+  document.getElementById("modalBackdrop").classList.remove("open");
+}
+function saveSettings() {
+  const key = document.getElementById("apiKeyInput").value.trim();
+  if (key) localStorage.setItem("tp_gemini_key", key);
+  else localStorage.removeItem("tp_gemini_key");
+  closeSettings();
+  checkApiKey();
+}
+function checkApiKey() {
+  const warn = document.getElementById("apiWarn");
+  warn.classList.toggle("visible", !localStorage.getItem("tp_gemini_key"));
+}
+function onBackdropClick(e) {
+  if (e.target === document.getElementById("modalBackdrop")) closeSettings();
+}
+
+// ---- Polish ----
+async function polish() {
+  if (isPolishing) return;
+
+  const text = document.getElementById("inputText").value.trim();
+  if (!text) { setStatus("Entrez du texte à polir."); return; }
+
+  const apiKey = localStorage.getItem("tp_gemini_key");
+  if (!apiKey) { openSettings(); return; }
+
+  if (currentMode === "custom") {
+    const instr = document.getElementById("instructionText").value.trim();
+    if (!instr) {
+      setStatus("Entrez une instruction pour le mode Personnalisé.");
+      document.getElementById("instructionText").focus();
+      return;
+    }
+  }
+
+  isPolishing = true;
+  document.getElementById("polishBtn").disabled = true;
+  document.getElementById("copyBtn").classList.remove("visible");
+
+  const content  = document.getElementById("outputContent");
+  const status   = document.getElementById("statusText");
+  const cursor   = document.getElementById("cursor");
+  const hintEl   = document.getElementById("outputHint");
+
+  status.style.display  = "none";
+  content.textContent   = "";
+  content.style.display = "inline";
+  cursor.classList.remove("hidden");
+  hintEl.textContent = "streaming · gemini";
+
+  const systemPrompt = PROMPTS[currentMode];
+  const userText = currentMode === "custom"
+    ? `Instruction: ${document.getElementById("instructionText").value.trim()}\n\nText:\n${text}`
+    : text;
+
+  try {
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?key=${encodeURIComponent(apiKey)}&alt=sse`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: "user", parts: [{ text: userText }] }],
+          generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
+        }),
+      }
+    );
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${resp.status}`);
+    }
+
+    const reader  = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let fullText = "";
+    let buf = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split("\n");
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const raw = line.slice(6).trim();
+        if (raw === "[DONE]") continue;
+        try {
+          const j = JSON.parse(raw);
+          const chunk = j.candidates?.[0]?.content?.parts?.[0]?.text || "";
+          fullText += chunk;
+          content.textContent = fullText;
+        } catch {}
+      }
+    }
+
+    cursor.classList.add("hidden");
+    hintEl.textContent = "gemini · fait";
+
+    if (fullText.trim()) {
+      addHistory(fullText.trim());
+      document.getElementById("copyBtn").classList.add("visible");
+    }
+
+  } catch (e) {
+    content.style.display = "none";
+    status.textContent = "Erreur : " + e.message;
+    status.style.display = "inline";
+    cursor.classList.add("hidden");
+    hintEl.textContent = "gemini";
+  }
+
+  isPolishing = false;
+  document.getElementById("polishBtn").disabled = false;
+}
+
+function setStatus(msg) {
+  const content = document.getElementById("outputContent");
+  const status  = document.getElementById("statusText");
+  const cursor  = document.getElementById("cursor");
+  content.style.display = "none";
+  status.textContent = msg;
+  status.style.display = "inline";
+  cursor.classList.add("hidden");
+}
+
+// ---- Keyboard ----
+document.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); polish(); }
+  if (e.key === "Escape") closeSettings();
+});
+
+// ---- Init ----
+checkApiKey();
+renderHistoryUI();
+</script>
+</body>
+</html>
