@@ -21,3 +21,41 @@ _config.OLLAMA_TIMEOUT = 60
 _config.OLLAMA_KEEP_ALIVE = 300
 
 sys.modules.setdefault("config", _config)
+
+# Injects a synthetic `pynput` module so clipboard.py (and anything that
+# imports it) can be imported in CI without a real X11/pynput backend —
+# clipboard.py instantiates pynput.keyboard.Controller() at import time,
+# which would otherwise try to connect to a display on Linux runners.
+_pynput_keyboard = types.ModuleType("pynput.keyboard")
+
+
+class _FakeKey:
+    cmd = "cmd"
+    ctrl = "ctrl"
+
+
+class _FakeController:
+    def press(self, key):
+        pass
+
+    def release(self, key):
+        pass
+
+    def pressed(self, *keys):
+        import contextlib
+
+        @contextlib.contextmanager
+        def _cm():
+            yield
+
+        return _cm()
+
+
+_pynput_keyboard.Controller = _FakeController
+_pynput_keyboard.Key = _FakeKey
+
+_pynput = types.ModuleType("pynput")
+_pynput.keyboard = _pynput_keyboard
+
+sys.modules.setdefault("pynput", _pynput)
+sys.modules.setdefault("pynput.keyboard", _pynput_keyboard)
