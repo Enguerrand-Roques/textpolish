@@ -176,3 +176,99 @@ For the 1b model, QAT is a strict improvement. For the 4b model, QAT is slower a
 ### Next steps
 
 - Re-run when `gemma4` variants become available on Ollama
+
+---
+
+## Round 4 — September 2, 2026
+
+**Goal:** Evaluate whether newer model generations released since Round 3 (April 2026) beat the current configuration (`gemma3:1b-it-qat` casual / `gemma3:4b` pro) on Apple M2 16 GB.
+
+### Context
+
+Between Round 3 and Round 4, several relevant model families shipped new generations: Gemma 4 (Google, April 2026), Qwen3.5 (Alibaba, Feb–March 2026, including a dedicated "Small"/edge series), and Ministral 3 (Mistral, Dec 2025). Ollama itself was upgraded from `0.20.2` to `0.33.2` for this round.
+
+**Models tested:** `gemma3:1b-it-qat`, `gemma3:4b` (current config, as baseline), `qwen3.5:4b`, `qwen3.5:0.8b`, `gemma4:e2b-it-qat`, `gemma4:e4b-it-qat`, `ministral-3:8b`, `ministral-3:3b` — 8 models × 10 cases = 80 runs, judged by `claude-opus-4-6` (same corpus and judge as Round 3).
+
+### Pre-run findings (before the comparative benchmark)
+
+**1. Ollama's MLX engine is present but not used for these GGUF models.** Upgrading Ollama pulls in `mlx`/`mlx-c` as bundled dependencies, and a `mlx_metal_v3` runner ships in `libexec/lib/ollama/`. However, a live-traced generation (`gemma3:1b-it-qat`) shows Ollama routing through `llama-server` (llama.cpp) with the classic Metal GPU backend (`msg="using llama-server for model"`), not the MLX runtime. All models pulled here are standard GGUF blobs, which llama.cpp handles directly — the MLX path would require MLX-native model weights, not something these Ollama library tags provide. **No latency gain from the Ollama/MLX transition was observed on this M2 16 GB for the models tested; the standalone MLX backend explored in earlier project notes is not made obsolete by this Ollama upgrade.**
+
+**2. Gemma 4 has "thinking" enabled by default and it is catastrophic for this use case.** A raw call to `gemma4:e2b-it-qat` on a short casual-mode case took **51.6s** and generated **1099 tokens** internally (`eval_count`) before returning a 20-token answer — a 28x latency regression vs. `gemma3:1b-it-qat`. Passing `"think": false` in the `/api/generate` payload eliminates this entirely: the same call dropped to **1.09s** with `eval_count: 25`, correct output preserved. `benchmark_models.py` (`run_case()`) was patched to always send `"think": false` — harmless for models without a thinking mode (confirmed on `gemma3:1b-it-qat`, no behavior change), and this is now required for anyone using Gemma 4 (or another hybrid-reasoning model) through TextPolish. **If Gemma 4 is ever adopted in production, `llm.py` must also send `"think": false` in its request payload — it currently does not.**
+
+### Results — Casual mode
+
+| Model | Median latency | **Overall** | vs. current (`gemma3:1b-it-qat`) |
+|-------|---------------:|------------:|-----------------------------------|
+| `gemma3:1b-it-qat` (current) | **1.34s** | 4.07/5 | — |
+| `qwen3.5:0.8b` | 1.96s | 2.93/5 | Slower, notably worse quality (reject) |
+| `ministral-3:3b` | 4.07s | 4.53/5 | +0.46 quality, but 3x slower |
+| `gemma4:e2b-it-qat` | 4.47s | 4.27/5 | +0.20 quality, 3.3x slower |
+| `gemma4:e4b-it-qat` | 5.62s | 4.20/5 | +0.13 quality, 4.2x slower |
+| `gemma3:4b` | 6.36s | 4.20/5 | (current pro model, for reference) |
+| `qwen3.5:4b` | 6.46s | 4.40/5 | +0.33 quality, 4.8x slower |
+| `ministral-3:8b` | 12.58s | 4.53/5 | +0.46 quality, 9.4x slower |
+
+### Results — Pro mode
+
+| Model | Median latency | **Overall** | vs. current (`gemma3:4b`) |
+|-------|---------------:|------------:|-----------------------------|
+| `gemma3:1b-it-qat` | 1.50s | 4.47/5 | (reference only — translates FR→EN without app-level language injection, see Round 2) |
+| `ministral-3:3b` | **5.03s** | 4.67/5 | **−34% latency**, −0.33 quality |
+| `gemma4:e2b-it-qat` | 6.16s | 4.73/5 | −19% latency, −0.27 quality |
+| `gemma3:4b` (current) | 7.59s | **5.00/5** | — |
+| `qwen3.5:4b` | 7.83s | 4.73/5 | +3% latency, −0.27 quality (reject) |
+| `gemma4:e4b-it-qat` | 9.87s | 5.00/5 | Same quality, +30% latency (reject) |
+| `ministral-3:8b` | 14.84s | 4.87/5 | −0.13 quality, +95% latency (reject) |
+
+### Key findings
+
+**1. No candidate beats the current configuration outright.** For casual mode, every candidate that improves quality does so at 3-9x the latency — a much worse tradeoff than the ~1.3-2s target established since Round 2. For pro mode, no model matches or beats `gemma3:4b`'s perfect 5.00/5 while also being faster; the two that are faster (`ministral-3:3b`, `gemma4:e2b-it-qat`) both give up meaningful quality.
+
+**2. `ministral-3:3b` is the most interesting alternative found, but not a clean swap.** In pro mode it is 34% faster than `gemma3:4b` (5.03s vs 7.59s) at a real but moderate quality cost (4.67 vs 5.00 — still "Excellent" tier per the existing verdict scale). Worth keeping in mind as a "fast pro" option if latency ever becomes the priority over the current quality-first choice, but not adopted this round since the existing methodology (Round 3) treats quality regressions as disqualifying unless the latency gain is dramatic.
+
+**3. `qwen3.5:0.8b` is not viable despite its size.** Smallest model tested (1.0 GB) but weakest by far (2.93/5 casual, 3.33/5 pro) — multiple cases show meaning distortion in French (`fr_pro_long`: "Bienvenue" instead of "Bonjour", nonsensical phrasing). Too small for reliable French correction.
+
+**4. All new candidates handle French pro-mode input correctly without language injection** — unlike `gemma3:1b-it-qat`, which still translates French to English in pro mode when tested without `llm.py`'s `_detect_language()` pass (confirmed again this round, same bug as Round 2). Gemma 4, Qwen3.5, and Ministral 3 all output correct French on `fr_pro_long` at the raw-model level. Not actionable today (no config change proposed), but relevant if French pro-mode robustness becomes a priority independent of speed.
+
+**5. `ministral-3:8b` produced an unwanted formatting artifact** on `fr_pro_long` — it added a bold Markdown subject line (`**Objet : ...**`) not present in the input or requested by the prompt. Judge score didn't penalize it heavily, but it is a real deviation TextPolish's clipboard-paste flow would surface directly to the user.
+
+### Current configuration (unchanged after Round 4)
+
+| Setting | Value | Rationale |
+|---------|-------|-----------|
+| `OLLAMA_MODEL_CASUAL` | `gemma3:1b-it-qat` | Still the best speed/quality tradeoff — no candidate matches its ~1.3-1.5s latency |
+| `OLLAMA_MODEL_PRO` | `gemma3:4b` | Still the only model reaching 5.00/5 overall on the pro corpus |
+
+### Next steps
+
+- Re-run when Phi-5 (status unconfirmed as of Sept 2026) or a further Qwen3.5/Ministral generation ships with a smaller/faster variant.
+- If a "fast pro" mode is ever introduced as a user-facing option, `ministral-3:3b` is the pre-vetted candidate (already pulled locally, `think` not applicable — no hybrid reasoning to disable).
+- Before any future Gemma 4 adoption: add `"think": False` to the request payload in `llm.py` (not just `benchmark_models.py`) — otherwise casual mode would regress to 50+ seconds.
+
+---
+
+## Round 5 — September 16, 2026
+
+**Goal:** Investigate a concrete user-reported bug — casual mode left `"opérationel"`/`"operationel"` uncorrected (should be `"opérationnel"`) — and decide whether to change the casual model.
+
+**Not a corpus benchmark run** — this round is a targeted single-case investigation (`"RH et opérationel on veut plus operationel"`), run directly against Ollama outside `benchmark_models.py`, prompted by a real failure the user hit in production use.
+
+### Findings
+
+**1. `gemma3:1b-it-qat` (casual) fails 100% of the time on this typo, not intermittently.** 3/3 runs returned the input unchanged. Unlike the Round 4 `"yo"/"frérot"` bug (non-deterministic — sometimes fine, sometimes not), this is a consistent miss: the model doesn't recognize `"opérationel"` as misspelled at all. A prompt fix (Round 4's added example) doesn't help here — this isn't an instruction-following problem, it's a knowledge/detection gap for this specific word.
+
+**2. It's not just a "too small" problem — `gemma3:4b` fails too when driven by the casual prompt.** Testing the same input with `casual.txt`'s instructions across models: `gemma3:4b` also left both typos uncorrected. `qwen3.5:4b` fixed the typo but corrupted `"RH et"` → `"RHO"`. `ministral-3:3b` fixed both occurrences perfectly with zero side effects. This looks like a Gemma3-family-specific weakness on this word, not a general small-model limitation.
+
+**3. Re-tested fairly with the real `pro.txt` prompt (not `casual.txt`) before touching the pro model.** Under its actual prompt, `gemma3:4b` correctly fixes both occurrences (`"opérationnel"`, `"opérationnelle"`) — the earlier casual-prompt test was not representative of real pro-mode behavior. `ministral-3:3b` under `pro.txt`, however, fabricated an entire formal email (`"**Objet:**"`, `"Bonjour,"`, `"Cordialement,"`, invented signature placeholder) from a two-clause fragment — a severe over-generation failure, worse than the original bug. **`ministral-3:3b` is not suitable for pro mode.**
+
+### Decision
+
+| Setting | Before | After | Rationale |
+|---------|--------|-------|-----------|
+| `OLLAMA_MODEL_CASUAL` | `gemma3:1b-it-qat` | `ministral-3:3b` | Fixes a reproducible real-world typo class gemma3:1b/4b both miss; ~+2.7s median latency accepted as the tradeoff (1.3s → ~4.1s per Round 4 timing) |
+| `OLLAMA_MODEL_PRO` | `gemma3:4b` | unchanged | Already handles this case correctly under its real prompt; `ministral-3:3b` fabricates content in pro mode — a regression, not an improvement |
+
+### Next steps
+
+- Re-run the full 10-case corpus (`benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge`) now that casual has changed, to get updated aggregate scores rather than relying on a single-case spot check.
+- Watch for further over-generation from `ministral-3:3b` in casual mode on longer/more ambiguous inputs — this round only tested a short fragment.

@@ -21,7 +21,8 @@ Select text in any app, press a shortcut, pick a rewrite mode, and the corrected
 | **Three rewrite modes** | Professional (full rewrite), Casual (light touch, keeps tone), Custom (any instruction) |
 | **Streaming output** | Corrected text appears word by word in the panel as the model generates — no waiting for the full response |
 | **Correction history** | Last 10 corrections available in the ✏️ menu → History. Click any entry to copy the corrected text |
-| **Configurable shortcut** | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed |
+| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
+| **Panel UI** (macOS) | Native WKWebView panel with Pip, a small pixel-art mascot that reacts to the selected mode |
 | **Fully private** | Everything runs on your machine. No API key, no telemetry, no data ever leaves your computer |
 | **System-level** | Works in any app — VS Code, Notion, Mail, Slack. Panel stays above fullscreen apps |
 
@@ -185,16 +186,20 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 ```
 textpolish/
 ├── main.py              # Entry point — detects OS, loads the right backend
-├── clipboard.py         # Copy / paste logic  ─┐
-├── llm.py               # Ollama request layer  ├─ shared across platforms
-├── prompts/             # Prompt templates      ─┘
+├── clipboard.py         # Copy / paste logic     ─┐
+├── llm.py               # Ollama request layer     │
+├── history.py           # Correction history        ├─ shared across platforms
+├── polish_job.py        # Correction threading      │
+├── prompts/             # Prompt templates         ─┘
 ├── config.example.py
 │
 └── platforms/
-    ├── macos/           # PyObjC · NSPanel · CGEventTap
+    ├── macos/                 # PyObjC · NSPanel · WKWebView · CGEventTap
     │   ├── ui.py
+    │   ├── panel.html         # WKWebView UI (Pip mascot, HTML/CSS/JS)
     │   ├── main.py
-    │   └── hotkey.py
+    │   ├── hotkey.py
+    │   └── shortcut_parser.py # Pure shortcut parsing, no PyObjC dependency
     └── windows/         # PyQt6 · QSystemTrayIcon · pynput
         ├── ui.py
         ├── main.py
@@ -207,14 +212,14 @@ textpolish/
 
 TextPolish uses different models per mode — not out of preference, but based on measured results.
 
-Two benchmark rounds were run on Apple M2 16 GB, using 10 representative cases (French + English, short + long, pro + casual) and Claude Haiku as an automated quality judge (scoring correction, tone, and preservation on a 1–5 scale).
+Five benchmark rounds have been run on Apple M2 16 GB, using a 10-case corpus (French + English, short + long, pro + casual) plus targeted single-case investigations for real bugs, judged by a Claude model on correction, tone, and preservation (1–5 scale).
 
-**Final configuration after Round 2:**
+**Final configuration (confirmed after Round 5, September 2026):**
 
 | Mode | Model | Median latency | Overall score |
 |------|-------|---------------:|:-------------:|
-| Casual | `gemma3:1b-it-qat` | 1.77 s | 4.53 / 5 |
-| Professional | `gemma3:4b` | 4.94 s | 4.67 / 5 |
+| Casual | `ministral-3:3b` | ~4.1 s | 4.53 / 5 (Round 4 corpus) |
+| Professional | `gemma3:4b` | 7.59 s | 5.00 / 5 |
 
 Key findings that shaped this choice:
 
@@ -222,6 +227,8 @@ Key findings that shaped this choice:
 - **`num_ctx: 1024`** reduces KV-cache RAM from ~2 GB to ~16 MB with zero quality impact on short texts (the longest test case was 544 tokens).
 - **`keep_alive: 300 s`** eliminates the 3–5 s cold-start penalty within a session.
 - **gemma3:1b fails on French professional text** — the model is too small to simultaneously follow "write professionally" and "stay in the input language" when driven by an English prompt. gemma3:4b handles both correctly. This is why the two modes use different models.
+- **Round 4 (Sept 2026) re-tested against newer model generations** (Gemma 4, Qwen3.5, Ministral 3) — on the 10-case corpus, none beat the setup at the time on a speed/quality basis. Also found: Gemma 4 has "thinking" enabled by default on Ollama, which turns a normal ~2s casual correction into 50+ seconds unless the request explicitly sets `"think": false`.
+- **Round 5 (Sept 2026) found gemma3:1b-it-qat missing real typos** (e.g. `"opérationel"` → should be `"opérationnel"`) 100% of the time, not intermittently — a Gemma3-family-specific gap, since even `gemma3:4b` misses it under the casual prompt. `ministral-3:3b` fixed it reliably in casual mode, at the cost of ~2.7s extra latency, and is now the casual model. **Not** switched for pro mode: under the real `pro.txt` prompt, `ministral-3:3b` fabricated an entire formal email from a two-clause fragment — `gemma3:4b` remains the safer choice there.
 
 → Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
 

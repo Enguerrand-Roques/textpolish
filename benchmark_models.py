@@ -67,6 +67,7 @@ def run_case(model: str, case: dict, base_url: str, timeout: int) -> dict:
         "prompt": prompt_text,
         "keep_alive": 0,
         "stream": False,
+        "think": False,
     }
 
     t0 = time.perf_counter()
