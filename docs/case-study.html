@@ -106,6 +106,20 @@
   .twoshots { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 24px; margin-top: 26px; }
   .twoshots figure { margin: 0; }
 
+  /* Mode colors */
+  .modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 24px; margin-top: 26px; }
+  .modes figure { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .swatch { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+  .swatch i { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+  .modes p { font-size: 0.95rem; color: var(--muted); margin: 0; }
+  .kinds { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 8px; font-size: 0.95rem; }
+  .kinds span { display: inline-flex; align-items: center; gap: 8px; }
+  .kinds i { width: 9px; height: 9px; border-radius: 50%; }
+  .stat { font: 700 2rem/1 var(--display); color: var(--blue); font-variant-numeric: tabular-nums; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 18px; margin: 22px 0 18px; }
+  .stats div { background: var(--sheet); padding: 16px 18px; }
+  .stats p { font-size: 0.9rem; color: var(--muted); margin: 6px 0 0; }
+
   footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--rule); font: 0.85rem/1.6 var(--mono); color: var(--muted); }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -121,104 +135,144 @@
   <div>
     <div class="label">Étude de cas UX · macOS · IA locale</div>
     <h1 style="margin-top:14px">TextPolish</h1>
-    <p class="lede" style="margin-top:18px">Corriger un texte <span class="fix"><s>sans quiter</s> <ins>sans quitter</ins></span> l'app où on l'écrit. On sélectionne, on appuie sur <kbd>⌥⌘G</kbd>, et une petite fenêtre propose les corrections une par une, avec un modèle qui tourne entièrement sur le Mac.</p>
+    <p class="lede" style="margin-top:18px">J'écris vite, sur mon téléphone comme sur mon Mac, et je laisse passer des fautes. J'ai construit un petit outil qui les corrige <span class="fix"><s>sans quiter</s> <ins>sans quitter</ins></span> l'app où j'écris : je sélectionne, j'appuie sur <kbd>⌥⌘G</kbd>, et une fenêtre me propose les corrections une par une. Le modèle tourne sur mon Mac, rien ne part sur Internet.</p>
     <div class="meta">
       <span class="label">Python · PyObjC · WebKit</span>
-      <span class="label">Ollama · Ministral 3B</span>
-      <span class="label">107 tests</span>
+      <span class="label">Ollama · Ministral 3B · Gemma 3</span>
+      <span class="label">109 tests</span>
     </div>
   </div>
   <figure>
-    <img class="shot" src="screenshots/popup-card-dark.png" alt="Popup TextPolish sous une phrase sélectionnée dans TextEdit : carte Orthographe proposant opérationel → opérationnel, avec les boutons Accepter et Ignorer.">
-    <figcaption>Capture réelle : la carte apparaît juste sous la sélection, dans TextEdit.</figcaption>
+    <img class="shot" src="screenshots/popup-card-dark.png" alt="Fenêtre TextPolish sous une phrase sélectionnée dans TextEdit : carte Orthographe proposant opérationel → opérationnel, avec Accepter et Ignorer.">
+    <figcaption>Capture réelle dans TextEdit. La fenêtre se place sous le texte sélectionné.</figcaption>
   </figure>
 </header>
 
 <main>
 <section class="col">
-  <h2>Le problème</h2>
-  <p>Pour corriger un message, on copie le texte, on ouvre un correcteur dans le navigateur, on colle, on recopie le résultat, puis on revient. Cinq gestes pour une virgule. Les outils qui évitent ce détour, comme Grammarly, envoient le texte sur leurs serveurs.</p>
-  <p>Je voulais l'inverse : rester dans l'app, ne rien envoyer en ligne, et que la correction arrive avant qu'on ait eu le temps de se demander quel mode choisir.</p>
+  <h2>Pourquoi je l'ai fait</h2>
+  <p>Pour corriger un message, je faisais toujours la même chose : copier le texte, l'ouvrir dans un correcteur en ligne, recopier le résultat, revenir dans l'app. Cinq gestes pour une virgule, et mon texte passait par les serveurs de quelqu'un d'autre.</p>
+  <p>Je voulais trois choses : ne pas quitter l'app, ne rien envoyer en ligne, et avoir une correction prête avant même de me demander quel réglage choisir.</p>
 </section>
 
 <section class="col">
   <h2>Le parcours</h2>
-  <p>Chaque étape retire une décision à l'utilisateur.</p>
+  <p>À chaque version, j'ai essayé d'enlever une décision à l'utilisateur.</p>
   <ol class="journey">
-    <li><div><b>Sélectionner, puis <kbd>⌥⌘G</kbd>.</b> Fonctionne dans Notes, Mail, Slack ou TextEdit. Le presse-papiers de l'utilisateur est sauvegardé puis restauré.</div></li>
-    <li><div><b>Lecture.</b> La fenêtre s'ouvre sous la sélection (position lue via l'API d'accessibilité de macOS) et le texte scintille pendant que le modèle lit.</div></li>
-    <li><div><b>Correction automatique.</b> Le mode Correction démarre seul : orthographe, accents, ponctuation, sans reformuler. Pro et Perso restent à un raccourci (<kbd>⌘2</kbd>, <kbd>⌘3</kbd>).</div></li>
-    <li><div><b>Une décision par faute.</b> <kbd>↵</kbd> accepte, <kbd>⇥</kbd> ignore, <kbd>⌘↵</kbd> accepte tout.</div></li>
-    <li><div><b>Collé.</b> Le texte reconstruit avec les seules corrections acceptées remplace la sélection, et la fenêtre disparaît.</div></li>
+    <li><div><b>Je sélectionne, puis <kbd>⌥⌘G</kbd>.</b> Ça marche dans Notes, Mail, Slack, TextEdit. Ce que j'avais copié avant est remis dans le presse-papiers à la fin.</div></li>
+    <li><div><b>La fenêtre lit le texte.</b> Elle s'ouvre juste sous la sélection et le texte scintille pendant la lecture.</div></li>
+    <li><div><b>La correction démarre seule.</b> Pas de mode à choisir : par défaut, l'outil corrige les fautes.</div></li>
+    <li><div><b>Je décide faute par faute.</b> <kbd>↵</kbd> pour accepter, <kbd>⇥</kbd> pour ignorer, <kbd>⌘↵</kbd> pour tout accepter.</div></li>
+    <li><div><b>C'est collé.</b> Seules les corrections acceptées remplacent ma sélection, et la fenêtre disparaît.</div></li>
   </ol>
 </section>
 
 <section class="col">
-  <h2>Une fenêtre qui s'adapte au texte</h2>
-  <p>Le même résultat ne se lit pas de la même façon selon sa longueur. Après la réponse du modèle, le diff est découpé en corrections typées (orthographe, accent, majuscule, grammaire, ponctuation, reformulation), puis l'app choisit la vue.</p>
+  <h2>Trois modes, trois couleurs</h2>
+  <p>Le mode par défaut, Correction, ne fait que corriger. C'est voulu : la plupart du temps, je veux juste que ma phrase soit juste, pas qu'on me la réécrive. Un message à un ami doit rester mon message. Quand je veux plus, je passe à Pro ou à Perso.</p>
+  <p>Chaque mode a sa couleur, partout dans la fenêtre : l'icône, l'onglet, le bouton principal et les surlignages. Même sans lire, on sait dans quel mode on est, et on ne remplace pas un texte entier par erreur en croyant juste corriger une faute. Une ligne sous les onglets dit en clair ce que fait le mode.</p>
 </section>
 <div class="wide">
-  <div class="layouts">
-    <div class="layout"><span class="label">Cartes</span><p>Texte court, trois fautes au plus : une carte par correction, avant → après, avec le contexte.</p></div>
-    <div class="layout"><span class="label">Document</span><p>Texte long : le texte entier, corrections surlignées par type. Un clic en annule une.</p></div>
-    <div class="layout"><span class="label">Réécriture</span><p>Pro et Perso changent toute la phrase : une seule proposition et un bouton Comparer.</p></div>
-    <div class="layout"><span class="label">Rien à corriger</span><p>Une coche, « Aucune faute », et la fenêtre se ferme seule.</p></div>
+  <div class="modes">
+    <figure>
+      <div class="swatch"><i style="background:#0a84ff"></i>Correction · <kbd>⌘1</kbd></div>
+      <p>Corrige les fautes sans toucher à ta façon d'écrire. Garde l'argot, les « frérot », les anglicismes comme « deadline ».</p>
+      <img class="shot" src="screenshots/popup-card-dark.png" alt="Mode Correction, carte bleue.">
+    </figure>
+    <figure>
+      <div class="swatch"><i style="background:#5e5ce6"></i>Pro · <kbd>⌘2</kbd></div>
+      <p>Réécrit le texte dans un ton professionnel. Une seule proposition, à comparer avec l'original avant de remplacer.</p>
+      <img class="shot" src="screenshots/popup-pro-dark.png" alt="Mode Pro : un message de candidature familier réécrit en version professionnelle, couleur indigo.">
+    </figure>
+    <figure>
+      <div class="swatch"><i style="background:#bf5af2"></i>Perso · <kbd>⌘3</kbd></div>
+      <p>Fait ce que je demande : traduire, raccourcir, rendre plus chaleureux ou plus drôle. Quatre idées en un clic, ou ma propre consigne.</p>
+      <img class="shot" src="screenshots/popup-perso-dark.png" alt="Mode Perso : consigne « Traduis en anglais » et le message traduit, couleur violette.">
+    </figure>
   </div>
-  <figure class="band" style="margin-left:0;margin-right:0">
-    <img class="shot" src="screenshots/all-states-light.png" alt="Planche de tous les états du popup en mode clair : lecture, cartes, aucune faute, document, mode Pro, comparaison, Perso, erreur, aucune sélection, terminé.">
-    <figcaption>Tous les états, générés à partir de vraies réponses du modèle (banc d'essai <code>design/preview.html</code>).</figcaption>
-  </figure>
+</div>
+<section class="col" style="padding-top:40px">
+  <h3>Et les couleurs des corrections</h3>
+  <p style="font-size:0.98rem">À l'intérieur d'un mode, la couleur dit le type de correction, pour savoir d'un coup d'œil ce qui est une vraie faute et ce qui est un choix de style.</p>
+  <div class="kinds">
+    <span><i style="background:#ff453a"></i>Rouge : orthographe, accents, grammaire</span>
+    <span><i style="background:#ff9f0a"></i>Orange : ponctuation</span>
+    <span><i style="background:#0a84ff"></i>Bleu : reformulation</span>
+  </div>
+</section>
+
+<section class="col">
+  <h2>Une fenêtre qui s'adapte au texte</h2>
+  <p>Une phrase courte et un paragraphe ne se relisent pas de la même façon. Après la réponse du modèle, l'outil découpe la différence en corrections et choisit la vue.</p>
+</section>
+<div class="wide">
   <div class="twoshots">
-    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : paragraphe avec dix corrections surlignées et une légende Orthographe, Ponctuation, Grammaire."><figcaption>Vue document, texte de 300 caractères.</figcaption></figure>
-    <figure><img class="shot" src="screenshots/popup-pro-dark.png" alt="Mode Pro : un message familier réécrit en version professionnelle, avec les boutons Annuler et Remplacer."><figcaption>Mode Pro : une proposition, à comparer ou remplacer.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : un paragraphe avec trois corrections surlignées et le bouton Appliquer."><figcaption>Texte long : tout le paragraphe, les corrections surlignées. Un clic en annule une.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="Aucune faute : coche verte et deux boutons, Version pro et Personnaliser."><figcaption>Aucune faute : la fenêtre reste ouverte et propose la suite, une version pro ou une consigne.</figcaption></figure>
   </div>
 </div>
 
 <section class="col">
-  <h2>Quatre versions de la même fenêtre</h2>
-  <p>Chaque version vient d'un retour en utilisation réelle, captures à l'appui.</p>
-  <div class="iter"><div class="v">v1</div><div><p>Un panneau de 420 × 520 au centre de l'écran : choisir un mode, cliquer sur Repolir, puis le texte était collé sans relecture.</p><p class="why">Trop de décisions avant de voir le moindre résultat, et aucun contrôle sur ce qui était collé.</p></div></div>
-  <div class="iter"><div class="v">v2</div><div><p>Un diff barré/surligné avec Accepter et Réviser, et une fenêtre ancrée sous la sélection.</p><p class="why">Il fallait encore choisir un mode avant que quoi que ce soit ne se passe.</p></div></div>
-  <div class="iter"><div class="v">v3</div><div><p>Fenêtre compacte par défaut, correction lancée dès l'ouverture, modes accessibles sans déplier.</p><p class="why">Le mode « décontracté » reformulait des phrases au lieu de seulement corriger : un problème de modèle, pas d'interface (voir plus bas).</p></div></div>
-  <div class="iter"><div class="v">v4</div><div><p>Une carte par correction façon Grammarly, flou natif de macOS, hauteur qui suit le contenu, vues selon la longueur du texte, clavier en premier.</p><p class="why">Version actuelle.</p></div></div>
+  <h2>Tout reste sur le Mac</h2>
+  <p>Le modèle tourne avec Ollama, directement sur mon MacBook (M2, 16 Go). Mes messages ne quittent jamais l'ordinateur, l'outil marche sans connexion, et il ne coûte rien à l'usage. En échange, il faut accepter des modèles plus petits et faire attention à la vitesse.</p>
+  <div class="stats">
+    <div><div class="stat">~1 s</div><p>pour corriger une phrase quand le modèle est déjà chargé</p></div>
+    <div><div class="stat">~5 s</div><p>quand on change de mode : le Mac recharge l'autre modèle</p></div>
+    <div><div class="stat">0</div><p>octet envoyé sur Internet</p></div>
+  </div>
+  <p>Le deuxième chiffre m'a surpris. J'ai essayé de garder les deux modèles en mémoire en même temps, mais avec un navigateur et un éditeur ouverts, il ne reste pas assez de place sur 16 Go. C'est la prochaine chose à améliorer.</p>
+</section>
+
+<section class="col">
+  <h2>Comment la fenêtre a évolué</h2>
+  <p>Chaque version vient de quelque chose qui ne marchait pas quand je l'utilisais vraiment.</p>
+  <div class="iter"><div class="v">v1</div><div><p>Un grand panneau au milieu de l'écran : je choisissais un mode, je cliquais sur Repolir, et le texte était collé sans que je puisse le relire.</p><p class="why">Trop de décisions avant de voir quoi que ce soit, et aucun contrôle sur le résultat.</p></div></div>
+  <div class="iter"><div class="v">v2</div><div><p>Le résultat s'affiche avant d'être collé, avec les mots barrés et ajoutés, et la fenêtre se place sous le texte.</p><p class="why">Il fallait encore choisir un mode avant que la correction démarre.</p></div></div>
+  <div class="iter"><div class="v">v3</div><div><p>Fenêtre plus petite, correction lancée dès l'ouverture.</p><p class="why">Le mode « décontracté » réécrivait mes phrases au lieu de les corriger. C'était le modèle, pas l'interface.</p></div></div>
+  <div class="iter"><div class="v">v4</div><div><p>Une carte par faute, le flou natif de macOS, une hauteur qui suit le contenu, et une vue différente pour les longs textes.</p><p class="why">Quand un texte n'avait aucune faute, la fenêtre se fermait toute seule. Impossible d'en demander une version pro.</p></div></div>
+  <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et Perso a des idées toutes prêtes.</p><p class="why">Version actuelle.</p></div></div>
 </section>
 
 <section class="col">
   <h2>Ce que j'ai écarté</h2>
-  <p>Le soulignement rouge en temps réel de Grammarly était tentant. J'ai étudié l'API d'accessibilité de macOS avant de m'y lancer, et trois obstacles concrets m'ont fait garder le déclenchement au raccourci :</p>
-  <p>Impossible de lire la position du curseur quand rien n'est sélectionné (un bug Apple connu). Une fonction clé (<code>AXValueGetValue</code>) n'est pas exposée par PyObjC. Et beaucoup d'apps Electron n'exposent pas leur texte de façon fiable. Les alternatives à Grammarly qui fonctionnent dans toutes les apps Mac utilisent d'ailleurs, elles aussi, un raccourci.</p>
+  <p>J'aurais aimé le soulignement rouge en direct, comme Grammarly. Avant de m'y lancer, j'ai regardé ce que permet l'API d'accessibilité de macOS. Elle ne donne pas la position du curseur quand rien n'est sélectionné, une fonction utile n'est pas disponible en Python, et beaucoup d'apps (Slack, VS Code) n'exposent pas bien leur texte. J'ai gardé le raccourci, comme le font les autres correcteurs Mac qui marchent dans toutes les apps.</p>
 </section>
 
 <section class="col">
   <h2>Choisir le modèle</h2>
-  <p>Le modèle tourne sur un MacBook M2 avec 16 Go de RAM, donc il doit être petit. Cinq séries de tests sur un corpus FR/EN, notées par un modèle juge, ont guidé les choix.</p>
+  <p>J'ai testé une dizaine de modèles sur des phrases en français et en anglais, avec un autre modèle pour noter les résultats. Quelques constats ont changé le produit :</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Constat</th><th>Effet sur le produit</th></tr></thead>
+      <thead><tr><th>Ce que j'ai vu</th><th>Ce que j'ai changé</th></tr></thead>
       <tbody>
-        <tr><td><code>gemma3:1b</code> ne voit pas que <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> est faux, 3 fois sur 3.</td><td>Le mode Correction passe sur <code>ministral-3:3b</code>, au prix d'environ 2,7 s de plus.</td></tr>
-        <tr><td><code>ministral-3:3b</code> invente un e-mail entier en mode Pro à partir de deux propositions.</td><td>Pro reste sur <code>gemma3:4b</code>.</td></tr>
-        <tr><td>Gemma 4 « réfléchit » par défaut sur Ollama : 51,6 s au lieu d'environ 1 s.</td><td>Écarté ; documenté pour l'avenir (<code>"think": false</code>).</td></tr>
-        <tr><td>Le modèle remplace <code>'</code> par <code>’</code> et ajoute des espaces insécables.</td><td>Ces différences ne sont plus montrées comme des corrections.</td></tr>
+        <tr><td><code>gemma3:1b</code> ne voit jamais que <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> est faux.</td><td>Correction passe sur <code>ministral-3:3b</code>, un peu plus lent mais fiable.</td></tr>
+        <tr><td>En mode Pro, <code>ministral-3:3b</code> invente un e-mail entier à partir de deux phrases.</td><td>Pro garde <code>gemma3:4b</code>.</td></tr>
+        <tr><td>Le modèle de correction mettait des mots en gras et traduisait « deadline » en « délai ».</td><td>Le gras est retiré et la consigne garde les anglicismes.</td></tr>
+        <tr><td>Il remplaçait <code>'</code> par <code>’</code> et ajoutait des espaces insécables.</td><td>Ces détails ne comptent plus comme des corrections.</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
 <section class="col">
-  <h2>Tester en conditions réelles</h2>
-  <p>Plutôt que de juger sur des maquettes, j'ai piloté la vraie app : du texte dans TextEdit, un raccourci envoyé comme un vrai clavier (événements HID), puis une capture de la fenêtre. Ce protocole a fait remonter des bugs qu'aucun test unitaire ne voyait.</p>
+  <h2>Tester comme un utilisateur</h2>
+  <p>Je n'ai pas voulu juger sur des maquettes. J'ai fait tourner la vraie app avec des messages de tous les jours : un SMS à un ami, un mail à mon manager, une candidature LinkedIn, un message en anglais, un long compte rendu. Le texte était tapé dans TextEdit et le raccourci envoyé comme par un vrai clavier. Plusieurs bugs ne sont apparus qu'à ce moment-là.</p>
   <div class="bugs">
-    <div class="bug"><h3>La copie échouait par intermittence</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé, donc la copie simulée devenait ⌥⌘C (« copier le style ») et ne copiait rien. L'app attend désormais que les touches soient relâchées.</p></div>
-    <div class="bug"><h3>Trois copies de l'app répondaient au raccourci</h3><p>Chaque lancement ajoutait une instance. Un verrou garantit désormais qu'une seule tourne.</p></div>
-    <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur un clavier AZERTY</h3><p>La touche 2 y produit « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
-    <div class="bug"><h3>La version Windows plantait au démarrage</h3><p>Un import invalide en PyQt6, trouvé en affichant le panneau Windows hors écran depuis le Mac.</p></div>
+    <div class="bug"><h3>La copie échouait une fois sur deux</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé. La copie devenait ⌥⌘C, « copier le style », et rien n'était copié. L'app attend maintenant qu'on relâche les touches.</p></div>
+    <div class="bug"><h3>Passer en Pro pendant la correction ne faisait rien</h3><p>L'onglet changeait, mais c'est la correction qui s'affichait. La nouvelle demande remplace maintenant l'ancienne.</p></div>
+    <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur mon clavier</h3><p>Sur un clavier AZERTY, la touche 2 donne « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
+    <div class="bug"><h3>Trois copies de l'app tournaient en même temps</h3><p>Chaque lancement en ajoutait une, et toutes répondaient au raccourci. Une seule peut tourner maintenant.</p></div>
   </div>
 </section>
 
 <section class="col">
+  <h2>La suite</h2>
+  <p>Les nouvelles versions d'Ollama utilisent MLX, le moteur d'Apple, pour certains modèles. Je veux mesurer si ça réduit les 5 secondes de changement de mode. Je veux aussi essayer de petits modèles sortis récemment (Qwen 3.5 2B, LFM3) pour la correction, et un modèle entraîné spécialement sur la grammaire française.</p>
+</section>
+
+<section class="col">
   <h2>Ce que j'en retiens</h2>
-  <p>Retirer une décision vaut souvent mieux qu'ajouter une option : la plus grosse amélioration a été de lancer la correction sans demander de mode. Une interface ne compense pas un mauvais modèle : le bug « opérationel » se réglait en changeant de modèle, pas en ajustant l'écran. Et une interface se juge en la faisant fonctionner pour de vrai, avec un vrai clavier et une vraie app à côté.</p>
+  <p>Enlever une décision m'a plus servi que d'ajouter une option : la meilleure amélioration a été de lancer la correction sans demander de mode. Certains problèmes ne se règlent pas dans l'interface : le bug « opérationel » se réglait en changeant de modèle. Et surtout, une interface se juge en l'utilisant pour de vrai. La moitié des bugs de cette page, je ne les aurais pas vus en regardant des captures.</p>
 </section>
 </main>
 
