@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>TextPolish — design preview</title>
+<style>
+  body { margin: 0; padding: 28px; font: 12px -apple-system, sans-serif; background: #d9dce3; color: #333; }
+  body.dark { background: #15161a; color: #aaa; }
+  .grid { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  figcaption { font-weight: 600; letter-spacing: 0.02em; }
+  iframe { width: 380px; border: 0; border-radius: 14px; display: block;
+           box-shadow: 0 0 0 0.5px rgba(0,0,0,0.18), 0 18px 50px rgba(0,0,0,0.22); background: transparent; }
+</style>
+</head>
+<body>
+<div class="grid" id="grid"></div>
+<script>
+const params = new URLSearchParams(location.search);
+const theme = params.get("theme") || "light";
+const only = params.get("only");
+if (theme === "dark") document.body.classList.add("dark");
+
+const SCENARIOS = [
+  ["Lecture", f => { A(f).setSourceApp("Notes"); A(f).setInputText(f.fx.long.input); A(f).onPolishStart(); }],
+  ["Carte — orthographe", f => { A(f).setSourceApp("Notes"); A(f).setChanges(f.fx.typo.parts, "cards"); }],
+  ["Carte — SMS (2/3)", f => { A(f).setSourceApp("Messages"); A(f).setChanges(f.fx.sms.parts, "cards"); f.contentWindow.decide(true); }, 450],
+  ["Rien à corriger", f => { A(f).setSourceApp("Mail"); A(f).setChanges(f.fx.clean.parts, "none"); }],
+  ["Document — texte long", f => { A(f).setSourceApp("Slack"); A(f).setChanges(f.fx.long.parts, "document"); }],
+  ["Mode Pro", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); }],
+  ["Pro — comparer", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); f.contentWindow.toggleCompare(); }],
+  ["Perso", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = "traduire en anglais"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],
+  ["Erreur", f => { A(f).onError("Cannot connect to Ollama. Make sure it is running: `ollama serve`"); }],
+  ["Aucune sélection", f => { A(f).setShortcut("⌥⌘G"); A(f).noSelection(); }],
+  ["Terminé", f => { A(f).setChanges(f.fx.typo.parts, "cards"); f.contentWindow.acceptAll(); }],
+];
+const A = f => f.contentWindow.App;
+
+fetch("fixtures.json").then(r => r.json()).then(fx => {
+  SCENARIOS.forEach(([name, run, wait], i) => {
+    if (only && only !== String(i)) return;
+    const fig = document.createElement("figure");
+    fig.innerHTML = `<figcaption>${name}</figcaption>`;
+    const f = document.createElement("iframe");
+    f.src = "../platforms/macos/panel.html?theme=" + theme;
+    f.fx = fx;
+    f.onload = () => {
+      f.contentWindow.App.reset();
+      run(f);
+      const fit = () => { f.style.height = f.contentDocument.getElementById("root").getBoundingClientRect().height + "px"; };
+      fit(); setTimeout(fit, 120); setTimeout(fit, wait || 500); setTimeout(fit, 900);
+    };
+    fig.appendChild(f);
+    document.getElementById("grid").appendChild(fig);
+  });
+});
+</script>
+</body>
+</html>

@@ -9,3 +9,7 @@ dist/
 build/
 .claude/
 benchmarks/results/
+
+# design harness: runtime log and real-desktop captures
+design/app.log
+design/screenshots/real-*.png
