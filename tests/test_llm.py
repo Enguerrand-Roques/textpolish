@@ -148,3 +148,64 @@ class TestPolishText:
             result = polish_text("broken text", mode="pro", on_token=lambda t: None)
 
         assert result == "Fixed text."
+
+
+class TestPolishTextHardening:
+    def _stream(self, lines):
+        import json as _json
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.iter_lines.return_value = iter([_json.dumps(l).encode() if isinstance(l, dict) else l for l in lines])
+        return resp
+
+    def test_text_over_limit_is_rejected_without_calling_ollama(self):
+        from llm import MAX_INPUT_CHARS
+        with patch("llm.requests.post") as mock_post:
+            with pytest.raises(RuntimeError, match="too long"):
+                polish_text("a" * (MAX_INPUT_CHARS + 1), mode="casual")
+            mock_post.assert_not_called()
+
+    def test_num_ctx_grows_with_prompt_length(self):
+        from llm import _num_ctx_for
+        assert _num_ctx_for("short") == 1024
+        assert _num_ctx_for("x" * 6000) > 1024
+
+    def test_num_ctx_sent_in_payload(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "ok"}
+        with patch("llm.requests.post", return_value=mock_resp) as mock_post:
+            polish_text("Hello", mode="casual")
+        assert mock_post.call_args.kwargs["json"]["options"]["num_ctx"] >= 1024
+
+    def test_empty_model_response_raises(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "   "}
+        with patch("llm.requests.post", return_value=mock_resp):
+            with pytest.raises(RuntimeError, match="empty response"):
+                polish_text("Hello", mode="casual")
+
+    def test_truncated_result_raises(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "partial", "done_reason": "length"}
+        with patch("llm.requests.post", return_value=mock_resp):
+            with pytest.raises(RuntimeError, match="incomplete"):
+                polish_text("Hello", mode="casual")
+
+    def test_streaming_truncated_raises(self):
+        resp = self._stream([{"response": "par", "done": False},
+                             {"response": "", "done": True, "done_reason": "length"}])
+        with patch("llm.requests.post", return_value=resp):
+            with pytest.raises(RuntimeError, match="incomplete"):
+                polish_text("Hello", mode="casual", on_token=lambda t: None)
+
+    def test_streaming_error_payload_raises(self):
+        resp = self._stream([{"error": "model crashed"}])
+        with patch("llm.requests.post", return_value=resp):
+            with pytest.raises(RuntimeError, match="model crashed"):
+                polish_text("Hello", mode="casual", on_token=lambda t: None)
+
+    def test_streaming_invalid_json_raises(self):
+        resp = self._stream([b"not json"])
+        with patch("llm.requests.post", return_value=resp):
+            with pytest.raises(RuntimeError, match="unreadable"):
+                polish_text("Hello", mode="casual", on_token=lambda t: None)

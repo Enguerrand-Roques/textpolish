@@ -548,8 +548,7 @@ class TextPolishPanel(NSObject):
 
     @objc.python_method
     def _on_error(self, message: str):
-        short = message[:80] + ("…" if len(message) > 80 else "")
-        self._js(f"App.onError({json.dumps(short)})")
+        self._js(f"App.onError({json.dumps(message)})")
 
 
 # ---------------------------------------------------------------------------

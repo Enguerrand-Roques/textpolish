@@ -15,10 +15,10 @@ from config import (
     OLLAMA_KEEP_ALIVE,
 )
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
+# Texts longer than this are rejected: the model context is sized from the
+# input (see _num_ctx_for), and very long inputs would be slow and risk
+# silent truncation of the instructions.
+MAX_INPUT_CHARS = 4000
 
 _PROMPTS_DIR = os.path.join(os.path.dirname(__file__), "prompts")
 
@@ -69,6 +69,13 @@ def _detect_language(text: str) -> str:
     return "en"
 
 
+def _num_ctx_for(prompt_text: str) -> int:
+    """Context window sized to the prompt: ~3 chars/token worst case, room for
+    an output about as long as the input, floor of 1024 to keep the KV cache small."""
+    est_tokens = len(prompt_text) // 3 + 1
+    return max(1024, ((est_tokens * 2 + 255) // 256) * 256)
+
+
 def polish_text(
     text: str,
     mode: str = "pro",
@@ -94,6 +101,12 @@ def polish_text(
 
     if not text.strip():
         return text
+
+    if len(text) > MAX_INPUT_CHARS:
+        raise RuntimeError(
+            f"Text too long ({len(text)} characters, max {MAX_INPUT_CHARS}). "
+            "Select a shorter passage."
+        )
 
     prompt_name = "custom" if custom_prompt else mode
     system = _load_prompt(prompt_name)
@@ -139,7 +152,7 @@ def polish_text(
         "prompt": prompt_text,
         "keep_alive": OLLAMA_KEEP_ALIVE,
         "stream": is_streaming,
-        "options": {"num_ctx": 1024},
+        "options": {"num_ctx": _num_ctx_for(prompt_text)},
     }
 
     logging.debug("Calling Ollama | model=%s | mode=%s | %d chars | stream=%s",
@@ -172,20 +185,38 @@ def polish_text(
 
     if is_streaming:
         parts: list[str] = []
+        truncated = False
         for raw_line in response.iter_lines():
             if not raw_line:
                 continue
-            chunk = json.loads(raw_line)
+            try:
+                chunk = json.loads(raw_line)
+            except json.JSONDecodeError:
+                raise RuntimeError("Ollama sent an unreadable response. Try again.")
+            if chunk.get("error"):
+                raise RuntimeError(f"Ollama error: {chunk['error']}")
             token = chunk.get("response", "")
             if token:
                 on_token(token)
                 parts.append(token)
             if chunk.get("done"):
+                truncated = chunk.get("done_reason") == "length"
                 break
         result = "".join(parts).strip()
     else:
         data = response.json()
+        if data.get("error"):
+            raise RuntimeError(f"Ollama error: {data['error']}")
         result = data.get("response", "").strip()
+        truncated = data.get("done_reason") == "length"
+
+    if truncated:
+        raise RuntimeError(
+            "The model ran out of context and the result is incomplete. "
+            "Select a shorter passage."
+        )
+    if not result:
+        raise RuntimeError("The model returned an empty response. Try again.")
 
     logging.debug("Response received — %d chars", len(result))
     return result
