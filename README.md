@@ -7,8 +7,13 @@
 
 Select text in any app, press a shortcut, pick a rewrite mode, and the corrected text is pasted back instantly. Runs silently in the menubar / system tray.
 
-<!-- demo.gif: record with Kap (https://getkap.co) — select text, Cmd+Option+G, click Pro, watch paste -->
-<!-- ![TextPolish demo](demo.gif) -->
+<p align="center">
+  <img src="docs/screenshots/popup-card-dark.png" width="440" alt="TextPolish popup under a selected sentence in TextEdit, suggesting opérationel → opérationnel with Accept and Ignore buttons">
+</p>
+
+The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro/Perso. Everything runs locally.
+
+→ UX case study (design process, iterations, real-use testing): [`docs/case-study.html`](docs/case-study.html) · all popup states: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
 
 > **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
 

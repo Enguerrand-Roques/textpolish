@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--artifact-start-->
+<title>TextPolish UX</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one reading column (~66ch) with full-bleed figure bands; proofreading marks as the recurring device. */
+  :root {
+    --paper:   #f3f5f9;
+    --sheet:   #ffffff;
+    --ink:     #14171d;
+    --muted:   #5b6474;
+    --rule:    #dde2ea;
+    --blue:    #0a64d6;
+    --red:     #d23a2f;
+    --tint:    #e6eefb;
+    --display: "Bricolage Grotesque", "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
+    --body:    "Source Serif 4", "New York", Georgia, serif;
+    --mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #101318; --sheet: #181c23; --ink: #e9edf3; --muted: #9aa4b4;
+      --rule: #2a313c; --blue: #5aa2ff; --red: #ff7a6e; --tint: #182538; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101318; --sheet: #181c23; --ink: #e9edf3; --muted: #9aa4b4;
+    --rule: #2a313c; --blue: #5aa2ff; --red: #ff7a6e; --tint: #182538; color-scheme: dark;
+  }
+
+  body {
+    background: var(--paper); color: var(--ink);
+    font: 18px/1.62 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 72px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .col { max-width: 40rem; margin: 0 auto; }
+  .wide { max-width: 68rem; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; letter-spacing: -0.02em; line-height: 1.08; }
+  h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); margin: 0; }
+  h2 { font-size: clamp(1.7rem, 3.6vw, 2.3rem); margin: 0 0 0.6em; }
+  h3 { font-size: 1.15rem; margin: 0 0 0.3em; letter-spacing: -0.01em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--blue); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+  .label { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  code, kbd { font: 0.85em var(--mono); background: var(--tint); padding: 0.08em 0.35em; border-radius: 4px; }
+
+  /* Proofreading marks */
+  .fix { white-space: nowrap; }
+  .fix s { color: var(--muted); text-decoration-color: var(--red); text-decoration-thickness: 0.08em; }
+  .fix ins { text-decoration: none; color: var(--blue); }
+
+  section { padding-block: 64px 0; }
+  .lede { font-size: 1.22rem; color: var(--muted); }
+
+  /* Hero */
+  .hero { padding-block: 64px 8px; display: grid; gap: 40px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; }
+  .hero .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 22px; }
+  .hero figure { margin: 0; }
+  .shot { width: 100%; max-width: 100%; height: auto; border-radius: 14px; display: block; box-shadow: 0 24px 60px rgba(10, 20, 40, 0.22); }
+  figcaption { font: 0.85rem/1.45 var(--mono); color: var(--muted); margin-top: 12px; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+
+  /* Journey: a real sequence, so it is numbered */
+  .journey { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 0; counter-reset: step; }
+  .journey li { counter-increment: step; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 14px; padding: 16px 0; border-top: 1px solid var(--rule); }
+  .journey li::before { content: counter(step); font: 700 1.2rem/1.4 var(--display); color: var(--blue); }
+  .journey b { font-family: var(--display); font-weight: 600; }
+
+  /* Layouts grid */
+  .layouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 18px; margin-top: 26px; }
+  .layout { background: var(--sheet); border-top: 3px solid var(--blue); padding: 18px 18px 16px; }
+  .layout p { font-size: 0.95rem; margin: 0; color: var(--muted); }
+  .layout .label { display: block; margin-bottom: 10px; color: var(--blue); }
+  .band { margin-top: 30px; }
+
+  /* Iterations: versions are an ordered history */
+  .iter { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 4px 18px; padding: 18px 0; border-top: 1px solid var(--rule); }
+  .iter .v { font: 700 1.5rem/1 var(--display); color: var(--blue); padding-top: 4px; }
+  .iter p { margin: 0; }
+  .iter .why { font-size: 0.95rem; color: var(--muted); margin-top: 6px; }
+
+  /* Data table */
+  .table-wrap { overflow-x: auto; margin-top: 18px; }
+  table { border-collapse: collapse; width: 100%; min-width: 30rem; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font: 500 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* Bugs found in real use */
+  .bugs { display: grid; gap: 14px; margin-top: 22px; }
+  .bug { background: var(--sheet); padding: 16px 18px; border-left: 3px solid var(--red); }
+  .bug h3 { font-size: 1.02rem; }
+  .bug p { font-size: 0.95rem; margin: 0; color: var(--muted); }
+
+  .twoshots { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 24px; margin-top: 26px; }
+  .twoshots figure { margin: 0; }
+
+  footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--rule); font: 0.85rem/1.6 var(--mono); color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1 .fix ins { animation: write 0.9s 0.35s both cubic-bezier(.2,.9,.25,1); display: inline-block; }
+    @keyframes write { from { opacity: 0; transform: translateY(0.25em); } to { opacity: 1; transform: none; } }
+  }
+</style>
+<!--artifact-head-end-->
+</head>
+<body>
+
+<header class="wide hero">
+  <div>
+    <div class="label">Étude de cas UX · macOS · IA locale</div>
+    <h1 style="margin-top:14px">TextPolish</h1>
+    <p class="lede" style="margin-top:18px">Corriger un texte <span class="fix"><s>sans quiter</s> <ins>sans quitter</ins></span> l'app où on l'écrit. On sélectionne, on appuie sur <kbd>⌥⌘G</kbd>, et une petite fenêtre propose les corrections une par une, avec un modèle qui tourne entièrement sur le Mac.</p>
+    <div class="meta">
+      <span class="label">Python · PyObjC · WebKit</span>
+      <span class="label">Ollama · Ministral 3B</span>
+      <span class="label">107 tests</span>
+    </div>
+  </div>
+  <figure>
+    <img class="shot" src="screenshots/popup-card-dark.png" alt="Popup TextPolish sous une phrase sélectionnée dans TextEdit : carte Orthographe proposant opérationel → opérationnel, avec les boutons Accepter et Ignorer.">
+    <figcaption>Capture réelle : la carte apparaît juste sous la sélection, dans TextEdit.</figcaption>
+  </figure>
+</header>
+
+<main>
+<section class="col">
+  <h2>Le problème</h2>
+  <p>Pour corriger un message, on copie le texte, on ouvre un correcteur dans le navigateur, on colle, on recopie le résultat, puis on revient. Cinq gestes pour une virgule. Les outils qui évitent ce détour, comme Grammarly, envoient le texte sur leurs serveurs.</p>
+  <p>Je voulais l'inverse : rester dans l'app, ne rien envoyer en ligne, et que la correction arrive avant qu'on ait eu le temps de se demander quel mode choisir.</p>
+</section>
+
+<section class="col">
+  <h2>Le parcours</h2>
+  <p>Chaque étape retire une décision à l'utilisateur.</p>
+  <ol class="journey">
+    <li><div><b>Sélectionner, puis <kbd>⌥⌘G</kbd>.</b> Fonctionne dans Notes, Mail, Slack ou TextEdit. Le presse-papiers de l'utilisateur est sauvegardé puis restauré.</div></li>
+    <li><div><b>Lecture.</b> La fenêtre s'ouvre sous la sélection (position lue via l'API d'accessibilité de macOS) et le texte scintille pendant que le modèle lit.</div></li>
+    <li><div><b>Correction automatique.</b> Le mode Correction démarre seul : orthographe, accents, ponctuation, sans reformuler. Pro et Perso restent à un raccourci (<kbd>⌘2</kbd>, <kbd>⌘3</kbd>).</div></li>
+    <li><div><b>Une décision par faute.</b> <kbd>↵</kbd> accepte, <kbd>⇥</kbd> ignore, <kbd>⌘↵</kbd> accepte tout.</div></li>
+    <li><div><b>Collé.</b> Le texte reconstruit avec les seules corrections acceptées remplace la sélection, et la fenêtre disparaît.</div></li>
+  </ol>
+</section>
+
+<section class="col">
+  <h2>Une fenêtre qui s'adapte au texte</h2>
+  <p>Le même résultat ne se lit pas de la même façon selon sa longueur. Après la réponse du modèle, le diff est découpé en corrections typées (orthographe, accent, majuscule, grammaire, ponctuation, reformulation), puis l'app choisit la vue.</p>
+</section>
+<div class="wide">
+  <div class="layouts">
+    <div class="layout"><span class="label">Cartes</span><p>Texte court, trois fautes au plus : une carte par correction, avant → après, avec le contexte.</p></div>
+    <div class="layout"><span class="label">Document</span><p>Texte long : le texte entier, corrections surlignées par type. Un clic en annule une.</p></div>
+    <div class="layout"><span class="label">Réécriture</span><p>Pro et Perso changent toute la phrase : une seule proposition et un bouton Comparer.</p></div>
+    <div class="layout"><span class="label">Rien à corriger</span><p>Une coche, « Aucune faute », et la fenêtre se ferme seule.</p></div>
+  </div>
+  <figure class="band" style="margin-left:0;margin-right:0">
+    <img class="shot" src="screenshots/all-states-light.png" alt="Planche de tous les états du popup en mode clair : lecture, cartes, aucune faute, document, mode Pro, comparaison, Perso, erreur, aucune sélection, terminé.">
+    <figcaption>Tous les états, générés à partir de vraies réponses du modèle (banc d'essai <code>design/preview.html</code>).</figcaption>
+  </figure>
+  <div class="twoshots">
+    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : paragraphe avec dix corrections surlignées et une légende Orthographe, Ponctuation, Grammaire."><figcaption>Vue document, texte de 300 caractères.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-pro-dark.png" alt="Mode Pro : un message familier réécrit en version professionnelle, avec les boutons Annuler et Remplacer."><figcaption>Mode Pro : une proposition, à comparer ou remplacer.</figcaption></figure>
+  </div>
+</div>
+
+<section class="col">
+  <h2>Quatre versions de la même fenêtre</h2>
+  <p>Chaque version vient d'un retour en utilisation réelle, captures à l'appui.</p>
+  <div class="iter"><div class="v">v1</div><div><p>Un panneau de 420 × 520 au centre de l'écran : choisir un mode, cliquer sur Repolir, puis le texte était collé sans relecture.</p><p class="why">Trop de décisions avant de voir le moindre résultat, et aucun contrôle sur ce qui était collé.</p></div></div>
+  <div class="iter"><div class="v">v2</div><div><p>Un diff barré/surligné avec Accepter et Réviser, et une fenêtre ancrée sous la sélection.</p><p class="why">Il fallait encore choisir un mode avant que quoi que ce soit ne se passe.</p></div></div>
+  <div class="iter"><div class="v">v3</div><div><p>Fenêtre compacte par défaut, correction lancée dès l'ouverture, modes accessibles sans déplier.</p><p class="why">Le mode « décontracté » reformulait des phrases au lieu de seulement corriger : un problème de modèle, pas d'interface (voir plus bas).</p></div></div>
+  <div class="iter"><div class="v">v4</div><div><p>Une carte par correction façon Grammarly, flou natif de macOS, hauteur qui suit le contenu, vues selon la longueur du texte, clavier en premier.</p><p class="why">Version actuelle.</p></div></div>
+</section>
+
+<section class="col">
+  <h2>Ce que j'ai écarté</h2>
+  <p>Le soulignement rouge en temps réel de Grammarly était tentant. J'ai étudié l'API d'accessibilité de macOS avant de m'y lancer, et trois obstacles concrets m'ont fait garder le déclenchement au raccourci :</p>
+  <p>Impossible de lire la position du curseur quand rien n'est sélectionné (un bug Apple connu). Une fonction clé (<code>AXValueGetValue</code>) n'est pas exposée par PyObjC. Et beaucoup d'apps Electron n'exposent pas leur texte de façon fiable. Les alternatives à Grammarly qui fonctionnent dans toutes les apps Mac utilisent d'ailleurs, elles aussi, un raccourci.</p>
+</section>
+
+<section class="col">
+  <h2>Choisir le modèle</h2>
+  <p>Le modèle tourne sur un MacBook M2 avec 16 Go de RAM, donc il doit être petit. Cinq séries de tests sur un corpus FR/EN, notées par un modèle juge, ont guidé les choix.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Constat</th><th>Effet sur le produit</th></tr></thead>
+      <tbody>
+        <tr><td><code>gemma3:1b</code> ne voit pas que <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> est faux, 3 fois sur 3.</td><td>Le mode Correction passe sur <code>ministral-3:3b</code>, au prix d'environ 2,7 s de plus.</td></tr>
+        <tr><td><code>ministral-3:3b</code> invente un e-mail entier en mode Pro à partir de deux propositions.</td><td>Pro reste sur <code>gemma3:4b</code>.</td></tr>
+        <tr><td>Gemma 4 « réfléchit » par défaut sur Ollama : 51,6 s au lieu d'environ 1 s.</td><td>Écarté ; documenté pour l'avenir (<code>"think": false</code>).</td></tr>
+        <tr><td>Le modèle remplace <code>'</code> par <code>’</code> et ajoute des espaces insécables.</td><td>Ces différences ne sont plus montrées comme des corrections.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="col">
+  <h2>Tester en conditions réelles</h2>
+  <p>Plutôt que de juger sur des maquettes, j'ai piloté la vraie app : du texte dans TextEdit, un raccourci envoyé comme un vrai clavier (événements HID), puis une capture de la fenêtre. Ce protocole a fait remonter des bugs qu'aucun test unitaire ne voyait.</p>
+  <div class="bugs">
+    <div class="bug"><h3>La copie échouait par intermittence</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé, donc la copie simulée devenait ⌥⌘C (« copier le style ») et ne copiait rien. L'app attend désormais que les touches soient relâchées.</p></div>
+    <div class="bug"><h3>Trois copies de l'app répondaient au raccourci</h3><p>Chaque lancement ajoutait une instance. Un verrou garantit désormais qu'une seule tourne.</p></div>
+    <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur un clavier AZERTY</h3><p>La touche 2 y produit « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
+    <div class="bug"><h3>La version Windows plantait au démarrage</h3><p>Un import invalide en PyQt6, trouvé en affichant le panneau Windows hors écran depuis le Mac.</p></div>
+  </div>
+</section>
+
+<section class="col">
+  <h2>Ce que j'en retiens</h2>
+  <p>Retirer une décision vaut souvent mieux qu'ajouter une option : la plus grosse amélioration a été de lancer la correction sans demander de mode. Une interface ne compense pas un mauvais modèle : le bug « opérationel » se réglait en changeant de modèle, pas en ajustant l'écran. Et une interface se juge en la faisant fonctionner pour de vrai, avec un vrai clavier et une vraie app à côté.</p>
+</section>
+</main>
+
+<footer class="col">
+  TextPolish · projet personnel, 2026 · code : <a href="https://github.com/Enguerrand-Roques/textpolish">github.com/Enguerrand-Roques/textpolish</a>
+</footer>
+<!--artifact-end-->
+</body>
+</html>

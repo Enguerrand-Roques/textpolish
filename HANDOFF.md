@@ -56,3 +56,12 @@ Fixes from the full project audit:
 - `benchmark_models.py` reads `ANTHROPIC_API_KEY` from the environment only. The key in local `config.py` is still there: rotate it and delete the line.
 - UI errors are no longer cut at 80 characters.
 Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was identical), CI lint/coverage, benchmark alignment with `llm.py`.
+
+## UX redesign (November 2026)
+
+- macOS popup rebuilt Apple-style: native vibrancy behind a transparent WKWebView, no title-bar chrome, content-height panel, popover dismissal. Adaptive layouts chosen by `diff.choose_layout`: per-correction cards (short text), highlighted document (long text), single rewrite with compare (Pro/Perso), "no mistakes" auto-close. Keyboard: ↵ accept, ⇥ ignore, ⌘↵ all, ⌘1-3 modes (physical keys, AZERTY-safe), esc.
+- `diff.py`: `group_changes` / `classify_change` / `apply_choices` / `choose_layout`; typographic-only differences (' vs ’, nbsp) are not corrections.
+- Bugs found by driving the real app (design/scenario.sh): copy sent ⌥⌘C while the shortcut's ⌥ was held (now waits for release); several instances could run (now single-instance lock); Windows crashed at import (QAction from QtWidgets).
+- `design/`: preview harness with fixtures from real model outputs, headless-Chrome screenshots, real-app drivers, offscreen Qt render. Driving the real app needs Accessibility, Automation and Screen Recording for VS Code.
+- Portfolio: `docs/case-study.html` (also published as a private artifact), screenshots in `docs/screenshots/`. GIF still to record by hand.
+- Not ported to `textpolish-cloud` yet (diff.py, clipboard.py and the panel are identical candidates). Windows only got a style refresh, untested on Windows.
