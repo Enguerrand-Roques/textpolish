@@ -11,6 +11,8 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
   <img src="docs/demo.gif" width="560" alt="Demo in TextEdit: a message with two mistakes is corrected card by card, then rewritten in Pro with ⌘2, then translated with a Sur mesure request and pasted back">
 </p>
 
+<p align="center"><b><a href="docs/textpolish-demo.mp4">▶ Watch the 40-second video</a></b> — real recordings of the app, not sped up (made with <a href="video/">Remotion</a>).</p>
+
 The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Sur mesure. Everything runs locally.
 
 → UX case study (design process, iterations, real-use testing): [`docs/case-study.html`](docs/case-study.html) · all popup states: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
