@@ -10,11 +10,11 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 
 | Model | Rounds | Best result | Why it was kept or dropped |
 |-------|--------|-------------|----------------------------|
-| **`gemma4:e2b-it-qat`** | 4, 6 | **11/12 Correction, 5/5 Pro, 3/3 Perso, ~1 s** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
+| **`gemma4:e2b-it-qat`** | 4, 6 | **11/12 Correction, 5/5 Pro, 3/3 Sur mesure; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
 | `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Same quality as E2B, ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
-| `ministral-3:3b` | 4, 5, 6 | 10/12, 0.67 s | Correction model in Round 5; in Pro it wrote whole e-mails, in Perso it answered the message |
+| `ministral-3:3b` | 4, 5, 6 | 10/12, 0.67 s | Correction model in Round 5; in Pro it wrote whole e-mails, in Sur mesure (then "Perso") it answered the message |
 | `ministral-3:8b` | 4 | 4.53/5 (judge) | 12-15 s per request; added Markdown |
 | `gemma3:4b` | 1-6 | 5.00/5 Pro (Round 4) | Pro model until Round 6; 6/12 Correction, "Dear [Recipient Name]" |
 | `gemma3:4b-it-qat` | 1, 3 | 4.77/5 (judge) | Slower than `gemma3:4b` once `num_ctx` was reduced |
@@ -32,7 +32,9 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 **What the research changed in the app**, beyond the model choice: prompts in English with a
 same-language rule (Round 1), `num_ctx` sized to the input (Round 2), `"think": false` for
 hybrid-reasoning models (Round 4), a stricter language detector and Markdown cleanup (Round 6),
-and per-mode temperature (Round 6). Only `gemma4:e2b-it-qat` is installed now; every other
+and per-mode temperature (Round 6). Later the same day, filming the demo showed that the
+"answer in the input language" rule blocked translation requests on long texts; in Sur mesure
+the rule now yields to the instruction. Only `gemma4:e2b-it-qat` is installed now; every other
 model was removed after testing.
 
 ---

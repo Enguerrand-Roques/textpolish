@@ -1,6 +1,6 @@
 # TextPolish video
 
-The 40-second montage in `docs/textpolish-demo.mp4`, built with [Remotion](https://www.remotion.dev/) from real recordings of the app.
+The 50-second montage in `docs/textpolish-demo.mp4`, built with [Remotion](https://www.remotion.dev/) from real recordings of the app.
 
 1. Film the raw clips (the app must be running, log in `design/app.log`; don't touch the keyboard or mouse for ~1 min 30):
 

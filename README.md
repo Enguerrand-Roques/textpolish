@@ -25,11 +25,11 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 | Feature | Description |
 |---------|-------------|
-| **Three rewrite modes** | Professional (full rewrite), Casual (light touch, keeps tone), Custom (any instruction) |
-| **Streaming output** | Corrected text appears word by word in the panel as the model generates — no waiting for the full response |
-| **Correction history** | Last 10 corrections available in the ✏️ menu → History. Click any entry to copy the corrected text |
-| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
-| **Panel UI** (macOS) | Native WKWebView panel with Pip, a small pixel-art mascot that reacts to the selected mode |
+| **Three modes** | Correction (fixes mistakes only, default), Pro (⌘2, professional rewrite), Sur mesure (⌘3, your own request: translate, shorten, warmer…) |
+| **Every fix explained** | Each correction is labelled: spelling, accent, conjugation, agreement, homophone, punctuation. Short texts get one card per fix, long ones a highlighted document |
+| **Correction history** | Last 10 corrections in the ✏️ menu → Historique. Click an entry to copy the corrected text |
+| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Préférences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
+| **Native-feeling popup** (macOS) | Opens under the selection with macOS vibrancy, light and dark mode, full keyboard control (↵ ⇥ ⌘↵ ⌘1-3 esc) |
 | **Fully private** | Everything runs on your machine. No API key, no telemetry, no data ever leaves your computer |
 | **System-level** | Works in any app — VS Code, Notion, Mail, Slack. Panel stays above fullscreen apps |
 
@@ -60,7 +60,7 @@ bash setup.sh
 - Registers the Launch Agent (survives reboots)
 - Creates **TextPolish.app** on your Desktop
 
-Then pull the AI models (one-time, ~2 GB total):
+Then pull the AI model (one-time, 4.3 GB):
 
 ```bash
 ollama pull gemma4:e2b-it-qat   # one model for all three modes (Ollama 0.40+)
@@ -99,7 +99,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plis
 | `Cannot connect to Ollama` | Run `ollama serve` in a terminal |
 | `Model not found` | Run `ollama pull gemma4:e2b-it-qat` |
 | Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
-| High RAM after use | Set `OLLAMA_KEEP_ALIVE = 0` in `config.py` |
+| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` in `config.py` (0 frees the 4.3 GB right away, but every request then waits 3–6 s for the model to load) |
 | Shortcut not working | Grant Accessibility in System Settings |
 | Text not pasted back | Keep the source app focused |
 | App won't start | Check `~/Library/Logs/TextPolish/textpolish.log` for errors |
@@ -127,7 +127,7 @@ pip install -r requirements-windows.txt
 copy config.example.py config.py
 ```
 
-Then pull the AI models (one-time, ~2 GB total):
+Then pull the AI model (one-time, 4.3 GB):
 
 ```bash
 ollama pull gemma4:e2b-it-qat
@@ -152,7 +152,7 @@ A ✏️ icon appears in the system tray — the app is running.
 | `Cannot connect to Ollama` | Run `ollama serve` in a terminal |
 | `Model not found` | Run `ollama pull gemma4:e2b-it-qat` |
 | Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
-| High RAM after use | Set `OLLAMA_KEEP_ALIVE = 0` in `config.py` |
+| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` in `config.py` (0 frees the 4.3 GB right away, but every request then waits 3–6 s for the model to load) |
 | Shortcut not working | Make sure no other app uses Ctrl+Alt+G |
 | Text not pasted back | Keep the source app focused |
 
@@ -190,6 +190,10 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 |---|---:|---:|
 | Short sentence, any mode | 0.5–1.1 s | 3–6 s |
 | 338-character report (Correction) | 2.7 s | — |
+| 379-character message, 13 mistakes (demo video) | 3–4 s | — |
+| ~1,500 characters (Correction) | ~10 s | — |
+
+Time grows with the length of the answer (about 30–35 tokens per second). The 4,000-character input limit stays under the 60 s timeout.
 
 Cold happens on the first request and again after 5 minutes without use (`OLLAMA_KEEP_ALIVE = 300` frees the 4.3 GB of RAM). Right after a reboot, when macOS has not cached the model file yet, the first request took 9–15 s. Raise `OLLAMA_KEEP_ALIVE` if you prefer speed over free RAM.
 
@@ -202,6 +206,7 @@ textpolish/
 ├── main.py              # Entry point — detects OS, loads the right backend
 ├── clipboard.py         # Copy / paste logic     ─┐
 ├── llm.py               # Ollama request layer     │
+├── diff.py              # Groups and labels fixes  │
 ├── history.py           # Correction history        ├─ shared across platforms
 ├── polish_job.py        # Correction threading      │
 ├── prompts/             # Prompt templates         ─┘
@@ -210,7 +215,7 @@ textpolish/
 └── platforms/
     ├── macos/                 # PyObjC · NSPanel · WKWebView · CGEventTap
     │   ├── ui.py
-    │   ├── panel.html         # WKWebView UI (Pip mascot, HTML/CSS/JS)
+    │   ├── panel.html         # WKWebView UI: cards, document view, rewrite (HTML/CSS/JS)
     │   ├── main.py
     │   ├── hotkey.py
     │   └── shortcut_parser.py # Pure shortcut parsing, no PyObjC dependency
@@ -238,7 +243,7 @@ Warm = median over the test set with the model in RAM. Cold = `ollama stop`, the
 
 Key findings that shaped this choice:
 
-- **One model beats two.** With a Correction model and a Pro model, every mode switch reloaded a model (~5 s on 16 GB). One model makes switching instant.
+- **One model beats two.** With a Correction model and a Pro model, every mode switch reloaded a model (~5 s on 16 GB). With one model, switching modes adds no wait (0.75–0.8 s for a sentence in Pro).
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Sur mesure.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
@@ -256,9 +261,9 @@ This project started as a way to understand how to integrate a language model in
 
 Building it surfaced a few things that tutorials don't really cover:
 
-- **Model size vs. latency** — a 4B model rewrites better but takes 5–8s; a 1B model is nearly instant but misses nuance. The right choice depends on the use case, not just benchmarks.
-- **Keeping a model in RAM** — loading a model from disk on every request adds 2–3s of overhead. `keep_alive` keeps it warm between requests, but costs RAM permanently. It's a trade-off you have to tune per machine.
-- **Local vs. cloud latency** — a local model on an M-series chip is often faster than a cloud API for short texts, once the model is loaded. Network round-trips add up.
+- **Model size vs. latency** — in early rounds a 4B model rewrote better but took 5–8 s, and a 1B model was fast but missed real typos. Gemma 4 E2B (2B effective) ended that trade-off at about 1 s, after disabling its "thinking" and fixing the temperature.
+- **Keeping a model in RAM** — loading the model takes 3–6 s (9–15 s after a reboot). `keep_alive` keeps it warm between requests but holds 4.3 GB of RAM; TextPolish frees it after 5 minutes idle. It's a trade-off you have to tune per machine.
+- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–0.9 s, the same as Gemini Flash-Lite over the network (~0.5 s). Local wins on privacy and offline use, not on raw speed, and only when the model is already in RAM.
 - **Integrating an LLM into an OS-level tool** — the LLM part ended up being the simplest piece. The hard parts were the global shortcut, clipboard handling, and making a window appear above fullscreen apps.
 
 Beyond the technical side, this project was also an exercise in building something the way a real open source project is built — using Conventional Commits (`feat:`, `fix:`, `chore:`...), maintaining a proper `LICENSE`, writing a README that someone else can actually follow, and structuring code so it makes sense to a stranger reading it on GitHub. Small habits that make a big difference when a project grows or gets contributors.

@@ -56,7 +56,7 @@ jobs:
             python main.py
             ```
 
-            Then pull the AI models (one-time, ~2 GB):
+            Then pull the AI model (one-time, 4.3 GB):
             ```bash
             ollama pull gemma4:e2b-it-qat
             ```

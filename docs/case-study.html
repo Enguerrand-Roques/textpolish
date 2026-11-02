@@ -144,7 +144,7 @@
     <div class="meta">
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
-      <span class="label">112 tests</span>
+      <span class="label">119 tests</span>
     </div>
   </div>
   <figure>
@@ -223,12 +223,12 @@
   <div class="stats">
     <div><div class="stat">0,5–1 s</div><p>pour corriger ou réécrire une phrase, quand le modèle est déjà chargé</p></div>
     <div><div class="stat">3–6 s</div><p>la première fois, ou après 5 minutes sans s'en servir</p></div>
-    <div><div class="stat">&lt; 1 s</div><p>pour changer de mode, contre 5 s avant</p></div>
+    <div><div class="stat">&lt; 1 s</div><p>pour passer une phrase en Pro, contre 5 s avant (rechargement du modèle)</p></div>
     <div><div class="stat">0</div><p>octet envoyé sur Internet</p></div>
   </div>
   <p>Je donne les deux temps, parce que c'est le second qu'on remarque. Après 5 minutes sans utilisation, Ollama retire le modèle de la mémoire pour rendre ses 4,3 Go au reste du Mac, et il faut le recharger. Juste après un redémarrage, la première correction a même pris 9 à 15 secondes. J'ai préféré libérer la mémoire ; on peut garder le modèle chargé plus longtemps dans les réglages.</p>
   <p>Le changement de mode coûtait 5 secondes : j'utilisais un modèle pour corriger et un autre pour réécrire, et avec un navigateur et un éditeur ouverts, mon Mac ne pouvait pas garder les deux en mémoire. J'ai fini par trouver un seul modèle assez bon pour les trois modes, et ce délai a disparu.</p>
-  <p>J'ai aussi essayé MLX, le moteur d'Apple que les dernières versions d'Ollama savent utiliser. C'était trois fois plus rapide (0,34 s), mais le modèle prenait 7,4 Go de mémoire et mon Mac commençait à ramer. J'ai gardé la version plus légère et noté MLX comme option pour les Mac qui ont plus de RAM.</p>
+  <p>J'ai aussi essayé MLX, le moteur d'Apple que les dernières versions d'Ollama savent utiliser. C'était 2,6 fois plus rapide (0,34 s contre 0,88 s), mais le modèle prenait 7,4 Go de mémoire et mon Mac commençait à ramer. J'ai gardé la version plus légère et noté MLX comme option pour les Mac qui ont plus de RAM.</p>
 </section>
 
 <section class="col">
@@ -274,7 +274,7 @@
         <tbody>
           <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 · ~1 s à chaud</td><td>Retenu pour les trois modes</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0,34 s</td><td>Le plus rapide, mais 7,4 Go de mémoire</td></tr>
-          <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5/5 Pro</td><td>Même qualité, plus lent</td></tr>
+          <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5,00/5 Pro (juge)</td><td>Même qualité, 1,6 fois plus lent</td></tr>
           <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0,67 s</td><td>Correction en série 5 ; écrit des e-mails entiers en Pro</td></tr>
           <tr><td><code>ministral-3:8b</code></td><td class="num">12–15 s</td><td>Trop lent</td></tr>
           <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro jusqu'à la série 6 ; « Dear [Recipient Name] »</td></tr>
@@ -320,6 +320,7 @@
         <tr><td><kbd>⌘2</kbd> pendant la correction</td><td class="num">1,6–1,7 s</td><td>C'est la version pro qui s'affiche</td></tr>
         <tr><td>Sur mesure « en anglais », puis <kbd>⌘↵</kbd></td><td class="num">0,6 s</td><td>Phrase traduite collée</td></tr>
         <tr><td>Compte rendu de 338 caractères, tout accepter</td><td class="num">2,7 s</td><td>9 corrections collées</td></tr>
+        <tr><td>Message de 379 caractères avec 13 fautes (vidéo)</td><td class="num">3–4 s</td><td>13 corrections, chacune avec son type</td></tr>
         <tr><td>Aucun texte sélectionné</td><td class="num">1,2 s</td><td>Message d'aide, le modèle n'est pas appelé</td></tr>
         <tr><td><kbd>Échap</kbd></td><td class="num">0,35 s</td><td>Fenêtre fermée, texte intact</td></tr>
       </tbody>

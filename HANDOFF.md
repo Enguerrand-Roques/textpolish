@@ -1,9 +1,36 @@
-# TextPolish — Handoff notes (September 2026)
+# TextPolish — Handoff notes
 
-Status snapshot for resuming work later. Written at the point where work paused on
-`textpolish` to switch to `textpolish-cloud`.
+Status snapshot for resuming work later. The newest state is first; the dated
+sections below it are the history, kept as written at the time.
 
-## Current configuration
+## Current state (November 2, 2026)
+
+| Item | Value |
+|------|-------|
+| Model | `gemma4:e2b-it-qat` for all three modes (only model installed, 4.3 GB) |
+| Ollama | 0.40.13, `"think": false`, temperature 0 Correction / 0.4 Pro & Sur mesure |
+| Modes (UI) | Correction (`casual`), Pro (`pro`), Sur mesure (`custom`) |
+| Quality (Round 6) | 11/12 expected fixes, Pro 5/5, Sur mesure 3/3 (`design/model_eval.py`) |
+| Speed, M2 16 GB | warm 0.5–1.1 s per sentence, 3–4 s for 380 chars, ~10 s for 1,500 chars; cold 3–6 s (9–15 s after reboot); model freed after 5 min idle |
+| Mistake labels | spelling, accent, case, agreement, conjugation, homophone/grammar, punctuation, rewrite (`diff.classify_change`) |
+| Tests | 119 (textpolish), 106 (textpolish-cloud) |
+| Public | GitHub Pages serves `docs/` at https://enguerrand-roques.github.io/textpolish/ (landing page, case study, video) |
+| Demo | `docs/demo.gif`, `docs/textpolish-demo.mp4` (Remotion project in `video/`, clips from `design/record_video.py`) |
+
+Open items:
+- Rotate the Anthropic key in local `config.py` and the Gemini key in textpolish-cloud's (user will do it).
+- Windows UI only got a style refresh; never tested on Windows.
+- Correction still misses 1/12 (drops a "?"); humour in Sur mesure is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
+- The popup closes when it loses focus; another app grabbing focus mid-request (seen once with Grammarly running) hides it.
+- Real-time "as you type" underlining was ruled out (see the September notes below).
+
+---
+
+# History
+
+## September 2026 (paused to work on textpolish-cloud)
+
+### Configuration at the time
 
 | Mode | Model | Why |
 |------|-------|-----|
@@ -12,7 +39,7 @@ Status snapshot for resuming work later. Written at the point where work paused 
 
 Full history and raw numbers: `benchmarks/BENCHMARK_REPORT.md` (Rounds 1–5).
 
-## What changed this session
+### What changed this session
 
 1. **Round 4 benchmark** — re-tested newer model generations (Gemma 4, Qwen3.5, Ministral 3) released since Round 3 against the then-current config. None beat it outright on the 10-case corpus. Found and fixed a real Gemma 4 footgun along the way: it has "thinking" on by default on Ollama, turning a ~2s call into 50+ seconds unless `"think": false` is sent explicitly.
 2. **Code cleanup (4 axes)** — factored the duplicated history/threading logic out of the macOS and Windows UIs into shared modules (`history.py`, `polish_job.py`); extracted shortcut parsing into `platforms/macos/shortcut_parser.py` so it's testable without PyObjC; added test coverage that didn't exist before (`clipboard.py`, history, polish job, shortcut parsing — 19 → 66 tests); synced `README.md` with the actual WKWebView panel architecture; added a native alert when the macOS Accessibility permission is missing (was previously a silent `print`).
@@ -21,7 +48,7 @@ Full history and raw numbers: `benchmarks/BENCHMARK_REPORT.md` (Rounds 1–5).
    - v3: mode chips (Pro/Casual/Perso) are now visible even in the compact view and instantly re-trigger a correction on click — only "Perso" forces an expand, since it needs the instruction field.
 4. **Round 5 (single-case investigation)** — the casual-mode typo bug above; led to the Ministral 3B switch documented in the table.
 
-## Known gotcha hit twice this session
+### Known gotcha hit twice this session
 
 The app doesn't hot-reload. If you edit `ui.py`/`panel.html`/prompts and the running
 `main.py` process was started *before* the edit, you're testing stale code — looks
@@ -31,7 +58,7 @@ ps aux | grep "[m]ain.py"
 ps -p <pid> -o lstart=          # compare to file mtimes
 ```
 
-## Open items / not done yet
+### Open items / not done yet
 
 - **Round 4 corpus not re-run with `ministral-3:3b` as casual.** The switch is based on one targeted real-world case (the "opérationel" bug), not aggregate scores. Worth running `python benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge` for a fuller picture, and watching for over-generation from Ministral on longer/more ambiguous casual inputs (it hallucinated a full fake email in pro mode on a short fragment — same risk class could show up in casual on the wrong input).
 - **Anthropic API key exposed in clear text** in local `config.py` (line 13, gitignored, never committed — confirmed clean history). Recommended to rotate on console.anthropic.com regardless, since it's readable on disk.
@@ -40,13 +67,13 @@ ps -p <pid> -o lstart=          # compare to file mtimes
 - **Local GPU fine-tuning** — user has an NVIDIA GPU at home, raised as a possible way to get a more reliable correction model than picking among pretrained options. Not investigated yet — needs GPU model/VRAM specs before any feasibility call. Current recommendation stands: exhaust pretrained-model swaps (like the Ministral switch) before considering training something custom, given how much the Ministral swap alone fixed for zero cost.
 - **`textpolish-cloud` improvements** — the reason this doc exists. Known gaps there (unchanged since audit, see that repo's own state): no error handling or timeout in `llm.py` (raw Gemini SDK exceptions reach the UI), still on the old native NSPanel UI (never got the WKWebView/diff-popup work this doc describes), no landing page. Proposed order when resumed: robustness (timeout + typed errors) before UI port, since the UI port is the bigger lift and error handling is cheap and unblocks safer testing.
 
-## Where things are documented
+### Where things are documented
 
 - Model choice rationale + all benchmark data: `benchmarks/BENCHMARK_REPORT.md`
 - User-facing feature list and architecture: `README.md`
 - This file: session handoff only — update or delete once stale, it's not meant to be permanent project documentation.
 
-## Reliability pass (October 2026, uncommitted until reviewed)
+## Reliability pass (October 2026)
 
 Fixes from the full project audit:
 - `clipboard.py`: clipboard is emptied before the simulated copy, polled until filled (no more fixed 0.35 s sleep), so "nothing selected" yields an empty text instead of stale clipboard content; the user's clipboard (all macOS types) is restored right after the copy and again after the paste.
