@@ -1,11 +1,14 @@
 """
-TextPolish panel — WKWebView inside NSPanel.
-The panel.html file provides the full Pip-design UI; Python communicates
-with it via a WKScriptMessageHandler bridge (JS→Python) and
-evaluateJavaScript (Python→JS).
+TextPolish panel — a transparent WKWebView over native macOS vibrancy
+(NSVisualEffectView) inside a borderless-looking NSPanel.
+
+panel.html renders the UI; Python talks to it through a
+WKScriptMessageHandler bridge (JS→Python) and evaluateJavaScript
+(Python→JS). The page reports its natural height and the panel hugs it.
 """
 
 import json
+import logging
 import os
 import re
 import threading
@@ -41,6 +44,15 @@ from AppKit import (
     NSWorkspace,
     NSScreen,
     NSMakePoint,
+    NSVisualEffectView,
+    NSVisualEffectMaterialPopover,
+    NSVisualEffectBlendingModeBehindWindow,
+    NSVisualEffectStateActive,
+    NSWindowStyleMaskFullSizeContentView,
+    NSWindowTitleHidden,
+    NSWindowCloseButton,
+    NSWindowMiniaturizeButton,
+    NSWindowZoomButton,
 )
 
 from WebKit import WKWebView, WKWebViewConfiguration, WKUserContentController
@@ -49,7 +61,7 @@ from clipboard import get_app_and_copy, paste_text
 from llm import polish_text
 from history import CorrectionHistory, format_menu_label, format_tooltip
 from polish_job import PolishJobRunner
-from diff import compute_word_diff
+from diff import group_changes, apply_choices, choose_layout
 from platforms.macos.ax_bounds import get_selection_bounds
 
 _CONFIG_PATH = os.path.normpath(
@@ -57,11 +69,12 @@ _CONFIG_PATH = os.path.normpath(
 )
 _HTML_PATH = os.path.join(os.path.dirname(__file__), "panel.html")
 
+# Titled + full-size content + transparent titlebar = rounded corners and a
+# system shadow without any visible chrome.
 _PANEL_STYLE = (
     NSWindowStyleMaskTitled
     | NSWindowStyleMaskClosable
-    | NSWindowStyleMaskResizable
-    | NSWindowStyleMaskUtilityWindow
+    | NSWindowStyleMaskFullSizeContentView
     | NSWindowStyleMaskNonactivatingPanel
 )
 _COLLECTION = (
@@ -69,8 +82,19 @@ _COLLECTION = (
     | NSWindowCollectionBehaviorFullScreenAuxiliary
 )
 
-_COMPACT_SIZE = (380, 258)
-_EXPANDED_SIZE = (420, 520)
+_PANEL_WIDTH = 380
+_INITIAL_HEIGHT = 230
+_MAX_HEIGHT = 560
+
+_MOD_SYMBOLS = [("ctrl", "⌃"), ("alt", "⌥"), ("option", "⌥"), ("shift", "⇧"), ("cmd", "⌘")]
+
+
+def _shortcut_label(shortcut: str) -> str:
+    """'<cmd>+<alt>+g' -> '⌥⌘G' (macOS modifier order)."""
+    keys = [k.strip().strip("<>").lower() for k in shortcut.split("+")]
+    mods = "".join(sym for name, sym in _MOD_SYMBOLS if name in keys and not (name == "option" and "alt" in keys))
+    main = [k for k in keys if k not in dict(_MOD_SYMBOLS)]
+    return mods + "".join(k.upper() for k in main)
 
 
 def _read_shortcut_from_config() -> str:
@@ -329,7 +353,7 @@ class TextPolishPanel(NSObject):
         self._selected_text = ""
         self._app_ref = None
         self._current_mode = "pro"
-        self._pending_result = None
+        self._parts: list[dict] = []
         self._job_runner = PolishJobRunner(on_main=_on_main)
         self._webview_ready = False
         self._pending_js: list[str] = []
@@ -340,18 +364,34 @@ class TextPolishPanel(NSObject):
 
     @objc.python_method
     def _create_panel(self):
-        w, h = _COMPACT_SIZE
         self._panel = NSPanel.alloc().initWithContentRect_styleMask_backing_defer_(
-            NSMakeRect(0, 0, w, h),
+            NSMakeRect(0, 0, _PANEL_WIDTH, _INITIAL_HEIGHT),
             _PANEL_STYLE,
             NSBackingStoreBuffered,
             False,
         )
         self._panel.setTitle_("TextPolish")
+        self._panel.setTitleVisibility_(NSWindowTitleHidden)
+        self._panel.setTitlebarAppearsTransparent_(True)
+        for button in (NSWindowCloseButton, NSWindowMiniaturizeButton, NSWindowZoomButton):
+            b = self._panel.standardWindowButton_(button)
+            if b is not None:
+                b.setHidden_(True)
+        self._panel.setMovableByWindowBackground_(True)
+        self._panel.setOpaque_(False)
+        self._panel.setBackgroundColor_(NSColor.clearColor())
+        self._panel.setHasShadow_(True)
         self._panel.setLevel_(NSFloatingWindowLevel)
         self._panel.setHidesOnDeactivate_(False)
         self._panel.setCollectionBehavior_(_COLLECTION)
         self._panel.setDelegate_(self)
+
+        blur = NSVisualEffectView.alloc().initWithFrame_(self._panel.contentView().bounds())
+        blur.setMaterial_(NSVisualEffectMaterialPopover)
+        blur.setBlendingMode_(NSVisualEffectBlendingModeBehindWindow)
+        blur.setState_(NSVisualEffectStateActive)
+        blur.setAutoresizingMask_(NSViewWidthSizable | NSViewHeightSizable)
+        self._panel.setContentView_(blur)
         self._build_webview()
 
     @objc.python_method
@@ -365,10 +405,11 @@ class TextPolishPanel(NSObject):
         config.setUserContentController_(controller)
 
         cv = self._panel.contentView()
-        frame = cv.bounds()
-        self._webview = WKWebView.alloc().initWithFrame_configuration_(frame, config)
+        self._webview = WKWebView.alloc().initWithFrame_configuration_(cv.bounds(), config)
         self._webview.setAutoresizingMask_(NSViewWidthSizable | NSViewHeightSizable)
         self._webview.setNavigationDelegate_(self)
+        # Let the vibrancy behind the web view show through.
+        self._webview.setValue_forKey_(False, "drawsBackground")
 
         html_url  = NSURL.fileURLWithPath_(_HTML_PATH)
         base_url  = NSURL.fileURLWithPath_(os.path.dirname(_HTML_PATH))
@@ -406,16 +447,19 @@ class TextPolishPanel(NSObject):
         elif msg_type == "close":
             self._hide()
         elif msg_type == "accept":
-            if self._pending_result is not None:
-                self._do_paste(self._pending_result)
-        elif msg_type == "expand":
-            self._set_expanded(bool(body.get("value")))
+            self._accept(body.get("accepted") or [])
+        elif msg_type == "resize":
+            self._resize_to(float(body.get("height") or 0))
 
     # ── Cocoa delegate ───────────────────────────────────────────────────────
 
     def windowShouldClose_(self, sender):
         self._hide()
         return False
+
+    def windowDidResignKey_(self, notification):
+        # Behave like a popover: clicking elsewhere dismisses it.
+        self._hide()
 
     # ── Public API ───────────────────────────────────────────────────────────
 
@@ -429,7 +473,8 @@ class TextPolishPanel(NSObject):
 
     @objc.python_method
     def _show(self):
-        self._set_expanded(False, animate=False)
+        self._parts = []
+        self._resize_to(_INITIAL_HEIGHT, keep_top=False)
         self._js("App.reset()")
         app_name = None
         if self._app_ref is not None:
@@ -438,15 +483,18 @@ class TextPolishPanel(NSObject):
             except Exception:
                 pass
         self._js(f"App.setSourceApp({json.dumps(app_name)})")
+        self._js(f"App.setShortcut({json.dumps(_shortcut_label(_read_shortcut_from_config()))})")
         has_text = bool(self._selected_text.strip())
+        self._current_mode = "casual"
+        self._js(f"App.setMode({json.dumps(self._current_mode)})")
         if has_text:
-            self._current_mode = "casual"
             self._js(f"App.setInputText({json.dumps(self._selected_text)})")
-            self._js(f"App.setMode({json.dumps(self._current_mode)})")
         else:
-            self._js("App.setInputText('Aucun texte sélectionné — sélectionnez du texte d\\'abord')")
+            self._js("App.noSelection()")
         self._position_near_selection()
+        self._panel.setAlphaValue_(0.0)
         self._panel.makeKeyAndOrderFront_(None)
+        self._panel.animator().setAlphaValue_(1.0)
         if has_text:
             self._start_process(self._current_mode)
 
@@ -465,7 +513,7 @@ class TextPolishPanel(NSObject):
 
         x, y, w, h = bounds
         screen_frame = screen.frame()
-        panel_w, panel_h = _COMPACT_SIZE
+        panel_w, panel_h = _PANEL_WIDTH, self._panel.frame().size.height
         gap = 8
 
         # AX bounds use a top-left, Y-down origin; Cocoa screen coordinates
@@ -481,22 +529,25 @@ class TextPolishPanel(NSObject):
         self._panel.setFrameOrigin_(NSMakePoint(origin_x, origin_y))
 
     @objc.python_method
-    def _set_expanded(self, expand: bool, animate: bool = True):
-        """Resize the native panel between the compact and expanded sizes,
-        keeping the top edge fixed (the panel grows/shrinks downward, which
-        matches it being anchored below the text selection)."""
-        w, h = _EXPANDED_SIZE if expand else _COMPACT_SIZE
+    def _resize_to(self, height: float, keep_top: bool = True):
+        """Resize the panel to the page's natural height, keeping the top edge
+        fixed so it grows downward from just below the selection."""
+        if height <= 0:
+            return
+        h = min(max(height, 120), _MAX_HEIGHT)
         frame = self._panel.frame()
-        screen = NSScreen.mainScreen()
+        if abs(frame.size.height - h) < 1 and frame.size.width == _PANEL_WIDTH:
+            return
         top = frame.origin.y + frame.size.height
-        new_origin_y = top - h
-        new_origin_x = frame.origin.x
+        new_y = top - h if keep_top else frame.origin.y
+        new_x = frame.origin.x
+        screen = NSScreen.mainScreen()
         if screen is not None:
-            screen_frame = screen.frame()
-            new_origin_x = max(0, min(new_origin_x, screen_frame.size.width - w))
-            new_origin_y = max(0, min(new_origin_y, screen_frame.size.height - h))
-        new_frame = NSMakeRect(new_origin_x, new_origin_y, w, h)
-        self._panel.setFrame_display_animate_(new_frame, True, animate)
+            sf = screen.visibleFrame()
+            new_x = max(sf.origin.x, min(new_x, sf.origin.x + sf.size.width - _PANEL_WIDTH))
+            new_y = max(sf.origin.y, min(new_y, sf.origin.y + sf.size.height - h))
+        animate = keep_top and self._panel.isVisible()
+        self._panel.setFrame_display_animate_(NSMakeRect(new_x, new_y, _PANEL_WIDTH, h), True, animate)
 
     @objc.python_method
     def _hide(self):
@@ -520,31 +571,28 @@ class TextPolishPanel(NSObject):
 
     @objc.python_method
     def _on_success(self, result: str):
-        self._pending_result = result
         self._js("App.onDone()")
-        segments = compute_word_diff(self._selected_text, result)
-        self._js(f"App.setDiff({json.dumps(segments)})")
+        self._parts = group_changes(self._selected_text, result)
+        layout = choose_layout(self._parts, self._selected_text, self._current_mode)
+        self._js(f"App.setChanges({json.dumps(self._parts)}, {json.dumps(layout)})")
+
+    @objc.python_method
+    def _accept(self, accepted_ids):
+        if not self._parts:
+            self._hide()
+            return
+        final = apply_choices(self._parts, accepted_ids)
+        self._parts = []
+        if final == self._selected_text:
+            self._hide()
+            return
+        self._do_paste(final)
 
     @objc.python_method
     def _do_paste(self, result: str):
-        self._pending_result = None
         self._hide()
         paste_text(result, self._app_ref)
         _add_to_history(self._selected_text, result, self._current_mode)
-        self._update_history_webview()
-
-    @objc.python_method
-    def _update_history_webview(self):
-        items = [
-            {
-                "mode":      e["mode"],
-                "ts":        e["ts"],
-                "preview":   e["original"][:60] + ("…" if len(e["original"]) > 60 else ""),
-                "corrected": e["corrected"],
-            }
-            for e in _history.entries
-        ]
-        self._js(f"App.updateHistory({json.dumps(items)})")
 
     @objc.python_method
     def _on_error(self, message: str):
