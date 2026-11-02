@@ -177,6 +177,15 @@ class TestPolishTextHardening:
             polish_text("Hello", mode="casual")
         assert mock_post.call_args.kwargs["json"]["options"]["num_ctx"] >= 1024
 
+    def test_custom_instruction_may_change_the_language(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "Hello"}
+        with patch("llm.requests.post", return_value=mock_resp) as mock_post:
+            polish_text("Bonjour à tous, voici le point", mode="custom", custom_prompt="en anglais")
+            prompt = mock_post.call_args.kwargs["json"]["prompt"]
+        assert "MUST output" not in prompt
+        assert "unless the custom instruction asks for another language" in prompt
+
     def test_correction_is_deterministic_rewrites_are_not(self):
         mock_resp = MagicMock()
         mock_resp.json.return_value = {"response": "ok"}

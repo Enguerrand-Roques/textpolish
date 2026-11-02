@@ -142,10 +142,17 @@ def polish_text(
     # model cannot miss it — this was validated in benchmark Round 2.
     lang = _detect_language(text)
     lang_names = {"fr": "French", "en": "English"}
-    lang_instruction = (
-        f"IMPORTANT: The input text is in {lang_names[lang]}. "
-        f"You MUST output in {lang_names[lang]} only.\n\n"
-    )
+    if custom_prompt:
+        # "Translate to English" must win over "answer in the input language".
+        lang_instruction = (
+            f"The input text is in {lang_names[lang]}. Answer in {lang_names[lang]} "
+            "unless the custom instruction asks for another language.\n\n"
+        )
+    else:
+        lang_instruction = (
+            f"IMPORTANT: The input text is in {lang_names[lang]}. "
+            f"You MUST output in {lang_names[lang]} only.\n\n"
+        )
 
     if custom_prompt:
         prompt_text = (
