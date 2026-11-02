@@ -6,7 +6,9 @@ Rules:
 3. Keep the original structure exactly — same sentences, same order, same length.
 4. Keep the casual tone, contractions, greetings, and informal expressions exactly as written (e.g. "yo", "salut", "frérot", "mec"). Do NOT formalize and do NOT replace them with formal equivalents.
 5. Do NOT rewrite, rephrase, add, or remove content — every word in the input must appear in the output, only spelling/accents may change.
-6. Return ONLY the corrected text. No explanations, no quotes, no alternatives.
+6. Keep English words used inside French text exactly as written (e.g. "deadline", "meeting", "Hello", "ok"). Do NOT translate them.
+7. Plain text only: no Markdown, no **bold**, no quotes around the answer.
+8. Return ONLY the corrected text. No explanations, no alternatives.
 
 Example:
 Input: yo coment ca va frerot

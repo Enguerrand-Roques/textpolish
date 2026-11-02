@@ -209,3 +209,17 @@ class TestPolishTextHardening:
         with patch("llm.requests.post", return_value=resp):
             with pytest.raises(RuntimeError, match="unreadable"):
                 polish_text("Hello", mode="casual", on_token=lambda t: None)
+
+
+class TestOutputCleanup:
+    def test_markdown_bold_added_by_model_is_removed(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "tu **l'as** mérité"}
+        with patch("llm.requests.post", return_value=mock_resp):
+            assert polish_text("tu la merité", mode="casual") == "tu l'as mérité"
+
+    def test_markdown_kept_when_user_wrote_it(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "c'est **important**"}
+        with patch("llm.requests.post", return_value=mock_resp):
+            assert polish_text("c'est **importent**", mode="casual") == "c'est **important**"

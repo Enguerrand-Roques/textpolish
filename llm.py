@@ -210,6 +210,12 @@ def polish_text(
         result = data.get("response", "").strip()
         truncated = data.get("done_reason") == "length"
 
+    # Small models sometimes wrap the words they changed in Markdown bold.
+    if "**" not in text:
+        result = result.replace("**", "")
+    if "__" not in text:
+        result = result.replace("__", "")
+
     if truncated:
         raise RuntimeError(
             "The model ran out of context and the result is incomplete. "
