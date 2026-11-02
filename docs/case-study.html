@@ -121,7 +121,7 @@
   .kinds span { display: inline-flex; align-items: center; gap: 8px; }
   .kinds i { width: 9px; height: 9px; border-radius: 50%; }
   .stat { font: 700 2rem/1 var(--display); color: var(--blue); font-variant-numeric: tabular-nums; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 18px; margin: 22px 0 18px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 18px; margin: 22px 0 18px; }
   .stats div { background: var(--sheet); padding: 16px 18px; }
   .stats p { font-size: 0.9rem; color: var(--muted); margin: 6px 0 0; }
 
@@ -148,8 +148,8 @@
     </div>
   </div>
   <figure>
-    <img class="shot" src="demo.gif" alt="Démo dans TextEdit : un message avec deux fautes est corrigé carte par carte, réécrit en Pro avec ⌘2, puis traduit en anglais avec une consigne Perso et recollé.">
-    <figcaption>Enregistrement de la vraie app dans TextEdit : correction carte par carte, puis Pro (<kbd>⌘2</kbd>), puis Perso « en anglais ».</figcaption>
+    <img class="shot" src="demo.gif" alt="Démo dans TextEdit : un message avec deux fautes est corrigé carte par carte, réécrit en Pro avec ⌘2, puis traduit en anglais avec une demande Sur mesure et recollé.">
+    <figcaption>Enregistrement de la vraie app dans TextEdit : correction carte par carte, puis Pro (<kbd>⌘2</kbd>), puis Sur mesure « en anglais ».</figcaption>
   </figure>
 </header>
 
@@ -174,7 +174,7 @@
 
 <section class="col">
   <h2>Trois modes, trois couleurs</h2>
-  <p>Le mode par défaut, Correction, ne fait que corriger. C'est voulu : la plupart du temps, je veux juste que ma phrase soit juste, pas qu'on me la réécrive. Un message à un ami doit rester mon message. Quand je veux plus, je passe à Pro ou à Perso.</p>
+  <p>Le mode par défaut, Correction, ne fait que corriger. C'est voulu : la plupart du temps, je veux juste que ma phrase soit juste, pas qu'on me la réécrive. Un message à un ami doit rester mon message. Quand je veux plus, je passe à Pro ou à Sur mesure.</p>
   <p>Chaque mode a sa couleur, partout dans la fenêtre : l'icône, l'onglet, le bouton principal et les surlignages. Même sans lire, on sait dans quel mode on est, et on ne remplace pas un texte entier par erreur en croyant juste corriger une faute. Une ligne sous les onglets dit en clair ce que fait le mode.</p>
 </section>
 <div class="wide">
@@ -190,9 +190,9 @@
       <img class="shot" src="screenshots/popup-pro-dark.png" alt="Mode Pro : un message de candidature familier réécrit en version professionnelle, couleur indigo.">
     </figure>
     <figure>
-      <div class="swatch"><i style="background:#bf5af2"></i>Perso · <kbd>⌘3</kbd></div>
+      <div class="swatch"><i style="background:#bf5af2"></i>Sur mesure · <kbd>⌘3</kbd></div>
       <p>Fait ce que je demande : traduire, raccourcir, rendre plus chaleureux ou plus drôle. Quatre idées en un clic, ou ma propre consigne.</p>
-      <img class="shot" src="screenshots/popup-perso-dark.png" alt="Mode Perso : consigne « Traduis en anglais » et le message traduit, couleur violette.">
+      <img class="shot" src="screenshots/popup-perso-dark.png" alt="Mode Sur mesure : demande « en anglais » et le message traduit, couleur violette.">
     </figure>
   </div>
 </div>
@@ -213,7 +213,7 @@
 <div class="wide">
   <div class="twoshots">
     <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : un paragraphe avec trois corrections surlignées et le bouton Appliquer."><figcaption>Texte long : tout le paragraphe, les corrections surlignées. Un clic en annule une.</figcaption></figure>
-    <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="Aucune faute : coche verte et deux boutons, Version pro et Personnaliser."><figcaption>Aucune faute : la fenêtre reste ouverte et propose la suite, une version pro ou une consigne.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="Aucune faute : coche verte et deux boutons, Version pro et Sur mesure."><figcaption>Aucune faute : la fenêtre reste ouverte et propose la suite, une version pro ou une consigne.</figcaption></figure>
   </div>
 </div>
 
@@ -221,10 +221,12 @@
   <h2>Tout reste sur le Mac</h2>
   <p>Le modèle tourne avec Ollama, directement sur mon MacBook (M2, 16 Go). Mes messages ne quittent jamais l'ordinateur, l'outil marche sans connexion, et il ne coûte rien à l'usage. En échange, il faut accepter des modèles plus petits et faire attention à la vitesse.</p>
   <div class="stats">
-    <div><div class="stat">~1 s</div><p>pour corriger ou réécrire une phrase, modèle chargé</p></div>
+    <div><div class="stat">0,5–1 s</div><p>pour corriger ou réécrire une phrase, quand le modèle est déjà chargé</p></div>
+    <div><div class="stat">3–6 s</div><p>la première fois, ou après 5 minutes sans s'en servir</p></div>
     <div><div class="stat">&lt; 1 s</div><p>pour changer de mode, contre 5 s avant</p></div>
     <div><div class="stat">0</div><p>octet envoyé sur Internet</p></div>
   </div>
+  <p>Je donne les deux temps, parce que c'est le second qu'on remarque. Après 5 minutes sans utilisation, Ollama retire le modèle de la mémoire pour rendre ses 4,3 Go au reste du Mac, et il faut le recharger. Juste après un redémarrage, la première correction a même pris 9 à 15 secondes. J'ai préféré libérer la mémoire ; on peut garder le modèle chargé plus longtemps dans les réglages.</p>
   <p>Le changement de mode coûtait 5 secondes : j'utilisais un modèle pour corriger et un autre pour réécrire, et avec un navigateur et un éditeur ouverts, mon Mac ne pouvait pas garder les deux en mémoire. J'ai fini par trouver un seul modèle assez bon pour les trois modes, et ce délai a disparu.</p>
   <p>J'ai aussi essayé MLX, le moteur d'Apple que les dernières versions d'Ollama savent utiliser. C'était trois fois plus rapide (0,34 s), mais le modèle prenait 7,4 Go de mémoire et mon Mac commençait à ramer. J'ai gardé la version plus légère et noté MLX comme option pour les Mac qui ont plus de RAM.</p>
 </section>
@@ -236,8 +238,9 @@
   <div class="iter"><div class="v">v2</div><div><p>Le résultat s'affiche avant d'être collé, avec les mots barrés et ajoutés, et la fenêtre se place sous le texte.</p><p class="why">Il fallait encore choisir un mode avant que la correction démarre.</p></div></div>
   <div class="iter"><div class="v">v3</div><div><p>Fenêtre plus petite, correction lancée dès l'ouverture.</p><p class="why">Le mode « décontracté » réécrivait mes phrases au lieu de les corriger. C'était le modèle, pas l'interface.</p></div></div>
   <div class="iter"><div class="v">v4</div><div><p>Une carte par faute, le flou natif de macOS, une hauteur qui suit le contenu, et une vue différente pour les longs textes.</p><p class="why">Quand un texte n'avait aucune faute, la fenêtre se fermait toute seule. Impossible d'en demander une version pro.</p></div></div>
-  <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et Perso a des idées toutes prêtes.</p><p class="why">Changer de mode prenait encore 5 secondes.</p></div></div>
-  <div class="iter"><div class="v">v6</div><div><p>Un seul modèle pour les trois modes : on passe de Correction à Pro ou Perso en moins d'une seconde.</p><p class="why">Version actuelle.</p></div></div>
+  <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et le troisième mode a des idées toutes prêtes.</p><p class="why">Changer de mode prenait encore 5 secondes.</p></div></div>
+  <div class="iter"><div class="v">v6</div><div><p>Un seul modèle pour les trois modes : on passe d'un mode à l'autre en moins d'une seconde.</p><p class="why">En la relisant, on ne comprenait pas que « Perso » voulait dire « personnalisé » : on pouvait y lire un ton perso, familier.</p></div></div>
+  <div class="iter"><div class="v">v7</div><div><p>« Perso » devient « Sur mesure », la ligne d'aide dit « Dis ce que tu veux », et l'icône du champ n'a plus l'air d'un chargement.</p><p class="why">Version actuelle.</p></div></div>
 </section>
 
 <section class="col">
@@ -256,7 +259,7 @@
         <tr><td>En mode Pro, <code>ministral-3:3b</code> invente un e-mail entier à partir de deux phrases.</td><td>Pro garde <code>gemma3:4b</code>.</td></tr>
         <tr><td>Le modèle de correction mettait des mots en gras et traduisait « deadline » en « délai ».</td><td>Le gras est retiré et la consigne garde les anglicismes.</td></tr>
         <tr><td>Il remplaçait <code>'</code> par <code>’</code> et ajoutait des espaces insécables.</td><td>Ces détails ne comptent plus comme des corrections.</td></tr>
-        <tr><td><code>gemma4:e2b</code> fait aussi bien en correction (10/12), mieux en Pro et en Perso, et répond en environ 1 s.</td><td>Un seul modèle pour les trois modes : plus de rechargement.</td></tr>
+        <tr><td><code>gemma4:e2b</code> fait aussi bien en correction (10/12), mieux en Pro et en Sur mesure, et répond en environ 1 s une fois chargé.</td><td>Un seul modèle pour les trois modes : plus de rechargement.</td></tr>
         <tr><td>Le même test donnait 9, 10 ou 11 bonnes réponses sur 12 selon les essais : le modèle tire ses mots un peu au hasard.</td><td>Correction est réglée pour répondre toujours la même chose : 11/12 à chaque essai.</td></tr>
         <tr><td>« J'ai finit le rapport hier soir » partait en anglais : mon détecteur de langue ne la reconnaissait pas comme du français.</td><td>Le détecteur est corrigé ; c'était mon code, pas le modèle.</td></tr>
       </tbody>
@@ -268,7 +271,7 @@
       <table>
         <thead><tr><th>Modèle</th><th>Meilleur résultat</th><th>Verdict</th></tr></thead>
         <tbody>
-          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 · ~1 s</td><td>Retenu pour les trois modes</td></tr>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 · ~1 s à chaud</td><td>Retenu pour les trois modes</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0,34 s</td><td>Le plus rapide, mais 7,4 Go de mémoire</td></tr>
           <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5/5 Pro</td><td>Même qualité, plus lent</td></tr>
           <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0,67 s</td><td>Correction en série 5 ; écrit des e-mails entiers en Pro</td></tr>
@@ -298,14 +301,14 @@
     <div class="bug"><h3>La copie échouait une fois sur deux</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé. La copie devenait ⌥⌘C, « copier le style », et rien n'était copié. L'app attend maintenant qu'on relâche les touches.</p></div>
     <div class="bug"><h3>Passer en Pro pendant la correction ne faisait rien</h3><p>L'onglet changeait, mais c'est la correction qui s'affichait. La nouvelle demande remplace maintenant l'ancienne.</p></div>
     <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur mon clavier</h3><p>Sur un clavier AZERTY, la touche 2 donne « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
-    <div class="bug"><h3><kbd>⌘↵</kbd> relançait Perso au lieu de coller</h3><p>Après avoir tapé une consigne, le curseur reste dans le champ. <kbd>⌘↵</kbd> y relançait la consigne et rien n'était collé. Maintenant <kbd>↵</kbd> lance la consigne et <kbd>⌘↵</kbd> remplace le texte.</p></div>
+    <div class="bug"><h3><kbd>⌘↵</kbd> relançait Sur mesure au lieu de coller</h3><p>Après avoir tapé une consigne, le curseur reste dans le champ. <kbd>⌘↵</kbd> y relançait la consigne et rien n'était collé. Maintenant <kbd>↵</kbd> lance la consigne et <kbd>⌘↵</kbd> remplace le texte.</p></div>
     <div class="bug"><h3>Trois copies de l'app tournaient en même temps</h3><p>Chaque lancement en ajoutait une, et toutes répondaient au raccourci. Une seule peut tourner maintenant.</p></div>
   </div>
 </section>
 
 <section class="col">
   <h2>Chronométré dans la vraie app</h2>
-  <p>Un script joue sept scénarios dans TextEdit comme le ferait quelqu'un au clavier, et mesure ce qu'on ressent. Les sept passent, deux fois de suite, avec des temps qui se répètent.</p>
+  <p>Un script joue sept scénarios dans TextEdit comme le ferait quelqu'un au clavier, et mesure ce qu'on ressent. Les sept passent, deux fois de suite, avec des temps qui se répètent. Ces temps sont mesurés modèle chargé ; la toute première demande ajoute les 3 à 6 secondes de chargement.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Scénario</th><th>Résultat affiché</th><th>Vérifié</th></tr></thead>
@@ -313,7 +316,7 @@
         <tr><td>SMS avec deux fautes, accepté avec <kbd>↵</kbd></td><td class="num">0,9–1,0 s</td><td>Texte corrigé collé</td></tr>
         <tr><td>Texte sans faute, puis <kbd>⌘2</kbd></td><td class="num">0,75–0,8 s</td><td>La fenêtre reste ouverte, version pro proposée</td></tr>
         <tr><td><kbd>⌘2</kbd> pendant la correction</td><td class="num">1,6–1,7 s</td><td>C'est la version pro qui s'affiche</td></tr>
-        <tr><td>Perso « en anglais », puis <kbd>⌘↵</kbd></td><td class="num">0,6 s</td><td>Phrase traduite collée</td></tr>
+        <tr><td>Sur mesure « en anglais », puis <kbd>⌘↵</kbd></td><td class="num">0,6 s</td><td>Phrase traduite collée</td></tr>
         <tr><td>Compte rendu de 338 caractères, tout accepter</td><td class="num">2,7 s</td><td>9 corrections collées</td></tr>
         <tr><td>Aucun texte sélectionné</td><td class="num">1,2 s</td><td>Message d'aide, le modèle n'est pas appelé</td></tr>
         <tr><td><kbd>Échap</kbd></td><td class="num">0,35 s</td><td>Fenêtre fermée, texte intact</td></tr>
@@ -325,7 +328,7 @@
 
 <section class="col">
   <h2>La suite</h2>
-  <p>Le modèle actuel reste petit : il rate encore une faute sur douze (il supprime un point d'interrogation), et son humour en mode Perso est limité. Les prochaines pistes sont un modèle entraîné spécialement sur la grammaire française, et la version MLX quand j'aurai un Mac avec plus de mémoire. Les petits modèles que j'ai essayés (Qwen 3.5 2B, LFM3) étaient rapides, mais ajoutaient des fautes ou affichaient leur raisonnement dans la réponse.</p>
+  <p>Le modèle actuel reste petit : il rate encore une faute sur douze (il supprime un point d'interrogation), et son humour en mode Sur mesure est limité. Les prochaines pistes sont un modèle entraîné spécialement sur la grammaire française, et la version MLX quand j'aurai un Mac avec plus de mémoire. Les petits modèles que j'ai essayés (Qwen 3.5 2B, LFM3) étaient rapides, mais ajoutaient des fautes ou affichaient leur raisonnement dans la réponse.</p>
 </section>
 
 <section class="col">

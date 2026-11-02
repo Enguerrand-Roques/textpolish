@@ -8,10 +8,10 @@
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo above is the real app, recorded by `design/record_demo.py`. Runs silently in the menubar / system tray.
 
 <p align="center">
-  <img src="docs/demo.gif" width="560" alt="Demo in TextEdit: a message with two mistakes is corrected card by card, then rewritten in Pro with ⌘2, then translated with a Perso instruction and pasted back">
+  <img src="docs/demo.gif" width="560" alt="Demo in TextEdit: a message with two mistakes is corrected card by card, then rewritten in Pro with ⌘2, then translated with a Sur mesure request and pasted back">
 </p>
 
-The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro/Perso. Everything runs locally.
+The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Sur mesure. Everything runs locally.
 
 → UX case study (design process, iterations, real-use testing): [`docs/case-study.html`](docs/case-study.html) · all popup states: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
 
@@ -166,7 +166,7 @@ Edit `config.py` (excluded from Git — never committed):
 OLLAMA_BASE_URL     = "http://localhost:11434"
 OLLAMA_MODEL_CASUAL = "gemma4:e2b-it-qat"   # Correction
 OLLAMA_MODEL_PRO    = "gemma4:e2b-it-qat"   # Pro
-OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Perso (custom instructions)
+OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Sur mesure (custom instructions)
 OLLAMA_TIMEOUT      = 60
 OLLAMA_KEEP_ALIVE   = 300
 SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+Alt+G
@@ -176,13 +176,20 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 
 ## Rewrite Modes
 
-| Mode | Speed | Best for |
-|------|-------|----------|
-| **Correction** | ~1s | Fixes mistakes, keeps your wording (default) |
-| **Pro** | ~1s | Emails, LinkedIn, formal writing — full rewrite |
-| **Perso** | ~1s | Any instruction: translate, shorter, warmer, funnier |
+| Mode | Best for |
+|------|----------|
+| **Correction** (default) | Fixes mistakes, keeps your wording |
+| **Pro** (⌘2) | Emails, LinkedIn, formal writing — full rewrite |
+| **Sur mesure** (⌘3) | Your own request: translate, shorter, warmer, funnier |
 
-Times are with the model already loaded on an M2 16 GB; the first request after a while takes a few more seconds to load it.
+**Speed, measured on an M2 16 GB:**
+
+| | Warm (model in RAM) | Cold (model not loaded) |
+|---|---:|---:|
+| Short sentence, any mode | 0.5–1.1 s | 3–6 s |
+| 338-character report (Correction) | 2.7 s | — |
+
+Cold happens on the first request and again after 5 minutes without use (`OLLAMA_KEEP_ALIVE = 300` frees the 4.3 GB of RAM). Right after a reboot, when macOS has not cached the model file yet, the first request took 9–15 s. Raise `OLLAMA_KEEP_ALIVE` if you prefer speed over free RAM.
 
 ---
 
@@ -219,19 +226,21 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 
 **Current configuration (Round 6, November 2026):**
 
-| Mode | Model | Warm latency | Score |
-|------|-------|-------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 11 / 12 expected fixes, no rewrite of correct texts |
-| Pro | `gemma4:e2b-it-qat` | 1.1 s | 5 / 5 checks |
-| Perso | `gemma4:e2b-it-qat` | 1.1 s | 3 / 3 checks |
+| Mode | Model | Warm (median) | Cold (median, range) | Score |
+|------|-------|-------------:|------------:|:-----:|
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 11 / 12 expected fixes, no rewrite of correct texts |
+| Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks |
+| Sur mesure | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks |
+
+Warm = median over the test set with the model in RAM. Cold = `ollama stop`, then one request, 3 runs per mode; the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
 
 Key findings that shaped this choice:
 
 - **One model beats two.** With a Correction model and a Pro model, every mode switch reloaded a model (~5 s on 16 GB). One model makes switching instant.
-- **Gemma 4 E2B matches the previous Correction model and is better at Pro and Perso.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
+- **Gemma 4 E2B matches the previous Correction model and is better at Pro and Sur mesure.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
-- **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Perso use 0.4.
+- **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Sur mesure use 0.4.
 - **Language detection had a bug** that sent short unaccented French ("J'ai finit le rapport hier soir") to English; fixed in `llm.py`.
 - Earlier rounds: QAT builds and `num_ctx: 1024` cut latency and RAM; `gemma3:1b` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 

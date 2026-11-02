@@ -346,6 +346,20 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting.
 4. **Temperature matters more than expected for Correction.** Gemma 4 defaults to temperature 1; three identical runs scored 9, 10 and 11/12. `llm.py` now sends 0 for Correction (same answer every run) and 0.4 for Pro/Perso (more consistent tone, still varied). Final run: **11/12** twice in a row; the remaining miss drops the "?" in "slt tu fais quoi ce soir ? on peut…". "si tout ça se passe bien" was added as an accepted answer (correct and same meaning).
 
+### Cold vs warm latency (chosen model, app pipeline)
+
+Measured with `polish_text()` after `ollama stop` (cold) and on the next three calls (warm), 3 runs per mode, short sentences:
+
+| Mode | Cold median | Cold range | Warm median |
+|------|------------:|-----------:|------------:|
+| Correction | 4.96 s | 3.68–6.28 s | 0.56 s |
+| Pro | 3.43 s | 2.97–3.99 s | 0.51 s |
+| Sur mesure (custom) | 3.08 s | 3.00–3.79 s | 0.56 s |
+
+The model file stayed in macOS's file cache between runs. Cold loads with an empty cache (first request after a reboot, or after heavy memory use) were 9.4 s and 15.4 s in this round. With `OLLAMA_KEEP_ALIVE = 300` a cold load happens again after 5 minutes idle. The warm numbers in the tables above are higher (0.9–1.1 s) because the test set has longer sentences.
+
+The Perso mode was renamed **Sur mesure** in the app after this round; the tables keep the name used at the time.
+
 ### Decision
 
 | Setting | Before | After |

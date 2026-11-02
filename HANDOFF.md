@@ -82,3 +82,9 @@ Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was ident
 - Bug found by it: ⌘↵ with the cursor in the Perso field re-ran the instruction instead of pasting. Fixed in `panel.html`.
 - Not changed: "no selection" takes ~1.2 s because the copy waits up to 1 s for slow apps (`_COPY_TIMEOUT`).
 
+## Honest latency and "Sur mesure" (November 2, 2026, later)
+
+- Docs now give cold and warm times. Warm 0.5-1.1 s; cold 3-6 s (model file cached), 9-15 s after a reboot. Cold also happens after 5 min idle (`OLLAMA_KEEP_ALIVE = 300`).
+- The third mode "Perso" is now "Sur mesure" in the UI (people read "Perso" as a familiar tone, not "custom"). Hint: "Dis ce que tu veux…"; the field icon is a wand (the sparkle looked like a loading spinner). Footer shortened to "Tout reste sur ton Mac, rien ne part en ligne" so it fits on one line. Internal mode id is still `custom`.
+- Screenshots, all-states images and `docs/demo.gif` re-recorded with the new label. `design/shoot.sh` uses a 12 s virtual-time budget; with 4 s the captures froze mid-animation.
+
