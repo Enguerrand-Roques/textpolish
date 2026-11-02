@@ -138,8 +138,8 @@
     <p class="lede" style="margin-top:18px">J'écris vite, sur mon téléphone comme sur mon Mac, et je laisse passer des fautes. J'ai construit un petit outil qui les corrige <span class="fix"><s>sans quiter</s> <ins>sans quitter</ins></span> l'app où j'écris : je sélectionne, j'appuie sur <kbd>⌥⌘G</kbd>, et une fenêtre me propose les corrections une par une. Le modèle tourne sur mon Mac, rien ne part sur Internet.</p>
     <div class="meta">
       <span class="label">Python · PyObjC · WebKit</span>
-      <span class="label">Ollama · Ministral 3B · Gemma 3</span>
-      <span class="label">109 tests</span>
+      <span class="label">Ollama · Gemma 4 E2B</span>
+      <span class="label">111 tests</span>
     </div>
   </div>
   <figure>
@@ -216,11 +216,12 @@
   <h2>Tout reste sur le Mac</h2>
   <p>Le modèle tourne avec Ollama, directement sur mon MacBook (M2, 16 Go). Mes messages ne quittent jamais l'ordinateur, l'outil marche sans connexion, et il ne coûte rien à l'usage. En échange, il faut accepter des modèles plus petits et faire attention à la vitesse.</p>
   <div class="stats">
-    <div><div class="stat">~1 s</div><p>pour corriger une phrase quand le modèle est déjà chargé</p></div>
-    <div><div class="stat">~5 s</div><p>quand on change de mode : le Mac recharge l'autre modèle</p></div>
+    <div><div class="stat">~1 s</div><p>pour corriger ou réécrire une phrase, modèle chargé</p></div>
+    <div><div class="stat">&lt; 1 s</div><p>pour changer de mode, contre 5 s avant</p></div>
     <div><div class="stat">0</div><p>octet envoyé sur Internet</p></div>
   </div>
-  <p>Le deuxième chiffre m'a surpris. J'ai essayé de garder les deux modèles en mémoire en même temps, mais avec un navigateur et un éditeur ouverts, il ne reste pas assez de place sur 16 Go. C'est la prochaine chose à améliorer.</p>
+  <p>Le changement de mode coûtait 5 secondes : j'utilisais un modèle pour corriger et un autre pour réécrire, et avec un navigateur et un éditeur ouverts, mon Mac ne pouvait pas garder les deux en mémoire. J'ai fini par trouver un seul modèle assez bon pour les trois modes, et ce délai a disparu.</p>
+  <p>J'ai aussi essayé MLX, le moteur d'Apple que les dernières versions d'Ollama savent utiliser. C'était trois fois plus rapide (0,34 s), mais le modèle prenait 7,4 Go de mémoire et mon Mac commençait à ramer. J'ai gardé la version plus légère et noté MLX comme option pour les Mac qui ont plus de RAM.</p>
 </section>
 
 <section class="col">
@@ -230,7 +231,8 @@
   <div class="iter"><div class="v">v2</div><div><p>Le résultat s'affiche avant d'être collé, avec les mots barrés et ajoutés, et la fenêtre se place sous le texte.</p><p class="why">Il fallait encore choisir un mode avant que la correction démarre.</p></div></div>
   <div class="iter"><div class="v">v3</div><div><p>Fenêtre plus petite, correction lancée dès l'ouverture.</p><p class="why">Le mode « décontracté » réécrivait mes phrases au lieu de les corriger. C'était le modèle, pas l'interface.</p></div></div>
   <div class="iter"><div class="v">v4</div><div><p>Une carte par faute, le flou natif de macOS, une hauteur qui suit le contenu, et une vue différente pour les longs textes.</p><p class="why">Quand un texte n'avait aucune faute, la fenêtre se fermait toute seule. Impossible d'en demander une version pro.</p></div></div>
-  <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et Perso a des idées toutes prêtes.</p><p class="why">Version actuelle.</p></div></div>
+  <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et Perso a des idées toutes prêtes.</p><p class="why">Changer de mode prenait encore 5 secondes.</p></div></div>
+  <div class="iter"><div class="v">v6</div><div><p>Un seul modèle pour les trois modes : on passe de Correction à Pro ou Perso en moins d'une seconde.</p><p class="why">Version actuelle.</p></div></div>
 </section>
 
 <section class="col">
@@ -240,7 +242,7 @@
 
 <section class="col">
   <h2>Choisir le modèle</h2>
-  <p>J'ai testé une dizaine de modèles sur des phrases en français et en anglais, avec un autre modèle pour noter les résultats. Quelques constats ont changé le produit :</p>
+  <p>J'ai testé une quinzaine de modèles en six séries. Pour la dernière, j'ai écrit une liste de phrases avec la correction attendue, dont trois phrases sans faute qu'un bon correcteur ne doit pas toucher. Ça permet de compter, au lieu de se fier à une impression. Quelques constats ont changé le produit :</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Ce que j'ai vu</th><th>Ce que j'ai changé</th></tr></thead>
@@ -249,6 +251,8 @@
         <tr><td>En mode Pro, <code>ministral-3:3b</code> invente un e-mail entier à partir de deux phrases.</td><td>Pro garde <code>gemma3:4b</code>.</td></tr>
         <tr><td>Le modèle de correction mettait des mots en gras et traduisait « deadline » en « délai ».</td><td>Le gras est retiré et la consigne garde les anglicismes.</td></tr>
         <tr><td>Il remplaçait <code>'</code> par <code>’</code> et ajoutait des espaces insécables.</td><td>Ces détails ne comptent plus comme des corrections.</td></tr>
+        <tr><td><code>gemma4:e2b</code> fait aussi bien en correction (10/12), mieux en Pro et en Perso, et répond en environ 1 s.</td><td>Un seul modèle pour les trois modes : plus de rechargement.</td></tr>
+        <tr><td>« J'ai finit le rapport hier soir » partait en anglais : mon détecteur de langue ne la reconnaissait pas comme du français.</td><td>Le détecteur est corrigé ; c'était mon code, pas le modèle.</td></tr>
       </tbody>
     </table>
   </div>
@@ -267,7 +271,7 @@
 
 <section class="col">
   <h2>La suite</h2>
-  <p>Les nouvelles versions d'Ollama utilisent MLX, le moteur d'Apple, pour certains modèles. Je veux mesurer si ça réduit les 5 secondes de changement de mode. Je veux aussi essayer de petits modèles sortis récemment (Qwen 3.5 2B, LFM3) pour la correction, et un modèle entraîné spécialement sur la grammaire française.</p>
+  <p>Le modèle actuel reste petit : il rate encore deux fautes sur douze, et son humour en mode Perso est limité. Les prochaines pistes sont un modèle entraîné spécialement sur la grammaire française, et la version MLX quand j'aurai un Mac avec plus de mémoire. Les petits modèles que j'ai essayés (Qwen 3.5 2B, LFM3) étaient rapides, mais ajoutaient des fautes ou affichaient leur raisonnement dans la réponse.</p>
 </section>
 
 <section class="col">
