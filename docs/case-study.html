@@ -148,8 +148,8 @@
     </div>
   </div>
   <figure>
-    <img class="shot" src="demo.gif" alt="Démo dans TextEdit : un message avec deux fautes est corrigé carte par carte, réécrit en Pro avec ⌘2, puis traduit en anglais avec une demande Sur mesure et recollé.">
-    <figcaption>Enregistrement de la vraie app dans TextEdit : correction carte par carte, puis Pro (<kbd>⌘2</kbd>), puis Sur mesure « en anglais ».</figcaption>
+    <img class="shot" src="demo.gif" alt="Démo dans TextEdit : un message de 13 fautes est corrigé, chaque faute avec son type, puis réécrit en Pro avec ⌘2, puis traduit en anglais avec une demande Sur mesure et recollé.">
+    <figcaption>Enregistrement de la vraie app dans TextEdit : un message de 13 fautes corrigé, puis Pro (<kbd>⌘2</kbd>), puis Sur mesure « en anglais ». Seule la frappe est accélérée ; le chronomètre montre le vrai temps du modèle.</figcaption>
   </figure>
 </header>
 
@@ -212,7 +212,7 @@
 </section>
 <div class="wide">
   <div class="twoshots">
-    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : un paragraphe avec trois corrections surlignées et le bouton Appliquer."><figcaption>Texte long : tout le paragraphe, les corrections surlignées. Un clic en annule une.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : un message avec 13 corrections surlignées et une légende Conjugaison 5, Grammaire 3, Accord 3, Orthographe 1, Ponctuation 1."><figcaption>Texte long : tout le message, chaque correction surlignée avec son type. Un clic en annule une.</figcaption></figure>
     <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="Aucune faute : coche verte et deux boutons, Version pro et Sur mesure."><figcaption>Aucune faute : la fenêtre reste ouverte et propose la suite, une version pro ou une consigne.</figcaption></figure>
   </div>
 </div>
@@ -240,7 +240,8 @@
   <div class="iter"><div class="v">v4</div><div><p>Une carte par faute, le flou natif de macOS, une hauteur qui suit le contenu, et une vue différente pour les longs textes.</p><p class="why">Quand un texte n'avait aucune faute, la fenêtre se fermait toute seule. Impossible d'en demander une version pro.</p></div></div>
   <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et le troisième mode a des idées toutes prêtes.</p><p class="why">Changer de mode prenait encore 5 secondes.</p></div></div>
   <div class="iter"><div class="v">v6</div><div><p>Un seul modèle pour les trois modes : on passe d'un mode à l'autre en moins d'une seconde.</p><p class="why">En la relisant, on ne comprenait pas que « Perso » voulait dire « personnalisé » : on pouvait y lire un ton perso, familier.</p></div></div>
-  <div class="iter"><div class="v">v7</div><div><p>« Perso » devient « Sur mesure », la ligne d'aide dit « Dis ce que tu veux », et l'icône du champ n'a plus l'air d'un chargement.</p><p class="why">Version actuelle.</p></div></div>
+  <div class="iter"><div class="v">v7</div><div><p>« Perso » devient « Sur mesure », la ligne d'aide dit « Dis ce que tu veux », et l'icône du champ n'a plus l'air d'un chargement.</p><p class="why">Toutes les fautes de grammaire portaient la même étiquette « Orthographe ».</p></div></div>
+  <div class="iter"><div class="v">v8</div><div><p>Chaque faute dit ce qu'elle est : conjugaison, accord, homophone (a/à, ces/c'est), orthographe, ponctuation. Sur un long message, la légende les compte.</p><p class="why">Version actuelle.</p></div></div>
 </section>
 
 <section class="col">
@@ -301,6 +302,7 @@
     <div class="bug"><h3>La copie échouait une fois sur deux</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé. La copie devenait ⌥⌘C, « copier le style », et rien n'était copié. L'app attend maintenant qu'on relâche les touches.</p></div>
     <div class="bug"><h3>Passer en Pro pendant la correction ne faisait rien</h3><p>L'onglet changeait, mais c'est la correction qui s'affichait. La nouvelle demande remplace maintenant l'ancienne.</p></div>
     <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur mon clavier</h3><p>Sur un clavier AZERTY, la touche 2 donne « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
+    <div class="bug"><h3>« En anglais » ne traduisait plus les longs textes</h3><p>Trouvé en tournant la vidéo. Pour éviter les traductions involontaires, l'app dit au modèle « réponds dans la langue du texte ». En mode Sur mesure, cette règle contredisait la demande. Elle cède maintenant la place à la consigne.</p></div>
     <div class="bug"><h3><kbd>⌘↵</kbd> relançait Sur mesure au lieu de coller</h3><p>Après avoir tapé une consigne, le curseur reste dans le champ. <kbd>⌘↵</kbd> y relançait la consigne et rien n'était collé. Maintenant <kbd>↵</kbd> lance la consigne et <kbd>⌘↵</kbd> remplace le texte.</p></div>
     <div class="bug"><h3>Trois copies de l'app tournaient en même temps</h3><p>Chaque lancement en ajoutait une, et toutes répondaient au raccourci. Une seule peut tourner maintenant.</p></div>
   </div>

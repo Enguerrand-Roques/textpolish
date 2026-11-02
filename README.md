@@ -8,10 +8,10 @@
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo above is the real app, recorded by `design/record_demo.py`. Runs silently in the menubar / system tray.
 
 <p align="center">
-  <img src="docs/demo.gif" width="560" alt="Demo in TextEdit: a message with two mistakes is corrected card by card, then rewritten in Pro with ⌘2, then translated with a Sur mesure request and pasted back">
+  <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 379-character message with 13 mistakes is corrected with each fix labelled (conjugation, agreement, homophones, spelling, punctuation), then rewritten in Pro with ⌘2, then translated with a Sur mesure request and pasted back">
 </p>
 
-<p align="center"><b><a href="docs/textpolish-demo.mp4">▶ Watch the 40-second video</a></b> — real recordings of the app, not sped up (made with <a href="video/">Remotion</a>).</p>
+<p align="center"><b><a href="docs/textpolish-demo.mp4">▶ Watch the 50-second video</a></b> — real recordings of the app; only the typing is sped up, the on-screen stopwatch shows the real model time (made with <a href="video/">Remotion</a>).</p>
 
 The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Sur mesure. Everything runs locally.
 

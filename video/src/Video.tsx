@@ -29,50 +29,61 @@ type Scene = {
   clip: "demo" | "menu";
   from: number; // source seconds
   to: number;
+  rate?: number; // playback speed, only for typing
   color: string;
   cams: Cam[];
   captions: Caption[];
+  waits?: { start: number; end: number }[]; // model at work: show a stopwatch
 };
 
 const CLIPS = {
-  // demo: TextEdit window, 900×520 pt recorded at 2x
-  demo: { src: "raw/demo.mp4", w: 1800, h: 1040, cropX: 0, cropW: 1800, cropH: 1040, base: 1500 / 1800 },
+  // demo: TextEdit window, 980×760 pt recorded at 2x; the empty bottom is cropped
+  demo: { src: "raw/demo.mp4", w: 1960, h: 1520, cropX: 0, cropW: 1960, cropH: 1360, base: 1000 / 1360 },
   // menu: right side of the menu bar; the left part is cropped out
   menu: { src: "raw/menu.mp4", w: 2040, h: 600, cropX: 300, cropW: 1740, cropH: 600, base: 1700 / 1740 },
 };
 
-const WIDE: Omit<Cam, "at"> = { z: 1, fx: 900, fy: 520 };
-const PANEL: Omit<Cam, "at"> = { z: 1.5, fx: 395, fy: 590 };
-const TEXT_LINE: Omit<Cam, "at"> = { z: 1.45, fx: 690, fy: 232 };
+const WIDE: Omit<Cam, "at"> = { z: 1, fx: 980, fy: 680 };
+// Panel on the right half, so captions on the left never cover it.
+const PANEL: Omit<Cam, "at"> = { z: 1.35, fx: 62, fy: 880 };
+const TEXT_LINE: Omit<Cam, "at"> = { z: 1.26, fx: 980, fy: 305 };
 
+// Source times are events.json times minus OFFSET (see design/record_video.py).
 const SCENES: Scene[] = [
   {
-    clip: "demo", from: 0.6, to: 11.9, color: BLUE,
-    cams: [{ at: 0.6, ...WIDE }, { at: 4.1, ...PANEL }, { at: 10.7, ...TEXT_LINE }],
-    captions: [
-      { at: 0.6, text: "Write anywhere on your Mac." },
-      { at: 4.0, text: "Select the text, press ⌥⌘G." },
-      { at: 6.1, text: "One card per mistake. ↵ to accept." },
-      { at: 10.65, text: "Fixed, right where you typed." },
-    ],
+    clip: "demo", from: 0.6, to: 8.7, rate: 3, color: BLUE,
+    cams: [{ at: 0.6, ...WIDE }],
+    captions: [{ at: 0.6, text: "Write anywhere on your Mac." }],
   },
   {
-    clip: "demo", from: 11.9, to: 20.2, color: INDIGO,
-    cams: [{ at: 11.9, ...TEXT_LINE }, { at: 12.75, ...PANEL }],
+    clip: "demo", from: 8.7, to: 21.0, color: BLUE,
+    cams: [{ at: 8.7, ...WIDE }, { at: 9.4, ...PANEL }, { at: 19.8, ...TEXT_LINE }],
     captions: [
-      { at: 11.9, text: "Already correct?" },
-      { at: 14.75, text: "Nothing to fix. Want more?" },
-      { at: 16.55, text: "⌘2 · Pro rewrites it for work." },
+      { at: 8.7, text: "Select a whole message, press ⌥⌘G." },
+      { at: 13.8, text: "13 mistakes found, each one labelled." },
+      { at: 16.2, text: "Conjugation, agreement, homophones, spelling…" },
+      { at: 19.8, text: "⌘↵ fixes them all in place." },
     ],
+    waits: [{ start: 9.32, end: 13.78 }],
   },
   {
-    clip: "demo", from: 20.2, to: 27.9, color: PURPLE,
-    cams: [{ at: 20.2, ...PANEL, fy: 605 }, { at: 26.6, ...TEXT_LINE }],
+    clip: "demo", from: 25.9, to: 34.2, color: INDIGO,
+    cams: [{ at: 25.9, ...PANEL }],
     captions: [
-      { at: 20.2, text: "⌘3 · Sur mesure: ask for anything." },
-      { at: 23.2, text: "Here: “en anglais” (in English)." },
-      { at: 26.6, text: "Translated and pasted back." },
+      { at: 25.9, text: "Already correct? It tells you." },
+      { at: 28.15, text: "⌘2 · Pro rewrites it for work." },
     ],
+    waits: [{ start: 28.16, end: 32.1 }],
+  },
+  {
+    clip: "demo", from: 34.2, to: 45.0, color: PURPLE,
+    cams: [{ at: 34.2, ...PANEL }, { at: 43.2, ...TEXT_LINE }],
+    captions: [
+      { at: 34.2, text: "⌘3 · Sur mesure: ask for anything." },
+      { at: 36.6, text: "Here: “en anglais” (in English)." },
+      { at: 43.2, text: "Translated and pasted back." },
+    ],
+    waits: [{ start: 36.62, end: 39.82 }],
   },
   {
     clip: "menu", from: 0.6, to: 8.6, color: TEAL,
@@ -87,7 +98,7 @@ const SCENES: Scene[] = [
 const KEYS = new Set(["⌘A", "⌥⌘G", "↵", "⌘2", "⌘3", "⌘↵"]);
 const INTRO = 90;
 const OUTRO = 120;
-const sceneFrames = (s: Scene) => Math.round((s.to - s.from) * FPS);
+const sceneFrames = (s: Scene) => Math.round(((s.to - s.from) / (s.rate ?? 1)) * FPS);
 export const TOTAL_FRAMES = INTRO + SCENES.reduce((n, s) => n + sceneFrames(s), 0) + OUTRO;
 
 const ease = Easing.bezier(0.45, 0, 0.2, 1);
@@ -118,7 +129,8 @@ const Backdrop: React.FC<{ color: string; drift: number }> = ({ color, drift }) 
 const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
   const frame = useCurrentFrame();
   const dur = sceneFrames(scene);
-  const t = scene.from + frame / FPS;
+  const rate = scene.rate ?? 1;
+  const t = scene.from + (frame / FPS) * rate;
   const c = CLIPS[scene.clip];
   const cam = camAt(scene.cams, t);
   const s = c.base * cam.z;
@@ -147,6 +159,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
         <OffthreadVideo
           src={staticFile(c.src)}
           trimBefore={Math.round(scene.from * FPS)}
+          playbackRate={rate}
           muted
           style={{ position: "absolute", left: -c.cropX, top: 0, width: c.w, height: c.h }}
         />
@@ -160,7 +173,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
       {caption && (
         <div
           style={{
-            position: "absolute", left: 110, bottom: 84, display: "flex", alignItems: "center", gap: 22,
+            position: "absolute", left: 110, bottom: 84, maxWidth: 760, display: "flex", alignItems: "center", gap: 22,
             padding: "22px 34px", borderRadius: 26,
             background: "rgba(16,18,24,.72)", backdropFilter: "blur(24px)",
             boxShadow: "0 0 0 1px rgba(255,255,255,.1), 0 20px 60px rgba(0,0,0,.4)",
@@ -168,12 +181,19 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
             transform: `translateY(${interpolate(captionAge, [0, 10], [16, 0], { extrapolateRight: "clamp", easing: ease })}px)`,
           }}
         >
-          <span style={{ width: 16, height: 16, borderRadius: 8, background: scene.color, boxShadow: `0 0 18px ${scene.color}` }} />
-          <span style={{ fontFamily: FONT, fontSize: 46, fontWeight: 600, color: "white", letterSpacing: -0.5 }}>{caption.text}</span>
+          <span style={{ width: 16, height: 16, flexShrink: 0, borderRadius: 8, background: scene.color, boxShadow: `0 0 18px ${scene.color}` }} />
+          <span style={{ fontFamily: FONT, fontSize: 44, fontWeight: 600, lineHeight: 1.2, color: "white", letterSpacing: -0.5 }}>{caption.text}</span>
         </div>
       )}
 
-      {key && <KeyChip label={key.label} age={(t - key.t) * FPS} color={scene.color} />}
+      {key && <KeyChip label={key.label} age={((t - key.t) * FPS) / rate} color={scene.color} />}
+      {rate !== 1 && <Badge text={`Typing sped up ${rate}×`} />}
+      {(scene.waits ?? []).map((w) =>
+        t >= w.start && t < w.end + 1.6 ? (
+          <Stopwatch key={w.start} seconds={Math.min(t, w.end) - w.start} done={t >= w.end}
+            age={(t - w.start) * FPS} color={scene.color} />
+        ) : null,
+      )}
     </AbsoluteFill>
   );
 };
@@ -196,6 +216,37 @@ const KeyChip: React.FC<{ label: string; age: number; color: string }> = ({ labe
     </div>
   );
 };
+
+// Real elapsed time while the local model works (the clips are not sped up).
+const Stopwatch: React.FC<{ seconds: number; done: boolean; age: number; color: string }> = ({ seconds, done, age, color }) => {
+  const appear = interpolate(age, [0, 8], [0, 1], { extrapolateRight: "clamp" });
+  return (
+    <div
+      style={{
+        position: "absolute", left: 110, top: 84, display: "flex", alignItems: "center", gap: 18,
+        padding: "16px 28px", borderRadius: 24, fontFamily: FONT, color: "white",
+        background: "rgba(16,18,24,.72)", backdropFilter: "blur(24px)",
+        boxShadow: `0 0 0 1px rgba(255,255,255,.1), 0 0 40px ${done ? "#30d15855" : color + "44"}`,
+        opacity: appear, transform: `translateY(${(1 - appear) * -12}px)`,
+      }}
+    >
+      <span style={{ fontSize: 26, fontWeight: 500, color: "rgba(255,255,255,.7)" }}>
+        {done ? "Done on this Mac" : "Gemma 4, on this Mac"}
+      </span>
+      <span style={{ fontSize: 44, fontWeight: 700, fontVariantNumeric: "tabular-nums", color: done ? "#30d158" : "white" }}>
+        {seconds.toFixed(1)} s
+      </span>
+    </div>
+  );
+};
+
+const Badge: React.FC<{ text: string }> = ({ text }) => (
+  <div style={{ position: "absolute", right: 110, top: 84, padding: "14px 26px", borderRadius: 20, fontFamily: FONT,
+    fontSize: 30, fontWeight: 600, color: "rgba(255,255,255,.85)", background: "rgba(16,18,24,.72)",
+    boxShadow: "0 0 0 1px rgba(255,255,255,.12)" }}>
+    ⏩ {text}
+  </div>
+);
 
 // ── Title cards ────────────────────────────────────────────────────────────
 const Glyph: React.FC<{ size: number }> = ({ size }) => (
@@ -220,7 +271,7 @@ const Title: React.FC<{ outro?: boolean }> = ({ outro }) => {
   const fadeIn = interpolate(frame, [0, 10], [0, 1], { extrapolateRight: "clamp" });
   const rise = (d: number) => ({ opacity: at(d), transform: `translateY(${(1 - at(d)) * 30}px)` });
   const chips = outro
-    ? ["Gemma 4 E2B via Ollama", "0.5–1 s per fix, model loaded", "Nothing leaves your Mac"]
+    ? ["Gemma 4 E2B via Ollama", "Runs offline", "Nothing leaves your Mac"]
     : ["Runs on your Mac", "Private by design", "Open source"];
 
   return (

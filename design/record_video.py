@@ -29,7 +29,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fluidity import close, key, log_size, osa, panel_visible, shortcut, type_text, wait_ready, wait_until  # noqa: E402
 
 OUT = os.path.abspath(sys.argv[1])
-WIN = (200, 140, 900, 520)  # TextEdit window: x, y, w, h (points)
+WIN = (150, 100, 980, 760)  # TextEdit window: x, y, w, h (points)
+# Long enough to open the document view and show several kinds of mistakes
+# (conjugation, agreement, spelling, punctuation).
+TEXT = ("Bonjour a tous, voici un petit point sur le projet. Hier soir on a finit la nouvelle "
+        "version tard, les testes sont passer et le client a était content de ce qu'il a vu. "
+        "Par contre il reste quelque bug sur la page de connexion et ces surtout sur mobile que "
+        "sa bloque. Est ce que quelqu'un peux s'en occupé demain matin, je pense qu'on a encore "
+        "besoin de deux jour pour tout finir.")
 os.makedirs(OUT, exist_ok=True)
 MENU_ONLY = "menu-only" in sys.argv[2:]
 EVENTS = os.path.join(OUT, "events.json")
@@ -104,7 +111,7 @@ def by_title(items, title):
 def fresh_text():
     """Empty document whose typing size is 24 pt."""
     osa('tell application "TextEdit" to set text of front document to "x"')
-    osa('tell application "TextEdit" to set size of text of front document to 24')
+    osa('tell application "TextEdit" to set size of text of front document to 22')
     osa('tell application "System Events" to keystroke "a" using command down')
     time.sleep(0.3)
 
@@ -142,22 +149,20 @@ def film_demo():
     fresh_text()
 
     # ── Clip 1: the app in TextEdit ─────────────────────────────────────────────
-    proc = record("demo", WIN, 46)
+    proc = record("demo", WIN, 55)
     mark("type")
-    type_text("Salut ! J'ai finit le rapport hier soir, les chiffres sont opérationel.")
+    type_text(TEXT)
     time.sleep(0.8)
     mark("⌘A")
     select_all()
     since = log_size()
     mark("⌥⌘G")
     shortcut()
-    r = wait_ready(since)
+    wait_ready(since)
     mark("ready")
-    time.sleep(1.8)
-    for _ in range((r or {}).get("changes", 1)):
-        mark("↵")
-        key("return")
-        time.sleep(1.3)
+    time.sleep(5.0)  # time to read the highlighted fixes and the legend
+    mark("⌘↵")
+    key("return", cmd=True)
     wait_until(lambda: not panel_visible(), 3)
     mark("pasted")
     time.sleep(1.5)
