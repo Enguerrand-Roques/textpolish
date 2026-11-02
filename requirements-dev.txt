@@ -1,0 +1,4 @@
+# Development and benchmarking only (not needed to run the app)
+-r requirements.txt
+pytest
+anthropic>=0.40.0

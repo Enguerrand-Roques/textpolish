@@ -9,6 +9,17 @@ APP="$HOME/Desktop/TextPolish.app"
 
 echo "Setting up TextPolish..."
 
+if ! python3 -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)"; then
+    echo "  ✗ Python 3.10+ is required (found: $(python3 --version 2>&1))."
+    echo "    Install a recent Python, e.g. 'brew install python@3.13'."
+    exit 1
+fi
+if ! command -v ollama >/dev/null 2>&1; then
+    echo "  ! Ollama not found — install it from https://ollama.com (setup continues)"
+fi
+LOG_DIR="$HOME/Library/Logs/TextPolish"
+mkdir -p "$LOG_DIR"
+
 # ── 1. Python venv ──────────────────────────────────────────────────────────
 if [ ! -d "$REPO_DIR/venv" ]; then
     python3 -m venv "$REPO_DIR/venv"
@@ -54,9 +65,9 @@ cat > "$PLIST_PATH" << EOF
     <key>KeepAlive</key>
     <false/>
     <key>StandardOutPath</key>
-    <string>/tmp/textpolish.log</string>
+    <string>${LOG_DIR}/textpolish.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/textpolish.log</string>
+    <string>${LOG_DIR}/textpolish.log</string>
 </dict>
 </plist>
 EOF
@@ -113,7 +124,7 @@ echo "  ✓ TextPolish.app created on Desktop"
 echo ""
 echo "All done! What's next:"
 echo "  1. Make sure Ollama is running:  ollama serve"
-echo "  2. Pull the models:              ollama pull gemma3:1b && ollama pull gemma3:4b"
+echo "  2. Pull the models:              ollama pull ministral-3:3b && ollama pull gemma3:4b"
 echo "  3. Double-click TextPolish.app on your Desktop"
 echo "  4. Look for the ✏️ icon in your menubar — that means it's running"
 echo "  5. Select text anywhere, press Cmd+Option+G"

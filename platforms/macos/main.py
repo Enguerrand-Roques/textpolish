@@ -1,14 +1,14 @@
 """
 TextPolish — macOS entry point.
 
-Starts a global shortcut listener (Cmd+Shift+P) and displays a native NSPanel
+Starts a global shortcut listener (Cmd+Option+G by default) and displays a native NSPanel
 that stays visible above all windows, including fullscreen apps.
 
 Required macOS permissions:
-  - Accessibility  (for CGEventTap)
-  - Automation     (for osascript / keystroke)
+  - Accessibility  (for CGEventTap and reading the selection position)
 """
 
+import logging
 import sys
 
 from AppKit import (
@@ -23,6 +23,11 @@ from AppKit import (
 from config import SHORTCUT
 from platforms.macos.hotkey import install as install_hotkey
 from platforms.macos.ui import setup as setup_panel, show_accessibility_denied_alert
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
 
 
 def main() -> None:

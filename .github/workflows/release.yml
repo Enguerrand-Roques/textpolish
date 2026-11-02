@@ -58,7 +58,7 @@ jobs:
 
             Then pull the AI models (one-time, ~2 GB):
             ```bash
-            ollama pull gemma3:1b
+            ollama pull ministral-3:3b
             ollama pull gemma3:4b
             ```
 

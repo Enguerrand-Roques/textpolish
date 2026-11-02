@@ -56,7 +56,7 @@ bash setup.sh
 Then pull the AI models (one-time, ~2 GB total):
 
 ```bash
-ollama pull gemma3:1b   # casual mode — fast
+ollama pull ministral-3:3b   # casual mode
 ollama pull gemma3:4b   # professional mode — higher quality
 ```
 
@@ -96,7 +96,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plis
 | High RAM after use | Set `OLLAMA_KEEP_ALIVE = 0` in `config.py` |
 | Shortcut not working | Grant Accessibility in System Settings |
 | Text not pasted back | Keep the source app focused |
-| App won't start | Check `/tmp/textpolish.log` for errors |
+| App won't start | Check `~/Library/Logs/TextPolish/textpolish.log` for errors |
 
 </details>
 
@@ -124,7 +124,7 @@ copy config.example.py config.py
 Then pull the AI models (one-time, ~2 GB total):
 
 ```bash
-ollama pull gemma3:1b
+ollama pull ministral-3:3b
 ollama pull gemma3:4b
 ```
 
@@ -161,7 +161,7 @@ Edit `config.py` (excluded from Git — never committed):
 
 ```python
 OLLAMA_BASE_URL     = "http://localhost:11434"
-OLLAMA_MODEL_CASUAL = "gemma3:1b"   # fast — typo fixes only
+OLLAMA_MODEL_CASUAL = "ministral-3:3b"   # typo fixes only
 OLLAMA_MODEL_PRO    = "gemma3:4b"   # slower — full rewrite
 OLLAMA_MODEL        = OLLAMA_MODEL_CASUAL  # used for Custom mode
 OLLAMA_TIMEOUT      = 60
@@ -176,7 +176,7 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 | Mode | Speed | Best for |
 |------|-------|----------|
 | **Professional** | ~5s | Emails, reports, LinkedIn, formal writing |
-| **Casual** | ~2s | SMS, WhatsApp, DMs — light touch, keeps your tone |
+| **Casual** | ~4s | SMS, WhatsApp, DMs — light touch, keeps your tone |
 | **Custom** | ~5s | Any instruction you type freely |
 
 ---
