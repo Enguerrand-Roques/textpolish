@@ -272,3 +272,51 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 - Re-run the full 10-case corpus (`benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge`) now that casual has changed, to get updated aggregate scores rather than relying on a single-case spot check.
 - Watch for further over-generation from `ministral-3:3b` in casual mode on longer/more ambiguous inputs — this round only tested a short fragment.
+
+---
+
+## Round 6 — November 2, 2026
+
+**Goal:** Pick the best local model per mode after Ollama 0.40 (MLX engine for some architectures) and new small models, with a test set that has expected answers instead of a judge.
+
+**Method** (`design/model_eval.py`): Correction is scored against expected outputs on 12 realistic sentences (9 with mistakes, 3 already correct that must stay untouched), exact match after normalising quotes and spaces. Pro and Perso use checks: language kept or translated as asked, no Markdown or e-mail boilerplate, sensible length, plus reading every output by hand. Latency: first call (cold) and median of warm calls, Ollama 0.40.13, M2 16 GB. All requests send `"think": false`.
+
+### Correction
+
+| Model | Engine | Score | Warm median | Notes |
+|-------|--------|------:|------------:|-------|
+| `gemma4:e2b-nvfp4` | MLX | 10/12 | **0.34 s** | 7.4 GB in RAM |
+| `ministral-3:3b` (previous) | llama.cpp | 10/12 | 0.67 s | expanded "infra" to "infrastructure" |
+| `gemma4:e2b-it-qat` | llama.cpp | 10/12 | 0.88 s | 4.3 GB |
+| `qwen3.5:4b-nvfp4` | MLX | 10/12 | 0.95 s | rewrote a correct sentence |
+| `gemma3:4b` | llama.cpp | 6/12 | 1.43 s | missed "opérationel" again |
+| `qwen3.5:2b-mtp-q4_K_M` | llama.cpp | 5/12 | 0.78 s | introduced mistakes |
+| `qwen3.5:2b-nvfp4` | MLX | 3/12 | 0.52 s | translated, introduced mistakes |
+| `lfm3:1.7b` | MLX | 2/12 | 7.2 s | printed its reasoning into the answer |
+
+### Pro and Perso
+
+| Model | Pro | Pro warm | Perso | Perso warm | Notes |
+|-------|----:|---------:|------:|-----------:|-------|
+| `gemma4:e2b-nvfp4` | 5/5 | 0.88 s | 3/3 | 0.56 s | keeps "tu" with a friend |
+| `gemma4:e2b-it-qat` | 5/5 | 1.06 s | 3/3 | 1.10 s | |
+| `gemma3:4b` (previous Pro) | 5/5 | 1.65 s | 2/3 | 1.85 s | "Dear [Recipient Name]"; reversed a sentence's meaning |
+| `qwen3.5:4b-nvfp4` | 5/5 | 2.04 s | 3/3 | 1.75 s | grammar slips ("Le réunion") |
+| `ministral-3:3b` | 3/5 | 1.98 s | 3/3* | 1.15 s | *answered a message instead of rewriting it |
+
+### Findings
+
+1. **One model for all modes removes the mode-switch reload.** With `ministral-3:3b` + `gemma3:4b`, switching mode reloaded a model (~5-6 s; Ollama could not keep both in RAM on this busy 16 GB Mac). With a single Gemma 4 model, measured switches were 0.5-1 s.
+2. **MLX helps a lot but costs RAM.** `gemma4:e2b-nvfp4` was the fastest everywhere, but loading it took free memory from 52 % to 24 % and added swap on a Mac already using 20 GB of swap.
+3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting.
+
+### Decision
+
+| Setting | Before | After |
+|---------|--------|-------|
+| Correction | `ministral-3:3b` | `gemma4:e2b-it-qat` |
+| Pro | `gemma3:4b` | `gemma4:e2b-it-qat` |
+| Perso | `ministral-3:3b` | `gemma4:e2b-it-qat` |
+| `OLLAMA_KEEP_ALIVE` | 100 s | 300 s |
+
+`gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Kept installed: `gemma4:e2b-it-qat`, `ministral-3:3b` (fallback); the other test models were removed.

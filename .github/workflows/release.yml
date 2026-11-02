@@ -58,8 +58,7 @@ jobs:
 
             Then pull the AI models (one-time, ~2 GB):
             ```bash
-            ollama pull ministral-3:3b
-            ollama pull gemma3:4b
+            ollama pull gemma4:e2b-it-qat
             ```
 
             See [README](https://github.com/Enguerrand-Roques/textpolish#readme) for full instructions.

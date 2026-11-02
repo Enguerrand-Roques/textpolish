@@ -3,11 +3,15 @@
 
 # Ollama local backend
 OLLAMA_BASE_URL = "http://localhost:11434"
-OLLAMA_MODEL_CASUAL = "ministral-3:3b"   # fixes real typos gemma3:1b-it-qat missed (e.g. "opérationel") — see benchmarks/BENCHMARK_REPORT.md Round 5
-OLLAMA_MODEL_PRO = "gemma3:4b"      # higher-quality model for professional mode
-OLLAMA_MODEL = OLLAMA_MODEL_CASUAL  # fallback default (custom mode)
+# One model for every mode: no reload when switching Correction / Pro / Perso
+# (it cost ~5 s with two models on a 16 GB Mac). Round 6 benchmark:
+# design/model_eval.py. Faster option on Macs with 24 GB+:
+# "gemma4:e2b-nvfp4" runs on Ollama's MLX engine (2-3x faster, ~7.4 GB in RAM).
+OLLAMA_MODEL_CASUAL = "gemma4:e2b-it-qat"
+OLLAMA_MODEL_PRO = "gemma4:e2b-it-qat"
+OLLAMA_MODEL = "gemma4:e2b-it-qat"   # Perso (custom instructions)
 OLLAMA_TIMEOUT = 60  # seconds
-OLLAMA_KEEP_ALIVE = 300  # keep model in RAM for 5 min between requests
+OLLAMA_KEEP_ALIVE = 300  # keep the model in RAM for 5 min between requests
 
 # Global keyboard shortcut (pynput format)
 # macOS: Cmd+Option+G  |  Windows: Ctrl+Alt+G  (no known conflicts)

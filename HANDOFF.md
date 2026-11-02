@@ -65,3 +65,10 @@ Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was ident
 - `design/`: preview harness with fixtures from real model outputs, headless-Chrome screenshots, real-app drivers, offscreen Qt render. Driving the real app needs Accessibility, Automation and Screen Recording for VS Code.
 - Portfolio: `docs/case-study.html` (also published as a private artifact), screenshots in `docs/screenshots/`. GIF still to record by hand.
 - Not ported to `textpolish-cloud` yet (diff.py, clipboard.py and the panel are identical candidates). Windows only got a style refresh, untested on Windows.
+
+## Model switch and UX fixes (November 2026, second pass)
+
+- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Perso. Same correction score as Ministral, better Pro/Perso, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. Old/test models removed; `ministral-3:3b` kept as fallback.
+- `llm.py` sends `"think": false`; strips Markdown the model adds; language detection handles short unaccented French.
+- Popup: "no mistakes" no longer auto-closes (offers Pro/Perso), switching mode during a request works, one-line explanation per mode, Perso presets.
+- Testing gotcha: synthetic HID keystrokes can inherit a ⌘ flag from a previous synthetic ⌘-shortcut; `design/type_text.py` now forces flags to 0.

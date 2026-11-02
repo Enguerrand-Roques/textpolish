@@ -61,8 +61,7 @@ bash setup.sh
 Then pull the AI models (one-time, ~2 GB total):
 
 ```bash
-ollama pull ministral-3:3b   # casual mode
-ollama pull gemma3:4b   # professional mode — higher quality
+ollama pull gemma4:e2b-it-qat   # one model for all three modes (Ollama 0.40+)
 ```
 
 ### Start
@@ -96,7 +95,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plis
 | Problem | Fix |
 |---------|-----|
 | `Cannot connect to Ollama` | Run `ollama serve` in a terminal |
-| `Model not found` | Run `ollama pull gemma3:4b` |
+| `Model not found` | Run `ollama pull gemma4:e2b-it-qat` |
 | Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
 | High RAM after use | Set `OLLAMA_KEEP_ALIVE = 0` in `config.py` |
 | Shortcut not working | Grant Accessibility in System Settings |
@@ -129,8 +128,7 @@ copy config.example.py config.py
 Then pull the AI models (one-time, ~2 GB total):
 
 ```bash
-ollama pull ministral-3:3b
-ollama pull gemma3:4b
+ollama pull gemma4:e2b-it-qat
 ```
 
 ### Start
@@ -150,7 +148,7 @@ A ✏️ icon appears in the system tray — the app is running.
 | Problem | Fix |
 |---------|-----|
 | `Cannot connect to Ollama` | Run `ollama serve` in a terminal |
-| `Model not found` | Run `ollama pull gemma3:4b` |
+| `Model not found` | Run `ollama pull gemma4:e2b-it-qat` |
 | Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
 | High RAM after use | Set `OLLAMA_KEEP_ALIVE = 0` in `config.py` |
 | Shortcut not working | Make sure no other app uses Ctrl+Alt+G |
@@ -166,9 +164,9 @@ Edit `config.py` (excluded from Git — never committed):
 
 ```python
 OLLAMA_BASE_URL     = "http://localhost:11434"
-OLLAMA_MODEL_CASUAL = "ministral-3:3b"   # typo fixes only
-OLLAMA_MODEL_PRO    = "gemma3:4b"   # slower — full rewrite
-OLLAMA_MODEL        = OLLAMA_MODEL_CASUAL  # used for Custom mode
+OLLAMA_MODEL_CASUAL = "gemma4:e2b-it-qat"   # Correction
+OLLAMA_MODEL_PRO    = "gemma4:e2b-it-qat"   # Pro
+OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Perso (custom instructions)
 OLLAMA_TIMEOUT      = 60
 OLLAMA_KEEP_ALIVE   = 300
 SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+Alt+G
@@ -180,9 +178,11 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 
 | Mode | Speed | Best for |
 |------|-------|----------|
-| **Professional** | ~5s | Emails, reports, LinkedIn, formal writing |
-| **Casual** | ~4s | SMS, WhatsApp, DMs — light touch, keeps your tone |
-| **Custom** | ~5s | Any instruction you type freely |
+| **Correction** | ~1s | Fixes mistakes, keeps your wording (default) |
+| **Pro** | ~1s | Emails, LinkedIn, formal writing — full rewrite |
+| **Perso** | ~1s | Any instruction: translate, shorter, warmer, funnier |
+
+Times are with the model already loaded on an M2 16 GB; the first request after a while takes a few more seconds to load it.
 
 ---
 
@@ -215,25 +215,24 @@ textpolish/
 
 ## How models were chosen
 
-TextPolish uses different models per mode — not out of preference, but based on measured results.
+TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds on an Apple M2 16 GB.
 
-Five benchmark rounds have been run on Apple M2 16 GB, using a 10-case corpus (French + English, short + long, pro + casual) plus targeted single-case investigations for real bugs, judged by a Claude model on correction, tone, and preservation (1–5 scale).
+**Current configuration (Round 6, November 2026):**
 
-**Final configuration (confirmed after Round 5, September 2026):**
-
-| Mode | Model | Median latency | Overall score |
-|------|-------|---------------:|:-------------:|
-| Casual | `ministral-3:3b` | ~4.1 s | 4.53 / 5 (Round 4 corpus) |
-| Professional | `gemma3:4b` | 7.59 s | 5.00 / 5 |
+| Mode | Model | Warm latency | Score |
+|------|-------|-------------:|:-----:|
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 10 / 12 expected fixes, no rewrite of correct texts |
+| Pro | `gemma4:e2b-it-qat` | 1.1 s | 5 / 5 checks |
+| Perso | `gemma4:e2b-it-qat` | 1.1 s | 3 / 3 checks |
 
 Key findings that shaped this choice:
 
-- **QAT quantization** (`gemma3:4b-it-qat`) is 30 % faster than the standard Q4_K_M build at the same parameter count — worth switching to if latency matters more than model size.
-- **`num_ctx: 1024`** reduces KV-cache RAM from ~2 GB to ~16 MB with zero quality impact on short texts (the longest test case was 544 tokens).
-- **`keep_alive: 300 s`** eliminates the 3–5 s cold-start penalty within a session.
-- **gemma3:1b fails on French professional text** — the model is too small to simultaneously follow "write professionally" and "stay in the input language" when driven by an English prompt. gemma3:4b handles both correctly. This is why the two modes use different models.
-- **Round 4 (Sept 2026) re-tested against newer model generations** (Gemma 4, Qwen3.5, Ministral 3) — on the 10-case corpus, none beat the setup at the time on a speed/quality basis. Also found: Gemma 4 has "thinking" enabled by default on Ollama, which turns a normal ~2s casual correction into 50+ seconds unless the request explicitly sets `"think": false`.
-- **Round 5 (Sept 2026) found gemma3:1b-it-qat missing real typos** (e.g. `"opérationel"` → should be `"opérationnel"`) 100% of the time, not intermittently — a Gemma3-family-specific gap, since even `gemma3:4b` misses it under the casual prompt. `ministral-3:3b` fixed it reliably in casual mode, at the cost of ~2.7s extra latency, and is now the casual model. **Not** switched for pro mode: under the real `pro.txt` prompt, `ministral-3:3b` fabricated an entire formal email from a two-clause fragment — `gemma3:4b` remains the safer choice there.
+- **One model beats two.** With a Correction model and a Pro model, every mode switch reloaded a model (~5 s on 16 GB). One model makes switching instant.
+- **Gemma 4 E2B matches the previous Correction model and is better at Pro and Perso.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
+- **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
+- **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
+- **Language detection had a bug** that sent short unaccented French ("J'ai finit le rapport hier soir") to English; fixed in `llm.py`.
+- Earlier rounds: QAT builds and `num_ctx: 1024` cut latency and RAM; `gemma3:1b` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 
 → Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
 
