@@ -8,7 +8,9 @@ Required macOS permissions:
   - Accessibility  (for CGEventTap and reading the selection position)
 """
 
+import fcntl
 import logging
+import os
 import sys
 
 from AppKit import (
@@ -30,7 +32,24 @@ logging.basicConfig(
 )
 
 
+_LOCK_PATH = os.path.expanduser("~/Library/Caches/TextPolish/instance.lock")
+
+
+def _acquire_single_instance_lock():
+    """Two running copies would both answer the shortcut and fight over the
+    clipboard. Hold an exclusive lock for the process lifetime."""
+    os.makedirs(os.path.dirname(_LOCK_PATH), exist_ok=True)
+    lock = open(_LOCK_PATH, "w")
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        print("TextPolish is already running — look for the ✏️ icon in the menu bar.")
+        sys.exit(0)
+    return lock
+
+
 def main() -> None:
+    _lock = _acquire_single_instance_lock()  # noqa: F841 — kept open on purpose
     NSApplication.sharedApplication()
     NSApp.setActivationPolicy_(NSApplicationActivationPolicyAccessory)
     NSApp.finishLaunching()
