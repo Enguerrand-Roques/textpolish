@@ -1,5 +1,40 @@
 # TextPolish — Benchmark Report
 
+## Summary — 17 models, 6 rounds (April → November 2026)
+
+Every model below was run on the same machine (MacBook Air M2, 16 GB) through Ollama.
+Rounds 1-4 scored outputs with an LLM judge (Claude) on a 10-case corpus; Round 5 was a
+targeted bug investigation; Round 6 switched to expected answers (`design/model_eval.py`)
+so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
+17 models were tested; an 18th (`gemma4:e4b-nvfp4`) failed to download.
+
+| Model | Rounds | Best result | Why it was kept or dropped |
+|-------|--------|-------------|----------------------------|
+| **`gemma4:e2b-it-qat`** | 4, 6 | **11/12 Correction, 5/5 Pro, 3/3 Perso, ~1 s** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
+| `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
+| `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Same quality as E2B, ~1.6x slower |
+| `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
+| `ministral-3:3b` | 4, 5, 6 | 10/12, 0.67 s | Correction model in Round 5; in Pro it wrote whole e-mails, in Perso it answered the message |
+| `ministral-3:8b` | 4 | 4.53/5 (judge) | 12-15 s per request; added Markdown |
+| `gemma3:4b` | 1-6 | 5.00/5 Pro (Round 4) | Pro model until Round 6; 6/12 Correction, "Dear [Recipient Name]" |
+| `gemma3:4b-it-qat` | 1, 3 | 4.77/5 (judge) | Slower than `gemma3:4b` once `num_ctx` was reduced |
+| `gemma3:1b-it-qat` | 1-5 | 4.53/5, 1.3 s | Correction model in Rounds 1-4; never fixed "opérationel" |
+| `gemma3:1b` | 1-3 | 4.47/5 | Beaten by its QAT build |
+| `qwen3.5:4b` | 4, 5 | 4.40/5 | ~6.5 s; turned "RH et" into "RHO" |
+| `qwen3.5:4b-nvfp4` (MLX) | 6 | 10/12, 0.95 s | Rewrote a correct sentence; "Le réunion" in Pro |
+| `qwen3.5:2b-mtp-q4_K_M` | 6 | 5/12 | Introduced mistakes |
+| `qwen3.5:2b-nvfp4` (MLX) | 6 | 3/12 | Translated French to English |
+| `qwen3.5:0.8b` | 4 | 2.93/5 | Distorted meaning in French |
+| `lfm3:1.7b` (MLX) | 6 | 2/12, 7.2 s | Printed its reasoning into the answer |
+| `command-r7b` | 1 | 3.90/5, 11.8 s | Too slow |
+| `qwen3:4b` | 1 | — | Timed out (thinking enabled) |
+
+**What the research changed in the app**, beyond the model choice: prompts in English with a
+same-language rule (Round 1), `num_ctx` sized to the input (Round 2), `"think": false` for
+hybrid-reasoning models (Round 4), a stricter language detector and Markdown cleanup (Round 6),
+and per-mode temperature (Round 6). Only `gemma4:e2b-it-qat` is installed now; every other
+model was removed after testing.
+
 ---
 
 ## Round 1 — April 5–6, 2026
@@ -309,6 +344,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 1. **One model for all modes removes the mode-switch reload.** With `ministral-3:3b` + `gemma3:4b`, switching mode reloaded a model (~5-6 s; Ollama could not keep both in RAM on this busy 16 GB Mac). With a single Gemma 4 model, measured switches were 0.5-1 s.
 2. **MLX helps a lot but costs RAM.** `gemma4:e2b-nvfp4` was the fastest everywhere, but loading it took free memory from 52 % to 24 % and added swap on a Mac already using 20 GB of swap.
 3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting.
+4. **Temperature matters more than expected for Correction.** Gemma 4 defaults to temperature 1; three identical runs scored 9, 10 and 11/12. `llm.py` now sends 0 for Correction (same answer every run) and 0.4 for Pro/Perso (more consistent tone, still varied). Final run: **11/12** twice in a row; the remaining miss drops the "?" in "slt tu fais quoi ce soir ? on peut…". "si tout ça se passe bien" was added as an accepted answer (correct and same meaning).
 
 ### Decision
 
@@ -318,5 +354,6 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 | Pro | `gemma3:4b` | `gemma4:e2b-it-qat` |
 | Perso | `ministral-3:3b` | `gemma4:e2b-it-qat` |
 | `OLLAMA_KEEP_ALIVE` | 100 s | 300 s |
+| Temperature | model default (1) | 0 Correction, 0.4 Pro/Perso |
 
-`gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Kept installed: `gemma4:e2b-it-qat`, `ministral-3:3b` (fallback); the other test models were removed.
+`gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Only `gemma4:e2b-it-qat` is kept installed; the other test models, including the `ministral-3:3b` fallback, were removed (Ollama models now take 4.0 GB). Raw outputs: `benchmarks/results/round6_20261102.md`.

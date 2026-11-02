@@ -68,7 +68,17 @@ Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was ident
 
 ## Model switch and UX fixes (November 2026, second pass)
 
-- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Perso. Same correction score as Ministral, better Pro/Perso, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. Old/test models removed; `ministral-3:3b` kept as fallback.
+- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Perso. Same correction score as Ministral, better Pro/Perso, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. All other models removed, `ministral-3:3b` included; only `gemma4:e2b-it-qat` is installed (4.0 GB). Raw outputs archived in `benchmarks/results/round6_20261102.md`; the report opens with a 17-model summary.
+- `llm.py` sends temperature 0 for Correction, 0.4 for Pro/Perso (Gemma 4's default of 1 made Correction score 9-11/12 between identical runs; now 11/12 every run).
 - `llm.py` sends `"think": false`; strips Markdown the model adds; language detection handles short unaccented French.
 - Popup: "no mistakes" no longer auto-closes (offers Pro/Perso), switching mode during a request works, one-line explanation per mode, Perso presets.
 - Testing gotcha: synthetic HID keystrokes can inherit a ⌘ flag from a previous synthetic ⌘-shortcut; `design/type_text.py` now forces flags to 0.
+
+## Final model cleanup and fluidity pass (November 2, 2026)
+
+- Only `gemma4:e2b-it-qat` installed. The benchmark report opens with a 17-model summary; Round 6 raw outputs are in `benchmarks/results/round6_20261102.md`.
+- Per-mode temperature in `llm.py` (0 Correction, 0.4 Pro/Perso): Correction went from 9-11/12 between runs to 11/12 every run.
+- `design/fluidity.py` plays 7 user scenarios in TextEdit against the running app and reads timings from `design/app.log` (`ui.py` now logs copy time and "<mode> ready in N ms", lengths only). 14/14 over two passes: panel ~0.7 s after the shortcut, sentence ~1 s, ⌘2 switch ~0.8 s, 338-char report 2.7 s.
+- Bug found by it: ⌘↵ with the cursor in the Perso field re-ran the instruction instead of pasting. Fixed in `panel.html`.
+- Not changed: "no selection" takes ~1.2 s because the copy waits up to 1 s for slow apps (`_COPY_TIMEOUT`).
+

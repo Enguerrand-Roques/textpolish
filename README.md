@@ -215,13 +215,13 @@ textpolish/
 
 ## How models were chosen
 
-TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds on an Apple M2 16 GB.
+TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds and 17 models tested on an Apple M2 16 GB (full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#summary--17-models-6-rounds-april--november-2026)).
 
 **Current configuration (Round 6, November 2026):**
 
 | Mode | Model | Warm latency | Score |
 |------|-------|-------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 10 / 12 expected fixes, no rewrite of correct texts |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 11 / 12 expected fixes, no rewrite of correct texts |
 | Pro | `gemma4:e2b-it-qat` | 1.1 s | 5 / 5 checks |
 | Perso | `gemma4:e2b-it-qat` | 1.1 s | 3 / 3 checks |
 
@@ -231,6 +231,7 @@ Key findings that shaped this choice:
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Perso.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
+- **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Perso use 0.4.
 - **Language detection had a bug** that sent short unaccented French ("J'ai finit le rapport hier soir") to English; fixed in `llm.py`.
 - Earlier rounds: QAT builds and `num_ctx: 1024` cut latency and RAM; `gemma3:1b` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 

@@ -92,9 +92,14 @@
 
   /* Data table */
   .table-wrap { overflow-x: auto; margin-top: 18px; }
+  .table-wrap + p { margin-top: 18px; }
   table { border-collapse: collapse; width: 100%; min-width: 30rem; font-size: 0.95rem; }
   th, td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
   th { font: 500 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  tr.pick td { color: var(--blue); font-weight: 600; }
+  details { margin-top: 22px; }
+  details .note { font-size: 0.9rem; color: var(--muted); margin-top: 12px; }
+  summary { cursor: pointer; font: 600 1rem var(--display); color: var(--blue); }
   td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
   /* Bugs found in real use */
@@ -242,7 +247,7 @@
 
 <section class="col">
   <h2>Choisir le modèle</h2>
-  <p>J'ai testé une quinzaine de modèles en six séries. Pour la dernière, j'ai écrit une liste de phrases avec la correction attendue, dont trois phrases sans faute qu'un bon correcteur ne doit pas toucher. Ça permet de compter, au lieu de se fier à une impression. Quelques constats ont changé le produit :</p>
+  <p>J'ai testé 17 modèles en six séries, d'avril à novembre. Pour la dernière, j'ai écrit une liste de phrases avec la correction attendue, dont trois phrases sans faute qu'un bon correcteur ne doit pas toucher. Ça permet de compter, au lieu de se fier à une impression. Quelques constats ont changé le produit :</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Ce que j'ai vu</th><th>Ce que j'ai changé</th></tr></thead>
@@ -252,10 +257,38 @@
         <tr><td>Le modèle de correction mettait des mots en gras et traduisait « deadline » en « délai ».</td><td>Le gras est retiré et la consigne garde les anglicismes.</td></tr>
         <tr><td>Il remplaçait <code>'</code> par <code>’</code> et ajoutait des espaces insécables.</td><td>Ces détails ne comptent plus comme des corrections.</td></tr>
         <tr><td><code>gemma4:e2b</code> fait aussi bien en correction (10/12), mieux en Pro et en Perso, et répond en environ 1 s.</td><td>Un seul modèle pour les trois modes : plus de rechargement.</td></tr>
+        <tr><td>Le même test donnait 9, 10 ou 11 bonnes réponses sur 12 selon les essais : le modèle tire ses mots un peu au hasard.</td><td>Correction est réglée pour répondre toujours la même chose : 11/12 à chaque essai.</td></tr>
         <tr><td>« J'ai finit le rapport hier soir » partait en anglais : mon détecteur de langue ne la reconnaissait pas comme du français.</td><td>Le détecteur est corrigé ; c'était mon code, pas le modèle.</td></tr>
       </tbody>
     </table>
   </div>
+  <details>
+    <summary>Les 17 modèles essayés</summary>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Modèle</th><th>Meilleur résultat</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 · ~1 s</td><td>Retenu pour les trois modes</td></tr>
+          <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0,34 s</td><td>Le plus rapide, mais 7,4 Go de mémoire</td></tr>
+          <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5/5 Pro</td><td>Même qualité, plus lent</td></tr>
+          <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0,67 s</td><td>Correction en série 5 ; écrit des e-mails entiers en Pro</td></tr>
+          <tr><td><code>ministral-3:8b</code></td><td class="num">12–15 s</td><td>Trop lent</td></tr>
+          <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro jusqu'à la série 6 ; « Dear [Recipient Name] »</td></tr>
+          <tr><td><code>gemma3:4b-it-qat</code></td><td class="num">4,77/5</td><td>Plus lent que sa version normale</td></tr>
+          <tr><td><code>gemma3:1b-it-qat</code></td><td class="num">4,53/5 · 1,3 s</td><td>Ne voyait jamais « opérationel »</td></tr>
+          <tr><td><code>gemma3:1b</code></td><td class="num">4,47/5</td><td>Battu par sa version QAT</td></tr>
+          <tr><td><code>qwen3.5:4b</code></td><td class="num">4,40/5 · 6,5 s</td><td>« RH et » devenait « RHO »</td></tr>
+          <tr><td><code>qwen3.5:4b-nvfp4</code> (MLX)</td><td class="num">10/12</td><td>Réécrit une phrase juste ; « Le réunion »</td></tr>
+          <tr><td><code>qwen3.5:2b</code> (deux versions)</td><td class="num">3 à 5/12</td><td>Ajoute des fautes, traduit</td></tr>
+          <tr><td><code>qwen3.5:0.8b</code></td><td class="num">2,93/5</td><td>Change le sens en français</td></tr>
+          <tr><td><code>lfm3:1.7b</code> (MLX)</td><td class="num">2/12 · 7 s</td><td>Écrit son raisonnement dans la réponse</td></tr>
+          <tr><td><code>command-r7b</code></td><td class="num">11,8 s</td><td>Trop lent</td></tr>
+          <tr><td><code>qwen3:4b</code></td><td class="num">—</td><td>Ne répondait pas à temps</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Les séries 1 à 4 étaient notées par un autre modèle sur 5 ; la série 6 compte les bonnes réponses sur 12. Un 18<sup>e</sup>, <code>gemma4:e4b-nvfp4</code>, n'a pas pu être téléchargé. Seul le modèle retenu reste installé ; les sorties brutes sont dans <code>benchmarks/results/</code>.</p>
+  </details>
 </section>
 
 <section class="col">
@@ -265,13 +298,34 @@
     <div class="bug"><h3>La copie échouait une fois sur deux</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé. La copie devenait ⌥⌘C, « copier le style », et rien n'était copié. L'app attend maintenant qu'on relâche les touches.</p></div>
     <div class="bug"><h3>Passer en Pro pendant la correction ne faisait rien</h3><p>L'onglet changeait, mais c'est la correction qui s'affichait. La nouvelle demande remplace maintenant l'ancienne.</p></div>
     <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur mon clavier</h3><p>Sur un clavier AZERTY, la touche 2 donne « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
+    <div class="bug"><h3><kbd>⌘↵</kbd> relançait Perso au lieu de coller</h3><p>Après avoir tapé une consigne, le curseur reste dans le champ. <kbd>⌘↵</kbd> y relançait la consigne et rien n'était collé. Maintenant <kbd>↵</kbd> lance la consigne et <kbd>⌘↵</kbd> remplace le texte.</p></div>
     <div class="bug"><h3>Trois copies de l'app tournaient en même temps</h3><p>Chaque lancement en ajoutait une, et toutes répondaient au raccourci. Une seule peut tourner maintenant.</p></div>
   </div>
 </section>
 
 <section class="col">
+  <h2>Chronométré dans la vraie app</h2>
+  <p>Un script joue sept scénarios dans TextEdit comme le ferait quelqu'un au clavier, et mesure ce qu'on ressent. Les sept passent, deux fois de suite, avec des temps qui se répètent.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Scénario</th><th>Résultat affiché</th><th>Vérifié</th></tr></thead>
+      <tbody>
+        <tr><td>SMS avec deux fautes, accepté avec <kbd>↵</kbd></td><td class="num">0,9–1,0 s</td><td>Texte corrigé collé</td></tr>
+        <tr><td>Texte sans faute, puis <kbd>⌘2</kbd></td><td class="num">0,75–0,8 s</td><td>La fenêtre reste ouverte, version pro proposée</td></tr>
+        <tr><td><kbd>⌘2</kbd> pendant la correction</td><td class="num">1,6–1,7 s</td><td>C'est la version pro qui s'affiche</td></tr>
+        <tr><td>Perso « en anglais », puis <kbd>⌘↵</kbd></td><td class="num">0,6 s</td><td>Phrase traduite collée</td></tr>
+        <tr><td>Compte rendu de 338 caractères, tout accepter</td><td class="num">2,7 s</td><td>9 corrections collées</td></tr>
+        <tr><td>Aucun texte sélectionné</td><td class="num">1,2 s</td><td>Message d'aide, le modèle n'est pas appelé</td></tr>
+        <tr><td><kbd>Échap</kbd></td><td class="num">0,35 s</td><td>Fenêtre fermée, texte intact</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>La fenêtre apparaît environ 0,7 s après l'appui, dont 0,3 s pendant lesquelles les touches sont encore tenues : l'app attend qu'on les relâche pour copier proprement.</p>
+</section>
+
+<section class="col">
   <h2>La suite</h2>
-  <p>Le modèle actuel reste petit : il rate encore deux fautes sur douze, et son humour en mode Perso est limité. Les prochaines pistes sont un modèle entraîné spécialement sur la grammaire française, et la version MLX quand j'aurai un Mac avec plus de mémoire. Les petits modèles que j'ai essayés (Qwen 3.5 2B, LFM3) étaient rapides, mais ajoutaient des fautes ou affichaient leur raisonnement dans la réponse.</p>
+  <p>Le modèle actuel reste petit : il rate encore une faute sur douze (il supprime un point d'interrogation), et son humour en mode Perso est limité. Les prochaines pistes sont un modèle entraîné spécialement sur la grammaire française, et la version MLX quand j'aurai un Mac avec plus de mémoire. Les petits modèles que j'ai essayés (Qwen 3.5 2B, LFM3) étaient rapides, mais ajoutaient des fautes ou affichaient leur raisonnement dans la réponse.</p>
 </section>
 
 <section class="col">
