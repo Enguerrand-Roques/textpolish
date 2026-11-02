@@ -136,6 +136,10 @@
   body[data-mode="pro"]    .seg .knob { transform: translateX(100%); }
   body[data-mode="custom"] .seg .knob { transform: translateX(200%); }
 
+  /* ── Mode explanation (what the selected mode will do to the text) ─────── */
+  .hint { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--secondary); margin-top: -4px; padding: 0 2px; }
+  .hint i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; transition: background 0.3s; }
+
   /* ── Custom instruction ─────────────────────────────────────────────────── */
   .instr {
     display: none; align-items: center; gap: 8px;
@@ -149,6 +153,16 @@
     font: inherit; color: var(--label); -webkit-user-select: text; user-select: text;
   }
   .instr input::placeholder { color: var(--tertiary); }
+  .presets { display: none; flex-wrap: wrap; gap: 6px; margin-top: -4px; }
+  body[data-mode="custom"] .presets { display: flex; }
+  .presets button {
+    height: 24px; padding: 0 9px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
+    background: color-mix(in srgb, var(--purple) 12%, transparent); color: var(--purple);
+    transition: background 0.15s;
+  }
+  .presets button:hover { background: color-mix(in srgb, var(--purple) 20%, transparent); }
+  .reading.idle .txt { animation: none; -webkit-text-fill-color: var(--secondary); background: none; }
+  .reading.idle .bar { display: none; }
   .instr .go {
     height: 24px; padding: 0 10px; border-radius: 6px; font-size: 12px; font-weight: 600;
     background: var(--accent); color: white;
@@ -319,11 +333,18 @@
     <button data-mode="pro"    role="tab" onclick="chooseMode('pro')">Pro</button>
     <button data-mode="custom" role="tab" onclick="chooseMode('custom')">Perso</button>
   </nav>
+  <div class="hint" id="modeHint"><i></i><span id="modeHintTxt"></span></div>
 
   <div class="instr" id="instr">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 2v2.2M8 11.8V14M2 8h2.2M11.8 8H14M3.8 3.8l1.5 1.5M10.7 10.7l1.5 1.5M3.8 12.2l1.5-1.5M10.7 5.3l1.5-1.5"/></svg>
     <input id="instrInput" type="text" placeholder="Ex. : traduire en anglais, plus court…" autocomplete="off">
     <button class="go" onclick="submitCustom()">Réécrire</button>
+  </div>
+  <div class="presets" id="presets">
+    <button onclick="preset('Traduis en anglais')">Anglais</button>
+    <button onclick="preset('Rends le texte plus court')">Plus court</button>
+    <button onclick="preset('Rends le ton plus chaleureux et amical')">Plus chaleureux</button>
+    <button onclick="preset('Rends le texte plus drôle, sans changer le sens')">Plus drôle</button>
   </div>
 
   <main id="stage">
@@ -399,17 +420,34 @@ function reportHeight() {
 new ResizeObserver(reportHeight).observe($("root"));
 
 // ── Modes ───────────────────────────────────────────────────────────────────
+const MODE_HINT = {
+  casual: "Corrige les fautes sans toucher à ta façon d'écrire",
+  pro:    "Réécrit le texte dans un ton professionnel",
+  custom: "Applique ta consigne : traduire, raccourcir, changer le ton…",
+};
 function applyMode(m) {
   mode = m;
   document.body.dataset.mode = m;
   document.querySelectorAll(".seg button").forEach(b => b.classList.toggle("on", b.dataset.mode === m));
+  $("modeHintTxt").textContent = MODE_HINT[m];
 }
 function chooseMode(m) {
-  if (m === mode && m !== "custom" && busy) return;
+  if (layout === "empty") { applyMode(m); return; }        // nothing selected: nothing to run
+  if (m === mode && m !== "custom" && busy) return;        // same mode already running
+  clearTimeout(closeTimer);
   applyMode(m);
-  if (m === "custom") { setTimeout(() => $("instrInput").focus(), 30); return; }
-  if (!busy) send({ type: "polish", mode: m });
+  if (m === "custom") { showIdle(); setTimeout(() => $("instrInput").focus(), 30); return; }
+  // A newer request supersedes the running one (Python drops stale results).
+  send({ type: "polish", mode: m });
 }
+function showIdle() {
+  busy = false; layout = "idle";
+  $("vReading").classList.add("idle");
+  show("vReading");
+  setPill("", "");
+  setFoot(`<span>Choisis une idée ou écris ta consigne</span><span class="right"><kbd>↵</kbd> lancer</span>`);
+}
+function preset(text) { $("instrInput").value = text; submitCustom(); }
 function submitCustom() {
   const v = $("instrInput").value.trim();
   if (!v) { $("instrInput").focus(); return; }
@@ -590,9 +628,10 @@ window.App = {
   },
   onPolishStart() {
     busy = true; layout = "reading";
+    $("vReading").classList.remove("idle");
     show("vReading");
-    setPill("Lecture", "", true);
-    setFoot(`<span>${mode === "pro" ? "Réécriture professionnelle" : mode === "custom" ? "Instruction personnalisée" : "Orthographe, accents, ponctuation"}</span><span class="right"><kbd>esc</kbd> fermer</span>`);
+    setPill(mode === "casual" ? "Lecture" : "Réécriture", "", true);
+    setFoot(`<span>Tout se passe sur ton Mac, rien n'est envoyé en ligne</span><span class="right"><kbd>esc</kbd> fermer</span>`);
   },
   setStatus() {},
   startStream() { setPill("Correction", "", true); },
@@ -604,10 +643,19 @@ window.App = {
     changes = parts.filter(p => p.op === "change");
     layout = newLayout; cursor = 0;
     accepted = new Set(newLayout === "document" ? changes.map(c => c.id) : []);
-    if (newLayout === "none") {
-      stateView("green", ICON.check, "Aucune faute", "Ton texte est déjà impeccable.");
-      setPill("Parfait", "green"); setFoot("");
-      closeTimer = setTimeout(() => send({ type: "close" }), 1600);
+    if (newLayout === "none" && mode === "casual") {
+      // No auto-close: the next step is often "make it more formal" or "translate it".
+      stateView("green", ICON.check, "Aucune faute", "Ton texte est déjà correct. Tu peux aussi le réécrire :",
+        `<div class="actions" style="justify-content:center">
+           <button class="btn plain" onclick="chooseMode('pro')">Version pro <span class="key">⌘2</span></button>
+           <button class="btn plain" onclick="chooseMode('custom')">Personnaliser <span class="key">⌘3</span></button>
+         </div>`);
+      setPill("Correct", "green"); setFoot(`<span class="right"><kbd>esc</kbd> fermer</span>`);
+    } else if (newLayout === "none") {
+      stateView("gray", ICON.check, "Rien à changer", mode === "pro"
+        ? "Le modèle juge ton texte déjà professionnel."
+        : "Le modèle n'a rien modifié avec cette consigne. Essaie de la reformuler.");
+      setPill("", ""); setFoot(`<span class="right"><kbd>esc</kbd> fermer</span>`);
     } else if (newLayout === "rewrite") {
       comparing = false; show("vRewrite"); renderRewrite();
     } else if (newLayout === "cards") {
