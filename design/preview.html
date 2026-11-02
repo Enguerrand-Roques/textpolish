@@ -32,7 +32,6 @@ const SCENARIOS = [
   [FR ? "Mode Pro" : "Pro mode", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); }],
   [FR ? "Pro — comparer" : "Pro — compare", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); f.contentWindow.toggleCompare(); }],
   [FR ? "Sur mesure" : "Custom", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = FR ? "traduire en anglais" : "translate into French"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],
-  [FR ? "Erreur" : "Error", f => { A(f).onError("Cannot connect to Ollama. Make sure it is running: `ollama serve`"); }],
   [FR ? "Aucune sélection" : "No selection", f => { A(f).setShortcut("⌥⌘G"); A(f).noSelection(); }],
   [FR ? "Terminé" : "Done", f => { A(f).setChanges(f.fx.typo.parts, "cards"); f.contentWindow.acceptAll(); }],
 ];

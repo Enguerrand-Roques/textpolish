@@ -2,7 +2,7 @@
   "typo": {
     "mode": "casual",
     "input": "RH et opérationel on veut plus operationel",
-    "output": "RH et opérationnel, on veut plus opérationnel",
+    "output": "RH et opérationnel on veut plus opérationnel",
     "parts": [
       {
         "op": "equal",
@@ -12,9 +12,9 @@
         "op": "change",
         "id": 0,
         "before": "opérationel",
-        "after": "opérationnel,",
+        "after": "opérationnel",
         "kind": "spelling",
-        "label": "Orthographe",
+        "label": "Spelling",
         "context_before": "RH et",
         "context_after": "on veut plus"
       },
@@ -28,7 +28,7 @@
         "before": "operationel",
         "after": "opérationnel",
         "kind": "spelling",
-        "label": "Orthographe",
+        "label": "Spelling",
         "context_before": "on veut plus",
         "context_after": ""
       }
@@ -38,30 +38,20 @@
   "sms": {
     "mode": "casual",
     "input": "slt tu fait quoi ce soir ? on peut se retrouver genre vers 19h pour manger un truc ?",
-    "output": "salut tu fais quoi ce soir ? on peut se retrouver genre vers 19h pour manger un truc ?",
+    "output": "slt tu fais quoi ce soir ? on peut se retrouver genre vers 19h pour manger un truc ?",
     "parts": [
+      {
+        "op": "equal",
+        "text": "slt tu "
+      },
       {
         "op": "change",
         "id": 0,
-        "before": "slt",
-        "after": "salut",
-        "kind": "spelling",
-        "label": "Orthographe",
-        "context_before": "",
-        "context_after": "tu"
-      },
-      {
-        "op": "equal",
-        "text": " tu "
-      },
-      {
-        "op": "change",
-        "id": 1,
         "before": "fait",
         "after": "fais",
-        "kind": "spelling",
-        "label": "Orthographe",
-        "context_before": "tu",
+        "kind": "conjugation",
+        "label": "Conjugation",
+        "context_before": "slt tu",
         "context_after": "quoi ce soir ?…"
       },
       {
@@ -86,7 +76,7 @@
   "long": {
     "mode": "casual",
     "input": "Bonjour a tous, je voulais vous faire un petit point sur le projet. On a bien avancer cette semaine sur la partie synchronisation mais il reste quelque blocage cote infra. Je pense qu'on pourras livrer mardi si tout ce passe bien, sinon on decalera de quelques jours. N'hesitez pas si vous avez des questions.",
-    "output": "Bonjour à tous, je voulais vous faire un petit point sur le projet. On a bien avancé cette semaine sur la partie synchronisation, mais il reste quelques blocages côté infra. Je pense qu’on pourra livrer mardi si tout se passe bien, sinon on décalera de quelques jours. N’hésite pas si vous avez des questions.",
+    "output": "Bonjour à tous, je voulais vous faire un petit point sur le projet. On a bien avancé cette semaine sur la partie synchronisation mais il reste quelques blocages côté infra. Je pense qu'on pourra livrer mardi si tout se passe bien, sinon on décalera de quelques jours. N'hésitez pas si vous avez des questions.",
     "parts": [
       {
         "op": "equal",
@@ -97,8 +87,8 @@
         "id": 0,
         "before": "a",
         "after": "à",
-        "kind": "accent",
-        "label": "Accent",
+        "kind": "grammar",
+        "label": "Grammar",
         "context_before": "Bonjour",
         "context_after": "tous, je voulais vous…"
       },
@@ -111,37 +101,23 @@
         "id": 1,
         "before": "avancer",
         "after": "avancé",
-        "kind": "spelling",
-        "label": "Orthographe",
+        "kind": "conjugation",
+        "label": "Conjugation",
         "context_before": "…projet. On a bien",
         "context_after": "cette semaine sur la…"
       },
       {
         "op": "equal",
-        "text": " cette semaine sur la partie synchronisation"
+        "text": " cette semaine sur la partie synchronisation mais il reste "
       },
       {
         "op": "change",
         "id": 2,
-        "before": "",
-        "after": ",",
-        "kind": "punctuation",
-        "label": "Ponctuation",
-        "context_before": "…sur la partie synchronisation",
-        "context_after": "mais il reste"
-      },
-      {
-        "op": "equal",
-        "text": " mais il reste "
-      },
-      {
-        "op": "change",
-        "id": 3,
         "before": "quelque",
         "after": "quelques",
-        "kind": "spelling",
-        "label": "Orthographe",
-        "context_before": "mais il reste",
+        "kind": "agreement",
+        "label": "Agreement",
+        "context_before": "…synchronisation mais il reste",
         "context_after": ""
       },
       {
@@ -150,11 +126,11 @@
       },
       {
         "op": "change",
-        "id": 4,
+        "id": 3,
         "before": "blocage",
         "after": "blocages",
-        "kind": "spelling",
-        "label": "Orthographe",
+        "kind": "agreement",
+        "label": "Agreement",
         "context_before": "",
         "context_after": ""
       },
@@ -164,7 +140,7 @@
       },
       {
         "op": "change",
-        "id": 5,
+        "id": 4,
         "before": "cote",
         "after": "côté",
         "kind": "accent",
@@ -178,11 +154,11 @@
       },
       {
         "op": "change",
-        "id": 6,
+        "id": 5,
         "before": "pourras",
         "after": "pourra",
-        "kind": "spelling",
-        "label": "Orthographe",
+        "kind": "agreement",
+        "label": "Agreement",
         "context_before": "infra. Je pense qu'on",
         "context_after": "livrer mardi si tout"
       },
@@ -192,11 +168,11 @@
       },
       {
         "op": "change",
-        "id": 7,
+        "id": 6,
         "before": "ce",
         "after": "se",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "livrer mardi si tout",
         "context_after": "passe bien, sinon on"
       },
@@ -206,26 +182,26 @@
       },
       {
         "op": "change",
-        "id": 8,
+        "id": 7,
         "before": "decalera",
         "after": "décalera",
         "kind": "accent",
         "label": "Accent",
         "context_before": "passe bien, sinon on",
-        "context_after": "de quelques jours. N"
+        "context_after": "de quelques jours. N'"
       },
       {
         "op": "equal",
-        "text": " de quelques jours. N"
+        "text": " de quelques jours. N'"
       },
       {
         "op": "change",
-        "id": 9,
-        "before": "'hesitez",
-        "after": "’hésite",
-        "kind": "spelling",
-        "label": "Orthographe",
-        "context_before": "de quelques jours. N",
+        "id": 8,
+        "before": "hesitez",
+        "after": "hésitez",
+        "kind": "accent",
+        "label": "Accent",
+        "context_before": "de quelques jours. N'",
         "context_after": "pas si vous avez…"
       },
       {
@@ -238,30 +214,16 @@
   "pro": {
     "mode": "pro",
     "input": "Salut, j'ai vu ton profil et je pense qu'on pourrait faire des trucs cool ensemble, t'as 5min pour qu'on se parle?",
-    "output": "Bonjour,\n\nJ'ai pris note de votre profil et je pense qu'il pourrait être intéressant d'échanger sur des opportunités potentielles. Auriez-vous 5 minutes à m'accorder pour un bref échange téléphonique ?",
+    "output": "J'ai consulté votre profil et je pense que nous pourrions collaborer sur des projets intéressants. Auriez-vous cinq minutes pour que nous en discutions ?",
     "parts": [
       {
         "op": "change",
         "id": 0,
-        "before": "Salut",
-        "after": "Bonjour",
-        "kind": "grammar",
-        "label": "Grammaire",
+        "before": "Salut, j",
+        "after": "J",
+        "kind": "rewrite",
+        "label": "Rewrite",
         "context_before": "",
-        "context_after": ","
-      },
-      {
-        "op": "equal",
-        "text": ","
-      },
-      {
-        "op": "change",
-        "id": 1,
-        "before": " j",
-        "after": "\n\nJ",
-        "kind": "case",
-        "label": "Majuscule",
-        "context_before": ",",
         "context_after": "'ai"
       },
       {
@@ -270,11 +232,11 @@
       },
       {
         "op": "change",
-        "id": 2,
+        "id": 1,
         "before": "vu",
-        "after": "pris",
+        "after": "consulté",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "'ai",
         "context_after": ""
       },
@@ -284,40 +246,54 @@
       },
       {
         "op": "change",
-        "id": 3,
+        "id": 2,
         "before": "ton",
-        "after": "note de votre",
-        "kind": "rewrite",
-        "label": "Reformulation",
+        "after": "votre",
+        "kind": "grammar",
+        "label": "Grammar",
         "context_before": "",
-        "context_after": "profil et je pense…"
+        "context_after": "profil et je pense"
       },
       {
         "op": "equal",
-        "text": " profil et je pense qu'"
+        "text": " profil et je pense "
+      },
+      {
+        "op": "change",
+        "id": 3,
+        "before": "qu'on",
+        "after": "que",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "profil et je pense",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
       },
       {
         "op": "change",
         "id": 4,
-        "before": "on",
-        "after": "il",
+        "before": "pourrait",
+        "after": "nous",
         "kind": "grammar",
-        "label": "Grammaire",
-        "context_before": "…et je pense qu'",
-        "context_after": "pourrait"
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
       },
       {
         "op": "equal",
-        "text": " pourrait "
+        "text": " "
       },
       {
         "op": "change",
         "id": 5,
         "before": "faire",
-        "after": "être intéressant d'échanger sur",
+        "after": "pourrions collaborer sur",
         "kind": "rewrite",
-        "label": "Reformulation",
-        "context_before": "pourrait",
+        "label": "Rewrite",
+        "context_before": "",
         "context_after": "des"
       },
       {
@@ -328,9 +304,9 @@
         "op": "change",
         "id": 6,
         "before": "trucs",
-        "after": "opportunités",
+        "after": "projets",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "des",
         "context_after": ""
       },
@@ -342,9 +318,9 @@
         "op": "change",
         "id": 7,
         "before": "cool",
-        "after": "potentielles.",
+        "after": "intéressants.",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "",
         "context_after": ""
       },
@@ -358,7 +334,7 @@
         "before": "ensemble,",
         "after": "Auriez-vous",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "",
         "context_after": ""
       },
@@ -369,25 +345,25 @@
       {
         "op": "change",
         "id": 9,
-        "before": "t",
-        "after": "5 minutes à m",
-        "kind": "rewrite",
-        "label": "Reformulation",
+        "before": "t'as",
+        "after": "cinq",
+        "kind": "grammar",
+        "label": "Grammar",
         "context_before": "",
-        "context_after": "'"
+        "context_after": ""
       },
       {
         "op": "equal",
-        "text": "'"
+        "text": " "
       },
       {
         "op": "change",
         "id": 10,
-        "before": "as 5min",
-        "after": "accorder",
-        "kind": "rewrite",
-        "label": "Reformulation",
-        "context_before": "'",
+        "before": "5min",
+        "after": "minutes",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
         "context_after": "pour"
       },
       {
@@ -398,9 +374,9 @@
         "op": "change",
         "id": 11,
         "before": "qu'on",
-        "after": "un",
+        "after": "que",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "pour",
         "context_after": ""
       },
@@ -412,9 +388,9 @@
         "op": "change",
         "id": 12,
         "before": "se",
-        "after": "bref",
+        "after": "nous",
         "kind": "grammar",
-        "label": "Grammaire",
+        "label": "Grammar",
         "context_before": "",
         "context_after": ""
       },
@@ -426,9 +402,9 @@
         "op": "change",
         "id": 13,
         "before": "parle",
-        "after": "échange téléphonique ",
+        "after": "en discutions ",
         "kind": "rewrite",
-        "label": "Reformulation",
+        "label": "Rewrite",
         "context_before": "",
         "context_after": "?"
       },
@@ -437,6 +413,6 @@
         "text": "?"
       }
     ],
-    "layout": "document"
+    "layout": "rewrite"
   }
 }
