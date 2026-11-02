@@ -29,7 +29,7 @@ const SCENARIOS = [
   ["Document — texte long", f => { A(f).setSourceApp("Slack"); A(f).setChanges(f.fx.long.parts, "document"); }],
   ["Mode Pro", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); }],
   ["Pro — comparer", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); f.contentWindow.toggleCompare(); }],
-  ["Perso", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = "traduire en anglais"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],
+  ["Sur mesure", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = "traduire en anglais"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],
   ["Erreur", f => { A(f).onError("Cannot connect to Ollama. Make sure it is running: `ollama serve`"); }],
   ["Aucune sélection", f => { A(f).setShortcut("⌥⌘G"); A(f).noSelection(); }],
   ["Terminé", f => { A(f).setChanges(f.fx.typo.parts, "cards"); f.contentWindow.acceptAll(); }],

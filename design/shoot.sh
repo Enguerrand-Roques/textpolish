@@ -12,7 +12,7 @@ mkdir -p design/screenshots
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 for theme in light dark; do
   "$CHROME" --headless=new --hide-scrollbars --force-device-scale-factor=2 \
-    --window-size=1700,1450 --virtual-time-budget=4000 \
+    --window-size=1700,1450 --virtual-time-budget=12000 \
     --screenshot="design/screenshots/preview-$theme.png" \
     "http://localhost:$PORT/design/preview.html?theme=$theme" 2>/dev/null
 done
