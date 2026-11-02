@@ -45,3 +45,14 @@ ps -p <pid> -o lstart=          # compare to file mtimes
 - Model choice rationale + all benchmark data: `benchmarks/BENCHMARK_REPORT.md`
 - User-facing feature list and architecture: `README.md`
 - This file: session handoff only — update or delete once stale, it's not meant to be permanent project documentation.
+
+## Reliability pass (October 2026, uncommitted until reviewed)
+
+Fixes from the full project audit:
+- `clipboard.py`: clipboard is emptied before the simulated copy, polled until filled (no more fixed 0.35 s sleep), so "nothing selected" yields an empty text instead of stale clipboard content; the user's clipboard (all macOS types) is restored right after the copy and again after the paste.
+- `llm.py`: input capped at `MAX_INPUT_CHARS` (4000), `num_ctx` sized from the prompt (min 1024), truncated (`done_reason == "length"`), empty, mid-stream error and invalid-JSON responses now raise readable errors. `logging.basicConfig` moved out of `llm.py` into the platform `main.py` files (INFO, no more text excerpt in logs).
+- `polish_job.py`: a superseded job's result no longer overwrites the current one.
+- Install: casual model is `ministral-3:3b` everywhere (README, `setup.sh`, `release.yml`); `anthropic` moved to `requirements-dev.txt`; Quartz/ApplicationServices listed explicitly; `setup.sh` checks Python >= 3.10 and Ollama, logs to `~/Library/Logs/TextPolish/`.
+- `benchmark_models.py` reads `ANTHROPIC_API_KEY` from the environment only. The key in local `config.py` is still there: rotate it and delete the line.
+- UI errors are no longer cut at 80 characters.
+Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was identical), CI lint/coverage, benchmark alignment with `llm.py`.
