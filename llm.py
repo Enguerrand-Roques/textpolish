@@ -3,6 +3,7 @@ Ollama local backend — sends text to a local model and returns the polished ve
 """
 
 import os
+import re
 import json
 import logging
 import requests
@@ -48,10 +49,16 @@ def _load_prompt(name: str) -> str:
 
 _FRENCH_CHARS = set("éèêëàâùûüîïôœæç")
 _FRENCH_STOP_WORDS = {
-    "le", "la", "les", "de", "du", "un", "une", "et", "en",
-    "je", "tu", "il", "elle", "nous", "vous", "ils", "elles",
-    "que", "qui", "ne", "pas", "sur", "par", "pour", "avec",
+    "le", "la", "les", "de", "du", "des", "un", "une", "et", "en", "au", "aux",
+    "je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles",
+    "que", "qui", "ne", "pas", "sur", "par", "pour", "avec", "dans", "chez",
+    "ce", "ça", "ca", "est", "ai", "as", "suis", "es", "sont", "mais", "ou", "donc",
+    "mon", "ton", "son", "ma", "ta", "sa", "mes", "tes", "ses", "moi", "toi",
+    "très", "tres", "bien", "plus", "tout", "rien", "hier", "demain", "soir",
+    "merci", "bonjour", "salut", "slt", "oui", "non", "quoi", "peux", "veux",
 }
+# Split on apostrophes too, so "j'ai" counts as "j" + "ai".
+_WORD_RE = re.compile(r"[\w]+", re.UNICODE)
 
 
 def _detect_language(text: str) -> str:
@@ -63,7 +70,7 @@ def _detect_language(text: str) -> str:
     """
     if any(c in _FRENCH_CHARS for c in text.lower()):
         return "fr"
-    words = set(text.lower().split())
+    words = set(_WORD_RE.findall(text.lower()))
     if len(words & _FRENCH_STOP_WORDS) >= 2:
         return "fr"
     return "en"
@@ -152,6 +159,9 @@ def polish_text(
         "prompt": prompt_text,
         "keep_alive": OLLAMA_KEEP_ALIVE,
         "stream": is_streaming,
+        # Hybrid-reasoning models (Gemma 4, Qwen 3.5, LFM3) think by default,
+        # which turns a 1 s correction into tens of seconds.
+        "think": False,
         "options": {"num_ctx": _num_ctx_for(prompt_text)},
     }
 

@@ -223,3 +223,17 @@ class TestOutputCleanup:
         mock_resp.json.return_value = {"response": "c'est **important**"}
         with patch("llm.requests.post", return_value=mock_resp):
             assert polish_text("c'est **importent**", mode="casual") == "c'est **important**"
+
+
+class TestDetectLanguageMore:
+    def test_short_french_without_accents(self):
+        from llm import _detect_language
+        assert _detect_language("J'ai finit le rapport hier soir") == "fr"
+        assert _detect_language("slt tu fait quoi ce soir") == "fr"
+        assert _detect_language("on se voit demain") == "fr"
+
+    def test_english_stays_english(self):
+        from llm import _detect_language
+        assert _detect_language("I has finished the report yesterday") == "en"
+        assert _detect_language("Their going to the store tomorow") == "en"
+        assert _detect_language("hey just wanted to let u know im running late") == "en"
