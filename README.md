@@ -5,10 +5,10 @@
 
 **TextPolish** polishes your text using a local AI model — no internet, no subscription, no data sent anywhere.
 
-Select text in any app, press a shortcut, pick a rewrite mode, and the corrected text is pasted back instantly. Runs silently in the menubar / system tray.
+Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo above is the real app, recorded by `design/record_demo.py`. Runs silently in the menubar / system tray.
 
 <p align="center">
-  <img src="docs/screenshots/popup-card-dark.png" width="440" alt="TextPolish popup under a selected sentence in TextEdit, suggesting opérationel → opérationnel with Accept and Ignore buttons">
+  <img src="docs/demo.gif" width="560" alt="Demo in TextEdit: a message with two mistakes is corrected card by card, then rewritten in Pro with ⌘2, then translated with a Perso instruction and pasted back">
 </p>
 
 The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro/Perso. Everything runs locally.

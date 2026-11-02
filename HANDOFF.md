@@ -63,7 +63,7 @@ Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was ident
 - `diff.py`: `group_changes` / `classify_change` / `apply_choices` / `choose_layout`; typographic-only differences (' vs ’, nbsp) are not corrections.
 - Bugs found by driving the real app (design/scenario.sh): copy sent ⌥⌘C while the shortcut's ⌥ was held (now waits for release); several instances could run (now single-instance lock); Windows crashed at import (QAction from QtWidgets).
 - `design/`: preview harness with fixtures from real model outputs, headless-Chrome screenshots, real-app drivers, offscreen Qt render. Driving the real app needs Accessibility, Automation and Screen Recording for VS Code.
-- Portfolio: `docs/case-study.html` (also published as a private artifact), screenshots in `docs/screenshots/`. GIF still to record by hand.
+- Portfolio: `docs/case-study.html` (also published as a private artifact), screenshots in `docs/screenshots/`. Demo GIF: `docs/demo.gif`, recorded from the real app by `design/record_demo.py` (warm the model through the app first, or the first correction shows a cold load).
 - Not ported to `textpolish-cloud` yet (diff.py, clipboard.py and the panel are identical candidates). Windows only got a style refresh, untested on Windows.
 
 ## Model switch and UX fixes (November 2026, second pass)
