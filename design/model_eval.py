@@ -22,7 +22,8 @@ import llm  # noqa: E402
 
 GOLD = [  # (input, [acceptable outputs])
     ("RH et opérationel on veut plus operationel", ["RH et opérationnel on veut plus opérationnel"]),
-    ("Je pense qu'on pourras livrer mardi si tout ce passe bien", ["Je pense qu'on pourra livrer mardi si tout se passe bien"]),
+    ("Je pense qu'on pourras livrer mardi si tout ce passe bien", ["Je pense qu'on pourra livrer mardi si tout se passe bien",
+                                                                   "Je pense qu'on pourra livrer mardi si tout ça se passe bien"]),
     ("il reste quelque blocage cote infra", ["il reste quelques blocages côté infra", "il reste quelque blocage côté infra"]),
     ("Les enfant sont partis a l'école ce matin", ["Les enfants sont partis à l'école ce matin"]),
     ("J'ai finit le rapport hier soir", ["J'ai fini le rapport hier soir"]),

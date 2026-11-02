@@ -21,6 +21,11 @@ from config import (
 # silent truncation of the instructions.
 MAX_INPUT_CHARS = 4000
 
+# Gemma 4 ships with temperature 1, which made Correction flip between runs
+# (9-11/12 on design/model_eval.py). 0 gives the same fix every time;
+# rewrites keep a little variety.
+_TEMPERATURE = {"casual": 0.0, "pro": 0.4, "custom": 0.4}
+
 _PROMPTS_DIR = os.path.join(os.path.dirname(__file__), "prompts")
 
 # Track the last model used so we can unload it when switching models.
@@ -162,7 +167,10 @@ def polish_text(
         # Hybrid-reasoning models (Gemma 4, Qwen 3.5, LFM3) think by default,
         # which turns a 1 s correction into tens of seconds.
         "think": False,
-        "options": {"num_ctx": _num_ctx_for(prompt_text)},
+        "options": {
+            "num_ctx": _num_ctx_for(prompt_text),
+            "temperature": _TEMPERATURE.get(mode, 0.4),
+        },
     }
 
     logging.debug("Calling Ollama | model=%s | mode=%s | %d chars | stream=%s",

@@ -177,6 +177,15 @@ class TestPolishTextHardening:
             polish_text("Hello", mode="casual")
         assert mock_post.call_args.kwargs["json"]["options"]["num_ctx"] >= 1024
 
+    def test_correction_is_deterministic_rewrites_are_not(self):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "ok"}
+        with patch("llm.requests.post", return_value=mock_resp) as mock_post:
+            polish_text("Hello", mode="casual")
+            assert mock_post.call_args.kwargs["json"]["options"]["temperature"] == 0
+            polish_text("Hello", mode="pro")
+            assert mock_post.call_args.kwargs["json"]["options"]["temperature"] > 0
+
     def test_empty_model_response_raises(self):
         mock_resp = MagicMock()
         mock_resp.json.return_value = {"response": "   "}
