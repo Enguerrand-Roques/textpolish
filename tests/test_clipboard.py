@@ -46,6 +46,7 @@ class TestGetAppAndCopy:
              patch.object(clipboard, "_kbd") as mock_kbd, \
              patch.object(clipboard, "_snapshot_clipboard", return_value=("text", "orig")) as snap, \
              patch.object(clipboard, "_restore_clipboard") as restore, \
+             patch.object(clipboard, "_wait_for_modifiers_released"), \
              patch.object(clipboard.time, "sleep"):
             mock_pyperclip.paste.side_effect = paste_values
             result = clipboard.get_app_and_copy()
@@ -195,3 +196,36 @@ class TestPasteText:
             except RuntimeError:
                 pass
         restore.assert_called_once_with(("text", "orig"))
+
+
+class TestWaitForModifiers:
+    def test_returns_immediately_off_macos(self):
+        with patch.object(clipboard.sys, "platform", "linux"), \
+             patch.object(clipboard.time, "sleep") as sleep:
+            clipboard._wait_for_modifiers_released()
+        sleep.assert_not_called()
+
+    def test_waits_until_modifiers_are_up(self):
+        states = iter([0x80000, 0x80000, 0])
+        with patch.object(clipboard.sys, "platform", "darwin"), \
+             patch.object(clipboard, "CGEventSourceFlagsState", side_effect=lambda _: next(states), create=True), \
+             patch.object(clipboard, "kCGEventSourceStateHIDSystemState", 1, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskCommand", 0x100000, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskAlternate", 0x80000, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskShift", 0x20000, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskControl", 0x40000, create=True), \
+             patch.object(clipboard.time, "sleep") as sleep:
+            clipboard._wait_for_modifiers_released()
+        assert sleep.call_count == 2
+
+    def test_gives_up_after_timeout(self):
+        with patch.object(clipboard.sys, "platform", "darwin"), \
+             patch.object(clipboard, "CGEventSourceFlagsState", return_value=0x80000, create=True), \
+             patch.object(clipboard, "kCGEventSourceStateHIDSystemState", 1, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskCommand", 0x100000, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskAlternate", 0x80000, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskShift", 0x20000, create=True), \
+             patch.object(clipboard, "kCGEventFlagMaskControl", 0x40000, create=True), \
+             patch.object(clipboard.time, "sleep") as sleep:
+            clipboard._wait_for_modifiers_released()
+        assert sleep.call_count == int(clipboard._RELEASE_TIMEOUT / clipboard._COPY_POLL)

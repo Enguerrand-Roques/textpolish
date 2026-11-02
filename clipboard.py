@@ -15,7 +15,12 @@ if sys.platform == "darwin":
         CGEventCreateKeyboardEvent,
         CGEventSetFlags,
         CGEventPostToPid,
+        CGEventSourceFlagsState,
+        kCGEventSourceStateHIDSystemState,
         kCGEventFlagMaskCommand,
+        kCGEventFlagMaskAlternate,
+        kCGEventFlagMaskShift,
+        kCGEventFlagMaskControl,
     )
 elif sys.platform == "win32":
     import ctypes
@@ -43,6 +48,23 @@ def get_frontmost_app():
 
 _COPY_TIMEOUT = 1.0
 _COPY_POLL = 0.02
+_RELEASE_TIMEOUT = 1.0
+
+
+def _wait_for_modifiers_released() -> None:
+    """The shortcut fires while the user still holds its modifiers. Copying
+    right away would send e.g. ⌥⌘C ("copy style") instead of ⌘C and copy
+    nothing, so wait (briefly) until the physical modifiers are up."""
+    if sys.platform != "darwin":
+        return
+    mask = (kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate
+            | kCGEventFlagMaskShift | kCGEventFlagMaskControl)
+    waited = 0.0
+    while waited < _RELEASE_TIMEOUT:
+        if not CGEventSourceFlagsState(kCGEventSourceStateHIDSystemState) & mask:
+            return
+        time.sleep(_COPY_POLL)
+        waited += _COPY_POLL
 
 
 def _snapshot_clipboard():
@@ -95,6 +117,7 @@ def get_app_and_copy() -> tuple[object, str]:
         app_name = str(app_ref)
     logging.debug("Source app: %r", app_name)
 
+    _wait_for_modifiers_released()
     snapshot = _snapshot_clipboard()
     try:
         pyperclip.copy("")
