@@ -125,6 +125,33 @@
   .stats div { background: var(--sheet); padding: 16px 18px; }
   .stats p { font-size: 0.9rem; color: var(--muted); margin: 6px 0 0; }
 
+  /* Benchmark chart */
+  .chart { position: relative; margin-top: 22px; background: var(--sheet); border-radius: 12px; padding: 18px 18px 8px; }
+  .chart > svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart .legend svg { flex-shrink: 0; }
+  .chart .grid line { stroke: var(--rule); stroke-width: 1; }
+  .chart .axis text, .chart .lbl { font: 12px var(--mono); fill: var(--muted); }
+  .chart .lbl.pick { fill: var(--ink); font-weight: 600; }
+  .chart .dot { fill: var(--muted); stroke: var(--sheet); stroke-width: 2; }
+  .chart .dot.pick { fill: var(--blue); }
+  .chart .hit { fill: transparent; cursor: default; }
+  .chart .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 12px var(--mono); color: var(--muted); padding: 4px 2px 10px; }
+  .chart .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); font: 12px/1.45 var(--mono);
+         padding: 8px 10px; border-radius: 8px; white-space: nowrap; opacity: 0; transition: opacity .12s; }
+  .tip.on { opacity: 1; }
+
+  /* Decision log */
+  .decisions { display: grid; gap: 18px; margin-top: 22px; }
+  .decision { background: var(--sheet); border-radius: 12px; padding: 18px 20px; }
+  .decision h3 { margin-bottom: 10px; }
+  .decision table { min-width: 0; font-size: 0.9rem; }
+  .decision td, .decision th { padding: 6px 10px 6px 0; }
+  .decision tr.pick td { color: var(--blue); font-weight: 600; }
+  .decision .verdict { margin: 12px 0 0; font-size: 0.95rem; }
+  .decision .verdict b { font-family: var(--display); }
+  .decision .cost { color: var(--muted); font-size: 0.92rem; margin: 4px 0 0; }
+
   footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--rule); font: 0.85rem/1.6 var(--mono); color: var(--muted); }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -140,10 +167,11 @@
   <div>
     <div class="label">UX case study · macOS · local AI</div>
     <h1 style="margin-top:14px">TextPolish</h1>
-    <p class="lede" style="margin-top:18px">I type fast, on my phone and on my Mac, and mistakes slip through. I built a small tool that fixes them <span class="fix"><s>whitout</s> <ins>without</ins></span> leaving the app I'm writing in: I select the text, press <kbd>⌥⌘G</kbd>, and a window offers the fixes one by one. The model runs on my Mac; nothing goes online. It works in English and French.</p>
+    <p class="lede" style="margin-top:18px">I type fast and mistakes slip through. I built a small Mac tool that fixes them <span class="fix"><s>whitout</s> <ins>without</ins></span> leaving the app I'm writing in: I select the text, press <kbd>⌥⌘G</kbd>, and a window offers the fixes one by one. The model runs on my Mac; nothing goes online. It works in English and French.</p>
     <div class="meta">
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
+      <span class="label">macOS first · Windows experimental</span>
       <span class="label">123 tests</span>
     </div>
   </div>
@@ -158,6 +186,7 @@
   <h2>Why I built it</h2>
   <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
   <p>I wanted three things: never leave the app, never send anything online, and have a correction ready before I even wonder which setting to pick.</p>
+  <p>It is built for the Mac first: the popup, the menu-bar icon and every test on this page are macOS. A Windows version exists with a simpler window; it hasn't been tested since the redesign.</p>
 </section>
 
 <section class="col">
@@ -226,18 +255,14 @@
 </section>
 
 <section class="col">
-  <h2>Everything stays on the Mac</h2>
-  <p>The model runs with Ollama, directly on my MacBook (M2, 16 GB). My messages never leave the computer, the tool works offline, and it costs nothing to use. In exchange, I have to accept smaller models and watch the speed.</p>
+  <h2>The numbers</h2>
+  <p>Measured on my MacBook Air M2, 16 GB, model running locally with Ollama.</p>
   <div class="stats">
-    <div><div class="stat">0.5–1 s</div><p>to fix or rewrite a sentence, when the model is already loaded</p></div>
-    <div><div class="stat">3–6 s</div><p>the first time, or after 5 minutes without using it</p></div>
-    <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s (model reload)</p></div>
+    <div><div class="stat">0.5–1 s</div><p>to fix or rewrite a sentence, model already loaded</p></div>
+    <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
+    <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s</p></div>
     <div><div class="stat">0</div><p>bytes sent over the Internet</p></div>
   </div>
-  <p>I give both times because the second one is the one you notice. After 5 minutes idle, Ollama drops the model from memory to give its 4.3 GB back to the Mac, and it has to load again. Right after a reboot, the first correction even took 9 to 15 seconds. I chose to free the memory; the model can be kept loaded longer in the settings.</p>
-  <p>Free memory matters as much as the model. While filming the demo, my Mac was swapping heavily (14 of 15 GB of swap in use): generation dropped from about 35 to 13 tokens per second, and a message that took 3–4 s took 7–11 s.</p>
-  <p>Switching modes used to cost 5 seconds: I used one model to correct and another to rewrite, and with a browser and an editor open my Mac couldn't keep both in memory. I eventually found one model good enough for all three modes, and the delay disappeared.</p>
-  <p>I also tried MLX, Apple's engine that recent Ollama versions can use. It was 2.6× faster (0.34 s vs 0.88 s), but the model took 7.4 GB of memory and my Mac started to struggle. I kept the lighter build and noted MLX as an option for Macs with more RAM.</p>
 </section>
 
 <section class="col">
@@ -254,14 +279,25 @@
   <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">Current version.</p></div></div>
 </section>
 
-<section class="col">
-  <h2>What I ruled out</h2>
-  <p>I would have liked live red underlines, like Grammarly. Before starting, I checked what macOS's accessibility API allows. It doesn't give the caret position when nothing is selected, one useful function isn't available from Python, and many apps (Slack, VS Code) don't expose their text well. I kept the shortcut, like the other Mac checkers that work in every app.</p>
-</section>
 
 <section class="col">
   <h2>Choosing the model</h2>
-  <p>I tested 17 models in six rounds, from April to November. For the last one I wrote a list of sentences with the expected correction, including sentences without mistakes that a good checker must leave alone. That lets me count instead of trusting an impression. A few findings changed the product:</p>
+  <p>17 models in six rounds, April to November. The last round stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6).</p>
+  <div class="chart" id="bench">
+    <div class="legend" aria-hidden="true">
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--blue)"/></svg>chosen</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--muted)"/></svg>llama.cpp (GGUF)</span>
+      <span><svg width="12" height="12"><rect x="1.5" y="1.5" width="9" height="9" transform="rotate(45 6 6)" fill="var(--muted)"/></svg>MLX build</span>
+    </div>
+    <svg viewBox="0 0 620 340" role="img" aria-labelledby="benchTitle benchDesc">
+      <title id="benchTitle">Correct fixes out of 12 against time per sentence</title>
+      <desc id="benchDesc">Gemma 4 E2B GGUF, chosen: 11 of 12 at 0.88 s. Gemma 4 E2B MLX: 10 at 0.34 s. Ministral 3 3B: 10 at 0.67 s. Qwen 3.5 4B MLX: 10 at 0.95 s. Gemma 3 4B: 6 at 1.43 s. Qwen 3.5 2B: 5 at 0.78 s. Qwen 3.5 2B MLX: 3 at 0.52 s. LFM3 1.7B MLX: 2 at 7.2 s, off the chart.</desc>
+      <g id="plot"></g>
+    </svg>
+    <div class="tip" id="tip"></div>
+  </div>
+  <p style="margin-top:14px;font-size:0.95rem;color:var(--muted)">Top left is best. Four models reach 10/12; the decision between them was not quality but memory and behaviour in the other modes (next section). Gemma 4 E2B scored 10/12 before its temperature was fixed, 11/12 after; on the English set it scores 12/12.</p>
+  <h3 style="margin-top:34px">What the tests revealed</h3>
   <div class="table-wrap">
     <table>
       <thead><tr><th>What I saw</th><th>What I changed</th></tr></thead>
@@ -308,6 +344,85 @@
 </section>
 
 <section class="col">
+  <h2>Decision log</h2>
+  <p>Every choice below traded something away. I wrote down what I measured, what I picked, and what it costs.</p>
+  <div class="decisions">
+    <div class="decision">
+      <h3>1. One model for every mode, or one per mode?</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Option</th><th>Switch Correction → Pro</th><th>Correction</th><th>Pro</th></tr></thead>
+        <tbody>
+          <tr><td>Ministral 3 3B + Gemma 3 4B</td><td class="num">~5 s (reload)</td><td class="num">10/12</td><td class="num">5/5, “Dear [Name]”</td></tr>
+          <tr class="pick"><td>Gemma 4 E2B for all</td><td class="num">0.75–0.8 s</td><td class="num">10/12 → 11/12</td><td class="num">5/5</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> one model. Same correction score, better rewrites, and switching modes stops costing a reload.</p>
+      <p class="cost">Cost: every mode shares the same model's weaknesses.</p>
+    </div>
+    <div class="decision">
+      <h3>2. The fastest build, or the lightest?</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Build</th><th>Per sentence</th><th>In memory</th><th>Free RAM after loading</th></tr></thead>
+        <tbody>
+          <tr><td>Gemma 4 E2B, MLX (nvfp4)</td><td class="num">0.34 s</td><td class="num">7.4 GB</td><td class="num">52% → 24%, swap</td></tr>
+          <tr class="pick"><td>Gemma 4 E2B, GGUF (QAT)</td><td class="num">0.88 s</td><td class="num">4.3 GB</td><td class="num">no swap added</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> the lighter build. On a 16 GB Mac with a browser open, the fast one slowed everything else down.</p>
+      <p class="cost">Cost: 2.6× slower per sentence. MLX is noted as the better choice with 24 GB or more.</p>
+    </div>
+    <div class="decision">
+      <h3>3. Keep the model in memory?</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Setting</th><th>Next request</th><th>Memory held</th></tr></thead>
+        <tbody>
+          <tr><td>Unload after each request</td><td class="num">3–6 s every time</td><td class="num">0</td></tr>
+          <tr class="pick"><td>Keep 5 minutes</td><td class="num">0.5–1 s, then 3–6 s after a pause</td><td class="num">4.3 GB while in use</td></tr>
+          <tr><td>Keep forever</td><td class="num">0.5–1 s</td><td class="num">4.3 GB always</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> 5 minutes. Fast while I'm writing, memory back when I stop.</p>
+      <p class="cost">Cost: the first correction after a pause waits 3–6 s. One setting changes it.</p>
+    </div>
+    <div class="decision">
+      <h3>4. Let the model vary, or make it repeatable?</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Temperature</th><th>Correction, 3 identical runs</th></tr></thead>
+        <tbody>
+          <tr><td>1 (model default)</td><td class="num">9, 10, 11 / 12</td></tr>
+          <tr class="pick"><td>0 for Correction, 0.4 for rewrites</td><td class="num">11, 11, 11 / 12</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> a correction must give the same answer for the same text. Rewrites keep a little variety.</p>
+      <p class="cost">Cost: none measured.</p>
+    </div>
+    <div class="decision">
+      <h3>5. Cards or the whole document?</h3>
+      <p style="margin:0 0 8px;font-size:0.95rem">Cards let you judge each fix; on a long message, 13 cards mean 13 key presses. The popup picks: <b>up to 3 fixes and 280 characters → cards</b>, otherwise the document view with every fix highlighted and one <kbd>⌘↵</kbd> to apply.</p>
+      <p class="cost">Cost: the thresholds are a judgement call, set by using it, not measured on users.</p>
+    </div>
+    <div class="decision">
+      <h3>6. Live underlining, or a shortcut?</h3>
+      <p style="margin:0 0 8px;font-size:0.95rem">Live red underlines like Grammarly need the caret position and the text of the app you're typing in. macOS's accessibility API doesn't give the caret without a selection, one needed function isn't available from Python, and apps like Slack or VS Code don't expose their text well.</p>
+      <p class="verdict"><b>Chose:</b> a shortcut, which works in every app.</p>
+      <p class="cost">Cost: nothing is caught unless you ask.</p>
+    </div>
+    <div class="decision">
+      <h3>7. Local or cloud?</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Sentence</th><th>First request</th><th>Privacy</th><th>Limits</th></tr></thead>
+        <tbody>
+          <tr class="pick"><td>Local (Gemma 4, Ollama)</td><td class="num">0.5–0.9 s</td><td class="num">3–6 s</td><td>nothing leaves the Mac</td><td>4.3 GB of RAM</td></tr>
+          <tr><td>Cloud (Gemini Flash-Lite)</td><td class="num">~0.5 s</td><td class="num">~0.5 s</td><td>text sent to Google</td><td>10 requests / minute free</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> local as the main version; speed is a tie once loaded, privacy and offline use are not.</p>
+      <p class="cost">Cost: the first-load wait and the memory. The cloud version exists as a separate project for Macs that can't spare the RAM.</p>
+    </div>
+  </div>
+</section>
+
+<section class="col">
   <h2>Testing like a user</h2>
   <p>I didn't want to judge from mock-ups. I ran the real app with everyday messages: a text to a friend, an e-mail to my manager, a LinkedIn application, messages in English and French, a long report. The text was typed in TextEdit and the shortcut sent like a real keyboard. Several bugs only showed up then.</p>
   <div class="bugs">
@@ -350,6 +465,53 @@
   <h2>What I take away</h2>
   <p>Removing a decision helped more than adding an option: the best improvement was starting the correction without asking for a mode. Some problems can't be fixed in the interface: the “opérationel” bug was fixed by changing the model. And above all, an interface is judged by really using it, in every language it claims to support. Half the bugs on this page I would never have seen by looking at screenshots.</p>
 </section>
+
+<script>
+(() => {
+  // Round 6, French set, warm median per sentence (benchmarks/results/round6_20261102.md)
+  const D = [
+    { m: "Gemma 4 E2B", x: 0.88, y: 11, mlx: 0, pick: 1, note: "4.3 GB · chosen (10/12 before temperature 0)" },
+    { m: "Gemma 4 E2B MLX", x: 0.34, y: 10, mlx: 1, note: "7.4 GB · pushed the Mac into swap" },
+    { m: "Ministral 3 3B", x: 0.67, y: 10, mlx: 0, note: "wrote whole e-mails in Pro" },
+    { m: "Qwen 3.5 4B MLX", x: 0.95, y: 10, mlx: 1, note: "rewrote a correct sentence" },
+    { m: "Gemma 3 4B", x: 1.43, y: 6, mlx: 0, note: "missed “opérationel”" },
+    { m: "Qwen 3.5 2B", x: 0.78, y: 5, mlx: 0, note: "added mistakes" },
+    { m: "Qwen 3.5 2B MLX", x: 0.52, y: 3, mlx: 1, note: "translated French to English" },
+    { m: "LFM3 1.7B MLX", x: 7.21, y: 2, mlx: 1, note: "printed its reasoning; 7.2 s, off the chart" },
+  ];
+  const W = 620, H = 340, L = 44, R = 20, T = 30, B = 38, XMAX = 1.6;
+  const sx = v => L + Math.min(v, XMAX) / XMAX * (W - L - R);
+  const sy = v => T + (1 - v / 12) * (H - T - B);
+  const NS = "http://www.w3.org/2000/svg";
+  const g = document.getElementById("plot"), tip = document.getElementById("tip"), box = document.getElementById("bench");
+  const el = (n, a, p = g) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const grid = el("g", { class: "grid" }), axis = el("g", { class: "axis" });
+  [0, 3, 6, 9, 12].forEach(v => { el("line", { x1: L, x2: W - R, y1: sy(v), y2: sy(v) }, grid); el("text", { x: L - 8, y: sy(v) + 4, "text-anchor": "end" }, axis).textContent = v; });
+  [0, 0.4, 0.8, 1.2, 1.6].forEach(v => { el("text", { x: sx(v), y: H - B + 18, "text-anchor": "middle" }, axis).textContent = v + " s"; });
+  el("text", { x: L, y: H - 2 }, axis).textContent = "time per sentence, model loaded →";
+  el("text", { x: L - 8, y: 12, "text-anchor": "end" }, axis).textContent = "fixes /12";
+  const place = { "Gemma 4 E2B": [10, -10], "Gemma 4 E2B MLX": [0, -14, "middle"], "Ministral 3 3B": [0, 22, "middle"],
+                  "Qwen 3.5 4B MLX": [10, 4], "Gemma 3 4B": [-10, -10, "end"], "Qwen 3.5 2B": [10, 4], "Qwen 3.5 2B MLX": [10, 4], "LFM3 1.7B MLX": [-12, 4, "end"] };
+  D.forEach(d => {
+    const cx = sx(d.x), cy = sy(d.y), r = d.pick ? 7 : 5.5;
+    const mark = d.mlx
+      ? el("rect", { x: cx - r * .8, y: cy - r * .8, width: r * 1.6, height: r * 1.6, transform: `rotate(45 ${cx} ${cy})`, class: "dot" + (d.pick ? " pick" : "") })
+      : el("circle", { cx, cy, r, class: "dot" + (d.pick ? " pick" : "") });
+    if (d.x > XMAX) el("text", { x: cx + 9, y: cy + 4, class: "lbl" }).textContent = "→";
+    const [dx, dy, anchor] = place[d.m];
+    el("text", { x: cx + dx, y: cy + dy, class: "lbl" + (d.pick ? " pick" : ""), "text-anchor": anchor || "start" }).textContent = d.m;
+    const hit = el("circle", { cx, cy, r: 16, class: "hit", tabindex: 0, "aria-label": `${d.m}: ${d.y} of 12 in ${d.x} s` });
+    const show = () => {
+      tip.innerHTML = `<b>${d.m}</b><br>${d.y}/12 · ${d.x} s · ${d.mlx ? "MLX" : "llama.cpp"}<br>${d.note}`;
+      const bb = box.getBoundingClientRect(), pt = hit.getBoundingClientRect();
+      let left = pt.left - bb.left + 20; if (left > bb.width - 260) left = pt.left - bb.left - 250;
+      tip.style.left = left + "px"; tip.style.top = (pt.top - bb.top - 10) + "px"; tip.classList.add("on");
+    };
+    hit.addEventListener("mouseenter", show); hit.addEventListener("focus", show);
+    hit.addEventListener("mouseleave", () => tip.classList.remove("on")); hit.addEventListener("blur", () => tip.classList.remove("on"));
+  });
+})();
+</script>
 </main>
 
 <footer class="col">

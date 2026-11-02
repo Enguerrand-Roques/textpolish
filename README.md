@@ -17,6 +17,8 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 → **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
 
+> **Built for macOS.** The popup, the menu-bar icon, the screenshots and every test in this repo are macOS (Apple Silicon, tested on an M2 with 16 GB). A Windows version exists with a simpler window; it has not been tested since the redesign.
+
 > **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
 
 ---
@@ -110,7 +112,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plis
 ---
 
 <details>
-<summary><strong>Windows</strong></summary>
+<summary><strong>Windows (experimental, untested since the redesign)</strong></summary>
 
 ### Requirements
 - Windows 10+
