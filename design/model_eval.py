@@ -3,6 +3,7 @@
     venv/bin/python3 design/model_eval.py casual qwen3.5:2b-nvfp4 ministral-3:3b ...
     venv/bin/python3 design/model_eval.py pro gemma3:4b ...
     venv/bin/python3 design/model_eval.py custom gemma3:4b ...
+    add --en to use the English test set
 
 Correction is scored against expected outputs (exact match after
 normalising quotes/spaces), plus "overreach": changing a text that had
@@ -35,6 +36,33 @@ GOLD = [  # (input, [acceptable outputs])
     ("Merci pour ton message, je te rappelle demain matin.", None),
     ("On a fait le meeting ce matin, le deadline est vendredi et le client est ok.", None),
     ("Thanks for the update, I will review the document tomorrow.", None),
+]
+GOLD_EN = [
+    ("Their going to the store tomorow", ["They're going to the store tomorrow"]),
+    ("I has finished the report yesterday", ["I have finished the report yesterday", "I finished the report yesterday"]),
+    ("Its a great idea, lets do it.", ["It's a great idea, let's do it."]),
+    ("She dont know where they is.", ["She doesn't know where they are."]),
+    ("We was planning to meet at the cafe, but it were closed.", ["We were planning to meet at the cafe, but it was closed."]),
+    ("Can you send me you're notes before the meeting?", ["Can you send me your notes before the meeting?"]),
+    ("The results was better then expected.", ["The results were better than expected."]),
+    ("I recieve to many emails every day", ["I receive too many emails every day"]),
+    ("He go to the gym every morning befor work.", ["He goes to the gym every morning before work."]),
+    # no mistakes
+    ("Thanks for the update, I will review the document tomorrow.", None),
+    ("Let's meet on Friday at 10 to go over the plan.", None),
+    ("The new version is live and the client is happy with it.", None),
+]
+PRO_EN = [
+    "hey can u send me the file asap, need it for the meeting",
+    "sorry im late, traffic was crazy, be there in 10",
+    "thx for the help yesterday, ur a lifesaver",
+    "we had the meeting, deadline is friday and the client is ok with it",
+    "hi, saw ur hiring a product intern, super motivated, can we talk?",
+]
+CUSTOM_EN = [
+    ("I'll be a bit late tomorrow, see you around 10.", "Translate into French", "fr_any"),
+    ("Hi everyone, quick update on the project: we made good progress on payments but there are still bugs on the login page. I suggest we meet on Thursday to prioritize.", "Make the text shorter", "shorter"),
+    ("Thanks for your help yesterday, it really saved me.", "Make the tone warmer and friendlier", "en_changed"),
 ]
 PRO = [
     "jsuis trop content pour toi frero, tu la merité grave",
@@ -81,6 +109,11 @@ def runner(model):
     return "?"
 
 
+LANG = "en" if "--en" in sys.argv else "fr"
+if LANG == "en":
+    GOLD, PRO, CUSTOM = GOLD_EN, PRO_EN, CUSTOM_EN
+
+
 def evaluate(mode, model):
     llm._unload_model = lambda m: None
     subprocess.run(["ollama", "stop", model], capture_output=True)
@@ -114,7 +147,7 @@ def evaluate(mode, model):
             bad = []
             if llm._detect_language(text) != llm._detect_language(out):
                 bad.append("lang")
-            if re.search(r"\*\*|^objet|^subject", out, re.I | re.M):
+            if re.search(r"\*\*|^objet|^subject|\[[^\]]+\]", out, re.I | re.M):
                 bad.append("boilerplate")
             if len(out) > 3 * len(text) + 60:
                 bad.append("too long")
@@ -126,13 +159,15 @@ def evaluate(mode, model):
         else:
             kind = expect
             ok = ((kind == "en" and llm._detect_language(out) == "en")
+                  or (kind == "fr_any" and llm._detect_language(out) == "fr")
+                  or (kind == "en_changed" and llm._detect_language(out) == "en" and norm(out) != norm(text))
                   or (kind == "shorter" and len(out) < 0.8 * len(text))
                   or (kind == "fr" and llm._detect_language(out) == "fr" and norm(out) != norm(text)))
             score += ok
             if not ok:
                 notes.append(f"{instr}: {out[:90]!r}")
     warm = statistics.median(times) if times else float("nan")
-    print(f"\n### {mode} · {model} · {where}")
+    print(f"\n### {mode} · {LANG} · {model} · {where}")
     print(f"score {score}/{len(rows)} · cold {first:.1f}s · warm median {warm:.2f}s")
     for n in notes:
         print("  -", n)
@@ -142,5 +177,5 @@ def evaluate(mode, model):
 
 if __name__ == "__main__":
     mode = sys.argv[1]
-    for model in sys.argv[2:]:
+    for model in [a for a in sys.argv[2:] if not a.startswith("--")]:
         evaluate(mode, model)

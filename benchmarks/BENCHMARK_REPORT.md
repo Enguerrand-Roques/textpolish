@@ -10,7 +10,7 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 
 | Model | Rounds | Best result | Why it was kept or dropped |
 |-------|--------|-------------|----------------------------|
-| **`gemma4:e2b-it-qat`** | 4, 6 | **11/12 Correction, 5/5 Pro, 3/3 Sur mesure; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
+| **`gemma4:e2b-it-qat`** | 4, 6 | **Correction 11/12 FR, 12/12 EN; Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
 | `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Same quality as E2B, ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
@@ -361,6 +361,20 @@ Measured with `polish_text()` after `ollama stop` (cold) and on the next three c
 The model file stayed in macOS's file cache between runs. Cold loads with an empty cache (first request after a reboot, or after heavy memory use) were 9.4 s and 15.4 s in this round. With `OLLAMA_KEEP_ALIVE = 300` a cold load happens again after 5 minutes idle. The warm numbers in the tables above are higher (0.9–1.1 s) because the test set has longer sentences.
 
 The Perso mode was renamed **Sur mesure** in the app after this round; the tables keep the name used at the time.
+
+### English test set
+
+The project and its interface are English-first, so the same evaluation was repeated on an
+English set (`design/model_eval.py --en`: their/they're, its/it's, your/you're, then/than, to/too,
+subject-verb agreement, spelling, plus 3 correct sentences that must stay untouched).
+
+| Mode | French set | English set | Warm median (EN) |
+|------|-----------:|------------:|-----------------:|
+| Correction | 11/12 | **12/12** (two identical runs) | 0.84 s |
+| Pro | 5/5 | 5/5 after a prompt fix (4/5 before: "Dear [Recipient Name]") | 0.94 s |
+| Custom / Sur mesure | 3/3 | 3/3 | 0.93 s |
+
+The UI was renamed again for the English interface: Sur mesure is **Custom** in English.
 
 ### Decision
 
