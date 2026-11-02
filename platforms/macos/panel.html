@@ -590,12 +590,15 @@ function finish() {
 document.addEventListener("keydown", e => {
   const typing = document.activeElement === $("instrInput");
   if (e.key === "Escape") { e.preventDefault(); send({ type: "close" }); return; }
-  if (typing) { if (e.key === "Enter") { e.preventDefault(); submitCustom(); } return; }
-  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+  const ready = layout === "cards" || layout === "rewrite" || layout === "document";
+  // ⌘↵ always means "replace my text", even with the cursor still in the
+  // Perso field; plain ↵ there (re)runs the instruction.
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && (ready || !typing)) {
     e.preventDefault();
     if (layout === "cards" || layout === "rewrite") acceptAll(); else if (layout === "document") finish();
     return;
   }
+  if (typing) { if (e.key === "Enter") { e.preventDefault(); submitCustom(); } return; }
   // e.code is the physical key: on AZERTY, ⌘2 has e.key === "é".
   const digit = { Digit1: 0, Digit2: 1, Digit3: 2 }[e.code];
   if (e.metaKey && digit !== undefined) { e.preventDefault(); chooseMode(["casual", "pro", "custom"][digit]); return; }

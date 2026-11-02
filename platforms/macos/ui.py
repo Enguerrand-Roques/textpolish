@@ -12,6 +12,7 @@ import logging
 import os
 import re
 import threading
+import time
 import objc
 from Foundation import NSObject, NSURL
 
@@ -354,6 +355,7 @@ class TextPolishPanel(NSObject):
         self._app_ref = None
         self._current_mode = "pro"
         self._parts: list[dict] = []
+        self._t_job = 0.0
         self._job_runner = PolishJobRunner(on_main=_on_main)
         self._webview_ready = False
         self._pending_js: list[str] = []
@@ -466,7 +468,10 @@ class TextPolishPanel(NSObject):
     @objc.python_method
     def trigger_polish(self):
         """Called from hotkey background thread on shortcut press."""
+        t0 = time.perf_counter()
         self._app_ref, self._selected_text = get_app_and_copy()
+        logging.info("Copied %d chars in %.0f ms",
+                     len(self._selected_text), (time.perf_counter() - t0) * 1000)
         _on_main(self._show)
 
     # ── Internal UI ──────────────────────────────────────────────────────────
@@ -558,6 +563,7 @@ class TextPolishPanel(NSObject):
         if not self._selected_text.strip():
             return
         self._js("App.onPolishStart()")
+        self._t_job = time.perf_counter()
         self._job_runner.start(
             self._selected_text, mode, custom_prompt,
             status_steps=_STATUS_STEPS,
@@ -574,6 +580,9 @@ class TextPolishPanel(NSObject):
         self._js("App.onDone()")
         self._parts = group_changes(self._selected_text, result)
         layout = choose_layout(self._parts, self._selected_text, self._current_mode)
+        logging.info("%s ready in %.0f ms: %s, %d change(s)", self._current_mode,
+                     (time.perf_counter() - self._t_job) * 1000, layout,
+                     sum(p["op"] == "change" for p in self._parts))
         self._js(f"App.setChanges({json.dumps(self._parts)}, {json.dumps(layout)})")
 
     @objc.python_method
