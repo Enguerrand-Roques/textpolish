@@ -1,6 +1,6 @@
 #!/bin/bash
 # Screenshot the design preview in light and dark (needs Google Chrome).
-#   design/shoot.sh            -> design/screenshots/preview-{light,dark}.png
+#   design/shoot.sh [en|fr]    -> design/screenshots/preview-{light,dark}[-fr].png
 set -e
 cd "$(dirname "$0")/.."
 PORT=8765
@@ -10,10 +10,12 @@ trap "kill $SERVER" EXIT
 sleep 0.6
 mkdir -p design/screenshots
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+LANG=${1:-en}
+SUFFIX=$([ "$LANG" = en ] && echo "" || echo "-$LANG")
 for theme in light dark; do
   "$CHROME" --headless=new --hide-scrollbars --force-device-scale-factor=2 \
     --window-size=1700,1450 --virtual-time-budget=12000 \
-    --screenshot="design/screenshots/preview-$theme.png" \
-    "http://localhost:$PORT/design/preview.html?theme=$theme" 2>/dev/null
+    --screenshot="design/screenshots/preview-$theme$SUFFIX.png" \
+    "http://localhost:$PORT/design/preview.html?theme=$theme&lang=$LANG" 2>/dev/null
 done
 ls -la design/screenshots

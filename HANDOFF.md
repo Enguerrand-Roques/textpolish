@@ -8,19 +8,21 @@ sections below it are the history, kept as written at the time.
 | Item | Value |
 |------|-------|
 | Model | `gemma4:e2b-it-qat` for all three modes (only model installed, 4.3 GB) |
-| Ollama | 0.40.13, `"think": false`, temperature 0 Correction / 0.4 Pro & Sur mesure |
-| Modes (UI) | Correction (`casual`), Pro (`pro`), Sur mesure (`custom`) |
-| Quality (Round 6) | 11/12 expected fixes, Pro 5/5, Sur mesure 3/3 (`design/model_eval.py`) |
-| Speed, M2 16 GB | warm 0.5–1.1 s per sentence, 3–4 s for 380 chars, ~10 s for 1,500 chars; cold 3–6 s (9–15 s after reboot); model freed after 5 min idle |
+| Ollama | 0.40.13, `"think": false`, temperature 0 Correction / 0.4 Pro & Custom |
+| Modes (UI) | Correction (`casual`), Pro (`pro`), Custom (`custom`, "Sur mesure" in French) |
+| Interface language | English (default) or French: `UI_LANGUAGE` in config.py, or ✏️ → Language (live, saved). Strings: `i18n.py` (Python) and the `I18N` dict in `panel.html` |
+| Quality (Round 6) | Correction 11/12 FR, 12/12 EN; Pro 5/5; Custom 3/3 (`design/model_eval.py`, `--en` for the English set) |
+| Speed, M2 16 GB | warm 0.5–1.1 s per sentence, 3–4 s for ~370 chars, ~10 s for 1,500 chars; cold 3–6 s (9–15 s after reboot); model freed after 5 min idle. With heavy swap, ~13 tok/s instead of ~35 and 7–11 s for ~370 chars |
 | Mistake labels | spelling, accent, case, agreement, conjugation, homophone/grammar, punctuation, rewrite (`diff.classify_change`) |
-| Tests | 119 (textpolish), 106 (textpolish-cloud) |
+| Tests | 123 (textpolish), 110 (textpolish-cloud) |
 | Public | GitHub Pages serves `docs/` at https://enguerrand-roques.github.io/textpolish/ (landing page, case study, video) |
-| Demo | `docs/demo.gif`, `docs/textpolish-demo.mp4` (Remotion project in `video/`, clips from `design/record_video.py`) |
+| Demo | `docs/demo.gif`, `docs/textpolish-demo.mp4` (1 min, English then the switch to French; Remotion project in `video/`, clips from `design/record_video.py`) |
 
 Open items:
 - Rotate the Anthropic key in local `config.py` and the Gemini key in textpolish-cloud's (user will do it).
 - Windows UI only got a style refresh; never tested on Windows.
-- Correction still misses 1/12 (drops a "?"); humour in Sur mesure is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
+- Correction still misses 1/12 (drops a "?"); humour in Custom is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
+- `docs/textpolish-cloud.html` (legacy browser demo) is still French-only with the old UI.
 - The popup closes when it loses focus; another app grabbing focus mid-request (seen once with Grammarly running) hides it.
 - Real-time "as you type" underlining was ruled out (see the September notes below).
 

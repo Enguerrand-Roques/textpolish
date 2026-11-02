@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>TextPolish — design preview</title>
@@ -19,30 +19,32 @@
 const params = new URLSearchParams(location.search);
 const theme = params.get("theme") || "light";
 const only = params.get("only");
+const lang = params.get("lang") || "en";
+const FR = lang === "fr";
 if (theme === "dark") document.body.classList.add("dark");
 
 const SCENARIOS = [
-  ["Lecture", f => { A(f).setSourceApp("Notes"); A(f).setInputText(f.fx.long.input); A(f).onPolishStart(); }],
-  ["Carte — orthographe", f => { A(f).setSourceApp("Notes"); A(f).setChanges(f.fx.typo.parts, "cards"); }],
-  ["Carte — SMS (2/3)", f => { A(f).setSourceApp("Messages"); A(f).setChanges(f.fx.sms.parts, "cards"); f.contentWindow.decide(true); }, 450],
-  ["Rien à corriger", f => { A(f).setSourceApp("Mail"); A(f).setChanges(f.fx.clean.parts, "none"); }],
-  ["Document — texte long", f => { A(f).setSourceApp("Slack"); A(f).setChanges(f.fx.long.parts, "document"); }],
-  ["Mode Pro", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); }],
-  ["Pro — comparer", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); f.contentWindow.toggleCompare(); }],
-  ["Sur mesure", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = "traduire en anglais"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],
-  ["Erreur", f => { A(f).onError("Cannot connect to Ollama. Make sure it is running: `ollama serve`"); }],
-  ["Aucune sélection", f => { A(f).setShortcut("⌥⌘G"); A(f).noSelection(); }],
-  ["Terminé", f => { A(f).setChanges(f.fx.typo.parts, "cards"); f.contentWindow.acceptAll(); }],
+  [FR ? "Lecture" : "Reading", f => { A(f).setSourceApp("Notes"); A(f).setInputText(f.fx.long.input); A(f).onPolishStart(); }],
+  [FR ? "Carte — orthographe" : "Card — spelling", f => { A(f).setSourceApp("Notes"); A(f).setChanges(f.fx.typo.parts, "cards"); }],
+  [FR ? "Carte — SMS (2/3)" : "Card — text message (2/3)", f => { A(f).setSourceApp("Messages"); A(f).setChanges(f.fx.sms.parts, "cards"); f.contentWindow.decide(true); }, 450],
+  [FR ? "Rien à corriger" : "Nothing to fix", f => { A(f).setSourceApp("Mail"); A(f).setChanges(f.fx.clean.parts, "none"); }],
+  [FR ? "Document — texte long" : "Document — long text", f => { A(f).setSourceApp("Slack"); A(f).setChanges(f.fx.long.parts, "document"); }],
+  [FR ? "Mode Pro" : "Pro mode", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); }],
+  [FR ? "Pro — comparer" : "Pro — compare", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); f.contentWindow.toggleCompare(); }],
+  [FR ? "Sur mesure" : "Custom", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = FR ? "traduire en anglais" : "translate into French"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],
+  [FR ? "Erreur" : "Error", f => { A(f).onError("Cannot connect to Ollama. Make sure it is running: `ollama serve`"); }],
+  [FR ? "Aucune sélection" : "No selection", f => { A(f).setShortcut("⌥⌘G"); A(f).noSelection(); }],
+  [FR ? "Terminé" : "Done", f => { A(f).setChanges(f.fx.typo.parts, "cards"); f.contentWindow.acceptAll(); }],
 ];
 const A = f => f.contentWindow.App;
 
-fetch("fixtures.json").then(r => r.json()).then(fx => {
+fetch(`fixtures-${lang}.json`).then(r => r.json()).then(fx => {
   SCENARIOS.forEach(([name, run, wait], i) => {
     if (only && only !== String(i)) return;
     const fig = document.createElement("figure");
     fig.innerHTML = `<figcaption>${name}</figcaption>`;
     const f = document.createElement("iframe");
-    f.src = "../platforms/macos/panel.html?theme=" + theme;
+    f.src = `../platforms/macos/panel.html?theme=${theme}&lang=${lang}`;
     f.fx = fx;
     f.onload = () => {
       f.contentWindow.App.reset();

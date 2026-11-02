@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -138,210 +138,222 @@
 
 <header class="wide hero">
   <div>
-    <div class="label">Étude de cas UX · macOS · IA locale</div>
+    <div class="label">UX case study · macOS · local AI</div>
     <h1 style="margin-top:14px">TextPolish</h1>
-    <p class="lede" style="margin-top:18px">J'écris vite, sur mon téléphone comme sur mon Mac, et je laisse passer des fautes. J'ai construit un petit outil qui les corrige <span class="fix"><s>sans quiter</s> <ins>sans quitter</ins></span> l'app où j'écris : je sélectionne, j'appuie sur <kbd>⌥⌘G</kbd>, et une fenêtre me propose les corrections une par une. Le modèle tourne sur mon Mac, rien ne part sur Internet.</p>
+    <p class="lede" style="margin-top:18px">I type fast, on my phone and on my Mac, and mistakes slip through. I built a small tool that fixes them <span class="fix"><s>whitout</s> <ins>without</ins></span> leaving the app I'm writing in: I select the text, press <kbd>⌥⌘G</kbd>, and a window offers the fixes one by one. The model runs on my Mac; nothing goes online. It works in English and French.</p>
     <div class="meta">
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
-      <span class="label">119 tests</span>
+      <span class="label">123 tests</span>
     </div>
   </div>
   <figure>
-    <img class="shot" src="demo.gif" alt="Démo dans TextEdit : un message de 13 fautes est corrigé, chaque faute avec son type, puis réécrit en Pro avec ⌘2, puis traduit en anglais avec une demande Sur mesure et recollé.">
-    <figcaption>Enregistrement de la vraie app dans TextEdit : un message de 13 fautes corrigé, puis Pro (<kbd>⌘2</kbd>), puis Sur mesure « en anglais ». Seule la frappe est accélérée ; le chronomètre montre le vrai temps du modèle.</figcaption>
+    <img class="shot" src="demo.gif" alt="Demo in TextEdit: an English message with 11 mistakes is corrected with each fix labelled, rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back.">
+    <figcaption>The real app in TextEdit: an 11-mistake message corrected, then Pro (<kbd>⌘2</kbd>), then Custom “translate into French”. Only the typing is sped up; the stopwatch shows the real model time.</figcaption>
   </figure>
 </header>
 
 <main>
 <section class="col">
-  <h2>Pourquoi je l'ai fait</h2>
-  <p>Pour corriger un message, je faisais toujours la même chose : copier le texte, l'ouvrir dans un correcteur en ligne, recopier le résultat, revenir dans l'app. Cinq gestes pour une virgule, et mon texte passait par les serveurs de quelqu'un d'autre.</p>
-  <p>Je voulais trois choses : ne pas quitter l'app, ne rien envoyer en ligne, et avoir une correction prête avant même de me demander quel réglage choisir.</p>
+  <h2>Why I built it</h2>
+  <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
+  <p>I wanted three things: never leave the app, never send anything online, and have a correction ready before I even wonder which setting to pick.</p>
 </section>
 
 <section class="col">
-  <h2>Le parcours</h2>
-  <p>À chaque version, j'ai essayé d'enlever une décision à l'utilisateur.</p>
+  <h2>The flow</h2>
+  <p>With every version I tried to remove one decision from the user.</p>
   <ol class="journey">
-    <li><div><b>Je sélectionne, puis <kbd>⌥⌘G</kbd>.</b> Ça marche dans Notes, Mail, Slack, TextEdit. Ce que j'avais copié avant est remis dans le presse-papiers à la fin.</div></li>
-    <li><div><b>La fenêtre lit le texte.</b> Elle s'ouvre juste sous la sélection et le texte scintille pendant la lecture.</div></li>
-    <li><div><b>La correction démarre seule.</b> Pas de mode à choisir : par défaut, l'outil corrige les fautes.</div></li>
-    <li><div><b>Je décide faute par faute.</b> <kbd>↵</kbd> pour accepter, <kbd>⇥</kbd> pour ignorer, <kbd>⌘↵</kbd> pour tout accepter.</div></li>
-    <li><div><b>C'est collé.</b> Seules les corrections acceptées remplacent ma sélection, et la fenêtre disparaît.</div></li>
+    <li><div><b>Select, then <kbd>⌥⌘G</kbd>.</b> It works in Notes, Mail, Slack, TextEdit. Whatever I had copied before is put back on the clipboard at the end.</div></li>
+    <li><div><b>The window reads the text.</b> It opens right under the selection, and the text shimmers while it is read.</div></li>
+    <li><div><b>Correction starts on its own.</b> No mode to pick: by default the tool fixes mistakes.</div></li>
+    <li><div><b>I decide fix by fix.</b> <kbd>↵</kbd> to accept, <kbd>⇥</kbd> to ignore, <kbd>⌘↵</kbd> to accept all.</div></li>
+    <li><div><b>It's pasted.</b> Only the accepted fixes replace my selection, and the window goes away.</div></li>
   </ol>
 </section>
 
 <section class="col">
-  <h2>Trois modes, trois couleurs</h2>
-  <p>Le mode par défaut, Correction, ne fait que corriger. C'est voulu : la plupart du temps, je veux juste que ma phrase soit juste, pas qu'on me la réécrive. Un message à un ami doit rester mon message. Quand je veux plus, je passe à Pro ou à Sur mesure.</p>
-  <p>Chaque mode a sa couleur, partout dans la fenêtre : l'icône, l'onglet, le bouton principal et les surlignages. Même sans lire, on sait dans quel mode on est, et on ne remplace pas un texte entier par erreur en croyant juste corriger une faute. Une ligne sous les onglets dit en clair ce que fait le mode.</p>
+  <h2>Three modes, three colors</h2>
+  <p>The default mode, Correction, only corrects. That's on purpose: most of the time I just want my sentence to be right, not rewritten. A message to a friend should stay my message. When I want more, I switch to Pro or Custom.</p>
+  <p>Each mode has its color everywhere in the window: the icon, the tab, the main button and the highlights. Without reading anything you know which mode you're in, so you don't replace a whole text by mistake while thinking you only fix a typo. A line under the tabs says plainly what the mode does.</p>
 </section>
 <div class="wide">
   <div class="modes">
     <figure>
       <div class="swatch"><i style="background:#0a84ff"></i>Correction · <kbd>⌘1</kbd></div>
-      <p>Corrige les fautes sans toucher à ta façon d'écrire. Garde l'argot, les « frérot », les anglicismes comme « deadline ».</p>
-      <img class="shot" src="screenshots/popup-card-dark.png" alt="Mode Correction, carte bleue.">
+      <p>Fixes mistakes without changing how you write. Keeps slang, nicknames, and English words in French text like “deadline”.</p>
+      <img class="shot" src="screenshots/popup-card-dark.png" alt="Correction mode, blue card: Their → They're.">
     </figure>
     <figure>
       <div class="swatch"><i style="background:#5e5ce6"></i>Pro · <kbd>⌘2</kbd></div>
-      <p>Réécrit le texte dans un ton professionnel. Une seule proposition, à comparer avec l'original avant de remplacer.</p>
-      <img class="shot" src="screenshots/popup-pro-dark.png" alt="Mode Pro : un message de candidature familier réécrit en version professionnelle, couleur indigo.">
+      <p>Rewrites the text in a professional tone. One suggestion, to compare with the original before replacing.</p>
+      <img class="shot" src="screenshots/popup-pro-dark.png" alt="Pro mode: a short message rewritten professionally, indigo color.">
     </figure>
     <figure>
-      <div class="swatch"><i style="background:#bf5af2"></i>Sur mesure · <kbd>⌘3</kbd></div>
-      <p>Fait ce que je demande : traduire, raccourcir, rendre plus chaleureux ou plus drôle. Quatre idées en un clic, ou ma propre consigne.</p>
-      <img class="shot" src="screenshots/popup-perso-dark.png" alt="Mode Sur mesure : demande « en anglais » et le message traduit, couleur violette.">
+      <div class="swatch"><i style="background:#bf5af2"></i>Custom · <kbd>⌘3</kbd></div>
+      <p>Does what I ask: translate, shorten, make it warmer or funnier. Four ideas one click away, or my own request.</p>
+      <img class="shot" src="screenshots/popup-custom-dark.png" alt="Custom mode: the request “translate into French” and the translated message, purple color.">
     </figure>
   </div>
 </div>
 <section class="col" style="padding-top:40px">
-  <h3>Et les couleurs des corrections</h3>
-  <p style="font-size:0.98rem">À l'intérieur d'un mode, la couleur dit le type de correction, pour savoir d'un coup d'œil ce qui est une vraie faute et ce qui est un choix de style.</p>
+  <h3>And the colors of the fixes</h3>
+  <p style="font-size:0.98rem">Inside a mode, the color tells the kind of fix, so you see at a glance what is a real mistake and what is a style choice.</p>
   <div class="kinds">
-    <span><i style="background:#ff453a"></i>Rouge : orthographe, accents, grammaire</span>
-    <span><i style="background:#ff9f0a"></i>Orange : ponctuation</span>
-    <span><i style="background:#0a84ff"></i>Bleu : reformulation</span>
+    <span><i style="background:#ff453a"></i>Red: spelling, accents, capitals</span>
+    <span><i style="background:#40c8e0"></i>Teal: grammar, agreement, verb forms</span>
+    <span><i style="background:#ff9f0a"></i>Orange: punctuation</span>
+    <span><i style="background:#0a84ff"></i>Blue: rewording</span>
   </div>
 </section>
 
 <section class="col">
-  <h2>Une fenêtre qui s'adapte au texte</h2>
-  <p>Une phrase courte et un paragraphe ne se relisent pas de la même façon. Après la réponse du modèle, l'outil découpe la différence en corrections et choisit la vue.</p>
+  <h2>A window that adapts to the text</h2>
+  <p>A short sentence and a paragraph aren't proofread the same way. Once the model answers, the tool splits the difference into fixes, labels each one, and picks the view.</p>
 </section>
 <div class="wide">
   <div class="twoshots">
-    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Vue document : un message avec 13 corrections surlignées et une légende Conjugaison 5, Grammaire 3, Accord 3, Orthographe 1, Ponctuation 1."><figcaption>Texte long : tout le message, chaque correction surlignée avec son type. Un clic en annule une.</figcaption></figure>
-    <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="Aucune faute : coche verte et deux boutons, Version pro et Sur mesure."><figcaption>Aucune faute : la fenêtre reste ouverte et propose la suite, une version pro ou une consigne.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Document view: an English message with 11 highlighted fixes and the legend Grammar 5, Agreement 2, Conjugation 1, Spelling 1, Punctuation 1, Capitalization 1."><figcaption>Long text: the whole message, each fix highlighted with its kind. Click one to undo it.</figcaption></figure>
+    <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="No mistakes: a green check and two buttons, Pro version and Custom."><figcaption>No mistakes: the window stays open and offers the next step, a Pro version or a request.</figcaption></figure>
   </div>
 </div>
 
 <section class="col">
-  <h2>Tout reste sur le Mac</h2>
-  <p>Le modèle tourne avec Ollama, directement sur mon MacBook (M2, 16 Go). Mes messages ne quittent jamais l'ordinateur, l'outil marche sans connexion, et il ne coûte rien à l'usage. En échange, il faut accepter des modèles plus petits et faire attention à la vitesse.</p>
+  <h2>English and French</h2>
+  <p>I write in both, so the tool had to handle both. The model follows the language of the text, and Custom can translate between them. The interface is in English or French too: one click in the menu bar, and the choice is remembered.</p>
+  <figure style="margin:22px 0 0"><img class="shot" src="screenshots/menu-language.png" alt="The TextPolish menu with the Language submenu open: English is checked, the cursor is on Français."></figure>
+  <p style="margin-top:18px">Supporting a second language is also a testing question. I ran the same evaluation on an English set (their/they're, its/it's, then/than, subject-verb agreement…) as on the French one. It scored 12/12, and it caught a problem the French set had missed (see below).</p>
+</section>
+
+<section class="col">
+  <h2>Everything stays on the Mac</h2>
+  <p>The model runs with Ollama, directly on my MacBook (M2, 16 GB). My messages never leave the computer, the tool works offline, and it costs nothing to use. In exchange, I have to accept smaller models and watch the speed.</p>
   <div class="stats">
-    <div><div class="stat">0,5–1 s</div><p>pour corriger ou réécrire une phrase, quand le modèle est déjà chargé</p></div>
-    <div><div class="stat">3–6 s</div><p>la première fois, ou après 5 minutes sans s'en servir</p></div>
-    <div><div class="stat">&lt; 1 s</div><p>pour passer une phrase en Pro, contre 5 s avant (rechargement du modèle)</p></div>
-    <div><div class="stat">0</div><p>octet envoyé sur Internet</p></div>
+    <div><div class="stat">0.5–1 s</div><p>to fix or rewrite a sentence, when the model is already loaded</p></div>
+    <div><div class="stat">3–6 s</div><p>the first time, or after 5 minutes without using it</p></div>
+    <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s (model reload)</p></div>
+    <div><div class="stat">0</div><p>bytes sent over the Internet</p></div>
   </div>
-  <p>Je donne les deux temps, parce que c'est le second qu'on remarque. Après 5 minutes sans utilisation, Ollama retire le modèle de la mémoire pour rendre ses 4,3 Go au reste du Mac, et il faut le recharger. Juste après un redémarrage, la première correction a même pris 9 à 15 secondes. J'ai préféré libérer la mémoire ; on peut garder le modèle chargé plus longtemps dans les réglages.</p>
-  <p>Le changement de mode coûtait 5 secondes : j'utilisais un modèle pour corriger et un autre pour réécrire, et avec un navigateur et un éditeur ouverts, mon Mac ne pouvait pas garder les deux en mémoire. J'ai fini par trouver un seul modèle assez bon pour les trois modes, et ce délai a disparu.</p>
-  <p>J'ai aussi essayé MLX, le moteur d'Apple que les dernières versions d'Ollama savent utiliser. C'était 2,6 fois plus rapide (0,34 s contre 0,88 s), mais le modèle prenait 7,4 Go de mémoire et mon Mac commençait à ramer. J'ai gardé la version plus légère et noté MLX comme option pour les Mac qui ont plus de RAM.</p>
+  <p>I give both times because the second one is the one you notice. After 5 minutes idle, Ollama drops the model from memory to give its 4.3 GB back to the Mac, and it has to load again. Right after a reboot, the first correction even took 9 to 15 seconds. I chose to free the memory; the model can be kept loaded longer in the settings.</p>
+  <p>Free memory matters as much as the model. While filming the demo, my Mac was swapping heavily (14 of 15 GB of swap in use): generation dropped from about 35 to 13 tokens per second, and a message that took 3–4 s took 7–11 s.</p>
+  <p>Switching modes used to cost 5 seconds: I used one model to correct and another to rewrite, and with a browser and an editor open my Mac couldn't keep both in memory. I eventually found one model good enough for all three modes, and the delay disappeared.</p>
+  <p>I also tried MLX, Apple's engine that recent Ollama versions can use. It was 2.6× faster (0.34 s vs 0.88 s), but the model took 7.4 GB of memory and my Mac started to struggle. I kept the lighter build and noted MLX as an option for Macs with more RAM.</p>
 </section>
 
 <section class="col">
-  <h2>Comment la fenêtre a évolué</h2>
-  <p>Chaque version vient de quelque chose qui ne marchait pas quand je l'utilisais vraiment.</p>
-  <div class="iter"><div class="v">v1</div><div><p>Un grand panneau au milieu de l'écran : je choisissais un mode, je cliquais sur Repolir, et le texte était collé sans que je puisse le relire.</p><p class="why">Trop de décisions avant de voir quoi que ce soit, et aucun contrôle sur le résultat.</p></div></div>
-  <div class="iter"><div class="v">v2</div><div><p>Le résultat s'affiche avant d'être collé, avec les mots barrés et ajoutés, et la fenêtre se place sous le texte.</p><p class="why">Il fallait encore choisir un mode avant que la correction démarre.</p></div></div>
-  <div class="iter"><div class="v">v3</div><div><p>Fenêtre plus petite, correction lancée dès l'ouverture.</p><p class="why">Le mode « décontracté » réécrivait mes phrases au lieu de les corriger. C'était le modèle, pas l'interface.</p></div></div>
-  <div class="iter"><div class="v">v4</div><div><p>Une carte par faute, le flou natif de macOS, une hauteur qui suit le contenu, et une vue différente pour les longs textes.</p><p class="why">Quand un texte n'avait aucune faute, la fenêtre se fermait toute seule. Impossible d'en demander une version pro.</p></div></div>
-  <div class="iter"><div class="v">v5</div><div><p>Le cas « aucune faute » propose la suite, chaque mode explique ce qu'il fait, et le troisième mode a des idées toutes prêtes.</p><p class="why">Changer de mode prenait encore 5 secondes.</p></div></div>
-  <div class="iter"><div class="v">v6</div><div><p>Un seul modèle pour les trois modes : on passe d'un mode à l'autre en moins d'une seconde.</p><p class="why">En la relisant, on ne comprenait pas que « Perso » voulait dire « personnalisé » : on pouvait y lire un ton perso, familier.</p></div></div>
-  <div class="iter"><div class="v">v7</div><div><p>« Perso » devient « Sur mesure », la ligne d'aide dit « Dis ce que tu veux », et l'icône du champ n'a plus l'air d'un chargement.</p><p class="why">Toutes les fautes de grammaire portaient la même étiquette « Orthographe ».</p></div></div>
-  <div class="iter"><div class="v">v8</div><div><p>Chaque faute dit ce qu'elle est : conjugaison, accord, homophone (a/à, ces/c'est), orthographe, ponctuation. Sur un long message, la légende les compte.</p><p class="why">Version actuelle.</p></div></div>
+  <h2>How the window evolved</h2>
+  <p>Each version comes from something that didn't work when I really used it.</p>
+  <div class="iter"><div class="v">v1</div><div><p>A big panel in the middle of the screen: I picked a mode, clicked Polish, and the text was pasted without a chance to read it.</p><p class="why">Too many decisions before seeing anything, and no control over the result.</p></div></div>
+  <div class="iter"><div class="v">v2</div><div><p>The result shows before it's pasted, with words struck out and added, and the window sits under the text.</p><p class="why">You still had to pick a mode before the correction started.</p></div></div>
+  <div class="iter"><div class="v">v3</div><div><p>Smaller window, correction starts as soon as it opens.</p><p class="why">The “casual” mode rewrote my sentences instead of correcting them. That was the model, not the interface.</p></div></div>
+  <div class="iter"><div class="v">v4</div><div><p>One card per mistake, native macOS blur, a height that follows the content, and a different view for long texts.</p><p class="why">When a text had no mistakes, the window closed on its own. No way to ask for a Pro version.</p></div></div>
+  <div class="iter"><div class="v">v5</div><div><p>“No mistakes” offers the next step, each mode explains what it does, and the third mode has ready-made ideas.</p><p class="why">Switching modes still took 5 seconds.</p></div></div>
+  <div class="iter"><div class="v">v6</div><div><p>One model for all three modes: switching takes under a second.</p><p class="why">Reading it again, nobody understood that “Perso” meant “custom”: it read like a casual, personal tone.</p></div></div>
+  <div class="iter"><div class="v">v7</div><div><p>“Perso” became “Sur mesure” (Custom in English), the hint says “Say what you want”, and the field icon no longer looks like a spinner.</p><p class="why">Every grammar mistake carried the same “Spelling” label.</p></div></div>
+  <div class="iter"><div class="v">v8</div><div><p>Each fix says what it is: verb form, agreement, homophone (their/there, a/à), spelling, punctuation. On a long message, the legend counts them.</p><p class="why">The project was in English but the interface only in French.</p></div></div>
+  <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">Current version.</p></div></div>
 </section>
 
 <section class="col">
-  <h2>Ce que j'ai écarté</h2>
-  <p>J'aurais aimé le soulignement rouge en direct, comme Grammarly. Avant de m'y lancer, j'ai regardé ce que permet l'API d'accessibilité de macOS. Elle ne donne pas la position du curseur quand rien n'est sélectionné, une fonction utile n'est pas disponible en Python, et beaucoup d'apps (Slack, VS Code) n'exposent pas bien leur texte. J'ai gardé le raccourci, comme le font les autres correcteurs Mac qui marchent dans toutes les apps.</p>
+  <h2>What I ruled out</h2>
+  <p>I would have liked live red underlines, like Grammarly. Before starting, I checked what macOS's accessibility API allows. It doesn't give the caret position when nothing is selected, one useful function isn't available from Python, and many apps (Slack, VS Code) don't expose their text well. I kept the shortcut, like the other Mac checkers that work in every app.</p>
 </section>
 
 <section class="col">
-  <h2>Choisir le modèle</h2>
-  <p>J'ai testé 17 modèles en six séries, d'avril à novembre. Pour la dernière, j'ai écrit une liste de phrases avec la correction attendue, dont trois phrases sans faute qu'un bon correcteur ne doit pas toucher. Ça permet de compter, au lieu de se fier à une impression. Quelques constats ont changé le produit :</p>
+  <h2>Choosing the model</h2>
+  <p>I tested 17 models in six rounds, from April to November. For the last one I wrote a list of sentences with the expected correction, including sentences without mistakes that a good checker must leave alone. That lets me count instead of trusting an impression. A few findings changed the product:</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Ce que j'ai vu</th><th>Ce que j'ai changé</th></tr></thead>
+      <thead><tr><th>What I saw</th><th>What I changed</th></tr></thead>
       <tbody>
-        <tr><td><code>gemma3:1b</code> ne voit jamais que <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> est faux.</td><td>Correction passe sur <code>ministral-3:3b</code>, un peu plus lent mais fiable.</td></tr>
-        <tr><td>En mode Pro, <code>ministral-3:3b</code> invente un e-mail entier à partir de deux phrases.</td><td>Pro garde <code>gemma3:4b</code>.</td></tr>
-        <tr><td>Le modèle de correction mettait des mots en gras et traduisait « deadline » en « délai ».</td><td>Le gras est retiré et la consigne garde les anglicismes.</td></tr>
-        <tr><td>Il remplaçait <code>'</code> par <code>’</code> et ajoutait des espaces insécables.</td><td>Ces détails ne comptent plus comme des corrections.</td></tr>
-        <tr><td><code>gemma4:e2b</code> fait aussi bien en correction (10/12), mieux en Pro et en Sur mesure, et répond en environ 1 s une fois chargé.</td><td>Un seul modèle pour les trois modes : plus de rechargement.</td></tr>
-        <tr><td>Le même test donnait 9, 10 ou 11 bonnes réponses sur 12 selon les essais : le modèle tire ses mots un peu au hasard.</td><td>Correction est réglée pour répondre toujours la même chose : 11/12 à chaque essai.</td></tr>
-        <tr><td>« J'ai finit le rapport hier soir » partait en anglais : mon détecteur de langue ne la reconnaissait pas comme du français.</td><td>Le détecteur est corrigé ; c'était mon code, pas le modèle.</td></tr>
+        <tr><td><code>gemma3:1b</code> never noticed that <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> was wrong.</td><td>Correction moved to <code>ministral-3:3b</code>, a bit slower but reliable.</td></tr>
+        <tr><td>In Pro, <code>ministral-3:3b</code> invented a whole e-mail from two sentences.</td><td>Pro kept <code>gemma3:4b</code>.</td></tr>
+        <tr><td>The correction model put words in bold and translated “deadline” into French.</td><td>Bold is stripped, and the prompt keeps English words in French text.</td></tr>
+        <tr><td>It replaced <code>'</code> with <code>’</code> and added non-breaking spaces.</td><td>Those details no longer count as fixes.</td></tr>
+        <tr><td><code>gemma4:e2b</code> corrected as well (10/12), rewrote better, and answered in about 1 s once loaded.</td><td>One model for all three modes: no more reloads.</td></tr>
+        <tr><td>The same test gave 9, 10 or 11 right answers out of 12 depending on the run: the model picks its words with some randomness.</td><td>Correction now always gives the same answer: 11/12 on every run.</td></tr>
+        <tr><td>“J'ai finit le rapport hier soir” came back in English: my language detector didn't recognize it as French.</td><td>Detector fixed; it was my code, not the model.</td></tr>
+        <tr><td>On a long text, “translate into English” only reworded the French: my “answer in the text's language” rule beat the request.</td><td>In Custom, the rule now yields to the request.</td></tr>
+        <tr><td>The English set showed Pro writing “Dear [Recipient Name]” on a two-line message.</td><td>The Pro prompt forbids invented greetings and placeholders: 5/5 in both languages.</td></tr>
       </tbody>
     </table>
   </div>
   <details>
-    <summary>Les 17 modèles essayés</summary>
+    <summary>The 17 models tested</summary>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Modèle</th><th>Meilleur résultat</th><th>Verdict</th></tr></thead>
+        <thead><tr><th>Model</th><th>Best result</th><th>Verdict</th></tr></thead>
         <tbody>
-          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 · ~1 s à chaud</td><td>Retenu pour les trois modes</td></tr>
-          <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0,34 s</td><td>Le plus rapide, mais 7,4 Go de mémoire</td></tr>
-          <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5,00/5 Pro (juge)</td><td>Même qualité, 1,6 fois plus lent</td></tr>
-          <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0,67 s</td><td>Correction en série 5 ; écrit des e-mails entiers en Pro</td></tr>
-          <tr><td><code>ministral-3:8b</code></td><td class="num">12–15 s</td><td>Trop lent</td></tr>
-          <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro jusqu'à la série 6 ; « Dear [Recipient Name] »</td></tr>
-          <tr><td><code>gemma3:4b-it-qat</code></td><td class="num">4,77/5</td><td>Plus lent que sa version normale</td></tr>
-          <tr><td><code>gemma3:1b-it-qat</code></td><td class="num">4,53/5 · 1,3 s</td><td>Ne voyait jamais « opérationel »</td></tr>
-          <tr><td><code>gemma3:1b</code></td><td class="num">4,47/5</td><td>Battu par sa version QAT</td></tr>
-          <tr><td><code>qwen3.5:4b</code></td><td class="num">4,40/5 · 6,5 s</td><td>« RH et » devenait « RHO »</td></tr>
-          <tr><td><code>qwen3.5:4b-nvfp4</code> (MLX)</td><td class="num">10/12</td><td>Réécrit une phrase juste ; « Le réunion »</td></tr>
-          <tr><td><code>qwen3.5:2b</code> (deux versions)</td><td class="num">3 à 5/12</td><td>Ajoute des fautes, traduit</td></tr>
-          <tr><td><code>qwen3.5:0.8b</code></td><td class="num">2,93/5</td><td>Change le sens en français</td></tr>
-          <tr><td><code>lfm3:1.7b</code> (MLX)</td><td class="num">2/12 · 7 s</td><td>Écrit son raisonnement dans la réponse</td></tr>
-          <tr><td><code>command-r7b</code></td><td class="num">11,8 s</td><td>Trop lent</td></tr>
-          <tr><td><code>qwen3:4b</code></td><td class="num">—</td><td>Ne répondait pas à temps</td></tr>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 FR · 12/12 EN · ~1 s</td><td>Chosen for all three modes</td></tr>
+          <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0.34 s</td><td>Fastest, but 7.4 GB of memory</td></tr>
+          <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5.00/5 Pro (judge)</td><td>Same quality, 1.6× slower</td></tr>
+          <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole e-mails in Pro</td></tr>
+          <tr><td><code>ministral-3:8b</code></td><td class="num">12–15 s</td><td>Too slow</td></tr>
+          <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro until round 6; “Dear [Recipient Name]”</td></tr>
+          <tr><td><code>gemma3:4b-it-qat</code></td><td class="num">4.77/5</td><td>Slower than the regular build</td></tr>
+          <tr><td><code>gemma3:1b-it-qat</code></td><td class="num">4.53/5 · 1.3 s</td><td>Never saw “opérationel”</td></tr>
+          <tr><td><code>gemma3:1b</code></td><td class="num">4.47/5</td><td>Beaten by its QAT build</td></tr>
+          <tr><td><code>qwen3.5:4b</code></td><td class="num">4.40/5 · 6.5 s</td><td>Turned “RH et” into “RHO”</td></tr>
+          <tr><td><code>qwen3.5:4b-nvfp4</code> (MLX)</td><td class="num">10/12</td><td>Rewrote a correct sentence; “Le réunion”</td></tr>
+          <tr><td><code>qwen3.5:2b</code> (two builds)</td><td class="num">3–5/12</td><td>Added mistakes, translated</td></tr>
+          <tr><td><code>qwen3.5:0.8b</code></td><td class="num">2.93/5</td><td>Changed the meaning in French</td></tr>
+          <tr><td><code>lfm3:1.7b</code> (MLX)</td><td class="num">2/12 · 7 s</td><td>Wrote its reasoning into the answer</td></tr>
+          <tr><td><code>command-r7b</code></td><td class="num">11.8 s</td><td>Too slow</td></tr>
+          <tr><td><code>qwen3:4b</code></td><td class="num">—</td><td>Didn't answer in time</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note">Les séries 1 à 4 étaient notées par un autre modèle sur 5 ; la série 6 compte les bonnes réponses sur 12. Un 18<sup>e</sup>, <code>gemma4:e4b-nvfp4</code>, n'a pas pu être téléchargé. Seul le modèle retenu reste installé ; les sorties brutes sont dans <code>benchmarks/results/</code>.</p>
+    <p class="note">Rounds 1–4 were scored out of 5 by another model; round 6 counts right answers out of 12, on a French and an English set. An 18th model, <code>gemma4:e4b-nvfp4</code>, failed to download. Only the chosen model stays installed; raw outputs are in <code>benchmarks/results/</code>.</p>
   </details>
 </section>
 
 <section class="col">
-  <h2>Tester comme un utilisateur</h2>
-  <p>Je n'ai pas voulu juger sur des maquettes. J'ai fait tourner la vraie app avec des messages de tous les jours : un SMS à un ami, un mail à mon manager, une candidature LinkedIn, un message en anglais, un long compte rendu. Le texte était tapé dans TextEdit et le raccourci envoyé comme par un vrai clavier. Plusieurs bugs ne sont apparus qu'à ce moment-là.</p>
+  <h2>Testing like a user</h2>
+  <p>I didn't want to judge from mock-ups. I ran the real app with everyday messages: a text to a friend, an e-mail to my manager, a LinkedIn application, messages in English and French, a long report. The text was typed in TextEdit and the shortcut sent like a real keyboard. Several bugs only showed up then.</p>
   <div class="bugs">
-    <div class="bug"><h3>La copie échouait une fois sur deux</h3><p>Le raccourci se déclenche pendant que ⌥ est encore enfoncé. La copie devenait ⌥⌘C, « copier le style », et rien n'était copié. L'app attend maintenant qu'on relâche les touches.</p></div>
-    <div class="bug"><h3>Passer en Pro pendant la correction ne faisait rien</h3><p>L'onglet changeait, mais c'est la correction qui s'affichait. La nouvelle demande remplace maintenant l'ancienne.</p></div>
-    <div class="bug"><h3><kbd>⌘2</kbd> ne marchait pas sur mon clavier</h3><p>Sur un clavier AZERTY, la touche 2 donne « é ». Les raccourcis lisent maintenant la touche physique.</p></div>
-    <div class="bug"><h3>« En anglais » ne traduisait plus les longs textes</h3><p>Trouvé en tournant la vidéo. Pour éviter les traductions involontaires, l'app dit au modèle « réponds dans la langue du texte ». En mode Sur mesure, cette règle contredisait la demande. Elle cède maintenant la place à la consigne.</p></div>
-    <div class="bug"><h3><kbd>⌘↵</kbd> relançait Sur mesure au lieu de coller</h3><p>Après avoir tapé une consigne, le curseur reste dans le champ. <kbd>⌘↵</kbd> y relançait la consigne et rien n'était collé. Maintenant <kbd>↵</kbd> lance la consigne et <kbd>⌘↵</kbd> remplace le texte.</p></div>
-    <div class="bug"><h3>Trois copies de l'app tournaient en même temps</h3><p>Chaque lancement en ajoutait une, et toutes répondaient au raccourci. Une seule peut tourner maintenant.</p></div>
+    <div class="bug"><h3>Copy failed one time in two</h3><p>The shortcut fires while ⌥ is still held. Copy became ⌥⌘C, “copy style”, and nothing was copied. The app now waits for the keys to be released.</p></div>
+    <div class="bug"><h3>Switching to Pro during a correction did nothing</h3><p>The tab changed, but the correction was shown. The new request now replaces the old one.</p></div>
+    <div class="bug"><h3><kbd>⌘2</kbd> didn't work on my keyboard</h3><p>On a French AZERTY keyboard, the 2 key types “é”. Shortcuts now read the physical key.</p></div>
+    <div class="bug"><h3>Translation stopped working on long texts</h3><p>Found while filming the demo. To avoid accidental translations, the app tells the model to answer in the text's language. In Custom, that rule contradicted the request. It now gives way to it.</p></div>
+    <div class="bug"><h3><kbd>⌘↵</kbd> re-ran Custom instead of pasting</h3><p>After typing a request, the cursor stays in the field. <kbd>⌘↵</kbd> re-ran the request and nothing was pasted. Now <kbd>↵</kbd> runs the request and <kbd>⌘↵</kbd> replaces the text.</p></div>
+    <div class="bug"><h3>Three copies of the app were running</h3><p>Each launch added one, and all of them answered the shortcut. Only one can run now.</p></div>
   </div>
 </section>
 
 <section class="col">
-  <h2>Chronométré dans la vraie app</h2>
-  <p>Un script joue sept scénarios dans TextEdit comme le ferait quelqu'un au clavier, et mesure ce qu'on ressent. Les sept passent, deux fois de suite, avec des temps qui se répètent. Ces temps sont mesurés modèle chargé ; la toute première demande ajoute les 3 à 6 secondes de chargement.</p>
+  <h2>Timed in the real app</h2>
+  <p>A script plays seven scenarios in TextEdit the way someone at the keyboard would, and measures what you feel. All seven pass, twice in a row, with consistent times. Times are with the model loaded; the very first request adds the 3–6 seconds of loading.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Scénario</th><th>Résultat affiché</th><th>Vérifié</th></tr></thead>
+      <thead><tr><th>Scenario</th><th>Result shown</th><th>Checked</th></tr></thead>
       <tbody>
-        <tr><td>SMS avec deux fautes, accepté avec <kbd>↵</kbd></td><td class="num">0,9–1,0 s</td><td>Texte corrigé collé</td></tr>
-        <tr><td>Texte sans faute, puis <kbd>⌘2</kbd></td><td class="num">0,75–0,8 s</td><td>La fenêtre reste ouverte, version pro proposée</td></tr>
-        <tr><td><kbd>⌘2</kbd> pendant la correction</td><td class="num">1,6–1,7 s</td><td>C'est la version pro qui s'affiche</td></tr>
-        <tr><td>Sur mesure « en anglais », puis <kbd>⌘↵</kbd></td><td class="num">0,6 s</td><td>Phrase traduite collée</td></tr>
-        <tr><td>Compte rendu de 338 caractères, tout accepter</td><td class="num">2,7 s</td><td>9 corrections collées</td></tr>
-        <tr><td>Message de 379 caractères avec 13 fautes (vidéo)</td><td class="num">3–4 s</td><td>13 corrections, chacune avec son type</td></tr>
-        <tr><td>Aucun texte sélectionné</td><td class="num">1,2 s</td><td>Message d'aide, le modèle n'est pas appelé</td></tr>
-        <tr><td><kbd>Échap</kbd></td><td class="num">0,35 s</td><td>Fenêtre fermée, texte intact</td></tr>
+        <tr><td>Text message with two mistakes, accepted with <kbd>↵</kbd></td><td class="num">0.9–1.0 s</td><td>Corrected text pasted</td></tr>
+        <tr><td>Text without mistakes, then <kbd>⌘2</kbd></td><td class="num">0.75–0.8 s</td><td>Window stays open, Pro version offered</td></tr>
+        <tr><td><kbd>⌘2</kbd> during the correction</td><td class="num">1.6–1.7 s</td><td>The Pro version is the one shown</td></tr>
+        <tr><td>Custom “in English”, then <kbd>⌘↵</kbd></td><td class="num">0.6 s</td><td>Translated sentence pasted</td></tr>
+        <tr><td>338-character report, accept all</td><td class="num">2.7 s</td><td>9 fixes pasted</td></tr>
+        <tr><td>~370-character message, 11–13 mistakes (video, EN and FR)</td><td class="num">3–4 s</td><td>Every fix labelled with its kind</td></tr>
+        <tr><td>No text selected</td><td class="num">1.2 s</td><td>Help message, the model isn't called</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td class="num">0.35 s</td><td>Window closed, text untouched</td></tr>
       </tbody>
     </table>
   </div>
-  <p>La fenêtre apparaît environ 0,7 s après l'appui, dont 0,3 s pendant lesquelles les touches sont encore tenues : l'app attend qu'on les relâche pour copier proprement.</p>
+  <p>The window appears about 0.7 s after the key press, 0.3 s of which the keys are still held: the app waits for them to be released so the copy is clean.</p>
 </section>
 
 <section class="col">
-  <h2>La suite</h2>
-  <p>Le modèle actuel reste petit : il rate encore une faute sur douze (il supprime un point d'interrogation), et son humour en mode Sur mesure est limité. Les prochaines pistes sont un modèle entraîné spécialement sur la grammaire française, et la version MLX quand j'aurai un Mac avec plus de mémoire. Les petits modèles que j'ai essayés (Qwen 3.5 2B, LFM3) étaient rapides, mais ajoutaient des fautes ou affichaient leur raisonnement dans la réponse.</p>
+  <h2>What's next</h2>
+  <p>The current model is still small: it misses one French mistake out of twelve (it drops a question mark), and its humour in Custom is limited. The next leads are a model trained specifically on French grammar, and the MLX build once I have a Mac with more memory. The smaller models I tried (Qwen 3.5 2B, LFM3) were fast but added mistakes or printed their reasoning in the answer.</p>
 </section>
 
 <section class="col">
-  <h2>Ce que j'en retiens</h2>
-  <p>Enlever une décision m'a plus servi que d'ajouter une option : la meilleure amélioration a été de lancer la correction sans demander de mode. Certains problèmes ne se règlent pas dans l'interface : le bug « opérationel » se réglait en changeant de modèle. Et surtout, une interface se juge en l'utilisant pour de vrai. La moitié des bugs de cette page, je ne les aurais pas vus en regardant des captures.</p>
+  <h2>What I take away</h2>
+  <p>Removing a decision helped more than adding an option: the best improvement was starting the correction without asking for a mode. Some problems can't be fixed in the interface: the “opérationel” bug was fixed by changing the model. And above all, an interface is judged by really using it, in every language it claims to support. Half the bugs on this page I would never have seen by looking at screenshots.</p>
 </section>
 </main>
 
 <footer class="col">
-  TextPolish · projet personnel, 2026 · code : <a href="https://github.com/Enguerrand-Roques/textpolish">github.com/Enguerrand-Roques/textpolish</a>
+  TextPolish · personal project, 2026 · code: <a href="https://github.com/Enguerrand-Roques/textpolish">github.com/Enguerrand-Roques/textpolish</a>
 </footer>
 <!--artifact-end-->
 </body>

@@ -107,14 +107,14 @@
   <div class="ctas">
     <a class="btn primary" href="#install">Install</a>
     <a class="btn" href="https://github.com/Enguerrand-Roques/textpolish">GitHub</a>
-    <a class="btn" href="case-study.html" hreflang="fr">UX case study (FR)</a>
+    <a class="btn" href="case-study.html">UX case study</a>
   </div>
   <div class="chips"><span>Gemma 4 E2B · Ollama</span><span>macOS</span><span>MIT license</span></div>
 </header>
 
 <div class="wide video">
   <video controls muted playsinline preload="metadata" poster="screenshots/video-poster.jpg" src="textpolish-demo.mp4"></video>
-  <p>Real recordings of the app. Only the typing is sped up; the on-screen stopwatch shows the real model time.</p>
+  <p>Real recordings of the app, in English then French. Typing and one wait are sped up (marked on screen); the stopwatch always shows the real model time.</p>
 </div>
 
 <section class="wide">
@@ -125,7 +125,7 @@
   <div class="modes">
     <figure>
       <div class="swatch"><i style="background:var(--blue)"></i>Correction · <kbd>⌘1</kbd></div>
-      <img src="screenshots/popup-card-dark.png" alt="Correction mode: a card suggesting opérationel → opérationnel with Accept and Ignore." loading="lazy">
+      <img src="screenshots/popup-card-dark.png" alt="Correction mode: a card suggesting Their → They're with Accept and Ignore." loading="lazy">
       <p>Fixes mistakes only and keeps your words and tone. Short texts get one card per fix: <kbd>↵</kbd> accept, <kbd>⇥</kbd> ignore.</p>
     </figure>
     <figure>
@@ -134,8 +134,8 @@
       <p>Rewrites the text for work: emails, reports, LinkedIn. Compare shows what changed.</p>
     </figure>
     <figure>
-      <div class="swatch"><i style="background:var(--purple)"></i>Sur mesure · <kbd>⌘3</kbd></div>
-      <img src="screenshots/popup-perso-dark.png" alt="Sur mesure mode: the request “en anglais” and the translated message." loading="lazy">
+      <div class="swatch"><i style="background:var(--purple)"></i>Custom · <kbd>⌘3</kbd></div>
+      <img src="screenshots/popup-custom-dark.png" alt="Custom mode: the request “translate into French” and the translated message." loading="lazy">
       <p>Your own request: translate, shorten, warmer, funnier. Presets are one click away.</p>
     </figure>
   </div>
@@ -147,14 +147,25 @@
       <h2>Every fix says what it is</h2>
       <p>On a long message the popup switches to a document view: the whole text, each fix highlighted, and a legend that counts them. Click a fix to ignore it, <kbd>⌘↵</kbd> to apply the rest.</p>
       <ul class="kinds">
-        <li><i style="background:var(--red)"></i><span><b>Spelling, accent</b> — testes → tests, reunion → réunion</span></li>
-        <li><i style="background:var(--teal)"></i><span><b>Conjugation</b> — finit → fini, était → été</span></li>
-        <li><i style="background:var(--teal)"></i><span><b>Agreement</b> — deux jour → deux jours</span></li>
-        <li><i style="background:var(--teal)"></i><span><b>Homophones</b> — a → à, ces → c'est, sa → ça</span></li>
-        <li><i style="background:var(--orange)"></i><span><b>Punctuation</b> — Est ce → Est-ce</span></li>
+        <li><i style="background:var(--red)"></i><span><b>Spelling, accent, capitals</b> — tomorow → tomorrow, reunion → réunion, friday → Friday</span></li>
+        <li><i style="background:var(--teal)"></i><span><b>Grammar &amp; homophones</b> — their → there, its → it's, ces → c'est</span></li>
+        <li><i style="background:var(--teal)"></i><span><b>Agreement</b> — a few bug → a few bugs, deux jour → deux jours</span></li>
+        <li><i style="background:var(--teal)"></i><span><b>Verb forms</b> — we finish → we finished, finit → fini</span></li>
+        <li><i style="background:var(--orange)"></i><span><b>Punctuation</b> — dont → don't, Est ce → Est-ce</span></li>
       </ul>
     </div>
-    <img class="shot" src="screenshots/popup-document-dark.png" alt="Document view: a message with 13 highlighted fixes and the legend Conjugaison 5, Grammaire 3, Accord 3, Orthographe 1, Ponctuation 1." loading="lazy">
+    <img class="shot" src="screenshots/popup-document-dark.png" alt="Document view: an English message with 11 highlighted fixes and the legend Grammar 5, Agreement 2, Conjugation 1, Spelling 1, Punctuation 1, Capitalization 1." loading="lazy">
+  </div>
+</section>
+
+<section class="wide">
+  <div class="split">
+    <div>
+      <h2>English and French</h2>
+      <p>TextPolish corrects and rewrites both languages; the model follows the language of the text, and Custom can translate between them. The interface itself is in English or French: pick one from ✏️ → Language and it is remembered.</p>
+      <p>Both were tested the same way, with expected answers: 12/12 corrections on the English set, 11/12 on the French one.</p>
+    </div>
+    <img class="shot" src="screenshots/menu-language.png" alt="The TextPolish menu bar menu with the Language submenu open: English is checked, the cursor is on Français." loading="lazy">
   </div>
 </section>
 
@@ -162,10 +173,10 @@
   <h2>Measured, not guessed</h2>
   <p>17 models tested in six benchmark rounds on a MacBook Air M2 with 16 GB. The last round scores corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
   <div class="stats">
-    <div><div class="stat">11/12</div><p>expected fixes, the same on every run (temperature 0)</p></div>
+    <div><div class="stat">12/12 · 11/12</div><p>expected fixes in English · French, the same on every run (temperature 0)</p></div>
     <div><div class="stat">0.5–1.1 s</div><p>per sentence, model already in memory</p></div>
     <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
-    <div><div class="stat">3–4 s</div><p>for a 380-character message with 13 mistakes</p></div>
+    <div><div class="stat">3–4 s</div><p>for a ~370-character message with 11–13 mistakes (7–11 s when the Mac is swapping)</p></div>
   </div>
   <p style="margin-top:18px"><a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/benchmarks/BENCHMARK_REPORT.md">Benchmark report and raw outputs →</a></p>
 </section>
@@ -193,7 +204,7 @@ ollama pull gemma4:e2b-it-qat   # one-time, 4.3 GB</code></pre>
 
 <footer class="wide">
   <a href="https://github.com/Enguerrand-Roques/textpolish">Source on GitHub</a>
-  <a href="case-study.html" hreflang="fr">Case study (FR)</a>
+  <a href="case-study.html">Case study</a>
   <a href="https://github.com/Enguerrand-Roques/textpolish-cloud">TextPolish Cloud</a>
   <span>MIT license</span>
 </footer>

@@ -25,8 +25,10 @@ const TEAL = "#30b0c7";
 
 type Cam = { at: number; z: number; fx: number; fy: number };
 type Caption = { at: number; text: string };
+type ClipName = "demo" | "menu" | "langMenu" | "langWin";
 type Scene = {
-  clip: "demo" | "menu";
+  clip: ClipName;
+  badge?: string; // shown when rate != 1
   from: number; // source seconds
   to: number;
   rate?: number; // playback speed, only for typing
@@ -36,11 +38,22 @@ type Scene = {
   waits?: { start: number; end: number }[]; // model at work: show a stopwatch
 };
 
-const CLIPS = {
+type Clip = {
+  src: string; w: number; h: number; cropX: number; cropW: number; cropH: number; base: number;
+  events: "demo" | "menu" | "lang";
+  patches?: { left: number; width: number; height: number }[]; // menu-bar areas to paint over
+};
+const BAR = "linear-gradient(rgb(32,109,167), rgb(34,111,170))";
+const CLIPS: Record<ClipName, Clip> = {
   // demo: TextEdit window, 980×760 pt recorded at 2x; the empty bottom is cropped
-  demo: { src: "raw/demo.mp4", w: 1960, h: 1520, cropX: 0, cropW: 1960, cropH: 1360, base: 1000 / 1360 },
-  // menu: right side of the menu bar; the left part is cropped out
-  menu: { src: "raw/menu.mp4", w: 2040, h: 600, cropX: 300, cropW: 1740, cropH: 600, base: 1700 / 1740 },
+  demo: { src: "raw/demo.mp4", w: 1960, h: 1520, cropX: 0, cropW: 1960, cropH: 1360, base: 1000 / 1360, events: "demo" },
+  // menu: right side of the menu bar; hide TextEdit's (French) menus and the recording indicator
+  menu: { src: "raw/menu.mp4", w: 2040, h: 600, cropX: 300, cropW: 1740, cropH: 600, base: 1700 / 1740, events: "menu",
+          patches: [{ left: 0, width: 1612 - 300, height: 62 }] },
+  // lang: screen from the TextEdit window's left edge to the right edge, menu bar included
+  langMenu: { src: "raw/lang.mp4", w: 2640, h: 1520, cropX: 1480, cropW: 746, cropH: 320, base: 1.4, events: "lang",
+              patches: [{ left: 1582 - 1480, width: 90, height: 62 }] },
+  langWin: { src: "raw/lang.mp4", w: 2640, h: 1520, cropX: 0, cropW: 1960, cropH: 1520, base: 1000 / 1360, events: "lang" },
 };
 
 const WIDE: Omit<Cam, "at"> = { z: 1, fx: 980, fy: 680 };
@@ -51,39 +64,39 @@ const TEXT_LINE: Omit<Cam, "at"> = { z: 1.26, fx: 980, fy: 305 };
 // Source times are events.json times minus OFFSET (see design/record_video.py).
 const SCENES: Scene[] = [
   {
-    clip: "demo", from: 0.6, to: 8.7, rate: 3, color: BLUE,
+    clip: "demo", from: 0.6, to: 8.1, rate: 3, color: BLUE,
     cams: [{ at: 0.6, ...WIDE }],
     captions: [{ at: 0.6, text: "Write anywhere on your Mac." }],
   },
   {
-    clip: "demo", from: 8.7, to: 21.0, color: BLUE,
-    cams: [{ at: 8.7, ...WIDE }, { at: 9.4, ...PANEL }, { at: 19.8, ...TEXT_LINE }],
+    clip: "demo", from: 8.1, to: 19.9, color: BLUE,
+    cams: [{ at: 8.1, ...WIDE }, { at: 8.8, ...PANEL }, { at: 18.6, ...TEXT_LINE }],
     captions: [
-      { at: 8.7, text: "Select a whole message, press ⌥⌘G." },
-      { at: 13.8, text: "13 mistakes found, each one labelled." },
-      { at: 16.2, text: "Conjugation, agreement, homophones, spelling…" },
-      { at: 19.8, text: "⌘↵ fixes them all in place." },
+      { at: 8.1, text: "Select a whole message, press ⌥⌘G." },
+      { at: 12.6, text: "11 mistakes found, each one labelled." },
+      { at: 15.0, text: "Grammar, agreement, verbs, spelling, punctuation…" },
+      { at: 18.6, text: "⌘↵ fixes them all in place." },
     ],
-    waits: [{ start: 9.32, end: 13.78 }],
+    waits: [{ start: 8.72, end: 12.6 }],
   },
   {
-    clip: "demo", from: 25.9, to: 34.2, color: INDIGO,
-    cams: [{ at: 25.9, ...PANEL }],
+    clip: "demo", from: 24.1, to: 31.5, color: INDIGO,
+    cams: [{ at: 24.1, ...PANEL }],
     captions: [
-      { at: 25.9, text: "Already correct? It tells you." },
-      { at: 28.15, text: "⌘2 · Pro rewrites it for work." },
+      { at: 24.1, text: "Already correct? It tells you." },
+      { at: 26.4, text: "⌘2 · Pro rewrites it for work." },
     ],
-    waits: [{ start: 28.16, end: 32.1 }],
+    waits: [{ start: 26.4, end: 29.36 }],
   },
   {
-    clip: "demo", from: 34.2, to: 45.0, color: PURPLE,
-    cams: [{ at: 34.2, ...PANEL }, { at: 43.2, ...TEXT_LINE }],
+    clip: "demo", from: 31.5, to: 42.0, color: PURPLE,
+    cams: [{ at: 31.5, ...PANEL }, { at: 40.34, ...TEXT_LINE }],
     captions: [
-      { at: 34.2, text: "⌘3 · Sur mesure: ask for anything." },
-      { at: 36.6, text: "Here: “en anglais” (in English)." },
-      { at: 43.2, text: "Translated and pasted back." },
+      { at: 31.5, text: "⌘3 · Custom: ask for anything." },
+      { at: 34.1, text: "Here: “translate into French”." },
+      { at: 40.34, text: "Translated and pasted back." },
     ],
-    waits: [{ start: 36.62, end: 39.82 }],
+    waits: [{ start: 34.11, end: 36.97 }],
   },
   {
     clip: "menu", from: 0.6, to: 8.6, color: TEAL,
@@ -92,6 +105,25 @@ const SCENES: Scene[] = [
       { at: 0.6, text: "Recent corrections live in the menu bar." },
       { at: 5.5, text: "Click one to copy it again." },
     ],
+  },
+  {
+    clip: "langMenu", from: 0.6, to: 6.4, color: TEAL,
+    cams: [{ at: 0.6, z: 1, fx: 390, fy: 160 }],
+    captions: [
+      { at: 0.6, text: "Prefer French? Switch from the menu bar." },
+      { at: 4.2, text: "English or Français, remembered next time." },
+    ],
+  },
+  {
+    clip: "langWin", from: 6.4, to: 18.4, rate: 3, badge: "Waiting sped up 3×", color: BLUE,
+    cams: [{ at: 6.4, ...PANEL, fy: 1080 }],
+    captions: [{ at: 6.4, text: "A French message. This Mac was short on memory here." }],
+    waits: [{ start: 7.53, end: 18.46 }],
+  },
+  {
+    clip: "langWin", from: 18.4, to: 22.9, color: BLUE,
+    cams: [{ at: 18.4, ...PANEL, fy: 1080 }],
+    captions: [{ at: 18.4, text: "Same app in French: 13 fixes, each labelled." }],
   },
 ];
 
@@ -139,7 +171,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
 
   const caption = [...scene.captions].reverse().find((x) => t >= x.at);
   const captionAge = caption ? (t - caption.at) * FPS : 0;
-  const keyEvents = events[scene.clip]
+  const keyEvents = events[c.events]
     .map((e) => ({ ...e, t: e.t - OFFSET }))
     .filter((e) => KEYS.has(e.label) && e.t >= scene.from && e.t < scene.to);
   const key = [...keyEvents].reverse().find((e) => t >= e.t && t < e.t + 1.1);
@@ -163,11 +195,9 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
           muted
           style={{ position: "absolute", left: -c.cropX, top: 0, width: c.w, height: c.h }}
         />
-        {scene.clip === "menu" && (
-          // hide macOS's screen-recording indicator in the menu bar
-          <div style={{ position: "absolute", left: 1508 - c.cropX, top: 4, width: 106, height: 58,
-            background: "linear-gradient(rgb(32,109,167), rgb(34,111,170))" }} />
-        )}
+        {(c.patches ?? []).map((p, i) => (
+          <div key={i} style={{ position: "absolute", left: p.left, top: 0, width: p.width, height: p.height, background: BAR }} />
+        ))}
       </div>
 
       {caption && (
@@ -187,7 +217,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
       )}
 
       {key && <KeyChip label={key.label} age={((t - key.t) * FPS) / rate} color={scene.color} />}
-      {rate !== 1 && <Badge text={`Typing sped up ${rate}×`} />}
+      {rate !== 1 && <Badge text={scene.badge ?? `Typing sped up ${rate}×`} under={!!scene.waits} />}
       {(scene.waits ?? []).map((w) =>
         t >= w.start && t < w.end + 1.6 ? (
           <Stopwatch key={w.start} seconds={Math.min(t, w.end) - w.start} done={t >= w.end}
@@ -240,8 +270,9 @@ const Stopwatch: React.FC<{ seconds: number; done: boolean; age: number; color: 
   );
 };
 
-const Badge: React.FC<{ text: string }> = ({ text }) => (
-  <div style={{ position: "absolute", right: 110, top: 84, padding: "14px 26px", borderRadius: 20, fontFamily: FONT,
+// Under the stopwatch when there is one, else bottom right (clear of the window).
+const Badge: React.FC<{ text: string; under: boolean }> = ({ text, under }) => (
+  <div style={{ position: "absolute", ...(under ? { left: 110, top: 176 } : { right: 110, bottom: 96 }), padding: "14px 26px", borderRadius: 20, fontFamily: FONT,
     fontSize: 30, fontWeight: 600, color: "rgba(255,255,255,.85)", background: "rgba(16,18,24,.72)",
     boxShadow: "0 0 0 1px rgba(255,255,255,.12)" }}>
     ⏩ {text}

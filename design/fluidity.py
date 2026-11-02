@@ -138,7 +138,7 @@ def scenario_card():
             time.sleep(0.35)
             key("return")
     pasted = wait_until(lambda: get_text() != text, 5)
-    row("SMS court → cartes → ↵", panel_ms=shown, copy_ms=copy_ms(since),
+    row("Short text message → cards → ↵", panel_ms=shown, copy_ms=copy_ms(since),
         ready=r, paste_ms=pasted, result=get_text())
 
 
@@ -149,7 +149,7 @@ def scenario_clean_then_pro():
     since2 = log_size()
     key("2", cmd=True)
     r2 = wait_ready(since2)
-    row("Texte sans faute → ⌘2 Pro", panel_ms=shown, ready=r, after_cmd2=r2,
+    row("Text without mistakes → ⌘2 Pro", panel_ms=shown, ready=r, after_cmd2=r2,
         still_open=panel_visible())
     close()
 
@@ -160,7 +160,7 @@ def scenario_switch_while_busy():
     time.sleep(0.15)
     key("2", cmd=True)  # switch before the correction finishes
     r = wait_ready(since)
-    row("⌘2 pendant la correction", panel_ms=shown, ready=r)
+    row("⌘2 during the correction", panel_ms=shown, ready=r)
     close()
 
 
@@ -177,7 +177,7 @@ def scenario_perso():
     t = time.perf_counter()
     key("return", cmd=True)  # accept the rewrite
     pasted = wait_until(lambda: get_text() != text, 5)
-    row("⌘3 Perso « en anglais » → ⌘↵", panel_ms=shown, ready=r, paste_ms=pasted, result=get_text())
+    row("⌘3 Custom “en anglais” → ⌘↵", panel_ms=shown, ready=r, paste_ms=pasted, result=get_text())
 
 
 def scenario_document():
@@ -190,7 +190,7 @@ def scenario_document():
     r = wait_ready(since)
     key("return", cmd=True)  # accept all
     pasted = wait_until(lambda: get_text() != text, 5)
-    row("Compte rendu long → document → ⌘↵", panel_ms=shown, ready=r, paste_ms=pasted,
+    row("Long report → document → ⌘↵", panel_ms=shown, ready=r, paste_ms=pasted,
         result=get_text())
 
 
@@ -201,7 +201,7 @@ def scenario_no_selection():
     shortcut()
     shown = wait_until(panel_visible)
     time.sleep(0.5)
-    row("Aucune sélection", panel_ms=shown, ollama_called=wait_ready(since, 1) is not None)
+    row("No selection", panel_ms=shown, ollama_called=wait_ready(since, 1) is not None)
     close()
 
 
@@ -212,7 +212,7 @@ def scenario_escape():
     t = time.perf_counter()
     key("escape")
     gone = wait_until(lambda: not panel_visible(), 2)
-    row("Échap ferme sans coller", panel_ms=shown, close_ms=gone, untouched=get_text() == text)
+    row("Esc closes without pasting", panel_ms=shown, close_ms=gone, untouched=get_text() == text)
 
 
 if __name__ == "__main__":

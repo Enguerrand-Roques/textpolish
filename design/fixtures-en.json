@@ -1,0 +1,400 @@
+{
+  "typo": {
+    "mode": "casual",
+    "input": "Their going to the store tomorow",
+    "output": "They're going to the store tomorrow",
+    "parts": [
+      {
+        "op": "change",
+        "id": 0,
+        "before": "Their",
+        "after": "They're",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": "going to the store"
+      },
+      {
+        "op": "equal",
+        "text": " going to the store "
+      },
+      {
+        "op": "change",
+        "id": 1,
+        "before": "tomorow",
+        "after": "tomorrow",
+        "kind": "spelling",
+        "label": "Spelling",
+        "context_before": "going to the store",
+        "context_after": ""
+      }
+    ],
+    "layout": "cards"
+  },
+  "sms": {
+    "mode": "casual",
+    "input": "hey r u free tonite, we could grab dinner around 7 if your up for it",
+    "output": "hey r u free tonight we could grab dinner around 7 if you're up for it",
+    "parts": [
+      {
+        "op": "equal",
+        "text": "hey r u free "
+      },
+      {
+        "op": "change",
+        "id": 0,
+        "before": "tonite,",
+        "after": "tonight",
+        "kind": "spelling",
+        "label": "Spelling",
+        "context_before": "hey r u free",
+        "context_after": "we could grab dinner…"
+      },
+      {
+        "op": "equal",
+        "text": " we could grab dinner around 7 if "
+      },
+      {
+        "op": "change",
+        "id": 1,
+        "before": "your",
+        "after": "you're",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "…dinner around 7 if",
+        "context_after": "up for it"
+      },
+      {
+        "op": "equal",
+        "text": " up for it"
+      }
+    ],
+    "layout": "cards"
+  },
+  "clean": {
+    "mode": "casual",
+    "input": "Thanks for your message, I'll call you back tomorrow morning.",
+    "output": "Thanks for your message, I'll call you back tomorrow morning.",
+    "parts": [
+      {
+        "op": "equal",
+        "text": "Thanks for your message, I'll call you back tomorrow morning."
+      }
+    ],
+    "layout": "none"
+  },
+  "long": {
+    "mode": "casual",
+    "input": "Hi everyone, here is a quick update on the project. Last night we finish the new version late, the tests was passing and the client were happy with what he seen. However their are still a few bug on the login page and its mostly on mobile that it break. Can someone take care of it tomorow morning? I dont think we can finish everything before friday.",
+    "output": "Hi everyone, here is a quick update on the project. Last night we finished the new version late, the tests were passing and the client was happy with what he saw. However there are still a few bugs on the login page and it's mostly on mobile that it breaks. Can someone take care of it tomorrow morning? I don't think we can finish everything before Friday.",
+    "parts": [
+      {
+        "op": "equal",
+        "text": "Hi everyone, here is a quick update on the project. Last night we "
+      },
+      {
+        "op": "change",
+        "id": 0,
+        "before": "finish",
+        "after": "finished",
+        "kind": "conjugation",
+        "label": "Conjugation",
+        "context_before": "…project. Last night we",
+        "context_after": "the new version late,…"
+      },
+      {
+        "op": "equal",
+        "text": " the new version late, the tests "
+      },
+      {
+        "op": "change",
+        "id": 1,
+        "before": "was",
+        "after": "were",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "…version late, the tests",
+        "context_after": "passing and the client"
+      },
+      {
+        "op": "equal",
+        "text": " passing and the client "
+      },
+      {
+        "op": "change",
+        "id": 2,
+        "before": "were",
+        "after": "was",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "passing and the client",
+        "context_after": "happy with what he"
+      },
+      {
+        "op": "equal",
+        "text": " happy with what he "
+      },
+      {
+        "op": "change",
+        "id": 3,
+        "before": "seen",
+        "after": "saw",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "happy with what he",
+        "context_after": ". However"
+      },
+      {
+        "op": "equal",
+        "text": ". However "
+      },
+      {
+        "op": "change",
+        "id": 4,
+        "before": "their",
+        "after": "there",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": ". However",
+        "context_after": "are still a few"
+      },
+      {
+        "op": "equal",
+        "text": " are still a few "
+      },
+      {
+        "op": "change",
+        "id": 5,
+        "before": "bug",
+        "after": "bugs",
+        "kind": "agreement",
+        "label": "Agreement",
+        "context_before": "are still a few",
+        "context_after": "on the login page…"
+      },
+      {
+        "op": "equal",
+        "text": " on the login page and "
+      },
+      {
+        "op": "change",
+        "id": 6,
+        "before": "its",
+        "after": "it's",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "…the login page and",
+        "context_after": "mostly on mobile that…"
+      },
+      {
+        "op": "equal",
+        "text": " mostly on mobile that it "
+      },
+      {
+        "op": "change",
+        "id": 7,
+        "before": "break",
+        "after": "breaks",
+        "kind": "agreement",
+        "label": "Agreement",
+        "context_before": "…on mobile that it",
+        "context_after": ". Can someone take…"
+      },
+      {
+        "op": "equal",
+        "text": ". Can someone take care of it "
+      },
+      {
+        "op": "change",
+        "id": 8,
+        "before": "tomorow",
+        "after": "tomorrow",
+        "kind": "spelling",
+        "label": "Spelling",
+        "context_before": "…take care of it",
+        "context_after": "morning? I"
+      },
+      {
+        "op": "equal",
+        "text": " morning? I "
+      },
+      {
+        "op": "change",
+        "id": 9,
+        "before": "dont",
+        "after": "don't",
+        "kind": "punctuation",
+        "label": "Punctuation",
+        "context_before": "morning? I",
+        "context_after": "think we can finish…"
+      },
+      {
+        "op": "equal",
+        "text": " think we can finish everything before "
+      },
+      {
+        "op": "change",
+        "id": 10,
+        "before": "friday",
+        "after": "Friday",
+        "kind": "case",
+        "label": "Capitalization",
+        "context_before": "…can finish everything before",
+        "context_after": "."
+      },
+      {
+        "op": "equal",
+        "text": "."
+      }
+    ],
+    "layout": "document"
+  },
+  "pro": {
+    "mode": "pro",
+    "input": "hey, saw ur profile and i think we could do cool stuff together, got 5 min to chat?",
+    "output": "I reviewed your profile and believe there is potential for us to collaborate effectively. Would you be available for a brief discussion?",
+    "parts": [
+      {
+        "op": "change",
+        "id": 0,
+        "before": "hey,",
+        "after": "I",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 1,
+        "before": "saw",
+        "after": "reviewed",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 2,
+        "before": "ur",
+        "after": "your",
+        "kind": "spelling",
+        "label": "Spelling",
+        "context_before": "",
+        "context_after": "profile and"
+      },
+      {
+        "op": "equal",
+        "text": " profile and "
+      },
+      {
+        "op": "change",
+        "id": 3,
+        "before": "i",
+        "after": "believe",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "profile and",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 4,
+        "before": "think",
+        "after": "there",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 5,
+        "before": "we",
+        "after": "is",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 6,
+        "before": "could",
+        "after": "potential",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 7,
+        "before": "do",
+        "after": "for",
+        "kind": "grammar",
+        "label": "Grammar",
+        "context_before": "",
+        "context_after": ""
+      },
+      {
+        "op": "equal",
+        "text": " "
+      },
+      {
+        "op": "change",
+        "id": 8,
+        "before": "cool stuff together, got 5 min",
+        "after": "us",
+        "kind": "rewrite",
+        "label": "Rewrite",
+        "context_before": "",
+        "context_after": "to"
+      },
+      {
+        "op": "equal",
+        "text": " to "
+      },
+      {
+        "op": "change",
+        "id": 9,
+        "before": "chat",
+        "after": "collaborate effectively. Would you be available for a brief discussion",
+        "kind": "rewrite",
+        "label": "Rewrite",
+        "context_before": "to",
+        "context_after": "?"
+      },
+      {
+        "op": "equal",
+        "text": "?"
+      }
+    ],
+    "layout": "rewrite"
+  }
+}

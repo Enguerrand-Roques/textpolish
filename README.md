@@ -8,12 +8,12 @@
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo above is the real app, recorded by `design/record_demo.py`. Runs silently in the menubar / system tray.
 
 <p align="center">
-  <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 379-character message with 13 mistakes is corrected with each fix labelled (conjugation, agreement, homophones, spelling, punctuation), then rewritten in Pro with ⌘2, then translated with a Sur mesure request and pasted back">
+  <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 351-character English message with 11 mistakes is corrected with each fix labelled (grammar, agreement, verbs, spelling, punctuation, capitalization), then rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
 </p>
 
-<p align="center"><b><a href="docs/textpolish-demo.mp4">▶ Watch the 50-second video</a></b> — real recordings of the app; only the typing is sped up, the on-screen stopwatch shows the real model time (made with <a href="video/">Remotion</a>).</p>
+<p align="center"><b><a href="docs/textpolish-demo.mp4">▶ Watch the 1-minute video</a></b> — real recordings of the app in English, then the switch to French; typing (and one wait, marked on screen) is sped up, and the on-screen stopwatch always shows the real model time (made with <a href="video/">Remotion</a>).</p>
 
-The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Sur mesure. Everything runs locally.
+The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Custom. Everything runs locally.
 
 → UX case study (design process, iterations, real-use testing): [`docs/case-study.html`](docs/case-study.html) · all popup states: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
 
@@ -25,10 +25,11 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 | Feature | Description |
 |---------|-------------|
-| **Three modes** | Correction (fixes mistakes only, default), Pro (⌘2, professional rewrite), Sur mesure (⌘3, your own request: translate, shorten, warmer…) |
+| **Three modes** | Correction (fixes mistakes only, default), Pro (⌘2, professional rewrite), Custom (⌘3, your own request: translate, shorten, warmer…) |
+| **English and French** | Corrects and rewrites both languages (tested on an English and a French set). The interface is in English or French: switch from ✏️ → Language, it is remembered |
 | **Every fix explained** | Each correction is labelled: spelling, accent, conjugation, agreement, homophone, punctuation. Short texts get one card per fix, long ones a highlighted document |
-| **Correction history** | Last 10 corrections in the ✏️ menu → Historique. Click an entry to copy the corrected text |
-| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Préférences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
+| **Correction history** | Last 10 corrections in the ✏️ menu → History. Click an entry to copy the corrected text |
+| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
 | **Native-feeling popup** (macOS) | Opens under the selection with macOS vibrancy, light and dark mode, full keyboard control (↵ ⇥ ⌘↵ ⌘1-3 esc) |
 | **Fully private** | Everything runs on your machine. No API key, no telemetry, no data ever leaves your computer |
 | **System-level** | Works in any app — VS Code, Notion, Mail, Slack. Panel stays above fullscreen apps |
@@ -168,9 +169,10 @@ Edit `config.py` (excluded from Git — never committed):
 OLLAMA_BASE_URL     = "http://localhost:11434"
 OLLAMA_MODEL_CASUAL = "gemma4:e2b-it-qat"   # Correction
 OLLAMA_MODEL_PRO    = "gemma4:e2b-it-qat"   # Pro
-OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Sur mesure (custom instructions)
+OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Custom (your own request)
 OLLAMA_TIMEOUT      = 60
 OLLAMA_KEEP_ALIVE   = 300
+UI_LANGUAGE         = "en"                # "en" or "fr", also from ✏️ → Language
 SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+Alt+G
 ```
 
@@ -182,7 +184,7 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 |------|----------|
 | **Correction** (default) | Fixes mistakes, keeps your wording |
 | **Pro** (⌘2) | Emails, LinkedIn, formal writing — full rewrite |
-| **Sur mesure** (⌘3) | Your own request: translate, shorter, warmer, funnier |
+| **Custom** (⌘3) | Your own request: translate, shorter, warmer, funnier (“Sur mesure” in the French interface) |
 
 **Speed, measured on an M2 16 GB:**
 
@@ -190,10 +192,10 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 |---|---:|---:|
 | Short sentence, any mode | 0.5–1.1 s | 3–6 s |
 | 338-character report (Correction) | 2.7 s | — |
-| 379-character message, 13 mistakes (demo video) | 3–4 s | — |
+| ~350–380-character message, 11–13 mistakes (demo video, EN and FR) | 3–4 s | — |
 | ~1,500 characters (Correction) | ~10 s | — |
 
-Time grows with the length of the answer (about 30–35 tokens per second). The 4,000-character input limit stays under the 60 s timeout.
+Time grows with the length of the answer (about 30–35 tokens per second, much less if the Mac is swapping). The 4,000-character input limit stays under the 60 s timeout.
 
 Cold happens on the first request and again after 5 minutes without use (`OLLAMA_KEEP_ALIVE = 300` frees the 4.3 GB of RAM). Right after a reboot, when macOS has not cached the model file yet, the first request took 9–15 s. Raise `OLLAMA_KEEP_ALIVE` if you prefer speed over free RAM.
 
@@ -235,19 +237,21 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 
 | Mode | Model | Warm (median) | Cold (median, range) | Score |
 |------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 11 / 12 expected fixes, no rewrite of correct texts |
-| Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks |
-| Sur mesure | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | French 11 / 12, English 12 / 12 expected fixes; correct texts left untouched |
+| Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
+| Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
 
 Warm = median over the test set with the model in RAM. Cold = `ollama stop`, then one request, 3 runs per mode; the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
 
 Key findings that shaped this choice:
 
 - **One model beats two.** With a Correction model and a Pro model, every mode switch reloaded a model (~5 s on 16 GB). With one model, switching modes adds no wait (0.75–0.8 s for a sentence in Pro).
-- **Gemma 4 E2B matches the previous Correction model and is better at Pro and Sur mesure.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
+- **Gemma 4 E2B matches the previous Correction model and is better at Pro and Custom.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
-- **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Sur mesure use 0.4.
+- **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
+- **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
+- **Free RAM matters as much as the model.** With the Mac swapping heavily (14 of 15 GB of swap in use), generation fell from ~35 to ~13 tokens per second and the same 380-character message took 7–11 s instead of 3–4 s.
 - **Language detection had a bug** that sent short unaccented French ("J'ai finit le rapport hier soir") to English; fixed in `llm.py`.
 - Earlier rounds: QAT builds and `num_ctx: 1024` cut latency and RAM; `gemma3:1b` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 
