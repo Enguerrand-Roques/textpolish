@@ -301,3 +301,18 @@ class TestDetectLanguageMore:
         assert _detect_language("I has finished the report yesterday") == "en"
         assert _detect_language("Their going to the store tomorow") == "en"
         assert _detect_language("hey just wanted to let u know im running late") == "en"
+
+
+class TestCorrectionKeepsQuestions:
+    def _run(self, mode, answer):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": answer}
+        with patch("llm.requests.post", return_value=mock_resp):
+            return polish_text("tu fait quoi ce soir ? on se voit", mode=mode)
+
+    def test_correction_puts_back_a_dropped_question_mark(self):
+        assert self._run("casual", "tu fais quoi ce soir on se voit") == "tu fais quoi ce soir ? on se voit"
+
+    def test_rewrites_are_not_touched(self):
+        assert self._run("pro", "Que fais-tu ce soir ? Nous pourrions nous voir.") == \
+            "Que fais-tu ce soir ? Nous pourrions nous voir."

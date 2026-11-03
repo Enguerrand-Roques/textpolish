@@ -17,6 +17,7 @@ from config import (
     OLLAMA_TIMEOUT,
     OLLAMA_KEEP_ALIVE,
 )
+from diff import keep_question_marks
 
 # Texts longer than this are rejected: the model context is sized from the
 # input (see _num_ctx_for), and very long inputs would be slow and risk
@@ -261,6 +262,11 @@ def polish_text(
         result = result.replace("**", "")
     if "__" not in text:
         result = result.replace("__", "")
+
+    # Correction must not remove a question the user asked (Round 6: the
+    # only miss was "ce soir ? on peut" -> "ce soir on peut").
+    if mode == "casual":
+        result = keep_question_marks(text, result)
 
     if truncated:
         raise RuntimeError(
