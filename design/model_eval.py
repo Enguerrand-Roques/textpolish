@@ -1,14 +1,14 @@
 """Compare local models per mode on realistic texts, with expected answers.
 
-    venv/bin/python3 design/model_eval.py casual qwen3.5:2b-nvfp4 ministral-3:3b ...
-    venv/bin/python3 design/model_eval.py pro gemma3:4b ...
-    venv/bin/python3 design/model_eval.py custom gemma3:4b ...
+    venv/bin/python3 design/model_eval.py casual gemma4:e2b-it-qat gemma4:e2b-nvfp4 ...
+    venv/bin/python3 design/model_eval.py pro gemma4:e2b-it-qat ...
+    venv/bin/python3 design/model_eval.py custom gemma4:e2b-it-qat ...
     add --en to use the English test set
 
 Correction is scored against expected outputs (exact match after
-normalising quotes/spaces), plus "overreach": changing a text that had
-no mistake. Pro/Perso are scored with simple checks (language kept or
-translated, no Markdown/e-mail boilerplate, sensible length).
+normalizing quotes/spaces), plus "overreach": changing a text that had
+no mistake. Pro and Custom are scored with simple checks (language kept or
+translated, no Markdown/email boilerplate, sensible length).
 Latency: first call (cold load) and median of warm calls.
 """
 import os

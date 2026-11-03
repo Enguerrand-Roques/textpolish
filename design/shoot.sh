@@ -4,7 +4,9 @@
 set -e
 cd "$(dirname "$0")/.."
 PORT=8765
-python3 -m http.server $PORT >/dev/null 2>&1 &
+# Bound to localhost: the repo root holds config.py, which must not be served
+# to the network.
+python3 -m http.server --bind 127.0.0.1 $PORT >/dev/null 2>&1 &
 SERVER=$!
 trap "kill $SERVER" EXIT
 sleep 0.6

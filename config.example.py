@@ -21,5 +21,5 @@ UI_LANGUAGE = "en"
 # macOS: Cmd+Option+G  |  Windows: Ctrl+Alt+G  (no known conflicts)
 SHORTCUT = "<cmd>+<alt>+g"
 
-# Optional — used by benchmark_models.py --judge (Claude Haiku as quality judge)
-# ANTHROPIC_API_KEY = "sk-ant-..."
+# benchmarks/benchmark_models.py --judge (Claude as quality judge) reads its key from the
+# ANTHROPIC_API_KEY environment variable, never from this file.

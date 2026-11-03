@@ -1,0 +1,1052 @@
+[
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_01",
+    "label": "Email professionnel avec fautes",
+    "mode": "pro",
+    "input": "bonjour, je voudrais savoir si vous avez bien recu mon dossier car jai pas eu de nouvelle depuis 2 semaine. merci de me repondre rapidement.",
+    "output": "Bonjour,\n\nJe souhaiterais savoir si vous aviez bien reçu mon dossier. Je n'ai pas eu de nouvelles depuis deux semaines. Je vous remercie de me faire parvenir une réponse dans les plus brefs délais.",
+    "wall_time_s": 7.959,
+    "metrics": {
+      "total_duration_s": 7.927,
+      "load_duration_s": 4.985,
+      "prompt_eval_duration_s": 0.925,
+      "eval_duration_s": 1.866,
+      "eval_count": 45,
+      "prompt_eval_count": 257
+    },
+    "error": null,
+    "judge": {
+      "correction": 4,
+      "tone": 5,
+      "preservation": 4,
+      "note": "Professional tone achieved; minor tense inconsistency ('aviez' should be 'avez') slightly impacts correction.",
+      "overall": 4.33
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_02",
+    "label": "Message LinkedIn informel",
+    "mode": "pro",
+    "input": "Salut, j'ai vu ton profil et je pense qu'on pourrait faire des trucs cool ensemble, t'as 5min pour qu'on se parle?",
+    "output": "Je suis intéressé par votre profil et crois qu'il pourrait y avoir des opportunités de collaboration. Auriez-vous 5 minutes pour échanger ?",
+    "wall_time_s": 7.15,
+    "metrics": {
+      "total_duration_s": 7.104,
+      "load_duration_s": 4.491,
+      "prompt_eval_duration_s": 0.925,
+      "eval_duration_s": 1.55,
+      "eval_count": 34,
+      "prompt_eval_count": 258
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 4,
+      "note": "Excellent professional transformation, minor shift from personal interest to formal collaboration.",
+      "overall": 4.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_03",
+    "label": "Rapport avec ponctuation manquante",
+    "mode": "pro",
+    "input": "suite a notre reunion de lundi dernier voici un resume des actions a mener en priorite premierement mettre a jour la documentation deuxiemement contacter les parties prenantes et troisiemement preparer le bilan trimestriel",
+    "output": "Suite à notre réunion du lundi dernier, veuillez trouver ci-dessous un résumé des actions à mener en priorité. Premièrement, nous devons mettre à jour la documentation. Deuxièmement, il convient de contacter les parties prenantes. Troisièmement, nous devons préparer le bilan trimestriel.",
+    "wall_time_s": 7.97,
+    "metrics": {
+      "total_duration_s": 7.942,
+      "load_duration_s": 3.274,
+      "prompt_eval_duration_s": 1.021,
+      "eval_duration_s": 3.348,
+      "eval_count": 63,
+      "prompt_eval_count": 267
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional restructuring with proper French accents, formal phrasing, and clear prioritization.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_04",
+    "label": "Relance client maladroite",
+    "mode": "pro",
+    "input": "Bonjour, je me permet de revenir vers vous parce que sans retour de votre part on peut pas avancer sur le projet et ca commence a etre un peu bloquant pour les equipes.",
+    "output": "Je me permets de vous relancer concernant l'absence de retour sur le projet. Ce manque de retours entrave actuellement les avancées et représente un blocage pour les équipes.",
+    "wall_time_s": 7.147,
+    "metrics": {
+      "total_duration_s": 7.129,
+      "load_duration_s": 4.203,
+      "prompt_eval_duration_s": 0.962,
+      "eval_duration_s": 1.873,
+      "eval_count": 39,
+      "prompt_eval_count": 260
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Professional tone achieved; grammatical errors corrected; meaning fully preserved with improved clarity.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_05",
+    "label": "Compte rendu très brouillon",
+    "mode": "pro",
+    "input": "pour le point de ce matin en gros ya eu plusieurs sujet le budget qui explose un peu les delais qui glissent encore et aussi le fait que personne a vraiment valide la version finale donc il faut reprendre ca vite sinon on va se retrouver en retard pour la mise en prod",
+    "output": "Concernant le point abordé ce matin, plusieurs sujets ont été soulevés. Il y a notamment eu une augmentation préoccupante du budget, des délais qui persistent à s'étendre, ainsi que le manque de validation de la version finale. Il est donc nécessaire de prendre des mesures rapidement pour éviter de retarder la mise en production.",
+    "wall_time_s": 8.996,
+    "metrics": {
+      "total_duration_s": 8.959,
+      "load_duration_s": 4.028,
+      "prompt_eval_duration_s": 1.006,
+      "eval_duration_s": 3.804,
+      "eval_count": 70,
+      "prompt_eval_count": 279
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional transformation with proper French grammar, formal vocabulary, and complete meaning preservation.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_06",
+    "label": "Demande de rendez-vous polie mais fautive",
+    "mode": "pro",
+    "input": "Bonjour Madame, est ce qu'il serais possible d'organiser un rendez vous la semaine prochaine afin de discuter de ma candidature et des suites possible.",
+    "output": "Madame,\n\nJe vous serais reconnaissant de bien vouloir organiser un rendez-vous la semaine prochaine afin de discuter de ma candidature et des suites possibles.",
+    "wall_time_s": 6.661,
+    "metrics": {
+      "total_duration_s": 6.65,
+      "load_duration_s": 4.106,
+      "prompt_eval_duration_s": 0.885,
+      "eval_duration_s": 1.529,
+      "eval_count": 32,
+      "prompt_eval_count": 254
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional transformation with proper French grammar and formal register throughout.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_07",
+    "label": "Email long de justification de retard",
+    "mode": "pro",
+    "input": "Bonjour, je voulais vous prévenir que nous n'allons probablement pas tenir la date annoncée initialement pour la livraison de la fonctionnalité. En fait en regardant plus en détail on s'est rendu compte qu'il y avait plusieurs dépendances techniques qui n'avaient pas été anticipées, notamment sur la partie synchronisation et sur les droits utilisateurs. On essaye de rattraper mais si on force maintenant on risque surtout de livrer quelque chose de fragile. L'idée serait plutot de décaler de quelques jours pour sécuriser les tests et éviter un incident derrière.",
+    "output": "Madame, Monsieur,\n\nJe vous prie de bien vouloir prendre note que la date de livraison de la fonctionnalité initialement annoncée risque d’être retardée. Suite à une analyse plus approfondie, nous avons identifié plusieurs dépendances techniques non anticipées, notamment dans les domaines de la synchronisation et des droits utilisateurs. Nous mettons tout en œuvre pour rattraper ce retard, mais une livraison précipitée pourrait entraîner la mise en production d'une fonctionnalité instable. Nous proposons donc de reporter la date de livraison de quelques jours afin de garantir la robustesse des tests et d'éviter tout incident ultérieur.",
+    "wall_time_s": 13.234,
+    "metrics": {
+      "total_duration_s": 13.22,
+      "load_duration_s": 3.744,
+      "prompt_eval_duration_s": 1.206,
+      "eval_duration_s": 8.099,
+      "eval_count": 127,
+      "prompt_eval_count": 341
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent transformation to professional French with formal structure, perfect grammar, and preserved meaning.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_08",
+    "label": "Mail RH trop direct",
+    "mode": "pro",
+    "input": "bonjour, je vous envoie mon cv comme convenu. dites moi si le poste est toujours ouvert parce que jai besoin d'une reponse assez vite.",
+    "output": "Bonjour,\n\nJe vous prie de bien vouloir trouver ci-joint mon curriculum vitae, comme convenu. Je vous serais reconnaissant de me confirmer si le poste est toujours vacant, car j'ai besoin d'une réponse dans les meilleurs délais.",
+    "wall_time_s": 8.258,
+    "metrics": {
+      "total_duration_s": 8.245,
+      "load_duration_s": 4.495,
+      "prompt_eval_duration_s": 0.882,
+      "eval_duration_s": 2.746,
+      "eval_count": 52,
+      "prompt_eval_count": 256
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional transformation with proper formatting, formal vocabulary, and all accent marks corrected.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_09",
+    "label": "Demande support technique confuse",
+    "mode": "pro",
+    "input": "Bonjour, depuis la derniere mise a jour certains utilisateurs peuvent plus se connecter sauf parfois si ils reessayent plusieurs fois donc on sait pas trop d'ou ca vient mais il faudrait regarder rapidement.",
+    "output": "Bonjour, suite à la dernière mise à jour, certains utilisateurs rencontrent des difficultés de connexion, bien que cette situation puisse être temporairement résolue par des tentatives répétées. Il est nécessaire d'analyser rapidement la cause de ces problèmes.",
+    "wall_time_s": 7.891,
+    "metrics": {
+      "total_duration_s": 7.87,
+      "load_duration_s": 3.973,
+      "prompt_eval_duration_s": 1.032,
+      "eval_duration_s": 2.721,
+      "eval_count": 51,
+      "prompt_eval_count": 263
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellently transformed casual French report into formal professional communication with proper accents and structure.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_10",
+    "label": "Message commercial trop familier",
+    "mode": "pro",
+    "input": "Hello, je t'ecris parce qu'on a une offre qui pourrait franchement bien matcher avec vos besoins et faire gagner pas mal de temps a ton equipe.",
+    "output": "Bonjour,\n\nJe vous écris pour vous présenter une offre qui pourrait parfaitement répondre à vos besoins et permettre à votre équipe de gagner un temps précieux.",
+    "wall_time_s": 6.718,
+    "metrics": {
+      "total_duration_s": 6.707,
+      "load_duration_s": 4.123,
+      "prompt_eval_duration_s": 0.991,
+      "eval_duration_s": 1.503,
+      "eval_count": 31,
+      "prompt_eval_count": 257
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent transformation from casual French to professional tone with perfect grammar and preserved meaning.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_11",
+    "label": "Texte long sans structure",
+    "mode": "pro",
+    "input": "bonjour a tous suite aux retours des derniers jours on va devoir ajuster le planning general parce que plusieurs sujets se telescopent en meme temps entre la finalisation du design les validations juridiques et les demandes du client qui ont encore evolue hier soir du coup ce que je propose c'est qu'on revoie les priorites aujourd'hui qu'on gèle le perimetre sur la v1 et qu'on reporte le reste au sprint suivant sinon on continue a tout melanger et on perd du temps sur chaque arbitrage",
+    "output": "Bonjour à tous,\n\nSuite aux retours des derniers jours, il sera nécessaire d'ajuster le planning général. Plusieurs sujets se chevauchent actuellement, notamment la finalisation du design, les validations juridiques et les demandes du client, qui ont évolué hier soir.\n\nPar conséquent, je propose de revoir les priorités aujourd'hui, en gelant le périmètre sur la V1 et en reportant le reste au sprint suivant. Une poursuite de la confusion et du mélange des tâches entraînerait des pertes de temps significatives liées aux arbitrages.",
+    "wall_time_s": 13.269,
+    "metrics": {
+      "total_duration_s": 13.254,
+      "load_duration_s": 4.211,
+      "prompt_eval_duration_s": 1.211,
+      "eval_duration_s": 7.608,
+      "eval_count": 118,
+      "prompt_eval_count": 331
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional French transformation with proper punctuation, formal structure, and complete meaning preservation.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_12",
+    "label": "Excuses après oubli de réponse",
+    "mode": "pro",
+    "input": "Bonjour, désolé je reviens seulement maintenant vers vous je pensais vous avoir répondu mais visiblement mon mail est jamais parti.",
+    "output": "Je vous prie de bien vouloir excuser mon retard. Je pensais avoir déjà répondu à votre message, mais il semble que mon e-mail n'ait pas été envoyé.",
+    "wall_time_s": 7.111,
+    "metrics": {
+      "total_duration_s": 7.088,
+      "load_duration_s": 4.18,
+      "prompt_eval_duration_s": 0.859,
+      "eval_duration_s": 1.93,
+      "eval_count": 38,
+      "prompt_eval_count": 250
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional rewrite with proper French formality, grammar corrections, and preserved meaning.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_01",
+    "label": "SMS avec fautes typiques",
+    "mode": "casual",
+    "input": "slt tu fait quoi ce soir ? on peut se retrouver genre vers 19h pour manger un truc ?",
+    "output": "Salut, tu fais quoi ce soir ? On pourrait se retrouver genre vers 19h pour manger un truc ?",
+    "wall_time_s": 6.118,
+    "metrics": {
+      "total_duration_s": 6.112,
+      "load_duration_s": 3.996,
+      "prompt_eval_duration_s": 0.86,
+      "eval_duration_s": 1.117,
+      "eval_count": 24,
+      "prompt_eval_count": 238
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfectly corrected French while maintaining casual, friendly tone and original meaning.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_02",
+    "label": "Message WhatsApp décousu",
+    "mode": "casual",
+    "input": "ah ouais jsp trop enfin je veux dire cest pas que jai pas envie mais la flemme tu vois haha",
+    "output": "Ah ouais, j'sais pas trop, enfin je veux dire, c'est pas que j'ai pas envie, mais la flemme, tu vois, haha",
+    "wall_time_s": 6.78,
+    "metrics": {
+      "total_duration_s": 6.775,
+      "load_duration_s": 4.009,
+      "prompt_eval_duration_s": 0.86,
+      "eval_duration_s": 1.807,
+      "eval_count": 37,
+      "prompt_eval_count": 238
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfect casual rewrite with corrected French grammar and maintained lazy, conversational tone.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_03",
+    "label": "Invitation entre amis bâclée",
+    "mode": "casual",
+    "input": "yo on fait un apero chez moi demain si t chaud ramene juste un truc a boire et voila",
+    "output": "Yo, on fait un apéro chez moi demain si t'as chaud, ramène juste un truc à boire et voilà !",
+    "wall_time_s": 6.291,
+    "metrics": {
+      "total_duration_s": 6.276,
+      "load_duration_s": 3.955,
+      "prompt_eval_duration_s": 0.852,
+      "eval_duration_s": 1.358,
+      "eval_count": 28,
+      "prompt_eval_count": 236
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfect casual rewrite with correct accents and apostrophes while maintaining friendly tone.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_04",
+    "label": "Annulation de dernière minute",
+    "mode": "casual",
+    "input": "desole je vais etre grave en retard enfaite jai zappé un truc et la je suis encore bloqué dehors",
+    "output": "Désolé, je vais être vraiment en retard, en fait j'ai raté quelque chose et là je suis encore bloqué dehors.",
+    "wall_time_s": 6.646,
+    "metrics": {
+      "total_duration_s": 6.635,
+      "load_duration_s": 4.257,
+      "prompt_eval_duration_s": 0.864,
+      "eval_duration_s": 1.447,
+      "eval_count": 31,
+      "prompt_eval_count": 239
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfect casual rewrite with all French spelling/grammar corrected while maintaining natural, apologetic tone.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_05",
+    "label": "Message affectif avec fautes",
+    "mode": "casual",
+    "input": "j'espere que ta bien dormi moi jetais ko hier soir mais ca ma fait trop plaisir de te voir",
+    "output": "J'espère que tu as bien dormi ! Moi, j'étais KO hier soir, mais ça m'a fait tellement plaisir de te voir.",
+    "wall_time_s": 6.446,
+    "metrics": {
+      "total_duration_s": 6.44,
+      "load_duration_s": 3.835,
+      "prompt_eval_duration_s": 0.864,
+      "eval_duration_s": 1.629,
+      "eval_count": 33,
+      "prompt_eval_count": 240
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 4,
+      "preservation": 5,
+      "note": "Excellent grammar fixes; tone slightly formal for casual mode with exclamation mark punctuation.",
+      "overall": 4.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_06",
+    "label": "Demande d'avis confuse",
+    "mode": "casual",
+    "input": "tu pense que c une bonne idee ou pas parce que moi je suis chaud mais en meme temps jhesite de fou",
+    "output": "Tu penses que c'est une bonne idée ou pas parce que moi, je suis chaud, mais en même temps, j'hésite de fou.",
+    "wall_time_s": 6.496,
+    "metrics": {
+      "total_duration_s": 6.486,
+      "load_duration_s": 3.856,
+      "prompt_eval_duration_s": 0.847,
+      "eval_duration_s": 1.709,
+      "eval_count": 34,
+      "prompt_eval_count": 239
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 2,
+      "preservation": 5,
+      "note": "Grammar fixed perfectly, but tone became too formal for casual mode.",
+      "overall": 4.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_07",
+    "label": "Long message vocal retranscrit",
+    "mode": "casual",
+    "input": "franchement la journée a ete trop bizarre au debut ca allait puis apres ya eu cette reunion inutile qui a duré mille ans ensuite jai raté mon metro et quand je suis enfin rentré jai vu ton message donc oui jsuis un peu saoulé mais si tu veux on s'appelle plus tard ca me fera du bien de parler d'autre chose",
+    "output": "Franchement, la journée a été trop bizarre au début, ça allait, puis après il y a eu cette réunion inutile qui a duré une éternité, ensuite j'ai raté le métro et quand je suis enfin rentré, j'ai vu ton message, donc oui, j'suis un peu bourré mais si tu veux, on s'appelle plus tard, ça me fera du bien de parler d'autre chose.",
+    "wall_time_s": 11.06,
+    "metrics": {
+      "total_duration_s": 11.032,
+      "load_duration_s": 3.763,
+      "prompt_eval_duration_s": 1.078,
+      "eval_duration_s": 5.967,
+      "eval_count": 93,
+      "prompt_eval_count": 289
+    },
+    "error": null,
+    "judge": {
+      "correction": 4,
+      "tone": 2,
+      "preservation": 4,
+      "note": "Grammar improved but tone became too formal; 'bourré' changes meaning from tired to drunk.",
+      "overall": 3.33
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_08",
+    "label": "Message de groupe",
+    "mode": "casual",
+    "input": "les gars faut quon se decide pr ce week end pcq si on reserve trop tard on va encore se retrouver avec un plan nul",
+    "output": "Les gars, faut qu'on se décide pour ce week-end parce que sinon, si on réserve trop tard, on va encore se retrouver avec un plan nul.",
+    "wall_time_s": 7.604,
+    "metrics": {
+      "total_duration_s": 7.574,
+      "load_duration_s": 4.864,
+      "prompt_eval_duration_s": 0.898,
+      "eval_duration_s": 1.739,
+      "eval_count": 35,
+      "prompt_eval_count": 242
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 4,
+      "preservation": 5,
+      "note": "Excellent correction; tone slightly formal for casual context but preserves natural speech.",
+      "overall": 4.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_09",
+    "label": "Message bref plein d'abréviations",
+    "mode": "casual",
+    "input": "tkt c bon g geré, jte redis ds 10 min",
+    "output": "Tkt, c'est bon, j'ai géré, je te redis dans 10 minutes.",
+    "wall_time_s": 5.956,
+    "metrics": {
+      "total_duration_s": 5.949,
+      "load_duration_s": 3.774,
+      "prompt_eval_duration_s": 0.915,
+      "eval_duration_s": 1.182,
+      "eval_count": 25,
+      "prompt_eval_count": 231
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfect casual French text: all abbreviations expanded naturally while maintaining relaxed tone.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_10",
+    "label": "Message de remerciement spontané",
+    "mode": "casual",
+    "input": "merci encore pr hier ct trop cool jai vraiment passé une super soirée",
+    "output": "merci encore pour hier, c'était trop cool ! j'ai vraiment passé une super soirée 😊",
+    "wall_time_s": 5.831,
+    "metrics": {
+      "total_duration_s": 5.823,
+      "load_duration_s": 3.783,
+      "prompt_eval_duration_s": 0.873,
+      "eval_duration_s": 1.108,
+      "eval_count": 23,
+      "prompt_eval_count": 229
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfect casual rewrite with proper French grammar while maintaining friendly, relaxed tone.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_11",
+    "label": "Conflit léger entre amis",
+    "mode": "casual",
+    "input": "j'avoue jai un peu mal pris ton message de tout a lheure mais bon cest pas grave on en reparle tranquille",
+    "output": "J'avoue, j'ai un peu mal pris ton message de tout à l'heure, mais bon, ce n'est pas grave, on en reparle tranquillement.",
+    "wall_time_s": 6.703,
+    "metrics": {
+      "total_duration_s": 6.695,
+      "load_duration_s": 3.784,
+      "prompt_eval_duration_s": 0.915,
+      "eval_duration_s": 1.902,
+      "eval_count": 39,
+      "prompt_eval_count": 241
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 2,
+      "preservation": 4,
+      "note": "Output is too formal; casual mode requires looser punctuation and contracted forms.",
+      "overall": 3.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_12",
+    "label": "Texte long avec hésitations",
+    "mode": "casual",
+    "input": "je sais pas trop comment te dire ca sans que ca fasse bizarre mais en gros ces derniers temps je suis un peu a l'ouest et je reponds mal a tout le monde donc si j'ai ete distant c'etait pas contre toi du tout c'est juste que jai besoin de souffler un peu et de remettre de l'ordre dans ma tete",
+    "output": "Je sais pas trop comment te le dire sans que ce soit bizarre, mais en gros, ces derniers temps, je suis un peu à l'ouest et je réponds mal à tout le monde. Donc si j'ai été distant, c'était pas contre toi du tout, c'est juste que j'ai besoin de souffler un peu et de remettre de l'ordre dans ma tête.",
+    "wall_time_s": 10.108,
+    "metrics": {
+      "total_duration_s": 10.09,
+      "load_duration_s": 3.797,
+      "prompt_eval_duration_s": 1.116,
+      "eval_duration_s": 5.011,
+      "eval_count": 83,
+      "prompt_eval_count": 289
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Perfect casual French with corrected accents, spacing, and grammar while maintaining natural conversational flow.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_01",
+    "label": "English professional follow-up",
+    "mode": "pro",
+    "input": "hi just checking in on the proposal i sent last week, let me know if you need anything else from my end thanks",
+    "output": "Je me permets de vous recontacter concernant la proposition que je vous ai envoyée la semaine dernière. N'hésitez pas à me faire savoir si vous avez besoin d'éléments supplémentaires de ma part. Merci de votre retour.",
+    "wall_time_s": 10.272,
+    "metrics": {
+      "total_duration_s": 10.254,
+      "load_duration_s": 6.573,
+      "prompt_eval_duration_s": 0.87,
+      "eval_duration_s": 2.65,
+      "eval_count": 49,
+      "prompt_eval_count": 247
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French rather than professional English as required.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_02",
+    "label": "Status update with grammar issues",
+    "mode": "pro",
+    "input": "Hello team, we made good progress on the migration but there is still some blockers on the infra side and we probably need one more day before saying it is fully stable.",
+    "output": "Bonjour à l’équipe, nous avons réalisé de bons progrès concernant la migration, mais des obstacles persistent encore du côté de l’infrastructure. Il est probable que nous aurions besoin d’un jour supplémentaire avant de pouvoir déclarer le système pleinement stable.",
+    "wall_time_s": 8.546,
+    "metrics": {
+      "total_duration_s": 8.495,
+      "load_duration_s": 4.667,
+      "prompt_eval_duration_s": 0.983,
+      "eval_duration_s": 2.741,
+      "eval_count": 52,
+      "prompt_eval_count": 257
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French instead of English; mode requires professional English tone.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_03",
+    "label": "Client apology email",
+    "mode": "pro",
+    "input": "sorry for the delay getting back to you, things got a bit messy on our side and i wanted to make sure i had the right information before answering.",
+    "output": "Je vous prie de bien vouloir excuser le délai de réponse. Des circonstances imprévues ont eu lieu de notre côté et je souhaitais m'assurer d'avoir l'information exacte avant de vous répondre.",
+    "wall_time_s": 7.667,
+    "metrics": {
+      "total_duration_s": 7.654,
+      "load_duration_s": 4.32,
+      "prompt_eval_duration_s": 0.864,
+      "eval_duration_s": 2.36,
+      "eval_count": 44,
+      "prompt_eval_count": 254
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is French; task requires English professional rewrite.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_04",
+    "label": "Long internal update",
+    "mode": "pro",
+    "input": "Following our discussions this week, I think we should pause the rollout to the remaining users until we have clearer visibility on the error rate. Right now the issue does not seem catastrophic, but the pattern is inconsistent enough that shipping further could create avoidable support load. My recommendation would be to keep the current cohort, collect another full day of logs, and decide tomorrow morning with actual data instead of assumptions.",
+    "output": "Suite à nos échanges cette semaine, je pense qu'il serait opportun de suspendre le déploiement aux utilisateurs restants jusqu'à ce que nous disposions d'une meilleure visibilité sur le taux d'erreur. Actuellement, le problème ne semble pas catastrophique, mais son caractère inconsistent justifie de ne pas procéder davantage, ce qui pourrait engendrer une surcharge du support client inutile. Je recommande de maintenir la cohorte actuelle, de collecter un autre jour complet de logs, et de prendre une décision éclairée demain matin sur la base de données réelles plutôt que d'hypothèses.",
+    "wall_time_s": 13.88,
+    "metrics": {
+      "total_duration_s": 13.821,
+      "load_duration_s": 4.155,
+      "prompt_eval_duration_s": 1.07,
+      "eval_duration_s": 8.35,
+      "eval_count": 127,
+      "prompt_eval_count": 302
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French; task requires English professional rewriting, not translation.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_05",
+    "label": "Sales outreach too casual",
+    "mode": "pro",
+    "input": "Hey, reaching out because i think what we're building could be pretty useful for your team and maybe save you a bunch of manual work every week.",
+    "output": "Je vous contacte afin de vous faire part de mon opinion sur le potentiel utilité de ce que nous développons pour votre équipe, ce qui pourrait vous permettre de réduire considérablement le travail manuel hebdomadaire.",
+    "wall_time_s": 8.497,
+    "metrics": {
+      "total_duration_s": 8.465,
+      "load_duration_s": 5.198,
+      "prompt_eval_duration_s": 0.843,
+      "eval_duration_s": 2.336,
+      "eval_count": 44,
+      "prompt_eval_count": 254
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French, not English professional rewrite; mode mismatch.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_06",
+    "label": "Support escalation unclear",
+    "mode": "pro",
+    "input": "The customer is still unhappy because they say the fix didn't really fix it and now they are asking if we tested this properly before release.",
+    "output": "Le client exprime toujours son mécontentement, estimant que la solution apportée n'a pas résolu son problème initial et interrogeant désormais sur les tests effectués avant la mise en production.",
+    "wall_time_s": 7.832,
+    "metrics": {
+      "total_duration_s": 7.808,
+      "load_duration_s": 4.565,
+      "prompt_eval_duration_s": 0.906,
+      "eval_duration_s": 2.263,
+      "eval_count": 43,
+      "prompt_eval_count": 252
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French instead of English; rewriting mode requires professional English tone.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_casual_01",
+    "label": "English casual text message",
+    "mode": "casual",
+    "input": "hey r u coming tmrw?? lmk asap bc i need to book the table thx",
+    "output": "Hey, tu viens demain ? Dis-moi vite, j'ai besoin de réserver la table, s'il te plaît merci !",
+    "wall_time_s": 6.941,
+    "metrics": {
+      "total_duration_s": 6.931,
+      "load_duration_s": 4.577,
+      "prompt_eval_duration_s": 0.887,
+      "eval_duration_s": 1.351,
+      "eval_count": 28,
+      "prompt_eval_count": 234
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 2,
+      "preservation": 2,
+      "note": "Output is French translation, not English rewriting; task appears misunderstood.",
+      "overall": 3.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_casual_02",
+    "label": "Late reply excuse",
+    "mode": "casual",
+    "input": "sry just saw this now, my phone was dead all afternoon",
+    "output": "Oups, viens de voir ça maintenant, mon téléphone était tombé en panne toute l'après-midi.",
+    "wall_time_s": 8.332,
+    "metrics": {
+      "total_duration_s": 8.316,
+      "load_duration_s": 6.269,
+      "prompt_eval_duration_s": 0.845,
+      "eval_duration_s": 1.118,
+      "eval_count": 24,
+      "prompt_eval_count": 228
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French instead of English; completely changes language rather than adjusting tone.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_casual_03",
+    "label": "Messy group chat planning",
+    "mode": "casual",
+    "input": "idk if we're still doing brunch sunday but if yes can we not do too early bc i'm dead in the morning lately",
+    "output": "Je sais pas si on fait toujours brunch dimanche, mais si oui, on peut pas faire trop tôt parce que je suis morte à force de dormir le matin !",
+    "wall_time_s": 7.495,
+    "metrics": {
+      "total_duration_s": 7.441,
+      "load_duration_s": 4.826,
+      "prompt_eval_duration_s": 0.885,
+      "eval_duration_s": 1.617,
+      "eval_count": 34,
+      "prompt_eval_count": 243
+    },
+    "error": null,
+    "judge": {
+      "correction": 1,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French; task requires English casual rewrite with original meaning preserved.",
+      "overall": 1.33
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_casual_04",
+    "label": "Long emotional message",
+    "mode": "casual",
+    "input": "not gonna lie i've been a bit overwhelmed lately and i know i've been weird in my replies, it's not about you at all, i just have too much going on in my head and i'm trying to get back to normal",
+    "output": "Je ne vais pas te mentir, j'ai été un peu dépassé ces derniers temps et je sais que j'ai été bizarre dans mes réponses. Ce n'est pas contre toi, j'ai juste beaucoup de choses dans la tête et je tente de retrouver mes esprits.",
+    "wall_time_s": 10.067,
+    "metrics": {
+      "total_duration_s": 10.04,
+      "load_duration_s": 5.785,
+      "prompt_eval_duration_s": 0.962,
+      "eval_duration_s": 3.189,
+      "eval_count": 60,
+      "prompt_eval_count": 267
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French; task requires casual English rewrite, not translation.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_casual_05",
+    "label": "Short enthusiastic invite",
+    "mode": "casual",
+    "input": "yo come thru tonight if u want, nothing fancy just drinks music and whoever shows up",
+    "output": "Yo, viens passer la soirée si tu veux, rien de trop copain, juste des boissons, de la musique et ceux qui se présentent.",
+    "wall_time_s": 7.506,
+    "metrics": {
+      "total_duration_s": 7.444,
+      "load_duration_s": 4.746,
+      "prompt_eval_duration_s": 0.861,
+      "eval_duration_s": 1.595,
+      "eval_count": 31,
+      "prompt_eval_count": 232
+    },
+    "error": null,
+    "judge": {
+      "correction": 1,
+      "tone": 1,
+      "preservation": 1,
+      "note": "Output is in French; task requires English rewriting in casual tone.",
+      "overall": 1.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "mix_pro_01",
+    "label": "Franglais professionnel",
+    "mode": "pro",
+    "input": "Bonjour team, petit follow up suite au call de ce matin: on a un vrai sujet sur le delivery timing et il faut qu'on realigne les priorites avant vendredi.",
+    "output": "Bonjour à l'équipe,\n\nJe tenais à faire suite à notre appel de ce matin concernant les délais de livraison. Il est essentiel d'aligner nos priorités avant vendredi afin de garantir une résolution efficace de ce sujet.",
+    "wall_time_s": 9.103,
+    "metrics": {
+      "total_duration_s": 9.048,
+      "load_duration_s": 5.253,
+      "prompt_eval_duration_s": 0.973,
+      "eval_duration_s": 2.64,
+      "eval_count": 49,
+      "prompt_eval_count": 259
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional French transformation with proper grammar, formal structure, and complete meaning preservation.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "mix_casual_01",
+    "label": "Franglais casual",
+    "mode": "casual",
+    "input": "franchement le resto etait trop bien hier, thanks encore pour l'idee c'etait trop cool",
+    "output": "Franchement, le resto était trop bien hier, merci encore pour l'idée, c'était trop cool !",
+    "wall_time_s": 7.019,
+    "metrics": {
+      "total_duration_s": 7.011,
+      "load_duration_s": 4.759,
+      "prompt_eval_duration_s": 0.917,
+      "eval_duration_s": 1.238,
+      "eval_count": 26,
+      "prompt_eval_count": 238
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 4,
+      "preservation": 5,
+      "note": "Excellent grammar fixes; slight formality lift but maintains casual warmth and enthusiasm.",
+      "overall": 4.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_13",
+    "label": "Texte avec répétitions et hésitations",
+    "mode": "pro",
+    "input": "Bonjour, je reviens vers vous concernant le document partagé hier parce que je pense qu'il faudrait peut etre peut etre clarifier certains points avant de le transmettre au client final.",
+    "output": "Je reviens vers vous concernant le document partagé hier. Je pense qu'il serait pertinent de clarifier certains points avant de le transmettre au client final.",
+    "wall_time_s": 6.945,
+    "metrics": {
+      "total_duration_s": 6.932,
+      "load_duration_s": 4.158,
+      "prompt_eval_duration_s": 1.023,
+      "eval_duration_s": 1.669,
+      "eval_count": 33,
+      "prompt_eval_count": 260
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional rewrite: removed greeting, fixed spacing errors, improved clarity and formality throughout.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_casual_13",
+    "label": "Texte sans accents ni ponctuation",
+    "mode": "casual",
+    "input": "je suis en bas depche toi sinon le train va partir sans nous",
+    "output": "Je suis en bas, dépêche-toi de moi sinon le train va partir sans nous.",
+    "wall_time_s": 6.094,
+    "metrics": {
+      "total_duration_s": 6.048,
+      "load_duration_s": 4.13,
+      "prompt_eval_duration_s": 0.919,
+      "eval_duration_s": 0.936,
+      "eval_count": 21,
+      "prompt_eval_count": 229
+    },
+    "error": null,
+    "judge": {
+      "correction": 2,
+      "tone": 3,
+      "preservation": 2,
+      "note": "Output introduces a grammatical error ('dépêche-toi de moi') that wasn't in original.",
+      "overall": 2.33
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "fr_pro_14",
+    "label": "Demande de validation pressante",
+    "mode": "pro",
+    "input": "Bonjour, on aurait besoin d'une validation aujourd'hui idealement avant 16h sinon toute la suite du planning risque de glisser.",
+    "output": "Bonjour, nous aurions besoin d'une validation aujourd'hui, idéalement avant 16h. Dans le cas contraire, l'ensemble du planning risque de subir un retard.",
+    "wall_time_s": 7.127,
+    "metrics": {
+      "total_duration_s": 7.088,
+      "load_duration_s": 3.946,
+      "prompt_eval_duration_s": 0.842,
+      "eval_duration_s": 1.957,
+      "eval_count": 39,
+      "prompt_eval_count": 253
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 5,
+      "preservation": 5,
+      "note": "Excellent professional transformation with proper grammar, formal tone, and clear meaning preservation.",
+      "overall": 5.0
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_pro_07",
+    "label": "Executive summary poorly phrased",
+    "mode": "pro",
+    "input": "In short the launch went mostly fine but we still had enough issues that i would not call it fully successful yet.",
+    "output": "En résumé, le lancement s'est déroulé principalement dans les meilleures conditions, mais nous avons rencontré suffisamment de problèmes que je ne le qualifierais pas encore de pleinement réussi.",
+    "wall_time_s": 10.702,
+    "metrics": {
+      "total_duration_s": 10.662,
+      "load_duration_s": 7.074,
+      "prompt_eval_duration_s": 0.908,
+      "eval_duration_s": 2.421,
+      "eval_count": 37,
+      "prompt_eval_count": 246
+    },
+    "error": null,
+    "judge": {
+      "correction": 5,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French; task requires English professional rewrite.",
+      "overall": 2.67
+    }
+  },
+  {
+    "model": "gemma3:4b",
+    "case_id": "en_casual_06",
+    "label": "Awkward apology to a friend",
+    "mode": "casual",
+    "input": "my bad for yesterday i was in a terrible mood and probably sounded harsher than i meant to",
+    "output": "Mais désolé pour hier, j'étais vraiment dans un mauvais jour et j'ai probablement été plus dur que prévu.",
+    "wall_time_s": 8.619,
+    "metrics": {
+      "total_duration_s": 8.599,
+      "load_duration_s": 6.326,
+      "prompt_eval_duration_s": 0.846,
+      "eval_duration_s": 1.256,
+      "eval_count": 27,
+      "prompt_eval_count": 233
+    },
+    "error": null,
+    "judge": {
+      "correction": 2,
+      "tone": 1,
+      "preservation": 2,
+      "note": "Output is in French while input is English; cannot evaluate tone match or preserve original language intent.",
+      "overall": 1.67
+    }
+  }
+]

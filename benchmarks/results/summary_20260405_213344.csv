@@ -1,0 +1,2 @@
+model,count,mean,median,p95,min,max,avg_correction,avg_tone,avg_preservation,avg_overall
+gemma3:4b,42,8.12,7.555,13.234,5.831,13.88,4.62,3.45,3.88,3.98

@@ -2,10 +2,13 @@
 """
 benchmark_models.py — Compare multiple Ollama models on TextPolish cases.
 
-Usage:
-    python benchmark_models.py --models gemma3:4b llama3.2:3b
-    python benchmark_models.py --models gemma3:4b --judge
-    python benchmark_models.py --models gemma3:4b llama3.2:3b --judge --judge-model claude-haiku-4-5
+This is the harness of Rounds 1-4 (scores from a Claude judge, 1-5). It keeps
+the simplified prompt those rounds used, so their numbers stay reproducible;
+Round 6 uses design/model_eval.py, which calls the app's own llm.polish_text.
+
+Usage (from anywhere; the judge key comes from ANTHROPIC_API_KEY):
+    python benchmarks/benchmark_models.py --models gemma4:e2b-it-qat ministral-3:3b
+    python benchmarks/benchmark_models.py --models gemma4:e2b-it-qat --judge
 """
 
 import argparse
@@ -13,11 +16,15 @@ import csv
 import json
 import os
 import statistics
+import sys
 import time
 from collections import defaultdict
 from datetime import datetime
 
 import requests
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(_HERE))  # repo root, for config.py
 
 # Defaults — overridden by config.py if available
 _OLLAMA_BASE_URL = "http://localhost:11434"
@@ -29,7 +36,7 @@ try:
 except ImportError:
     pass
 
-_PROMPTS_DIR = os.path.join(os.path.dirname(__file__), "prompts")
+_PROMPTS_DIR = os.path.join(os.path.dirname(_HERE), "prompts")
 
 _JUDGE_SYSTEM = """\
 You are an expert text-quality evaluator. You will receive a text rewriting task: \
@@ -56,6 +63,7 @@ def _load_prompt(name: str) -> str:
 
 
 def _build_prompt(text: str, mode: str) -> str:
+    # Rounds 1-4 prompt, kept as run (French header, no language rule).
     system = _load_prompt(mode)
     return f"{system}\n\nTexte à réécrire :\n{text}"
 
@@ -284,7 +292,7 @@ def _verdict(score: float) -> str:
     return "Poor"
 
 
-def _write_constat(
+def _write_verdict(
     models: list,
     by_model: dict,
     scores_by_model: dict,
@@ -369,16 +377,15 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "Examples:\n"
-            "  python benchmark_models.py --models gemma3:4b llama3.2:3b\n"
-            "  python benchmark_models.py --models gemma3:4b --judge\n"
-            "  python benchmark_models.py --models gemma3:4b --judge --judge-model claude-haiku-4-5"
+            "  python benchmarks/benchmark_models.py --models gemma4:e2b-it-qat ministral-3:3b\n"
+            "  python benchmarks/benchmark_models.py --models gemma4:e2b-it-qat --judge"
         ),
     )
     parser.add_argument("--models", nargs="+", required=True, metavar="MODEL",
                         help="Ollama model names to benchmark")
-    parser.add_argument("--cases", default="benchmarks/cases.json",
+    parser.add_argument("--cases", default=os.path.join(_HERE, "cases.json"),
                         help="Path to cases JSON (default: benchmarks/cases.json)")
-    parser.add_argument("--output-dir", default="benchmarks/results",
+    parser.add_argument("--output-dir", default=os.path.join(_HERE, "results"),
                         help="Output directory (default: benchmarks/results)")
     parser.add_argument("--ollama-url", default=_OLLAMA_BASE_URL,
                         help=f"Ollama base URL (default: {_OLLAMA_BASE_URL})")
@@ -472,17 +479,17 @@ def main() -> None:
         timestamp, args.judge_model if args.judge else None, md_path,
     )
     if args.judge and any(scores_by_model.values()):
-        constat_path = os.path.join(args.output_dir, f"constat_{timestamp}.md")
-        _write_constat(args.models, by_model, scores_by_model, timestamp, constat_path)
+        verdict_path = os.path.join(args.output_dir, f"verdict_{timestamp}.md")
+        _write_verdict(args.models, by_model, scores_by_model, timestamp, verdict_path)
     else:
-        constat_path = None
+        verdict_path = None
 
     print(f"\nResults saved to {args.output_dir}/")
     print(f"  {os.path.basename(json_path)}  — full results (JSON)")
     print(f"  {os.path.basename(csv_path)}  — timing summary (CSV)")
     print(f"  {os.path.basename(md_path)}  — human-readable review (Markdown)")
-    if constat_path:
-        print(f"  {os.path.basename(constat_path)}  — model verdict (Markdown)")
+    if verdict_path:
+        print(f"  {os.path.basename(verdict_path)}  — model verdict (Markdown)")
 
     # --- Inline timing summary ---
     print("\n--- Timing Summary (wall time, seconds) ---")

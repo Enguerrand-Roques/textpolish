@@ -1,6 +1,6 @@
 """Time the real app like a user would feel it, end to end, in TextEdit.
 
-    venv/bin/python3 design/fluidity.py [card perso ...]
+    venv/bin/python3 design/fluidity.py [card custom ...]
 
 Needs the app running with its log in design/app.log
 (venv/bin/python main.py > design/app.log 2>&1), plus Accessibility and
@@ -164,7 +164,7 @@ def scenario_switch_while_busy():
     close()
 
 
-def scenario_perso():
+def scenario_custom():
     text = "Je serai un peu en retard demain, on se retrouve vers 10h."
     since, (_, shown) = open_on(text)
     wait_ready(since)
@@ -218,9 +218,9 @@ def scenario_escape():
 if __name__ == "__main__":
     if not panel_visible() and not os.path.exists(LOG):
         sys.exit("start the app with its log in design/app.log first")
-    names = sys.argv[1:]  # optional: run only some scenarios, e.g. "card perso"
+    names = sys.argv[1:]  # optional: run only some scenarios, e.g. "card custom"
     for s in (scenario_card, scenario_clean_then_pro, scenario_switch_while_busy,
-              scenario_perso, scenario_document, scenario_no_selection, scenario_escape):
+              scenario_custom, scenario_document, scenario_no_selection, scenario_escape):
         if names and s.__name__.removeprefix("scenario_") not in names:
             continue
         try:

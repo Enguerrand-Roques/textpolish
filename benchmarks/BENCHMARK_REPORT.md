@@ -14,7 +14,7 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
 | `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Same quality as E2B, ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
-| `ministral-3:3b` | 4, 5, 6 | 10/12, 0.67 s | Correction model in Round 5; in Pro it wrote whole e-mails, in Sur mesure (then "Perso") it answered the message |
+| `ministral-3:3b` | 4, 5, 6 | 10/12 clean run (11/12 on a first, busier pass), 0.67 s | Correction model in Round 5; in Pro it wrote whole emails, in Custom (then "Perso") it answered the message |
 | `ministral-3:8b` | 4 | 4.53/5 (judge) | 12-15 s per request; added Markdown |
 | `gemma3:4b` | 1-6 | 5.00/5 Pro (Round 4) | Pro model until Round 6; 6/12 Correction, "Dear [Recipient Name]" |
 | `gemma3:4b-it-qat` | 1, 3 | 4.77/5 (judge) | Slower than `gemma3:4b` once `num_ctx` was reduced |
@@ -46,7 +46,7 @@ model was removed after testing.
 ### Methodology
 
 - **Corpus:** 10 representative cases (pro/casual, French/English, short/long, with typos)
-- **Models tested:** gemma3:1b, gemma3:1b-it-qat, gemma3:4b, gemma3:4b-it-qat, command-r7b
+- **Models tested:** gemma3:1b, gemma3:1b-it-qat, gemma3:4b, gemma3:4b-it-qat, command-r7b, qwen3:4b (timed out)
 - **Quality judge:** Claude Haiku 4.5 (Anthropic API), scoring 1–5 on three criteria
 - **Configuration:** `num_ctx: 1024`, `keep_alive: 300s`
 
@@ -307,7 +307,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 ### Next steps
 
-- Re-run the full 10-case corpus (`benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge`) now that casual has changed, to get updated aggregate scores rather than relying on a single-case spot check.
+- Re-run the full 10-case corpus (`benchmarks/benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge`) now that casual has changed, to get updated aggregate scores rather than relying on a single-case spot check.
 - Watch for further over-generation from `ministral-3:3b` in casual mode on longer/more ambiguous inputs — this round only tested a short fragment.
 
 ---
@@ -316,7 +316,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 **Goal:** Pick the best local model per mode after Ollama 0.40 (MLX engine for some architectures) and new small models, with a test set that has expected answers instead of a judge.
 
-**Method** (`design/model_eval.py`): Correction is scored against expected outputs on 12 realistic sentences (9 with mistakes, 3 already correct that must stay untouched), exact match after normalising quotes and spaces. Pro and Perso use checks: language kept or translated as asked, no Markdown or e-mail boilerplate, sensible length, plus reading every output by hand. Latency: first call (cold) and median of warm calls, Ollama 0.40.13, M2 16 GB. All requests send `"think": false`.
+**Method** (`design/model_eval.py`): Correction is scored against expected outputs on 12 realistic sentences (9 with mistakes, 3 already correct that must stay untouched), exact match after normalizing quotes and spaces. Pro and Custom use checks: language kept or translated as asked, no Markdown or email boilerplate, sensible length, plus reading every output by hand. Latency: first call (cold) and median of warm calls, Ollama 0.40.13, M2 16 GB. All requests send `"think": false`.
 
 ### Correction
 
@@ -331,13 +331,13 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 | `qwen3.5:2b-nvfp4` | MLX | 3/12 | 0.52 s | translated, introduced mistakes |
 | `lfm3:1.7b` | MLX | 2/12 | 7.2 s | printed its reasoning into the answer |
 
-### Pro and Perso
+### Pro and Custom (then "Perso")
 
-| Model | Pro | Pro warm | Perso | Perso warm | Notes |
+| Model | Pro | Pro warm | Custom | Custom warm | Notes |
 |-------|----:|---------:|------:|-----------:|-------|
 | `gemma4:e2b-nvfp4` | 5/5 | 0.88 s | 3/3 | 0.56 s | keeps "tu" with a friend |
 | `gemma4:e2b-it-qat` | 5/5 | 1.06 s | 3/3 | 1.10 s | |
-| `gemma3:4b` (previous Pro) | 5/5 | 1.65 s | 2/3 | 1.85 s | "Dear [Recipient Name]"; reversed a sentence's meaning |
+| `gemma3:4b` (previous Pro) | 5/5 | 1.65 s | 2/3 | 1.85 s | "Dear [Recipient Name]"; missed "make it shorter"; on a rerun reversed who thanked whom |
 | `qwen3.5:4b-nvfp4` | 5/5 | 2.04 s | 3/3 | 1.75 s | grammar slips ("Le réunion") |
 | `ministral-3:3b` | 3/5 | 1.98 s | 3/3* | 1.15 s | *answered a message instead of rewriting it |
 
@@ -356,11 +356,11 @@ Measured with `polish_text()` after `ollama stop` (cold) and on the next three c
 |------|------------:|-----------:|------------:|
 | Correction | 4.96 s | 3.68–6.28 s | 0.56 s |
 | Pro | 3.43 s | 2.97–3.99 s | 0.51 s |
-| Sur mesure (custom) | 3.08 s | 3.00–3.79 s | 0.56 s |
+| Custom | 3.08 s | 3.00–3.79 s | 0.56 s |
 
 The model file stayed in macOS's file cache between runs. Cold loads with an empty cache (first request after a reboot, or after heavy memory use) were 9.4 s and 15.4 s in this round. With `OLLAMA_KEEP_ALIVE = 300` a cold load happens again after 5 minutes idle. The warm numbers in the tables above are higher (0.9–1.1 s) because the test set has longer sentences.
 
-The Perso mode was renamed **Sur mesure** in the app after this round; the tables keep the name used at the time.
+The Custom mode was called "Perso" during this round; it is now **Custom** in English and **Sur mesure** in French.
 
 ### English test set
 
@@ -371,7 +371,7 @@ subject-verb agreement, spelling, plus 3 correct sentences that must stay untouc
 | Mode | French set | English set | Warm median (EN) |
 |------|-----------:|------------:|-----------------:|
 | Correction | 11/12 | **12/12** (two identical runs) | 0.84 s |
-| Pro | 5/5 | 5/5 after a prompt fix (4/5 before: "Dear [Recipient Name]") | 0.94 s |
+| Pro | 5/5 | 5/5 (the first run also scored 5/5 but invented "Dear [Recipient Name]"; prompt fixed, and the eval now flags placeholders) | 0.94 s |
 | Custom / Sur mesure | 3/3 | 3/3 | 0.93 s |
 
 The UI was renamed again for the English interface: Sur mesure is **Custom** in English.
@@ -382,8 +382,8 @@ The UI was renamed again for the English interface: Sur mesure is **Custom** in 
 |---------|--------|-------|
 | Correction | `ministral-3:3b` | `gemma4:e2b-it-qat` |
 | Pro | `gemma3:4b` | `gemma4:e2b-it-qat` |
-| Perso | `ministral-3:3b` | `gemma4:e2b-it-qat` |
-| `OLLAMA_KEEP_ALIVE` | 100 s | 300 s |
-| Temperature | model default (1) | 0 Correction, 0.4 Pro/Perso |
+| Custom (then "Perso") | `ministral-3:3b` | `gemma4:e2b-it-qat` |
+| `OLLAMA_KEEP_ALIVE` | 300 s | 300 s (kept; cold vs warm measured above) |
+| Temperature | model default (1) | 0 Correction, 0.4 Pro/Custom |
 
-`gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Only `gemma4:e2b-it-qat` is kept installed; the other test models, including the `ministral-3:3b` fallback, were removed (Ollama models now take 4.0 GB). Raw outputs: `benchmarks/results/round6_20261102.md`.
+`gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Only `gemma4:e2b-it-qat` is kept installed; the other test models, including the `ministral-3:3b` fallback, were removed (Ollama models now take 4.3 GB). Raw outputs: `benchmarks/results/round6_20261102.md`.

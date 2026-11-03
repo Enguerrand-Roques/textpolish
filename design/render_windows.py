@@ -11,8 +11,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 cfg = types.ModuleType("config")
 cfg.OLLAMA_BASE_URL = "http://localhost:11434"
-cfg.OLLAMA_MODEL = cfg.OLLAMA_MODEL_CASUAL = "ministral-3:3b"
-cfg.OLLAMA_MODEL_PRO = "gemma3:4b"
+cfg.OLLAMA_MODEL = cfg.OLLAMA_MODEL_CASUAL = cfg.OLLAMA_MODEL_PRO = "gemma4:e2b-it-qat"
 cfg.OLLAMA_TIMEOUT = 60
 cfg.OLLAMA_KEEP_ALIVE = 300
 sys.modules["config"] = cfg

@@ -1,4 +1,4 @@
-"""Build design/fixtures.json from real model outputs, so the design
+"""Build design/fixtures-en.json and fixtures-fr.json from real model outputs, so the design
 preview shows what the app would actually display. Needs Ollama running.
 
     venv/bin/python3 design/make_fixtures.py [en|fr]   (default en → fixtures-en.json)

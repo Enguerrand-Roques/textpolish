@@ -1,0 +1,5 @@
+model,count,mean,median,p95,min,max,avg_correction,avg_tone,avg_preservation,avg_overall
+gemma3:1b-it-qat,10,2.087,1.769,3.799,1.178,3.799,4.3,4.7,4.6,4.53
+gemma3:4b-it-qat,10,6.632,5.79,10.349,4.423,10.349,4.6,4.8,4.9,4.77
+gemma3:1b,10,2.05,1.959,3.402,1.288,3.402,4,4.9,4.5,4.47
+gemma3:4b,10,5.572,4.94,10.413,3.636,10.413,4.1,4.9,5,4.67
