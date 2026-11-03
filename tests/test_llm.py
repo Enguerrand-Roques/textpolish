@@ -35,6 +35,13 @@ class TestDetectLanguage:
         # One stop word match should not trigger French detection
         assert _detect_language("de") == "en"
 
+    def test_words_shared_with_english_do_not_make_it_french(self):
+        # "on" and "as" are French stop words too
+        assert _detect_language("I will be there on time as usual.") == "en"
+
+    def test_unaccented_french_with_shared_words(self):
+        assert _detect_language("tu as fini le rapport ou pas") == "fr"
+
 
 # ---------------------------------------------------------------------------
 # _load_prompt
@@ -216,6 +223,13 @@ class TestPolishTextHardening:
             with pytest.raises(RuntimeError, match="incomplete"):
                 polish_text("Hello", mode="casual", on_token=lambda t: None)
 
+    def test_streaming_connection_drop_raises_readable_message(self):
+        resp = self._stream([])
+        resp.iter_lines.side_effect = requests.exceptions.ChunkedEncodingError("reset")
+        with patch("llm.requests.post", return_value=resp):
+            with pytest.raises(RuntimeError, match="Lost the connection"):
+                polish_text("Hello", mode="casual", on_token=lambda t: None)
+
     def test_streaming_error_payload_raises(self):
         resp = self._stream([{"error": "model crashed"}])
         with patch("llm.requests.post", return_value=resp):
@@ -227,6 +241,38 @@ class TestPolishTextHardening:
         with patch("llm.requests.post", return_value=resp):
             with pytest.raises(RuntimeError, match="unreadable"):
                 polish_text("Hello", mode="casual", on_token=lambda t: None)
+
+
+class TestPayload:
+    """What the app sends to Ollama: the settings the benchmarks depend on."""
+
+    def _call(self, text="Hello", **kwargs):
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"response": "ok"}
+        with patch("llm.requests.post", return_value=mock_resp) as mock_post:
+            polish_text(text, **kwargs)
+        return mock_post.call_args.kwargs["json"]
+
+    def test_thinking_is_off(self):
+        # Gemma 4 thinks by default: a 1 s correction took tens of seconds.
+        assert self._call(mode="casual")["think"] is False
+
+    def test_each_mode_uses_its_configured_model(self):
+        assert self._call(mode="casual")["model"] == "test-model-casual"
+        assert self._call(mode="pro")["model"] == "test-model-pro"
+        assert self._call(mode="custom", custom_prompt="shorter")["model"] == "test-model-custom"
+
+    def test_custom_instruction_is_in_the_prompt(self):
+        prompt = self._call(mode="custom", custom_prompt="make it a haiku")["prompt"]
+        assert "make it a haiku" in prompt
+        assert prompt.endswith("Hello")
+
+    def test_switching_model_unloads_the_previous_one(self):
+        with patch("llm._unload_model") as unload:
+            self._call(mode="casual")
+            unload.assert_not_called()
+            self._call(mode="pro")
+            unload.assert_called_once_with("test-model-casual")
 
 
 class TestOutputCleanup:

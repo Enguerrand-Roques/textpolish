@@ -14,9 +14,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 _config = types.ModuleType("config")
 _config.OLLAMA_BASE_URL = "http://localhost:11434"
-_config.OLLAMA_MODEL = "gemma3:1b"
-_config.OLLAMA_MODEL_PRO = "gemma3:4b"
-_config.OLLAMA_MODEL_CASUAL = "gemma3:1b"
+# Distinct names per mode so tests can check which model each mode picks
+# (the real config uses gemma4:e2b-it-qat for all three).
+_config.OLLAMA_MODEL = "test-model-custom"
+_config.OLLAMA_MODEL_PRO = "test-model-pro"
+_config.OLLAMA_MODEL_CASUAL = "test-model-casual"
 _config.OLLAMA_TIMEOUT = 60
 _config.OLLAMA_KEEP_ALIVE = 300
 
@@ -59,3 +61,15 @@ _pynput.keyboard = _pynput_keyboard
 
 sys.modules.setdefault("pynput", _pynput)
 sys.modules.setdefault("pynput.keyboard", _pynput_keyboard)
+
+
+import pytest  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _no_background_unload(monkeypatch):
+    """Switching modes unloads the previous model in a background thread;
+    keep that thread from starting (and from calling a real Ollama) in tests."""
+    import llm
+    monkeypatch.setattr(llm, "_unload_model", lambda model: None)
+    monkeypatch.setattr(llm, "_active_model", None)

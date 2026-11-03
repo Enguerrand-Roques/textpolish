@@ -6,6 +6,8 @@ import os
 import re
 import json
 import logging
+import threading
+from collections.abc import Callable
 import requests
 from config import (
     OLLAMA_BASE_URL,
@@ -34,16 +36,19 @@ _active_model: str | None = None
 
 
 def _unload_model(model: str) -> None:
-    """Ask Ollama to evict *model* from RAM (best-effort, non-blocking)."""
-    try:
-        requests.post(
-            f"{OLLAMA_BASE_URL}/api/generate",
-            json={"model": model, "keep_alive": 0},
-            timeout=5,
-        )
-        logging.debug("Unloaded model from RAM: %s", model)
-    except Exception:
-        pass
+    """Ask Ollama to evict *model* from RAM, in the background (best-effort)."""
+    def unload():
+        try:
+            requests.post(
+                f"{OLLAMA_BASE_URL}/api/generate",
+                json={"model": model, "keep_alive": 0},
+                timeout=5,
+            )
+            logging.debug("Unloaded model from RAM: %s", model)
+        except requests.RequestException as e:
+            logging.debug("Could not unload %s: %s", model, e)
+
+    threading.Thread(target=unload, daemon=True).start()
 
 
 def _load_prompt(name: str) -> str:
@@ -62,6 +67,16 @@ _FRENCH_STOP_WORDS = {
     "très", "tres", "bien", "plus", "tout", "rien", "hier", "demain", "soir",
     "merci", "bonjour", "salut", "slt", "oui", "non", "quoi", "peux", "veux",
 }
+# Common English words. Some French stop words ("on", "as", "son"…) are also
+# English, so French must outnumber English instead of just being present.
+_ENGLISH_STOP_WORDS = {
+    "the", "a", "an", "and", "or", "but", "of", "to", "in", "on", "at", "for",
+    "with", "from", "by", "as", "is", "are", "was", "were", "be", "been",
+    "i", "you", "he", "she", "it", "we", "they", "me", "my", "your", "our",
+    "this", "that", "there", "here", "will", "would", "can", "could", "have",
+    "has", "had", "do", "does", "did", "not", "no", "yes", "if", "so", "what",
+    "when", "time", "today", "tomorrow", "thanks", "hello", "hi", "please",
+}
 # Split on apostrophes too, so "j'ai" counts as "j" + "ai".
 _WORD_RE = re.compile(r"[\w]+", re.UNICODE)
 
@@ -71,12 +86,14 @@ def _detect_language(text: str) -> str:
 
     Uses two signals in order of priority:
     1. French-specific accented characters (é, è, ç, œ…) — very reliable.
-    2. French stop words — catches unaccented French text.
+    2. French stop words, when at least two appear and they outnumber English
+       ones — catches unaccented French without flagging "on time as usual".
     """
     if any(c in _FRENCH_CHARS for c in text.lower()):
         return "fr"
     words = set(_WORD_RE.findall(text.lower()))
-    if len(words & _FRENCH_STOP_WORDS) >= 2:
+    french = len(words & _FRENCH_STOP_WORDS)
+    if french >= 2 and french > len(words & _ENGLISH_STOP_WORDS):
         return "fr"
     return "en"
 
@@ -92,14 +109,14 @@ def polish_text(
     text: str,
     mode: str = "pro",
     custom_prompt: str | None = None,
-    on_token=None,
+    on_token: Callable[[str], None] | None = None,
 ) -> str:
     """
     Send *text* to a local Ollama model and return the corrected version.
 
     Args:
         text:          The raw text to polish.
-        mode:          "pro" | "casual" — selects the matching prompt file.
+        mode:          "casual" | "pro" | "custom" — selects the prompt and temperature.
         custom_prompt: If provided, applied through the custom prompt template.
         on_token:      Optional callback(token: str) called for each streamed
                        token. When provided, streaming mode is used and tokens
@@ -136,8 +153,8 @@ def polish_text(
         _unload_model(_active_model)
     _active_model = model
 
-    # Small models (gemma3:1b) ignore the "same language" rule in the system
-    # prompt when the task is cognitively demanding (e.g. pro rewriting).
+    # Small models ignore the "same language" rule in the system prompt when
+    # the task is demanding (e.g. Pro rewriting turned French into English).
     # We detect the input language and prepend an explicit override so the
     # model cannot miss it — this was validated in benchmark Round 2.
     lang = _detect_language(text)
@@ -211,22 +228,26 @@ def polish_text(
     if is_streaming:
         parts: list[str] = []
         truncated = False
-        for raw_line in response.iter_lines():
-            if not raw_line:
-                continue
-            try:
-                chunk = json.loads(raw_line)
-            except json.JSONDecodeError:
-                raise RuntimeError("Ollama sent an unreadable response. Try again.")
-            if chunk.get("error"):
-                raise RuntimeError(f"Ollama error: {chunk['error']}")
-            token = chunk.get("response", "")
-            if token:
-                on_token(token)
-                parts.append(token)
-            if chunk.get("done"):
-                truncated = chunk.get("done_reason") == "length"
-                break
+        try:
+            with response:
+                for raw_line in response.iter_lines():
+                    if not raw_line:
+                        continue
+                    try:
+                        chunk = json.loads(raw_line)
+                    except json.JSONDecodeError:
+                        raise RuntimeError("Ollama sent an unreadable response. Try again.")
+                    if chunk.get("error"):
+                        raise RuntimeError(f"Ollama error: {chunk['error']}")
+                    token = chunk.get("response", "")
+                    if token:
+                        on_token(token)
+                        parts.append(token)
+                    if chunk.get("done"):
+                        truncated = chunk.get("done_reason") == "length"
+                        break
+        except requests.RequestException:
+            raise RuntimeError("Lost the connection to Ollama while it was answering. Try again.")
         result = "".join(parts).strip()
     else:
         data = response.json()
