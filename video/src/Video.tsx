@@ -31,11 +31,12 @@ type Scene = {
   badge?: string; // shown when rate != 1
   from: number; // source seconds
   to: number;
-  rate?: number; // playback speed, only for typing
+  rate?: number; // playback speed: typing, or a long wait (with a badge)
   color: string;
   cams: Cam[];
   captions: Caption[];
   waits?: { start: number; end: number }[]; // model at work: show a stopwatch
+  join?: "prev" | "next" | "both"; // cut straight to/from the neighbour scene, no fade
 };
 
 type Clip = {
@@ -114,16 +115,25 @@ const SCENES: Scene[] = [
       { at: 4.2, text: "English or Français, remembered next time." },
     ],
   },
+  // The wait is cut in two: real speed while the shortcut is pressed, then 8×
+  // while the model works. The stopwatch keeps the real time.
   {
-    clip: "langWin", from: 6.4, to: 18.4, rate: 3, badge: "Waiting sped up 3×", color: BLUE,
+    clip: "langWin", from: 6.4, to: 8.6, color: BLUE, join: "next",
     cams: [{ at: 6.4, ...PANEL, fy: 1080 }],
     captions: [{ at: 6.4, text: "A French message. This Mac was short on memory here." }],
     waits: [{ start: 7.53, end: 18.46 }],
   },
   {
-    clip: "langWin", from: 18.4, to: 22.9, color: BLUE,
+    clip: "langWin", from: 8.6, to: 18.4, rate: 8, badge: "Waiting sped up 8×", color: BLUE, join: "both",
+    cams: [{ at: 8.6, ...PANEL, fy: 1080 }],
+    captions: [{ at: 6.4, text: "A French message. This Mac was short on memory here." }], // already shown
+    waits: [{ start: 7.53, end: 18.46 }],
+  },
+  {
+    clip: "langWin", from: 18.4, to: 22.9, color: BLUE, join: "prev",
     cams: [{ at: 18.4, ...PANEL, fy: 1080 }],
     captions: [{ at: 18.4, text: "Same app in French: 13 fixes, each labelled." }],
+    waits: [{ start: 7.53, end: 18.46 }],
   },
 ];
 
@@ -166,8 +176,10 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
   const c = CLIPS[scene.clip];
   const cam = camAt(scene.cams, t);
   const s = c.base * cam.z;
-  const fade = interpolate(frame, [0, 12, dur - 12, dur], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const enter = interpolate(frame, [0, 18], [0.96, 1], { extrapolateRight: "clamp", easing: ease });
+  const joinPrev = scene.join === "prev" || scene.join === "both";
+  const joinNext = scene.join === "next" || scene.join === "both";
+  const fade = interpolate(frame, [0, 12, dur - 12, dur], [joinPrev ? 1 : 0, 1, 1, joinNext ? 1 : 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const enter = joinPrev ? 1 : interpolate(frame, [0, 18], [0.96, 1], { extrapolateRight: "clamp", easing: ease });
 
   const caption = [...scene.captions].reverse().find((x) => t >= x.at);
   const captionAge = caption ? (t - caption.at) * FPS : 0;
@@ -178,7 +190,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
 
   return (
     <AbsoluteFill style={{ opacity: fade }}>
-      <Backdrop color={scene.color} drift={frame / dur} />
+      <Backdrop color={scene.color} drift={(t / 40) % 1} /* source time: continuous across joined scenes */ />
       <div
         style={{
           position: "absolute", left: 0, top: 0, width: c.cropW, height: c.cropH,
