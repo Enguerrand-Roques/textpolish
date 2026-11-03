@@ -81,7 +81,7 @@
   .kinds i { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; transform: translateY(-1px); }
 
   .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
-  .stats div { background: var(--sheet); padding: 18px 20px; border-radius: 12px; border: 1px solid var(--rule); }
+  .stats > div { background: var(--sheet); padding: 18px 20px; border-radius: 12px; border: 1px solid var(--rule); }
   .stat { font: 700 2rem/1 var(--display); color: var(--blue); font-variant-numeric: tabular-nums; }
   .stats p { font-size: 0.92rem; color: var(--muted); margin: 8px 0 0; }
 
@@ -150,7 +150,7 @@
         <li><i style="background:var(--red)"></i><span><b>Spelling, accent, capitals</b> — tomorow → tomorrow, reunion → réunion, friday → Friday</span></li>
         <li><i style="background:var(--teal)"></i><span><b>Grammar &amp; homophones</b> — their → there, its → it's, ces → c'est</span></li>
         <li><i style="background:var(--teal)"></i><span><b>Agreement</b> — a few bug → a few bugs, deux jour → deux jours</span></li>
-        <li><i style="background:var(--teal)"></i><span><b>Verb forms</b> — we finish → we finished, finit → fini</span></li>
+        <li><i style="background:var(--teal)"></i><span><b>Conjugation</b> — we finish → we finished, finit → fini</span></li>
         <li><i style="background:var(--orange)"></i><span><b>Punctuation</b> — dont → don't, Est ce → Est-ce</span></li>
       </ul>
     </div>
@@ -182,11 +182,11 @@
 </section>
 
 <section class="col">
-  <h2>Trade-offs we chose</h2>
+  <h2>Trade-offs</h2>
   <div class="trade">
-    <div><h3>One model for every mode</h3><p>Two specialised models meant a ~5 s reload at each mode switch on 16 GB. Gemma 4 E2B is good enough at all three, so switching adds no wait.</p></div>
-    <div><h3>Free the memory after 5 minutes</h3><p>Keeping the model loaded holds 4.3 GB. TextPolish frees it after 5 minutes idle, so the next request waits 3–6 s. <code>OLLAMA_KEEP_ALIVE</code> moves the cursor.</p></div>
-    <div><h3>Lighter build over the fastest one</h3><p>The MLX build answers in 0.34 s instead of 0.88 s but needs ~7.4 GB and pushed this Mac into swap. It is the better pick with 24 GB or more.</p></div>
+    <div><h3>One model for every mode</h3><p>Two specialized models meant a ~5 s reload at each mode switch on 16 GB. Gemma 4 E2B is good enough at all three, so switching adds no wait.</p></div>
+    <div><h3>Free the memory after 5 minutes</h3><p>Keeping the model loaded holds 4.3 GB. TextPolish frees it after 5 minutes idle, so the next request waits 3–6 s. <code>OLLAMA_KEEP_ALIVE</code> changes the delay.</p></div>
+    <div><h3>Lighter build over the fastest one</h3><p>The MLX build answers in 0.34 s instead of about 0.9 s but needs ~7.4 GB and pushed this Mac into swap. It is the better pick with 24 GB or more.</p></div>
     <div><h3>Local over cloud</h3><p>Once loaded, the local model is about as fast as Gemini Flash-Lite (~0.5 s), and works offline with nothing leaving the Mac. The cost is the first-load wait and the RAM. <a href="https://github.com/Enguerrand-Roques/textpolish-cloud">TextPolish Cloud</a> makes the opposite choice.</p></div>
     <div><h3>A shortcut, not live underlining</h3><p>macOS's accessibility API doesn't give the caret position without a selection, and many apps (Slack, VS Code) don't expose their text well. A shortcut works everywhere.</p></div>
   </div>

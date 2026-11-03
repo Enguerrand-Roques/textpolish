@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!--artifact-start-->
 <title>TextPolish UX</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="How I designed and tested TextPolish, a Mac menu bar tool that fixes selected text with a local AI model: benchmark of 17 models, trade-offs, iterations and real-app tests.">
+<meta property="og:title" content="TextPolish — UX case study">
+<meta property="og:description" content="Benchmark of 17 local models, seven decisions with their cost, and nine iterations of a Mac proofreading window.">
+<meta property="og:image" content="https://enguerrand-roques.github.io/textpolish/screenshots/video-poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -19,6 +21,10 @@
     --rule:    #dde2ea;
     --blue:    #0a64d6;
     --red:     #d23a2f;
+    --indigo:  #4b49c8;
+    --purple:  #9b3fd1;
+    --teal:    #0a8aa3;
+    --orange:  #c46a00;
     --tint:    #e6eefb;
     --display: "Bricolage Grotesque", "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
     --body:    "Source Serif 4", "New York", Georgia, serif;
@@ -28,11 +34,13 @@
     :root:not([data-theme="light"]) {
       --paper: #101318; --sheet: #181c23; --ink: #e9edf3; --muted: #9aa4b4;
       --rule: #2a313c; --blue: #5aa2ff; --red: #ff7a6e; --tint: #182538; color-scheme: dark;
+      --indigo: #8e8cff; --purple: #d38bff; --teal: #40c8e0; --orange: #ffad4a;
     }
   }
   :root[data-theme="dark"] {
     --paper: #101318; --sheet: #181c23; --ink: #e9edf3; --muted: #9aa4b4;
     --rule: #2a313c; --blue: #5aa2ff; --red: #ff7a6e; --tint: #182538; color-scheme: dark;
+    --indigo: #8e8cff; --purple: #d38bff; --teal: #40c8e0; --orange: #ffad4a;
   }
 
   body {
@@ -122,7 +130,7 @@
   .kinds i { width: 9px; height: 9px; border-radius: 50%; }
   .stat { font: 700 2rem/1 var(--display); color: var(--blue); font-variant-numeric: tabular-nums; }
   .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 18px; margin: 22px 0 18px; }
-  .stats div { background: var(--sheet); padding: 16px 18px; }
+  .stats > div { background: var(--sheet); padding: 16px 18px; }
   .stats p { font-size: 0.9rem; color: var(--muted); margin: 6px 0 0; }
 
   /* Benchmark chart */
@@ -142,7 +150,7 @@
   .tip.on { opacity: 1; }
 
   /* Decision log */
-  .decisions { display: grid; gap: 18px; margin-top: 22px; }
+  .decisions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 22px; }
   .decision { background: var(--sheet); border-radius: 12px; padding: 18px 20px; }
   .decision h3 { margin-bottom: 10px; }
   .decision table { min-width: 0; font-size: 0.9rem; }
@@ -159,7 +167,6 @@
     @keyframes write { from { opacity: 0; transform: translateY(0.25em); } to { opacity: 1; transform: none; } }
   }
 </style>
-<!--artifact-head-end-->
 </head>
 <body>
 
@@ -172,11 +179,11 @@
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
       <span class="label">macOS first · Windows experimental</span>
-      <span class="label">123 tests</span>
+      <span class="label">127 tests</span>
     </div>
   </div>
   <figure>
-    <img class="shot" src="demo.gif" alt="Demo in TextEdit: an English message with 11 mistakes is corrected with each fix labelled, rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back.">
+    <video class="shot" src="demo-loop.mp4" autoplay muted loop playsinline width="960" height="540" aria-label="Demo in TextEdit: an English message with 11 mistakes is corrected with each fix labelled, rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back."></video>
     <figcaption>The real app in TextEdit: an 11-mistake message corrected, then Pro (<kbd>⌘2</kbd>), then Custom “translate into French”. Only the typing is sped up; the stopwatch shows the real model time.</figcaption>
   </figure>
 </header>
@@ -211,17 +218,17 @@
     <figure>
       <div class="swatch"><i style="background:#0a84ff"></i>Correction · <kbd>⌘1</kbd></div>
       <p>Fixes mistakes without changing how you write. Keeps slang, nicknames, and English words in French text like “deadline”.</p>
-      <img class="shot" src="screenshots/popup-card-dark.png" alt="Correction mode, blue card: Their → They're.">
+      <img class="shot" loading="lazy" src="screenshots/popup-card-dark.png" alt="Correction mode, blue card: Their → They're.">
     </figure>
     <figure>
-      <div class="swatch"><i style="background:#5e5ce6"></i>Pro · <kbd>⌘2</kbd></div>
+      <div class="swatch"><i style="background:var(--indigo)"></i>Pro · <kbd>⌘2</kbd></div>
       <p>Rewrites the text in a professional tone. One suggestion, to compare with the original before replacing.</p>
-      <img class="shot" src="screenshots/popup-pro-dark.png" alt="Pro mode: a short message rewritten professionally, indigo color.">
+      <img class="shot" loading="lazy" src="screenshots/popup-pro-dark.png" alt="Pro mode: a short message rewritten professionally, indigo color.">
     </figure>
     <figure>
-      <div class="swatch"><i style="background:#bf5af2"></i>Custom · <kbd>⌘3</kbd></div>
+      <div class="swatch"><i style="background:var(--purple)"></i>Custom · <kbd>⌘3</kbd></div>
       <p>Does what I ask: translate, shorten, make it warmer or funnier. Four ideas one click away, or my own request.</p>
-      <img class="shot" src="screenshots/popup-custom-dark.png" alt="Custom mode: the request “translate into French” and the translated message, purple color.">
+      <img class="shot" loading="lazy" src="screenshots/popup-custom-dark.png" alt="Custom mode: the request “translate into French” and the translated message, purple color.">
     </figure>
   </div>
 </div>
@@ -229,28 +236,28 @@
   <h3>And the colors of the fixes</h3>
   <p style="font-size:0.98rem">Inside a mode, the color tells the kind of fix, so you see at a glance what is a real mistake and what is a style choice.</p>
   <div class="kinds">
-    <span><i style="background:#ff453a"></i>Red: spelling, accents, capitals</span>
-    <span><i style="background:#40c8e0"></i>Teal: grammar, agreement, verb forms</span>
-    <span><i style="background:#ff9f0a"></i>Orange: punctuation</span>
+    <span><i style="background:var(--red)"></i>Red: spelling, accents, capitals</span>
+    <span><i style="background:var(--teal)"></i>Teal: grammar, agreement, conjugation</span>
+    <span><i style="background:var(--orange)"></i>Orange: punctuation</span>
     <span><i style="background:#0a84ff"></i>Blue: rewording</span>
   </div>
 </section>
 
 <section class="col">
   <h2>A window that adapts to the text</h2>
-  <p>A short sentence and a paragraph aren't proofread the same way. Once the model answers, the tool splits the difference into fixes, labels each one, and picks the view.</p>
+  <p>A short sentence and a paragraph aren't proofread the same way. Once the model answers, the tool compares its answer with the original, splits the changes into separate fixes, labels each one, and picks the view.</p>
 </section>
 <div class="wide">
   <div class="twoshots">
-    <figure><img class="shot" src="screenshots/popup-document-dark.png" alt="Document view: an English message with 11 highlighted fixes and the legend Grammar 5, Agreement 2, Conjugation 1, Spelling 1, Punctuation 1, Capitalization 1."><figcaption>Long text: the whole message, each fix highlighted with its kind. Click one to undo it.</figcaption></figure>
-    <figure><img class="shot" src="screenshots/popup-clean-dark.png" alt="No mistakes: a green check and two buttons, Pro version and Custom."><figcaption>No mistakes: the window stays open and offers the next step, a Pro version or a request.</figcaption></figure>
+    <figure><img class="shot" loading="lazy" src="screenshots/popup-document-dark.png" alt="Document view: an English message with 11 highlighted fixes and the legend Grammar 5, Agreement 2, Conjugation 1, Spelling 1, Punctuation 1, Capitalization 1."><figcaption>Long text: the whole message, each fix highlighted with its kind. Click one to undo it.</figcaption></figure>
+    <figure><img class="shot" loading="lazy" src="screenshots/popup-clean-dark.png" alt="No mistakes: a green check and two buttons, Pro version and Custom."><figcaption>No mistakes: the window stays open and offers the next step, a Pro version or a request.</figcaption></figure>
   </div>
 </div>
 
 <section class="col">
   <h2>English and French</h2>
   <p>I write in both, so the tool had to handle both. The model follows the language of the text, and Custom can translate between them. The interface is in English or French too: one click in the menu bar, and the choice is remembered.</p>
-  <figure style="margin:22px 0 0"><img class="shot" src="screenshots/menu-language.png" alt="The TextPolish menu with the Language submenu open: English is checked, the cursor is on Français."></figure>
+  <figure style="margin:22px 0 0"><img class="shot" loading="lazy" src="screenshots/menu-language.png" alt="The TextPolish menu with the Language submenu open: English is checked, the cursor is on Français."></figure>
   <p style="margin-top:18px">Supporting a second language is also a testing question. I ran the same evaluation on an English set (their/they're, its/it's, then/than, subject-verb agreement…) as on the French one. It scored 12/12, and it caught a problem the French set had missed (see below).</p>
 </section>
 
@@ -258,7 +265,7 @@
   <h2>The numbers</h2>
   <p>Measured on my MacBook Air M2, 16 GB, model running locally with Ollama.</p>
   <div class="stats">
-    <div><div class="stat">0.5–1 s</div><p>to fix or rewrite a sentence, model already loaded</p></div>
+    <div><div class="stat">0.5–1.1 s</div><p>to fix or rewrite a sentence, model already loaded</p></div>
     <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
     <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s</p></div>
     <div><div class="stat">0</div><p>bytes sent over the Internet</p></div>
@@ -273,16 +280,16 @@
   <div class="iter"><div class="v">v3</div><div><p>Smaller window, correction starts as soon as it opens.</p><p class="why">The “casual” mode rewrote my sentences instead of correcting them. That was the model, not the interface.</p></div></div>
   <div class="iter"><div class="v">v4</div><div><p>One card per mistake, native macOS blur, a height that follows the content, and a different view for long texts.</p><p class="why">When a text had no mistakes, the window closed on its own. No way to ask for a Pro version.</p></div></div>
   <div class="iter"><div class="v">v5</div><div><p>“No mistakes” offers the next step, each mode explains what it does, and the third mode has ready-made ideas.</p><p class="why">Switching modes still took 5 seconds.</p></div></div>
-  <div class="iter"><div class="v">v6</div><div><p>One model for all three modes: switching takes under a second.</p><p class="why">Reading it again, nobody understood that “Perso” meant “custom”: it read like a casual, personal tone.</p></div></div>
+  <div class="iter"><div class="v">v6</div><div><p>One model for all three modes: switching takes under a second.</p><p class="why">Reading the French interface again, I saw that “Perso” read like a casual, personal tone, not “custom”.</p></div></div>
   <div class="iter"><div class="v">v7</div><div><p>“Perso” became “Sur mesure” (Custom in English), the hint says “Say what you want”, and the field icon no longer looks like a spinner.</p><p class="why">Every grammar mistake carried the same “Spelling” label.</p></div></div>
-  <div class="iter"><div class="v">v8</div><div><p>Each fix says what it is: verb form, agreement, homophone (their/there, a/à), spelling, punctuation. On a long message, the legend counts them.</p><p class="why">The project was in English but the interface only in French.</p></div></div>
+  <div class="iter"><div class="v">v8</div><div><p>Each fix says what it is: conjugation, agreement, homophone (their/there, a/à), spelling, punctuation. On a long message, the legend counts them.</p><p class="why">The project was in English but the interface only in French.</p></div></div>
   <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">Current version.</p></div></div>
 </section>
 
 
 <section class="col">
   <h2>Choosing the model</h2>
-  <p>17 models in six rounds, April to November. The last round stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6).</p>
+  <p>17 models in six rounds, April to November. The last round stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6). Ollama can run a model two ways: <b>GGUF</b> files through llama.cpp (compressed, lighter) or Apple's <b>MLX</b> engine (faster, heavier in memory).</p>
   <div class="chart" id="bench">
     <div class="legend" aria-hidden="true">
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--blue)"/></svg>chosen</span>
@@ -291,19 +298,19 @@
     </div>
     <svg viewBox="0 0 620 340" role="img" aria-labelledby="benchTitle benchDesc">
       <title id="benchTitle">Correct fixes out of 12 against time per sentence</title>
-      <desc id="benchDesc">Gemma 4 E2B GGUF, chosen: 11 of 12 at 0.88 s. Gemma 4 E2B MLX: 10 at 0.34 s. Ministral 3 3B: 10 at 0.67 s. Qwen 3.5 4B MLX: 10 at 0.95 s. Gemma 3 4B: 6 at 1.43 s. Qwen 3.5 2B: 5 at 0.78 s. Qwen 3.5 2B MLX: 3 at 0.52 s. LFM3 1.7B MLX: 2 at 7.2 s, off the chart.</desc>
+      <desc id="benchDesc">Gemma 4 E2B GGUF, chosen: 11 of 12 at about 0.9 s. Gemma 4 E2B MLX: 10 at 0.34 s. Ministral 3 3B: 10 at 0.67 s. Qwen 3.5 4B MLX: 10 at 0.95 s. Gemma 3 4B: 6 at 1.43 s. Qwen 3.5 2B: 5 at 0.78 s. Qwen 3.5 2B MLX: 3 at 0.52 s. LFM3 1.7B MLX: 2 at 7.2 s, off the chart.</desc>
       <g id="plot"></g>
     </svg>
     <div class="tip" id="tip"></div>
   </div>
-  <p style="margin-top:14px;font-size:0.95rem;color:var(--muted)">Top left is best. Four models reach 10/12; the decision between them was not quality but memory and behaviour in the other modes (next section). Gemma 4 E2B scored 10/12 before its temperature was fixed, 11/12 after; on the English set it scores 12/12.</p>
+  <p style="margin-top:14px;font-size:0.95rem;color:var(--muted)">Top left is best. Four models reach 10/12; the decision between them was not quality but memory and behavior in the other modes (next section). Gemma 4 E2B scored 10/12 before its temperature was fixed, 11/12 after; on the English set it scores 12/12.</p>
   <h3 style="margin-top:34px">What the tests revealed</h3>
   <div class="table-wrap">
     <table>
       <thead><tr><th>What I saw</th><th>What I changed</th></tr></thead>
       <tbody>
         <tr><td><code>gemma3:1b</code> never noticed that <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> was wrong.</td><td>Correction moved to <code>ministral-3:3b</code>, a bit slower but reliable.</td></tr>
-        <tr><td>In Pro, <code>ministral-3:3b</code> invented a whole e-mail from two sentences.</td><td>Pro kept <code>gemma3:4b</code>.</td></tr>
+        <tr><td>In Pro, <code>ministral-3:3b</code> invented a whole email from two sentences.</td><td>Pro kept <code>gemma3:4b</code>.</td></tr>
         <tr><td>The correction model put words in bold and translated “deadline” into French.</td><td>Bold is stripped, and the prompt keeps English words in French text.</td></tr>
         <tr><td>It replaced <code>'</code> with <code>’</code> and added non-breaking spaces.</td><td>Those details no longer count as fixes.</td></tr>
         <tr><td><code>gemma4:e2b</code> corrected as well (10/12), rewrote better, and answered in about 1 s once loaded.</td><td>One model for all three modes: no more reloads.</td></tr>
@@ -323,7 +330,7 @@
           <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 FR · 12/12 EN · ~1 s</td><td>Chosen for all three modes</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0.34 s</td><td>Fastest, but 7.4 GB of memory</td></tr>
           <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5.00/5 Pro (judge)</td><td>Same quality, 1.6× slower</td></tr>
-          <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole e-mails in Pro</td></tr>
+          <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole emails in Pro</td></tr>
           <tr><td><code>ministral-3:8b</code></td><td class="num">12–15 s</td><td>Too slow</td></tr>
           <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro until round 6; “Dear [Recipient Name]”</td></tr>
           <tr><td><code>gemma3:4b-it-qat</code></td><td class="num">4.77/5</td><td>Slower than the regular build</td></tr>
@@ -339,7 +346,7 @@
         </tbody>
       </table>
     </div>
-    <p class="note">Rounds 1–4 were scored out of 5 by another model; round 6 counts right answers out of 12, on a French and an English set. An 18th model, <code>gemma4:e4b-nvfp4</code>, failed to download. Only the chosen model stays installed; raw outputs are in <code>benchmarks/results/</code>.</p>
+    <p class="note">Rounds 1–4 were scored out of 5 by another model; round 6 counts right answers out of 12, on a French and an English set. Only the chosen model stays installed; every raw output is in <a href="https://github.com/Enguerrand-Roques/textpolish/tree/main/benchmarks/results"><code>benchmarks/results/</code></a>.</p>
   </details>
 </section>
 
@@ -361,6 +368,7 @@
     </div>
     <div class="decision">
       <h3>2. The fastest build, or the lightest?</h3>
+      <p>Same model, two packagings. Measured before the temperature change, so both score 10/12 here. “Swap” is the Mac moving memory to disk when RAM runs out: everything slows down.</p>
       <div class="table-wrap"><table>
         <thead><tr><th>Build</th><th>Per sentence</th><th>In memory</th><th>Free RAM after loading</th></tr></thead>
         <tbody>
@@ -377,8 +385,8 @@
         <thead><tr><th>Setting</th><th>Next request</th><th>Memory held</th></tr></thead>
         <tbody>
           <tr><td>Unload after each request</td><td class="num">3–6 s every time</td><td class="num">0</td></tr>
-          <tr class="pick"><td>Keep 5 minutes</td><td class="num">0.5–1 s, then 3–6 s after a pause</td><td class="num">4.3 GB while in use</td></tr>
-          <tr><td>Keep forever</td><td class="num">0.5–1 s</td><td class="num">4.3 GB always</td></tr>
+          <tr class="pick"><td>Keep 5 minutes</td><td class="num">0.5–1.1 s, then 3–6 s after a pause</td><td class="num">4.3 GB while in use</td></tr>
+          <tr><td>Keep forever</td><td class="num">0.5–1.1 s</td><td class="num">4.3 GB always</td></tr>
         </tbody>
       </table></div>
       <p class="verdict"><b>Chose:</b> 5 minutes. Fast while I'm writing, memory back when I stop.</p>
@@ -386,15 +394,16 @@
     </div>
     <div class="decision">
       <h3>4. Let the model vary, or make it repeatable?</h3>
+      <p>Temperature is how much randomness the model adds: at 0 the same text always gets the same answer.</p>
       <div class="table-wrap"><table>
         <thead><tr><th>Temperature</th><th>Correction, 3 identical runs</th></tr></thead>
         <tbody>
           <tr><td>1 (model default)</td><td class="num">9, 10, 11 / 12</td></tr>
-          <tr class="pick"><td>0 for Correction, 0.4 for rewrites</td><td class="num">11, 11, 11 / 12</td></tr>
+          <tr class="pick"><td>0 for Correction, 0.4 for rewrites</td><td class="num">11, 11 / 12</td></tr>
         </tbody>
       </table></div>
       <p class="verdict"><b>Chose:</b> a correction must give the same answer for the same text. Rewrites keep a little variety.</p>
-      <p class="cost">Cost: none measured.</p>
+      <p class="cost">Cost: retrying a correction gives the same answer, so a wrong fix can only be ignored, not re-rolled.</p>
     </div>
     <div class="decision">
       <h3>5. Cards or the whole document?</h3>
@@ -412,7 +421,7 @@
       <div class="table-wrap"><table>
         <thead><tr><th></th><th>Sentence</th><th>First request</th><th>Privacy</th><th>Limits</th></tr></thead>
         <tbody>
-          <tr class="pick"><td>Local (Gemma 4, Ollama)</td><td class="num">0.5–0.9 s</td><td class="num">3–6 s</td><td>nothing leaves the Mac</td><td>4.3 GB of RAM</td></tr>
+          <tr class="pick"><td>Local (Gemma 4, Ollama)</td><td class="num">0.5–1.1 s</td><td class="num">3–6 s</td><td>nothing leaves the Mac</td><td>4.3 GB of RAM</td></tr>
           <tr><td>Cloud (Gemini Flash-Lite)</td><td class="num">~0.5 s</td><td class="num">~0.5 s</td><td>text sent to Google</td><td>10 requests / minute free</td></tr>
         </tbody>
       </table></div>
@@ -424,7 +433,7 @@
 
 <section class="col">
   <h2>Testing like a user</h2>
-  <p>I didn't want to judge from mock-ups. I ran the real app with everyday messages: a text to a friend, an e-mail to my manager, a LinkedIn application, messages in English and French, a long report. The text was typed in TextEdit and the shortcut sent like a real keyboard. Several bugs only showed up then.</p>
+  <p>I didn't want to judge from mock-ups. I ran the real app with everyday messages: a text to a friend, an email to my manager, a LinkedIn application, messages in English and French, a long report. The text was typed in TextEdit and the shortcut sent like a real keyboard. Several bugs only showed up then.</p>
   <div class="bugs">
     <div class="bug"><h3>Copy failed one time in two</h3><p>The shortcut fires while ⌥ is still held. Copy became ⌥⌘C, “copy style”, and nothing was copied. The app now waits for the keys to be released.</p></div>
     <div class="bug"><h3>Switching to Pro during a correction did nothing</h3><p>The tab changed, but the correction was shown. The new request now replaces the old one.</p></div>
@@ -437,7 +446,7 @@
 
 <section class="col">
   <h2>Timed in the real app</h2>
-  <p>A script plays seven scenarios in TextEdit the way someone at the keyboard would, and measures what you feel. All seven pass, twice in a row, with consistent times. Times are with the model loaded; the very first request adds the 3–6 seconds of loading.</p>
+  <p>A script (<code>design/fluidity.py</code>) plays seven scenarios in TextEdit the way someone at the keyboard would, and measures what you feel. All seven pass, twice in a row, with consistent times; the ~370-character row comes from the video recordings. Times are with the model loaded; the very first request adds the 3–6 seconds of loading.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Scenario</th><th>Result shown</th><th>Checked</th></tr></thead>
@@ -458,7 +467,7 @@
 
 <section class="col">
   <h2>What's next</h2>
-  <p>The current model is still small: it misses one French mistake out of twelve (it drops a question mark), and its humour in Custom is limited. The next leads are a model trained specifically on French grammar, and the MLX build once I have a Mac with more memory. The smaller models I tried (Qwen 3.5 2B, LFM3) were fast but added mistakes or printed their reasoning in the answer.</p>
+  <p>The current model is still small: it misses one French mistake out of twelve (it drops a question mark), and its humor in Custom is limited. The next leads are a model trained specifically on French grammar, and the MLX build once I have a Mac with more memory. The smaller models I tried (Qwen 3.5 2B, LFM3) were fast but added mistakes or printed their reasoning in the answer.</p>
 </section>
 
 <section class="col">
@@ -470,11 +479,11 @@
 (() => {
   // Round 6, French set, warm median per sentence (benchmarks/results/round6_20261102.md)
   const D = [
-    { m: "Gemma 4 E2B", x: 0.88, y: 11, mlx: 0, pick: 1, note: "4.3 GB · chosen (10/12 before temperature 0)" },
+    { m: "Gemma 4 E2B", x: 0.91, y: 11, mlx: 0, pick: 1, note: "4.3 GB · chosen · 11/12 twice at temperature 0 (10/12 at 0.88 s before)" },
     { m: "Gemma 4 E2B MLX", x: 0.34, y: 10, mlx: 1, note: "7.4 GB · pushed the Mac into swap" },
-    { m: "Ministral 3 3B", x: 0.67, y: 10, mlx: 0, note: "wrote whole e-mails in Pro" },
+    { m: "Ministral 3 3B", x: 0.67, y: 10, mlx: 0, note: "wrote whole emails in Pro" },
     { m: "Qwen 3.5 4B MLX", x: 0.95, y: 10, mlx: 1, note: "rewrote a correct sentence" },
-    { m: "Gemma 3 4B", x: 1.43, y: 6, mlx: 0, note: "missed “opérationel”" },
+    { m: "Gemma 3 4B", x: 1.43, y: 6, mlx: 0, note: "invented “Dear [Recipient Name]” in Pro" },
     { m: "Qwen 3.5 2B", x: 0.78, y: 5, mlx: 0, note: "added mistakes" },
     { m: "Qwen 3.5 2B MLX", x: 0.52, y: 3, mlx: 1, note: "translated French to English" },
     { m: "LFM3 1.7B MLX", x: 7.21, y: 2, mlx: 1, note: "printed its reasoning; 7.2 s, off the chart" },
@@ -515,8 +524,7 @@
 </main>
 
 <footer class="col">
-  TextPolish · personal project, 2026 · code: <a href="https://github.com/Enguerrand-Roques/textpolish">github.com/Enguerrand-Roques/textpolish</a>
+  TextPolish · personal project, 2026 · <a href="./">project page and install</a> · code: <a href="https://github.com/Enguerrand-Roques/textpolish">github.com/Enguerrand-Roques/textpolish</a>
 </footer>
-<!--artifact-end-->
 </body>
 </html>

@@ -5,7 +5,7 @@
 
 **TextPolish** polishes your text using a local AI model — no internet, no subscription, no data sent anywhere.
 
-Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo above is the real app, recorded by `design/record_demo.py`. Runs silently in the menubar / system tray.
+Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`). It runs quietly in the macOS menu bar.
 
 <p align="center">
   <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 351-character English message with 11 mistakes is corrected with each fix labelled (grammar, agreement, verbs, spelling, punctuation, capitalization), then rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
@@ -17,7 +17,7 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 → **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
 
-> **Built for macOS.** The popup, the menu-bar icon, the screenshots and every test in this repo are macOS (Apple Silicon, tested on an M2 with 16 GB). A Windows version exists with a simpler window; it has not been tested since the redesign.
+> **Built for macOS.** The popup, the menu-bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A Windows version exists with a simpler window; it has not been tested since the redesign.
 
 > **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
 
@@ -29,7 +29,7 @@ The popup reads the selection, then adapts: one card per correction for short te
 |---------|-------------|
 | **Three modes** | Correction (fixes mistakes only, default), Pro (⌘2, professional rewrite), Custom (⌘3, your own request: translate, shorten, warmer…) |
 | **English and French** | Corrects and rewrites both languages (tested on an English and a French set). The interface is in English or French: switch from ✏️ → Language, it is remembered |
-| **Every fix explained** | Each correction is labelled: spelling, accent, conjugation, agreement, homophone, punctuation. Short texts get one card per fix, long ones a highlighted document |
+| **Every fix explained** | Each correction is labelled: spelling, accent, capitalization, punctuation, agreement, conjugation, grammar (including homophones like their/there) or rewrite. Short texts get one card per fix, long ones a highlighted document |
 | **Correction history** | Last 10 corrections in the ✏️ menu → History. Click an entry to copy the corrected text |
 | **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
 | **Native-feeling popup** (macOS) | Opens under the selection with macOS vibrancy, light and dark mode, full keyboard control (↵ ⇥ ⌘↵ ⌘1-3 esc) |
@@ -45,7 +45,7 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 ### Requirements
 - macOS 13+
-- Python 3.13
+- Python 3.10+ (developed and tested on 3.13)
 - [Ollama](https://ollama.com) installed and running
 - Accessibility permission (granted on first launch)
 
@@ -208,25 +208,31 @@ Cold happens on the first request and again after 5 minutes without use (`OLLAMA
 ```
 textpolish/
 ├── main.py              # Entry point — detects OS, loads the right backend
-├── clipboard.py         # Copy / paste logic     ─┐
-├── llm.py               # Ollama request layer     │
-├── diff.py              # Groups and labels fixes  │
-├── history.py           # Correction history        ├─ shared across platforms
-├── polish_job.py        # Correction threading      │
-├── prompts/             # Prompt templates         ─┘
+├── clipboard.py         # Copy / paste logic          ─┐
+├── llm.py               # Ollama request layer         │
+├── diff.py              # Groups and labels fixes      │
+├── i18n.py              # English / French strings     ├─ shared across platforms
+├── history.py           # Correction history           │
+├── polish_job.py        # Correction threading         │
+├── prompts/             # Prompt templates            ─┘
 ├── config.example.py
+├── setup.sh             # macOS install: venv, config, app bundle
 │
-└── platforms/
-    ├── macos/                 # PyObjC · NSPanel · WKWebView · CGEventTap
-    │   ├── ui.py
-    │   ├── panel.html         # WKWebView UI: cards, document view, rewrite (HTML/CSS/JS)
-    │   ├── main.py
-    │   ├── hotkey.py
-    │   └── shortcut_parser.py # Pure shortcut parsing, no PyObjC dependency
-    └── windows/         # PyQt6 · QSystemTrayIcon · pynput
-        ├── ui.py
-        ├── main.py
-        └── hotkey.py
+├── platforms/
+│   ├── macos/           # PyObjC · NSPanel · WKWebView · CGEventTap
+│   │   ├── ui.py        # Menu bar item, panel, JS bridge
+│   │   ├── panel.html   # The popup: cards, document view, rewrite (HTML/CSS/JS)
+│   │   ├── ax_bounds.py # Where the selection is on screen (Accessibility API)
+│   │   ├── hotkey.py
+│   │   ├── shortcut_parser.py
+│   │   └── main.py
+│   └── windows/         # PyQt6 · QSystemTrayIcon · pynput (experimental)
+│
+├── tests/               # pytest, runs on Linux CI (macOS APIs are stubbed)
+├── benchmarks/          # Model research: report, harness, every raw output
+├── design/              # Dev tools: model eval, real-app timing, previews, recordings
+├── video/               # Remotion project that edits the demo video
+└── docs/                # GitHub Pages: landing page, UX case study, media
 ```
 
 ---
@@ -269,7 +275,7 @@ Building it surfaced a few things that tutorials don't really cover:
 
 - **Model size vs. latency** — in early rounds a 4B model rewrote better but took 5–8 s, and a 1B model was fast but missed real typos. Gemma 4 E2B (2B effective) ended that trade-off at about 1 s, after disabling its "thinking" and fixing the temperature.
 - **Keeping a model in RAM** — loading the model takes 3–6 s (9–15 s after a reboot). `keep_alive` keeps it warm between requests but holds 4.3 GB of RAM; TextPolish frees it after 5 minutes idle. It's a trade-off you have to tune per machine.
-- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–0.9 s, the same as Gemini Flash-Lite over the network (~0.5 s). Local wins on privacy and offline use, not on raw speed, and only when the model is already in RAM.
+- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–1.1 s, close to Gemini Flash-Lite over the network (~0.5 s). Local wins on privacy and offline use, not on raw speed, and only when the model is already in RAM.
 - **Integrating an LLM into an OS-level tool** — the LLM part ended up being the simplest piece. The hard parts were the global shortcut, clipboard handling, and making a window appear above fullscreen apps.
 
 Beyond the technical side, this project was also an exercise in building something the way a real open source project is built — using Conventional Commits (`feat:`, `fix:`, `chore:`...), maintaining a proper `LICENSE`, writing a README that someone else can actually follow, and structuring code so it makes sense to a stranger reading it on GitHub. Small habits that make a big difference when a project grows or gets contributors.

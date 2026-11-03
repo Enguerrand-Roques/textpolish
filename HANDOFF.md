@@ -3,29 +3,44 @@
 Status snapshot for resuming work later. The newest state is first; the dated
 sections below it are the history, kept as written at the time.
 
-## Current state (November 2, 2026)
+## Current state (November 3, 2026)
 
 | Item | Value |
 |------|-------|
 | Model | `gemma4:e2b-it-qat` for all three modes (only model installed, 4.3 GB) |
 | Ollama | 0.40.13, `"think": false`, temperature 0 Correction / 0.4 Pro & Custom |
 | Modes (UI) | Correction (`casual`), Pro (`pro`), Custom (`custom`, "Sur mesure" in French) |
-| Interface language | English (default) or French: `UI_LANGUAGE` in config.py, or ✏️ → Language (live, saved). Strings: `i18n.py` (Python) and the `I18N` dict in `panel.html` |
+| Interface language | English (default) or French: `UI_LANGUAGE` in config.py, or menu bar ✎ → Language (live, saved). Strings: `i18n.py` (Python) and the `I18N` dict in `panel.html` |
 | Quality (Round 6) | Correction 11/12 FR, 12/12 EN; Pro 5/5; Custom 3/3 (`design/model_eval.py`, `--en` for the English set) |
 | Speed, M2 16 GB | warm 0.5–1.1 s per sentence, 3–4 s for ~370 chars, ~10 s for 1,500 chars; cold 3–6 s (9–15 s after reboot); model freed after 5 min idle. With heavy swap, ~13 tok/s instead of ~35 and 7–11 s for ~370 chars |
 | Mistake labels | spelling, accent, case, agreement, conjugation, homophone/grammar, punctuation, rewrite (`diff.classify_change`) |
-| Tests | 123 (textpolish), 110 (textpolish-cloud) |
+| Tests | 127 (textpolish), 107 (textpolish-cloud) |
 | Public | GitHub Pages serves `docs/` at https://enguerrand-roques.github.io/textpolish/ (landing page, case study, video) |
 | Demo | `docs/demo.gif`, `docs/textpolish-demo.mp4` (1 min, English then the switch to French; Remotion project in `video/`, clips from `design/record_video.py`) |
 
 Open items:
-- Rotate the Anthropic key in local `config.py` and the Gemini key in textpolish-cloud's (user will do it).
 - Windows UI only got a style refresh; never tested on Windows.
-- Correction still misses 1/12 (drops a "?"); humour in Custom is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
+- Correction still misses 1/12 (drops a "?"); humor in Custom is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
 - `docs/textpolish-cloud.html` (legacy browser demo) is still French-only with the old UI.
 - The popup closes when it loses focus; another app grabbing focus mid-request (seen once with Grammarly running) hides it.
 - Real-time "as you type" underlining was ruled out (see the September notes below).
 
+Audit of November 3 (six review passes: core code, macOS UI, tests and scripts,
+numbers across docs, repo hygiene, public pages), fixed in the same session:
+- English sentences with "on"/"as" were detected as French (and answered in
+  French); French stop words must now outnumber English ones.
+- Fast double ↵ skipped a card; panel placed on the wrong screen with two
+  displays; height not re-reported on reopen; one failing UI update dropped
+  the others; per-token JS calls and French status strings that the popup ignored.
+- Streaming errors now give a readable message; the model unload no longer
+  blocks the request.
+- `design/shoot.sh` served the repo root (config.py included) on every network
+  interface; now bound to 127.0.0.1.
+- `benchmarks/results/` was gitignored although the report links to it: now
+  committed. `benchmark_models.py` moved into `benchmarks/`; superseded design
+  scripts removed; tests added for the payload (`think: false`, model per mode,
+  custom instruction, unload) and layout thresholds.
+- Numbers aligned across README, report, landing page and case study.
 ---
 
 # History
@@ -62,8 +77,7 @@ ps -p <pid> -o lstart=          # compare to file mtimes
 
 ### Open items / not done yet
 
-- **Round 4 corpus not re-run with `ministral-3:3b` as casual.** The switch is based on one targeted real-world case (the "opérationel" bug), not aggregate scores. Worth running `python benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge` for a fuller picture, and watching for over-generation from Ministral on longer/more ambiguous casual inputs (it hallucinated a full fake email in pro mode on a short fragment — same risk class could show up in casual on the wrong input).
-- **Anthropic API key exposed in clear text** in local `config.py` (line 13, gitignored, never committed — confirmed clean history). Recommended to rotate on console.anthropic.com regardless, since it's readable on disk.
+- **Round 4 corpus not re-run with `ministral-3:3b` as casual.** The switch is based on one targeted real-world case (the "opérationel" bug), not aggregate scores. Worth running `python benchmarks/benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge` for a fuller picture, and watching for over-generation from Ministral on longer/more ambiguous casual inputs (it hallucinated a full fake email in pro mode on a short fragment — same risk class could show up in casual on the wrong input).
 - **~20 GB of benchmark models** pulled during Round 4 (`qwen3.5:4b/0.8b`, `gemma4:e2b/e4b-it-qat`, `ministral-3:8b/3b`) still on disk. Not urgent (561 GB free at last check) but `ollama rm` candidates if space matters.
 - **Real-time "as you type" popup (Grammarly's actual continuous mode)** was deliberately *not* pursued — explicitly deferred after research showed real macOS-level blockers: `AXValueGetValue` unsupported in PyObjC (needs a manual wrapper), a long-standing Apple bug where caret position can't be read without an active text selection, and inconsistent Accessibility support in Electron apps. The shortcut-triggered flow (what exists now) matches how real "no-browser-extension" Grammarly alternatives for Mac are actually built, per research done this session — not a corner-cut, a considered choice.
 - **Local GPU fine-tuning** — user has an NVIDIA GPU at home, raised as a possible way to get a more reliable correction model than picking among pretrained options. Not investigated yet — needs GPU model/VRAM specs before any feasibility call. Current recommendation stands: exhaust pretrained-model swaps (like the Ministral switch) before considering training something custom, given how much the Ministral swap alone fixed for zero cost.
@@ -82,7 +96,7 @@ Fixes from the full project audit:
 - `llm.py`: input capped at `MAX_INPUT_CHARS` (4000), `num_ctx` sized from the prompt (min 1024), truncated (`done_reason == "length"`), empty, mid-stream error and invalid-JSON responses now raise readable errors. `logging.basicConfig` moved out of `llm.py` into the platform `main.py` files (INFO, no more text excerpt in logs).
 - `polish_job.py`: a superseded job's result no longer overwrites the current one.
 - Install: casual model is `ministral-3:3b` everywhere (README, `setup.sh`, `release.yml`); `anthropic` moved to `requirements-dev.txt`; Quartz/ApplicationServices listed explicitly; `setup.sh` checks Python >= 3.10 and Ollama, logs to `~/Library/Logs/TextPolish/`.
-- `benchmark_models.py` reads `ANTHROPIC_API_KEY` from the environment only. The key in local `config.py` is still there: rotate it and delete the line.
+- The benchmark harness reads `ANTHROPIC_API_KEY` from the environment only.
 - UI errors are no longer cut at 80 characters.
 Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was identical), CI lint/coverage, benchmark alignment with `llm.py`.
 
@@ -97,7 +111,7 @@ Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was ident
 
 ## Model switch and UX fixes (November 2026, second pass)
 
-- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Perso. Same correction score as Ministral, better Pro/Perso, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. All other models removed, `ministral-3:3b` included; only `gemma4:e2b-it-qat` is installed (4.0 GB). Raw outputs archived in `benchmarks/results/round6_20261102.md`; the report opens with a 17-model summary.
+- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Custom (then "Perso"). Same correction score as Ministral, better Pro/Custom, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. All other models removed, `ministral-3:3b` included; only `gemma4:e2b-it-qat` is installed (4.0 GB). Raw outputs archived in `benchmarks/results/round6_20261102.md`; the report opens with a 17-model summary.
 - `llm.py` sends temperature 0 for Correction, 0.4 for Pro/Perso (Gemma 4's default of 1 made Correction score 9-11/12 between identical runs; now 11/12 every run).
 - `llm.py` sends `"think": false`; strips Markdown the model adds; language detection handles short unaccented French.
 - Popup: "no mistakes" no longer auto-closes (offers Pro/Perso), switching mode during a request works, one-line explanation per mode, Perso presets.
