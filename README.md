@@ -245,7 +245,7 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 
 | Mode | Model | Warm (median) | Cold (median, range) | Score |
 |------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | French 11 / 12, English 12 / 12 expected fixes; correct texts left untouched |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 12 / 12 expected fixes in French and English (the model alone: 11 / 12 French, see below); correct texts left untouched |
 | Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
 | Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
 
@@ -257,6 +257,7 @@ Key findings that shaped this choice:
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Custom.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
+- **A rule fixes the model's one French miss.** It kept deleting the "?" in "tu fais quoi ce soir ? on peut…". Correction now puts back any "?" or "!" the model removed without replacing it (`diff.keep_question_marks`): 12/12 on both sets, while the model alone stays at 11/12 in French.
 - **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
 - **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
 - **Free RAM matters as much as the model.** With the Mac swapping heavily (14 of 15 GB of swap in use), generation fell from ~35 to ~13 tokens per second and the same 380-character message took 7–11 s instead of 3–4 s.

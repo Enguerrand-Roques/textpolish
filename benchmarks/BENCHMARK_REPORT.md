@@ -10,7 +10,7 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 
 | Model | Rounds | Best result | Why it was kept or dropped |
 |-------|--------|-------------|----------------------------|
-| **`gemma4:e2b-it-qat`** | 4, 6 | **Correction 11/12 FR, 12/12 EN; Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
+| **`gemma4:e2b-it-qat`** | 4, 6 | **Correction 12/12 FR and EN (model alone 11/12 FR, plus a question-mark guard); Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
 | `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Same quality as E2B, ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
@@ -375,6 +375,15 @@ subject-verb agreement, spelling, plus 3 correct sentences that must stay untouc
 | Custom / Sur mesure | 3/3 | 3/3 | 0.93 s |
 
 The UI was renamed again for the English interface: Sur mesure is **Custom** in English.
+
+### Question-mark guard
+
+The one French miss was always the same: in "slt tu fait quoi ce soir ? on peut se retrouver
+vers 19h" the model fixed "fait" but deleted the "?", merging two questions. A correction should
+never remove the user's question, so `diff.keep_question_marks` (Correction only) puts back a
+"?" or "!" that the model removed without replacing it. A mark turned into "." or moved is left
+alone. Result on what the app pastes: **12/12 French, 12/12 English**. The model alone is still
+11/12 French; the guard is a rule in the app, not a better model.
 
 ### Decision
 

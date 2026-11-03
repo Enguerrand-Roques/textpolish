@@ -179,7 +179,7 @@
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
       <span class="label">macOS first · Windows experimental</span>
-      <span class="label">127 tests</span>
+      <span class="label">132 tests</span>
     </div>
   </div>
   <figure>
@@ -315,6 +315,7 @@
         <tr><td>It replaced <code>'</code> with <code>’</code> and added non-breaking spaces.</td><td>Those details no longer count as fixes.</td></tr>
         <tr><td><code>gemma4:e2b</code> corrected as well (10/12), rewrote better, and answered in about 1 s once loaded.</td><td>One model for all three modes: no more reloads.</td></tr>
         <tr><td>The same test gave 9, 10 or 11 right answers out of 12 depending on the run: the model picks its words with some randomness.</td><td>Correction now always gives the same answer: 11/12 on every run.</td></tr>
+        <tr><td>The remaining miss was always the same: the model deleted the “?” in “tu fais quoi ce soir ? on peut…”, merging two questions.</td><td>A rule puts back any “?” or “!” the model removes without replacing it: 12/12 in French and English. The model alone stays at 11/12.</td></tr>
         <tr><td>“J'ai finit le rapport hier soir” came back in English: my language detector didn't recognize it as French.</td><td>Detector fixed; it was my code, not the model.</td></tr>
         <tr><td>On a long text, “translate into English” only reworded the French: my “answer in the text's language” rule beat the request.</td><td>In Custom, the rule now yields to the request.</td></tr>
         <tr><td>The English set showed Pro writing “Dear [Recipient Name]” on a two-line message.</td><td>The Pro prompt forbids invented greetings and placeholders: 5/5 in both languages.</td></tr>
@@ -327,7 +328,7 @@
       <table>
         <thead><tr><th>Model</th><th>Best result</th><th>Verdict</th></tr></thead>
         <tbody>
-          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">11/12 FR · 12/12 EN · ~1 s</td><td>Chosen for all three modes</td></tr>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">12/12 FR and EN (11/12 FR alone) · ~1 s</td><td>Chosen for all three modes</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0.34 s</td><td>Fastest, but 7.4 GB of memory</td></tr>
           <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5.00/5 Pro (judge)</td><td>Same quality, 1.6× slower</td></tr>
           <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole emails in Pro</td></tr>
@@ -467,7 +468,7 @@
 
 <section class="col">
   <h2>What's next</h2>
-  <p>The current model is still small: it misses one French mistake out of twelve (it drops a question mark), and its humor in Custom is limited. The next leads are a model trained specifically on French grammar, and the MLX build once I have a Mac with more memory. The smaller models I tried (Qwen 3.5 2B, LFM3) were fast but added mistakes or printed their reasoning in the answer.</p>
+  <p>The current model is still small: on its own it misses one French mistake out of twelve (the app now catches that one), and its humor in Custom is limited. The next leads are a model trained specifically on French grammar, and the MLX build once I have a Mac with more memory. The smaller models I tried (Qwen 3.5 2B, LFM3) were fast but added mistakes or printed their reasoning in the answer.</p>
 </section>
 
 <section class="col">
