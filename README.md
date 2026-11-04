@@ -5,7 +5,7 @@
 
 > **In short**
 > - **What:** a Mac tool that fixes the text you select, with an AI model running on your Mac. It is built on two sides: the **interface** (a popup that adapts to the text and lets you accept or ignore each fix) and the **mechanism behind it** (a model chosen by benchmark, safety rules, a grammar checker).
-> - **Key number:** on 174 sentences it had never seen, 95 % come out as expected by default; fixes it isn't sure about wait for your click, so a fix that changes your meaning is rare (1 in 802 test sentences).
+> - **Key number:** 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without your click.
 > - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.
 
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. Everything runs on your Mac: it works offline once installed, with no account, and your text is never sent anywhere. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`).

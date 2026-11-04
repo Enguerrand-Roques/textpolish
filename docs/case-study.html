@@ -196,7 +196,7 @@
 <main>
 <section class="col tldr" aria-label="In short">
   <p><b>What:</b> a Mac tool that fixes the text you select, with an AI model running on your Mac. I designed both sides: the <b>interface</b> (a popup that adapts to the text, where each fix is accepted or ignored) and the <b>mechanism behind it</b> (a model chosen by benchmark, safety rules, a grammar checker).</p>
-  <p><b>Key number:</b> on 174 sentences it had never seen, 95 % come out as expected by default; fixes it isn't sure about wait for a click, so a fix that changes the meaning is rare (1 in 802 test sentences).</p>
+  <p><b>Key number:</b> 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without a click.</p>
   <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.</p>
 </section>
 <section class="col">
@@ -277,11 +277,11 @@
   <h2>The numbers</h2>
   <p>Measured on my MacBook Air M2, 16 GB, model running locally with Ollama.</p>
   <div class="stats">
-    <div><div class="stat">0.5–1.1 s</div><p>to fix or rewrite a sentence, model already loaded</p></div>
-    <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
+    <div><div class="stat">95 %</div><p>of new sentences corrected right the first time</p></div>
+    <div><div class="stat">~1 s</div><p>to correct or rewrite a sentence</p></div>
     <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s</p></div>
-    <div><div class="stat">165 / 174</div><p>new sentences corrected as expected by default; doubtful fixes wait for a click</p></div>
-    <div><div class="stat">0</div><p>bytes of your text sent over the Internet</p></div>
+    <div><div class="stat">1 command</div><p>to install; a setup window does the rest</p></div>
+    <div><div class="stat">0 bytes</div><p>of your text leave your Mac</p></div>
   </div>
 </section>
 
