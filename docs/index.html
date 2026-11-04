@@ -200,11 +200,9 @@
 <section class="col" id="install">
   <h2>Install</h2>
   <p>macOS with Python 3.10+ and <a href="https://ollama.com">Ollama</a> 0.40+. Apple Silicon recommended. Download the <a href="https://github.com/Enguerrand-Roques/textpolish/releases/latest">latest release</a> (<a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/CHANGELOG.md">what changed in each version</a>), or clone the repo:</p>
-  <pre><code>git clone https://github.com/Enguerrand-Roques/textpolish.git
-cd textpolish
-bash setup.sh
-ollama pull gemma4:e2b-it-qat   # one-time, 4.3 GB</code></pre>
-  <p>Open <b>TextPolish.app</b> on your Desktop, allow Accessibility when macOS asks, then select text anywhere and press <kbd>⌥⌘G</kbd>. TextPolish is built and tested for the Mac. A Windows version exists (<kbd>Ctrl+Alt+G</kbd>) with a simpler window; it is experimental and has not been tested since the redesign.</p>
+  <pre><code>curl -fsSL https://raw.githubusercontent.com/Enguerrand-Roques/textpolish/main/install.sh | bash</code></pre>
+  <p>One command in Terminal installs what is missing (Python, Ollama) and opens the app. Its setup window then downloads the model (4.3 GB, once) with a progress bar, and takes you to the Accessibility permission with one button. No administrator password. <a href="https://github.com/Enguerrand-Roques/textpolish#installation">Step-by-step install from source</a>.</p>
+  <p>Then select text anywhere and press <kbd>⌥⌘G</kbd>. TextPolish is built and tested for the Mac. A Windows version exists (<kbd>Ctrl+Alt+G</kbd>) with a simpler window; it is experimental and has not been tested since the redesign.</p>
 </section>
 
 <footer class="wide">

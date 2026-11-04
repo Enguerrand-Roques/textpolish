@@ -2,6 +2,20 @@
 
 All notable changes to TextPolish. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] — 2026-11-04
+
+Install in one command, set up in three clicks.
+
+### Added
+- **One-command install** (`install.sh`): a recent Python through uv if
+  needed (no Homebrew, no sudo), Ollama, the latest release, LanguageTool
+  when Homebrew is there, then it opens the app.
+- **Setup window** on first launch (and whenever something is missing):
+  Ollama started automatically; the model downloaded with a progress bar,
+  speed and time left, resumable; the Accessibility permission with a
+  button that opens the right pane, detected as soon as it is on, and the
+  shortcut installed without a restart. English and French.
+
 ## [2.1.0] — 2026-11-04
 
 Fixes you can trust: doubtful fixes wait for a click, and a grammar checker
@@ -81,6 +95,7 @@ First release: menu bar app with a global shortcut (⌘⇧P), Casual, Pro and
 custom rewriting with local Ollama models (`gemma3:1b` and `gemma3:4b`),
 macOS and Windows.
 
+[2.2.0]: https://github.com/Enguerrand-Roques/textpolish/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/Enguerrand-Roques/textpolish/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Enguerrand-Roques/textpolish/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/Enguerrand-Roques/textpolish/releases/tag/v1.0.0

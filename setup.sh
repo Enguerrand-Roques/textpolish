@@ -9,8 +9,9 @@ APP="$HOME/Desktop/TextPolish.app"
 
 echo "Setting up TextPolish..."
 
-if ! python3 -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)"; then
-    echo "  ✗ Python 3.10+ is required (found: $(python3 --version 2>&1))."
+PYTHON="${PYTHON:-python3}"  # install.sh passes the Python it found or installed
+if ! "$PYTHON" -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)"; then
+    echo "  ✗ Python 3.10+ is required (found: $("$PYTHON" --version 2>&1))."
     echo "    Install a recent Python, e.g. 'brew install python@3.13'."
     exit 1
 fi
@@ -22,14 +23,14 @@ mkdir -p "$LOG_DIR"
 
 # ── 1. Python venv ──────────────────────────────────────────────────────────
 if [ ! -d "$REPO_DIR/venv" ]; then
-    python3 -m venv "$REPO_DIR/venv"
+    "$PYTHON" -m venv "$REPO_DIR/venv"
 fi
 "$REPO_DIR/venv/bin/pip" install -q --upgrade pip
 "$REPO_DIR/venv/bin/pip" install -q -r "$REPO_DIR/requirements.txt"
 echo "  ✓ Dependencies installed"
 
 # ── 2. Detect the real Python binary (bypass venv symlink for launchd) ──────
-REAL_PYTHON=$(python3 -c "import os, sys; print(os.path.realpath(sys.executable))")
+REAL_PYTHON=$("$PYTHON" -c "import os, sys; print(os.path.realpath(sys.executable))")
 
 SITE_PACKAGES="$REPO_DIR/venv/lib/$(ls "$REPO_DIR/venv/lib/")/site-packages"
 
@@ -120,6 +121,10 @@ fi
 find "$APP" -exec xattr -c {} \; 2>/dev/null
 codesign --force --deep --sign - "$APP" 2>/dev/null || true
 echo "  ✓ TextPolish.app created on Desktop"
+
+if [ -n "${TEXTPOLISH_FROM_INSTALLER:-}" ]; then
+    exit 0  # install.sh opens the app; its setup window does the rest
+fi
 
 echo ""
 echo "All done! What's next:"

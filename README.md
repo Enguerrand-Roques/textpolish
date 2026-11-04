@@ -52,8 +52,24 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 ## Installation
 
+**One command** (macOS 13+, Apple Silicon recommended). Paste it in Terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Enguerrand-Roques/textpolish/main/install.sh | bash
+```
+
+It installs what is missing — a recent Python (with [uv](https://docs.astral.sh/uv/), no Homebrew needed), [Ollama](https://ollama.com), and LanguageTool if Homebrew is there — puts the latest release in `~/Library/Application Support/TextPolish`, and opens the app. Nothing asks for an administrator password. On first launch a setup window checks the three things TextPolish needs and fixes them with one button each:
+
+| Step | What happens |
+|---|---|
+| Ollama running | started automatically |
+| The model (4.3 GB, once) | **Download** button, progress bar and time left; you can close the window, it goes on; an interrupted download resumes |
+| Accessibility permission | **Open Settings** button; the step turns green as soon as you switch it on, and the shortcut starts working without a restart |
+
+[What `install.sh` does](install.sh) is about 100 readable lines.
+
 <details>
-<summary><strong>macOS</strong></summary>
+<summary><strong>macOS, step by step from source</strong></summary>
 
 ### Requirements
 - macOS 13+
@@ -238,7 +254,9 @@ textpolish/
 ├── polish_job.py        # Correction threading         │
 ├── prompts/             # Prompt templates            ─┘
 ├── config.example.py
-├── setup.sh             # macOS install: venv, config, app bundle
+├── install.sh           # One-command install: Python, Ollama, latest release
+├── setup.sh             # Venv, config, LaunchAgent, TextPolish.app
+├── setup_check.py       # First-launch checks and the model download
 │
 ├── platforms/
 │   ├── macos/           # PyObjC · NSPanel · WKWebView · CGEventTap
@@ -246,6 +264,7 @@ textpolish/
 │   │   ├── panel.html   # The popup: cards, document view, rewrite (HTML/CSS/JS)
 │   │   ├── ax_bounds.py # Where the selection is on screen (Accessibility API)
 │   │   ├── spelling.py  # macOS dictionary: real word or typo (review rules)
+│   │   ├── onboarding.py / .html  # First-launch setup window
 │   │   ├── hotkey.py
 │   │   ├── shortcut_parser.py
 │   │   └── main.py
