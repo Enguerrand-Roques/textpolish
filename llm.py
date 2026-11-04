@@ -17,7 +17,7 @@ from config import (
     OLLAMA_TIMEOUT,
     OLLAMA_KEEP_ALIVE,
 )
-from diff import keep_question_marks
+from diff import keep_sentence_marks
 
 # Texts longer than this are rejected: the model context is sized from the
 # input (see _num_ctx_for), and very long inputs would be slow and risk
@@ -71,7 +71,7 @@ _FRENCH_STOP_WORDS = {
 # Common English words. Some French stop words ("on", "as", "son"…) are also
 # English, so French must outnumber English instead of just being present.
 _ENGLISH_STOP_WORDS = {
-    "the", "a", "an", "and", "or", "but", "of", "to", "in", "on", "at", "for",
+    "the", "an", "and",  # not "a": in French it is a verb ("on a fini") "or", "but", "of", "to", "in", "on", "at", "for",
     "with", "from", "by", "as", "is", "are", "was", "were", "be", "been",
     "i", "you", "he", "she", "it", "we", "they", "me", "my", "your", "our",
     "this", "that", "there", "here", "will", "would", "can", "could", "have",
@@ -263,10 +263,10 @@ def polish_text(
     if "__" not in text:
         result = result.replace("__", "")
 
-    # Correction must not remove a question the user asked (Round 6: the
-    # only miss was "ce soir ? on peut" -> "ce soir on peut").
+    # Correction must not remove a question or exclamation the user wrote
+    # (Round 6: the only miss was "ce soir ? on peut" -> "ce soir on peut").
     if mode == "casual":
-        result = keep_question_marks(text, result)
+        result = keep_sentence_marks(text, result)
 
     if truncated:
         raise RuntimeError(

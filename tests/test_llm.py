@@ -41,6 +41,7 @@ class TestDetectLanguage:
 
     def test_unaccented_french_with_shared_words(self):
         assert _detect_language("tu as fini le rapport ou pas") == "fr"
+        assert _detect_language("on a vu un film") == "fr"
 
 
 # ---------------------------------------------------------------------------
