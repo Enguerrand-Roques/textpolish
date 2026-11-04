@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TextPolish UX</title>
-<meta name="description" content="How I designed and tested TextPolish, a Mac menu bar tool that fixes selected text with a local AI model: benchmark of 17 models, trade-offs, iterations and real-app tests.">
+<meta name="description" content="A learning project: how I designed and evaluated TextPolish, a Mac menu bar tool that fixes selected text with a local AI model. Benchmark of 17 models, nine decisions with their cost, 802 test sentences and a severity rubric.">
 <meta property="og:title" content="TextPolish — UX case study">
 <meta property="og:description" content="Benchmark of 17 local models, nine decisions with their cost, and ten iterations of a Mac proofreading window.">
 <meta property="og:image" content="https://enguerrand-roques.github.io/textpolish/screenshots/video-poster.jpg">
@@ -179,7 +179,7 @@
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
       <span class="label">macOS first · Windows experimental</span>
-      <span class="label">132 tests</span>
+      <span class="label">156 tests</span>
     </div>
   </div>
   <figure>
@@ -193,6 +193,7 @@
   <h2>Why I built it</h2>
   <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
   <p>I wanted three things: never leave the app, never send anything online, and have a correction ready before I even wonder which setting to pick.</p>
+  <p>It is also a learning project: I wanted to learn how to build an AI product end to end, and how to know whether it works. It isn't distributed, so the evidence on this page comes from the real app on my Mac and from 802 test sentences, not from users.</p>
   <p>It is built for the Mac first: the popup, the menu bar icon and every test on this page are macOS. A Windows version exists with a simpler window; it hasn't been tested since the redesign.</p>
 </section>
 
@@ -452,8 +453,8 @@
       <div class="table-wrap"><table>
         <thead><tr><th></th><th>Right, French</th><th>Right, English</th><th>Wrong fixes</th><th>Time added</th><th>Memory</th></tr></thead>
         <tbody>
-          <tr><td>Model and review rules</td><td class="num">78 / 86</td><td class="num">84 / 88</td><td class="num">1</td><td class="num">—</td><td class="num">—</td></tr>
-          <tr class="pick"><td>+ LanguageTool</td><td class="num">79 / 86</td><td class="num">86 / 88</td><td class="num">2</td><td class="num">~15 ms</td><td class="num">~540 MB</td></tr>
+          <tr><td>Model and review rules</td><td class="num">78 / 86</td><td class="num">84 / 88</td><td class="num">1 minor</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="pick"><td>+ LanguageTool</td><td class="num">79 / 86</td><td class="num">86 / 88</td><td class="num">1 minor, 1 grave (since fixed)</td><td class="num">~15 ms</td><td class="num">~540 MB</td></tr>
         </tbody>
       </table></div>
       <p class="verdict"><b>Chose:</b> add it, as an option. Out of the box its French checks took 700 ms each; one server setting (pipeline caching) brought them to 15 ms. Two French rules were turned off because they “fix” informal register (“j'ai pas” → “je n'ai pas”), and its one wrong fix on this set was a hint it returns in brackets, now skipped.</p>
@@ -500,7 +501,7 @@
   <h2>What's next</h2>
   <p>What the numbers above don't cover yet, and what I would test next:</p>
   <ul>
-    <li><b>Real messages.</b> The 253 test sentences are written by me. The next step is messages from real users, to see whether 93–95 % holds.</li>
+    <li><b>Real messages and real people.</b> The 802 test sentences are written by me. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
     <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
     <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>
     <li><b>Windows.</b> The code runs there, but the new window has never been tested on a PC.</li>
@@ -509,6 +510,7 @@
 
 <section class="col">
   <h2>What I take away</h2>
+  <p>A score is only as good as its test set. 12/12 on twelve sentences became 95 % on 253; from then on I froze a new test set before each change, and defined what a grave error is before counting them. Safety beat coverage: the biggest gain in trust came from not applying the fixes the app wasn't sure about.</p>
   <p>Removing a decision helped more than adding an option: the best improvement was starting the correction without asking for a mode. Some problems can't be fixed in the interface: the “opérationel” bug was fixed by changing the model. And above all, an interface is judged by really using it, in every language it claims to support. Half the bugs on this page I would never have seen by looking at screenshots.</p>
 </section>
 

@@ -17,6 +17,13 @@ The popup reads the selection, then adapts: one card per correction for short te
 
 → **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png) · [what changed in 2.0](CHANGELOG.md)
 
+> **About this project.** A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. It is not distributed (installing needs Python, Ollama and a 4.3 GB model), so its users are me and the tests. What it shows:
+> - **Product and UX:** a popup that adapts to the text, three modes, English and French, ten iterations ([case study](https://enguerrand-roques.github.io/textpolish/case-study.html)).
+> - **A model chosen by measurement:** 17 local models benchmarked against expected answers ([report](benchmarks/BENCHMARK_REPORT.md)).
+> - **Safety over coverage:** a wrong fix is worse than a missed one, so doubtful fixes wait for a click, and every failure is classified as grave, minor or missed with a rubric written first.
+> - **Honest evaluation:** 802 test sentences, and three held-out sets each committed before the change it judges, so the scores can't be tuned to the test.
+> - **AI and rules together:** the model, a review layer, then LanguageTool's grammar rules, each measured on its own.
+
 > **Built for macOS.** The popup, the menu-bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A Windows version exists with a simpler window; it has not been tested since the redesign.
 
 > **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
@@ -256,7 +263,7 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 
 | Mode | Model | Warm (median) | Cold (median, range) | Score |
 |------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | On 174 new sentences (written before the last change): 79/86 French, 86/88 English corrected as expected by default with LanguageTool, 2 wrong fixes applied. Development sets (628 sentences): 596 right, 3 wrong |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | On 174 new sentences (written before the last change): 79/86 French, 86/88 English corrected as expected by default with LanguageTool; 1 grave fix (since fixed) and 1 minor. Development sets (628 sentences): 596 right, 3 wrong |
 | Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
 | Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
 

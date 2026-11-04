@@ -173,7 +173,7 @@
   <h2>Measured, not guessed</h2>
   <p>17 models tested in six benchmark rounds on a MacBook Air M2 with 16 GB, then the chosen one on 253 messages. The last rounds score corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
   <div class="stats">
-    <div><div class="stat">165 / 174</div><p>new sentences corrected as expected by default, 2 wrong fixes applied; doubtful fixes wait for your click</p></div>
+    <div><div class="stat">165 / 174</div><p>new sentences corrected as expected by default; 1 fix that changed the meaning (since fixed), doubtful ones wait for your click</p></div>
     <div><div class="stat">0.5–1.1 s</div><p>per sentence, model already in memory</p></div>
     <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
     <div><div class="stat">3–4 s</div><p>for a ~370-character message with 11–13 mistakes (7–11 s when the Mac is swapping)</p></div>
@@ -190,6 +190,11 @@
     <div><h3>Local over cloud</h3><p>Once loaded, the local model is about as fast as Gemini Flash-Lite (~0.5 s), and works offline with nothing leaving the Mac. The cost is the first-load wait and the RAM. <a href="https://github.com/Enguerrand-Roques/textpolish-cloud">TextPolish Cloud</a> makes the opposite choice.</p></div>
     <div><h3>A shortcut, not live underlining</h3><p>macOS's accessibility API doesn't give the caret position without a selection, and many apps (Slack, VS Code) don't expose their text well. A shortcut works everywhere.</p></div>
   </div>
+</section>
+
+<section class="col">
+  <h2>About this project</h2>
+  <p>A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. It isn't distributed (it needs Python, Ollama and a 4.3 GB model), so its users are me and 802 test sentences. What I worked on: a popup that adapts to the text, a model chosen by benchmark, safety over coverage (a wrong fix is worse than a missed one), test sets frozen before each change, and the model combined with grammar rules. The <a href="case-study.html">case study</a> shows each decision and what it cost.</p>
 </section>
 
 <section class="col" id="install">
