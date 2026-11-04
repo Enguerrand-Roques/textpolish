@@ -148,7 +148,7 @@ Measured on an M2 with 16 GB:
 | ~370-character message, 11–13 mistakes (demo video, EN and FR) | 3–4 s | — |
 | ~1,500 characters (Correction) | ~10 s | — |
 
-Time grows with the length of the answer (about 30–35 tokens per second, much less if the Mac is swapping). The 4,000-character input limit stays under the 60 s timeout.
+Time grows with the length of the answer (about 30–35 tokens per second). The 4,000-character input limit stays under the 60 s timeout.
 
 Cold happens on the first request and again after 5 minutes without use (`OLLAMA_KEEP_ALIVE = 300` frees the 4.3 GB of RAM). Right after a reboot, when macOS has not cached the model file yet, the first request took 9–15 s. Raise `OLLAMA_KEEP_ALIVE` if you prefer speed over free RAM.
 
@@ -238,7 +238,7 @@ Building it surfaced a few things that tutorials don't really cover:
 
 - **Model size vs. latency** — in early rounds a 4B model rewrote better but took 5–8 s, and a 1B model was fast but missed real typos. Gemma 4 E2B (2B effective) ended that trade-off at about 1 s, after disabling its "thinking" and fixing the temperature.
 - **Keeping a model in RAM** — loading the model takes 3–6 s (9–15 s after a reboot). `keep_alive` keeps it warm between requests but holds 4.3 GB of RAM; TextPolish frees it after 5 minutes idle. It's a trade-off you have to tune per machine.
-- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–1.1 s, close to Gemini Flash-Lite over the network (~0.5 s). Local wins on privacy and offline use, not on raw speed, and only when the model is already in RAM.
+- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–1.1 s, close to Gemini Flash-Lite over the network (~0.5 s). Once loaded, local matches the cloud on speed and adds privacy and offline use.
 - **Integrating an LLM into an OS-level tool** — the LLM part ended up being the simplest piece. The hard parts were the global shortcut, clipboard handling, and making a window appear above fullscreen apps.
 
 Beyond the technical side, this project was also an exercise in building something the way a real open source project is built — using Conventional Commits (`feat:`, `fix:`, `chore:`...), maintaining a proper `LICENSE`, writing a README that someone else can actually follow, and structuring code so it makes sense to a stranger reading it on GitHub. Small habits that make a big difference when a project grows or gets contributors.
