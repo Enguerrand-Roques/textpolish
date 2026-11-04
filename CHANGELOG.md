@@ -2,7 +2,10 @@
 
 All notable changes to TextPolish. Versions follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [2.1.0] — 2026-11-04
+
+Fixes you can trust: doubtful fixes wait for a click, and a grammar checker
+catches what the model misses.
 
 ### Added
 - **Safe by default.** A fix that is not a recognised kind of mistake is
@@ -18,7 +21,12 @@ All notable changes to TextPolish. Versions follow [Semantic Versioning](https:/
   ("j'ai pas" → "je n'ai pas") are off. About 15 ms per check, ~540 MB of RAM.
 - Larger Correction test sets: 130 French and 123 English messages in
   `benchmarks/eval/`, plus three held-out sets, each written before the change
-  it judges (Rounds 7–10 in the benchmark report).
+  it judges (Rounds 7–10 in the benchmark report), and a severity rubric:
+  every failure is classified as grave, minor or missed.
+
+### Fixed
+- Eight common English words ("or", "to", "in", "on"…) had dropped out of the
+  language detector; short English texts could be treated as French.
 
 ## [2.0.0] — 2026-11-04
 
@@ -73,5 +81,6 @@ First release: menu bar app with a global shortcut (⌘⇧P), Casual, Pro and
 custom rewriting with local Ollama models (`gemma3:1b` and `gemma3:4b`),
 macOS and Windows.
 
+[2.1.0]: https://github.com/Enguerrand-Roques/textpolish/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Enguerrand-Roques/textpolish/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/Enguerrand-Roques/textpolish/releases/tag/v1.0.0

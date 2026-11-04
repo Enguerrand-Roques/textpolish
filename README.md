@@ -3,6 +3,11 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Tests](https://github.com/Enguerrand-Roques/textpolish/actions/workflows/tests.yml/badge.svg)
 
+> **In short**
+> - **What:** a Mac tool that fixes the text you select, with an AI model running on your Mac. It is built on two sides: the **interface** (a popup that adapts to the text and lets you accept or ignore each fix) and the **mechanism behind it** (a model chosen by benchmark, safety rules, a grammar checker).
+> - **Key number:** on 174 sentences it had never seen, 95 % come out as expected by default; fixes it isn't sure about wait for your click, so a fix that changes your meaning is rare (1 in 802 test sentences).
+> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.
+
 **TextPolish** polishes your text using a local AI model — no internet, no subscription, no data sent anywhere.
 
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`). It runs quietly in the macOS menu bar.
@@ -15,7 +20,7 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
 
 The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Custom. Everything runs locally.
 
-→ **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png) · [what changed in 2.0](CHANGELOG.md)
+→ **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png) · [what changed in each version](CHANGELOG.md)
 
 > **About this project.** A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. It is not distributed (installing needs Python, Ollama and a 4.3 GB model), so its users are me and the tests. What it shows:
 > - **Product and UX:** a popup that adapts to the text, three modes, English and French, ten iterations ([case study](https://enguerrand-roques.github.io/textpolish/case-study.html)).

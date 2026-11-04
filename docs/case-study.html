@@ -149,6 +149,11 @@
          padding: 8px 10px; border-radius: 8px; white-space: nowrap; opacity: 0; transition: opacity .12s; }
   .tip.on { opacity: 1; }
 
+  /* In short: the three-line summary under the hero */
+  .tldr { background: var(--sheet); border-left: 3px solid var(--blue); border-radius: 0 12px 12px 0;
+          padding: 16px 20px; margin-top: 8px; display: grid; gap: 8px; font-size: 0.98rem; }
+  .tldr p { margin: 0; }
+
   /* Decision log */
   .decisions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 22px; }
   .decision { background: var(--sheet); border-radius: 12px; padding: 18px 20px; }
@@ -189,6 +194,11 @@
 </header>
 
 <main>
+<section class="col tldr" aria-label="In short">
+  <p><b>What:</b> a Mac tool that fixes the text you select, with an AI model running on your Mac. I designed both sides: the <b>interface</b> (a popup that adapts to the text, where each fix is accepted or ignored) and the <b>mechanism behind it</b> (a model chosen by benchmark, safety rules, a grammar checker).</p>
+  <p><b>Key number:</b> on 174 sentences it had never seen, 95 % come out as expected by default; fixes it isn't sure about wait for a click, so a fix that changes the meaning is rare (1 in 802 test sentences).</p>
+  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.</p>
+</section>
 <section class="col">
   <h2>Why I built it</h2>
   <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
