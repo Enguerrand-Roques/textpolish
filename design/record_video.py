@@ -12,6 +12,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 
@@ -125,6 +126,29 @@ def by_title(items, title):
 
 
 # ── Set the stage ───────────────────────────────────────────────────────────
+# A plain-text file: no formatting toolbar, and a neutral title.
+DOC = os.path.join(tempfile.gettempdir(), "Message.txt")
+
+
+def open_document():
+    osa('tell application "TextEdit" to close every document saving no')
+    with open(DOC, "w") as f:
+        f.write("")
+    subprocess.run(["open", "-a", "TextEdit", DOC], check=True)
+    time.sleep(1.2)
+    osa(f'''tell application "TextEdit"
+      activate
+      set bounds of front window to {{{WIN[0]}, {WIN[1]}, {WIN[0] + WIN[2]}, {WIN[1] + WIN[3]}}}
+    end tell''')
+    time.sleep(0.6)
+
+
+def clear_document():
+    """Empty and save, so the window behind the menu bar shows no text."""
+    osa('tell application "TextEdit" to set text of front document to ""')
+    osa('tell application "TextEdit" to save front document')
+    time.sleep(0.4)
+
 def fresh_text():
     """Empty document whose typing size is 24 pt."""
     osa('tell application "TextEdit" to set text of front document to "x"')
@@ -140,12 +164,7 @@ def select_all():
 
 def film_demo():
     mouse(Quartz.kCGEventMouseMoved, 1460, 940)  # cursor out of the shot
-    osa(f'''tell application "TextEdit"
-      activate
-      if (count of documents) = 0 then make new document
-      set bounds of front window to {{{WIN[0]}, {WIN[1]}, {WIN[0] + WIN[2]}, {WIN[1] + WIN[3]}}}
-    end tell''')
-    time.sleep(1)
+    open_document()
 
 
 
@@ -221,13 +240,7 @@ def film_demo():
 
 def film_language():
     """Clip 3: menu → Language → Français, then the popup in French."""
-    osa('tell application "TextEdit" to activate')
-    osa(f'tell application "TextEdit" to set text of front document to {json.dumps(TEXT_FR, ensure_ascii=False)}')
-    for _ in range(5):  # TextEdit sometimes applies the size late
-        osa('tell application "TextEdit" to set size of text of front document to 22')
-        time.sleep(0.4)
-        if osa('tell application "TextEdit" to get size of character 1 of front document') == "22":
-            break
+    open_document()  # empty while the menu is open: no text behind it
     item = status_item()
     ix, iy, iw, ih = frame_of(item)
     cx, cy = ix + iw / 2, iy + ih / 2
@@ -253,6 +266,8 @@ def film_language():
     time.sleep(0.6)
     mark("français")
     AXUIElementPerformAction(french, "AXPress")
+    osa(f'tell application "TextEdit" to set text of front document to {json.dumps(TEXT_FR, ensure_ascii=False)}')
+    osa('tell application "TextEdit" to set size of text of front document to 22')
     time.sleep(1.0)
     mouse(Quartz.kCGEventMouseMoved, 1460, 940)
     select_all()
@@ -301,6 +316,7 @@ if LANG_ONLY:
 if not MENU_ONLY:
     film_demo()
 osa('tell application "TextEdit" to activate')
+clear_document()
 time.sleep(1)
 item = status_item()
 ix, iy, iw, ih = frame_of(item)
