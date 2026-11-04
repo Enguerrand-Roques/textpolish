@@ -203,10 +203,10 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 | Mode | Tested on | How it is scored | Result | Warm | Cold |
 |------|-----------|------------------|-------:|-----:|-----:|
 | Correction | 174 sentences never seen before (86 FR, 88 EN) | the fix must match an expected answer | **165 / 174** (95 %) | 0.9 s | 5.0 s |
-| Pro | 10 messages (5 FR, 5 EN) | automatic checks: same language, no "Dear [Name]", sensible length, actually rewritten | 10 / 10 | 1.1 s | 3.4 s |
-| Custom | 6 requests (3 FR, 3 EN) | automatic checks: translated when asked, shorter when asked, otherwise changed and in the right language | 6 / 6 | 1.1 s | 3.1 s |
+| Pro | 50 messages (25 FR, 25 EN) | automatic checks: the facts are kept (names, days, times, amounts), no invented greeting, sign-off or placeholder, right language | 48 / 50, 0 real problem after reading | 0.9 s | 3.4 s |
+| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list, one sentence, "vous"…) and the facts are kept | 29 / 30, 1 real problem | 0.8 s | 3.1 s |
 
-Correction is where the testing went: 802 sentences in all, held-out sets and a severity rubric (1 grave fix left in 802: "This kind of mistakes" → "This kinds of mistakes") ([report](benchmarks/BENCHMARK_REPORT.md)). Pro and Custom are only checked on a handful of cases and read by hand, so their 100 % means "no problem found", not "proven": a rewrite has no single right answer, which makes it harder to score. That is the next gap to close.
+Correction is where most of the testing went: 802 sentences, held-out sets and a severity rubric (1 grave fix left in 802: "This kind of mistakes" → "This kinds of mistakes"). A rewrite has no single right answer, so Pro and Custom are checked for what can go wrong rather than scored on style; every failure was read by hand. The 2 Pro failures turned "quote" into "quotation" (the fact is kept); the real Custom problem: "make it more positive" turned "two weeks behind schedule" into "will be completed shortly". Details in the [report](benchmarks/BENCHMARK_REPORT.md).
 
 Warm = median per sentence with the model in RAM. Cold = `ollama stop`, then one request, median of 3 runs (range 3.0–6.3 s); the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
 

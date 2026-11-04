@@ -14,6 +14,11 @@ class TestFacts:
     def test_facts_survive_case_and_accents(self):
         assert missing_facts("La réunion est décalée à MARDI, 14 h", ["mardi", "14"]) == []
 
+    def test_numbers_in_words_or_with_separators_count(self):
+        assert missing_facts("une réunion à quinze heures, trois mille euros", ["15", "3000"]) == []
+        assert missing_facts("We reached 1,000 customers in eighteen days", ["1000", "18"]) == []
+        assert missing_facts("We reached 1,200 customers", ["1000"]) == ["1000"]
+
     def test_a_changed_day_is_caught(self):
         assert missing_facts("Nous nous verrons vendredi", ["jeudi"]) == ["jeudi"]
 
@@ -38,3 +43,5 @@ class TestCustom:
                                "On a fini. Le client est content.", [], _lang) == ["request not met (one_sentence)"]
         assert custom_problems("vous", "Tu peux venir ?", "Vous pouvez venir ?", [], _lang) == []
         assert custom_problems("vous", "Tu peux venir ?", "Tu peux venir, vous ?", [], _lang) != []
+        assert custom_problems("vous", "Tu m'envoies le rapport ?", "Envoyez-moi le rapport.", [], _lang) == []
+        assert custom_problems("bullets", "pain, lait et œufs", "Pain\nLait\nŒufs", [], _lang) == []

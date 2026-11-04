@@ -1,16 +1,69 @@
-# TextPolish — Benchmark Report
+# TextPolish — Benchmark report
 
-## Summary — 17 models, 10 rounds (April → November 2026)
+How TextPolish was measured: which model, how well it corrects, and how it was
+kept honest. Everything ran on a MacBook Air M2 with 16 GB, through Ollama.
+Every number comes from a raw output kept in [`results/`](results/), on a test
+set kept in [`eval/`](eval/).
 
-Every model below was run on the same machine (MacBook Air M2, 16 GB) through Ollama.
-Rounds 1–6 chose the model; Rounds 7–10 tested the whole app with it. Rounds 1-4 scored
-outputs with an LLM judge (Claude) on a 10-case corpus; Round 5 was a targeted bug
-investigation; from Round 6 on, scores are counts against expected answers
-(`design/model_eval.py`), not opinions. Raw outputs: `benchmarks/results/`.
-17 models were tested; an 18th (`gemma4:e4b-nvfp4`) failed to download.
+## At a glance
 
-In the table, "Best result" keeps the unit of the round it comes from: **x/5** is the
-judge's score (Rounds 1–4), **x/12** is right answers on the 12-sentence set (Round 6).
+| Mode | Tested on | How it is scored | Result |
+|---|---|---|---:|
+| Correction | 174 sentences never seen before (86 FR, 88 EN) | the fix must match an expected answer | **165 / 174** (95 %) |
+| Correction | all 802 test sentences, every failure classified | grave, minor or missed ([rubric](#severity-rubric-written-before-classifying-november-4-2026)) | 762 right, **1 grave** |
+| Pro | 50 messages (25 FR, 25 EN) | automatic checks: facts kept, no invented greeting or placeholder, right language | **48 / 50**, 0 real problem after reading |
+| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list…) and facts are kept | **29 / 30**, 1 real problem |
+
+Speed with the model loaded: 0.5–1.1 s per sentence, 3–4 s for a 370-character
+message; the first request after a pause waits 3–6 s while the model loads.
+
+**Three things the measurements changed:**
+1. **One model for every mode** (Gemma 4 E2B): as good at correcting as the
+   best, better at rewriting, and switching modes no longer reloads a model.
+2. **A wrong fix is worse than a missed one:** fixes that aren't a known kind of
+   mistake are shown but not applied; on unseen sentences this cut wrong fixes
+   from 6 to 1.
+3. **Rules on top of the model:** LanguageTool fixes the grammar the model
+   misses ("quand au", "have ate") in about 15 ms.
+
+## How it is measured
+
+- **Expected answers, not opinions.** Since Round 6 a correction scores only if
+  it matches an expected answer (several are accepted when two are right).
+  Rounds 1–4 used an AI judge scoring out of 5; those scores are kept but not
+  compared with the later ones.
+- **Test sets frozen before each change.** A change is tuned on development
+  sentences, then judged once on a held-out set written and committed before
+  it, so the score can't be tuned to the test. Three held-out sets so far.
+- **Every failure classified.** Grave (meaning changed, mistake introduced),
+  minor (partial fix, valid variant) or missed (left as written), with a
+  rubric written before counting.
+- **Rewrites checked for what can go wrong.** Pro and Custom have no single
+  right answer, so their checks look for lost facts, invented text, the wrong
+  language and unmet requests, and every failure is read by hand.
+- **Limits:** every test sentence was written for the test, not collected from
+  users; Pro and Custom quality (tone, style) is not scored, only their errors.
+
+## The 11 rounds
+
+| Round | When | Question | Answer |
+|---|---|---|---|
+| 1 | Apr 2026 | Which small model, judged by an AI? | Gemma 3 1B for corrections, 4B for rewrites; prompts rewritten in English |
+| 2 | Apr 2026 | Did the English prompts fix the language mix-ups? | Partly: 1B still translated French Pro messages, so the app now tells the model the language |
+| 3 | Apr 2026 | Are the QAT builds better? | Yes for 1B, not for 4B |
+| 4 | Sep 2026 | Do the new models (Gemma 4, Qwen 3.5, Ministral 3) beat them? | Not outright; Gemma 4 needs "thinking" off |
+| 5 | Sep 2026 | Why is "opérationel" never fixed? | Correction moved to Ministral 3 3B |
+| 6 | Nov 2 | Which model, scored against expected answers? | Gemma 4 E2B for all three modes, temperature 0 for Correction |
+| 7 | Nov 4 | Does 12/12 hold on 253 sentences? | No: 95 % French, 93 % English |
+| 8 | Nov 4 | Can doubtful fixes be held instead of applied? | Yes: 3 of 8 wrong fixes blocked on unseen text |
+| 9 | Nov 4 | Known confusions and a dictionary? | Wrong fixes on unseen text: 6 → 1 |
+| 10 | Nov 4 | Does LanguageTool catch the misses? | English 84 → 86 / 88, French 78 → 79 / 86 |
+| 11 | Nov 4 | Pro and Custom on 80 cases? | 48 / 50 and 29 / 30; one real problem |
+
+## The 17 models
+
+"Best result" keeps the unit of its round: **x/5** is the AI judge's score
+(Rounds 1–4), **x/12** is right answers on the 12-sentence set (Round 6).
 
 | Model | Rounds | Best result | Why it was kept or dropped |
 |-------|--------|-------------|----------------------------|
@@ -33,36 +86,23 @@ judge's score (Rounds 1–4), **x/12** is right answers on the 12-sentence set (
 | `command-r7b` | 1 | 3.90/5, 11.8 s | Too slow |
 | `qwen3:4b` | 1 | — | Timed out (thinking enabled) |
 
-**What the research changed in the app**, beyond the model choice: prompts in English with a
-same-language rule (Round 1), a small fixed `num_ctx` (Round 2, sized to the input since November), `"think": false` for
-hybrid-reasoning models (Round 4), a stricter language detector and Markdown cleanup (Round 6),
-and per-mode temperature (Round 6). Later the same day, filming the demo showed that the
-"answer in the input language" rule blocked translation requests on long texts; in Custom
-the rule now yields to the instruction. Only `gemma4:e2b-it-qat` is installed now; every other
-model was removed after testing.
+## Round by round
 
-**After the model was chosen (Rounds 7–10)**, the tests moved from models to the whole app:
-a 253-sentence development set (Round 7: 95 % French, 93 % English), review rules that hold
-doubtful fixes instead of applying them (Rounds 8–9), and LanguageTool after the model (Round
-10). Each change was judged on a held-out set written and committed before it, and every
-failure is classified as grave, minor or missed with a rubric written first. On all 802 test
-sentences the current app gets 762 right by default, with 1 grave fix; on the last unseen set
-(174 sentences), 165 right and 1 grave fix, since fixed.
+Each round is folded: open the one you need. Raw outputs are in [`results/`](results/), the test sets in [`eval/`](eval/).
 
----
-
-## Round 1 — April 5–6, 2026
+<details>
+<summary><b>Round 1 — April 5–6, 2026</b></summary>
 
 **Goal:** Identify the best local Ollama model for TextPolish on Apple M2 16 GB.
 
-### Methodology
+#### Methodology
 
 - **Corpus:** 10 representative cases (pro/casual, French/English, short/long, with typos)
 - **Models tested:** gemma3:1b, gemma3:1b-it-qat, gemma3:4b, gemma3:4b-it-qat, command-r7b, qwen3:4b (timed out)
 - **Quality judge:** Claude Haiku 4.5 (Anthropic API), scoring 1–5 on three criteria
 - **Configuration:** `keep_alive: 0` (model reloaded every call); the harness never sets `num_ctx`, so Ollama's default applies
 
-### Results
+#### Results
 
 | Model | Median latency | Correction | Tone | Preservation | **Overall** | Size |
 |-------|---------------:|----------:|-----:|-------------:|------------:|-----:|
@@ -73,7 +113,7 @@ sentences the current app gets 762 right by default, with 1 grave fix; on the la
 | `command-r7b` | 11.8s | 4.9/5 | 3.2/5 | 3.6/5 | 3.90/5 | 5.1 GB |
 | `qwen3:4b` | — | — | — | — | timeout | 2.5 GB |
 
-### Key findings
+#### Key findings
 
 **1. All models responded in French on English input** — identified as a prompt engineering issue, not a model limitation. Prompts were in French and small models anchored on the prompt language rather than the input language.
 
@@ -81,7 +121,7 @@ sentences the current app gets 762 right by default, with 1 grave fix; on the la
 
 **3. `num_ctx: 1024` has no quality impact** — the longest case in the corpus is ~544 tokens. `num_ctx: 1024` provides a safety margin while reducing KV cache from ~2 GB to ~16 MB.
 
-### Optimizations applied to the app after Round 1
+#### Optimizations applied to the app after Round 1
 
 These changed `llm.py` and `config.py`; the benchmark harness kept `keep_alive: 0` and the default `num_ctx` in every round.
 
@@ -92,20 +132,21 @@ These changed `llm.py` and `config.py`; the benchmark harness kept `keep_alive: 
 | `num_ctx` | `131 072` (default) | `1 024` | −2–4s + −2 GB RAM |
 | Prompts | French, loose | English, strict language-match rule | language bug fix |
 
----
+</details>
 
-## Round 2 — April 7, 2026
+<details>
+<summary><b>Round 2 — April 7, 2026</b></summary>
 
 **Goal:** Verify the language bug fix and validate the per-mode model architecture (`gemma3:1b` for casual, `gemma3:4b` for pro) after rewriting prompts in English.
 
-### What changed since Round 1
+#### What changed since Round 1
 
 - All three prompt files (`pro.txt`, `casual.txt`, `custom.txt`) rewritten in English
 - Rule 1 in every prompt: *"Output in the SAME language as the input"*
 - `casual.txt` now explicitly forbids restructuring: *"Keep the original structure exactly — same sentences, same order, same length"*
 - Per-mode model selection introduced in `llm.py`
 
-### Results
+#### Results
 
 | Model | Median latency | Correction | Tone | Preservation | **Overall** | vs Round 1 |
 |-------|---------------:|----------:|-----:|-------------:|------------:|----------:|
@@ -114,7 +155,7 @@ These changed `llm.py` and `config.py`; the benchmark harness kept `keep_alive: 
 
 Both models improved dramatically on every axis — quality up, latency down.
 
-### Language bug: status
+#### Language bug: status
 
 | Case | gemma3:1b | gemma3:4b |
 |------|-----------|-----------|
@@ -133,7 +174,7 @@ Both models improved dramatically on every axis — quality up, latency down.
 
 **French pro input → gemma3:1b still translates to English.** The 1b model is too small to reliably follow the language-match rule when the system prompt is in English and the task requires professional rewriting. It defaults to English as its strongest language. gemma3:4b follows the rule correctly on all cases.
 
-### Findings
+#### Findings
 
 **1. Language bug fixed for English input on both models**
 Round 1 showed every model replying in French on English input. With the new English prompts and explicit language rule, both models now correctly output English for English input — scores of 4.0–5.0/5 on all four English cases.
@@ -156,7 +197,7 @@ gemma3:1b went from 4.18s (Round 1) to 1.87s (−55%). gemma3:4b from 8.71s to 4
 **6. Remaining weakness: heavy abbreviations in casual mode**
 `fr_casual_abbrev` ("tkt c bon g geré, jte redis ds 10 min") scores 2/5 on correction for both models — they barely touch it. This is actually correct behavior: casual mode is designed to preserve style, not expand abbreviations. The low correction score reflects the judge's expectation, not a real bug. To be documented as a known scope limitation.
 
-### Current configuration (post Round 2)
+#### Current configuration (post Round 2)
 
 | Setting | Value | Rationale |
 |---------|-------|-----------|
@@ -166,24 +207,25 @@ gemma3:1b went from 4.18s (Round 1) to 1.87s (−55%). gemma3:4b from 8.71s to 4
 | `num_ctx` | `1024` | Max corpus token count is ~544; 1024 is safe margin |
 | Model unload on switch | enabled | Prevents simultaneous model cohabitation (~5 GB peak avoided) |
 
-### Next steps
+#### Next steps
 
 - ~~Re-run after Gemma 4 small variants become available on Ollama~~ → gemma4 not yet on Ollama as of 2026-04-14; re-run when available
 - ~~Consider a language-detection pre-pass~~ → **Done**: `_detect_language()` added to `llm.py`, prepends explicit language instruction to every prompt
 
----
+</details>
 
-## Round 3 — April 14, 2026
+<details>
+<summary><b>Round 3 — April 14, 2026</b></summary>
 
 **Goal:** Validate QAT variants (`gemma3:1b-it-qat`, `gemma3:4b-it-qat`) using the fixed English prompts and language injection introduced after Round 2. Do they outperform standard Q4_K_M at `num_ctx: 1024`?
 
-### Context
+#### Context
 
 Round 1 found QAT to be ~30% faster than Q4_K_M (`gemma3:4b-it-qat` 6.1s vs `gemma3:4b` 8.7s). Round 3 tests whether QAT keeps that advantage with the English prompts.
 
 Note: the benchmark runner calls Ollama directly and does **not** pass through `polish_text()` in `llm.py`. Language injection (`_detect_language`) is therefore **not active** during benchmarking — results reflect raw model capability, not the app pipeline.
 
-### Latency Results
+#### Latency Results
 
 | Model | Median | Mean | P95 | Min | Max |
 |-------|-------:|-----:|----:|----:|----:|
@@ -192,7 +234,7 @@ Note: the benchmark runner calls Ollama directly and does **not** pass through `
 | `gemma3:4b-it-qat` | 5.27s | 5.89s | 9.35s | 4.20s | 9.35s |
 | `gemma3:4b` | **4.23s** | 4.54s | 7.60s | 3.31s | 7.60s |
 
-### Quality Scores (judge: claude-opus-4-6, run 2026-04-15)
+#### Quality Scores (judge: claude-opus-4-6, run 2026-04-15)
 
 | Model | Median | Correction | Tone | Preservation | **Overall** |
 |-------|-------:|----------:|-----:|-------------:|------------:|
@@ -203,7 +245,7 @@ Note: the benchmark runner calls Ollama directly and does **not** pass through `
 
 Note: benchmark runs models without the `_detect_language()` injection from `llm.py` — both 1b models translate French pro text to English in raw mode. In the actual app, the language fix is active.
 
-### Key Findings
+#### Key Findings
 
 **1. `gemma3:1b-it-qat` beats `gemma3:1b` on both axes**
 Faster (1.77s vs 1.96s, −10%) and better quality (4.53 vs 4.47, +0.06). Clear config switch for casual mode.
@@ -214,7 +256,7 @@ Quality: 4.77 vs 4.67 (+0.10). Latency: 5.79s vs 4.94s (+17%). The quality gain 
 **3. The QAT advantage depends on model size**
 For the 1b model, QAT is a strict improvement. For the 4b model, QAT is slower. The Round 1 gap was not reproduced; the harness never changed `num_ctx`, so the cause is unknown.
 
-### Current configuration (updated after Round 3)
+#### Current configuration (updated after Round 3)
 
 | Setting | Value | Rationale |
 |---------|-------|-----------|
@@ -224,29 +266,30 @@ For the 1b model, QAT is a strict improvement. For the 4b model, QAT is slower. 
 | `num_ctx` | `1024` | Max corpus token count is ~544; 1024 is safe margin |
 | Language injection | enabled (`llm.py`) | Fixes French pro mode for 1b models in the app pipeline |
 
-### Next steps
+#### Next steps
 
 - Re-run when `gemma4` variants become available on Ollama
 
----
+</details>
 
-## Round 4 — September 2, 2026
+<details>
+<summary><b>Round 4 — September 2, 2026</b></summary>
 
 **Goal:** Evaluate whether newer model generations released since Round 3 (April 2026) beat the current configuration (`gemma3:1b-it-qat` casual / `gemma3:4b` pro) on Apple M2 16 GB.
 
-### Context
+#### Context
 
 Between Round 3 and Round 4, several relevant model families shipped new generations: Gemma 4 (Google, April 2026), Qwen3.5 (Alibaba, Feb–March 2026, including a dedicated "Small"/edge series), and Ministral 3 (Mistral, Dec 2025). Ollama itself was upgraded from `0.20.2` to `0.33.2` for this round.
 
 **Models tested:** `gemma3:1b-it-qat`, `gemma3:4b` (current config, as baseline), `qwen3.5:4b`, `qwen3.5:0.8b`, `gemma4:e2b-it-qat`, `gemma4:e4b-it-qat`, `ministral-3:8b`, `ministral-3:3b` — 8 models × 10 cases = 80 runs, judged by `claude-opus-4-6` (same corpus and judge as Round 3).
 
-### Pre-run findings (before the comparative benchmark)
+#### Pre-run findings (before the comparative benchmark)
 
 **1. Ollama's MLX engine is present but not used for these GGUF models.** Upgrading Ollama pulls in `mlx`/`mlx-c` as bundled dependencies, and a `mlx_metal_v3` runner ships in `libexec/lib/ollama/`. However, a live-traced generation (`gemma3:1b-it-qat`) shows Ollama routing through `llama-server` (llama.cpp) with the classic Metal GPU backend (`msg="using llama-server for model"`), not the MLX runtime. All models pulled here are standard GGUF blobs, which llama.cpp handles directly — the MLX path would require MLX-native model weights, not something these Ollama library tags provide. **No latency gain from the Ollama/MLX transition was observed on this M2 16 GB for the models tested; the standalone MLX backend explored in earlier project notes is not made obsolete by this Ollama upgrade.**
 
 **2. Gemma 4 has "thinking" enabled by default and it is catastrophic for this use case.** A raw call to `gemma4:e2b-it-qat` on a short casual-mode case took **51.6s** and generated **1099 tokens** internally (`eval_count`) before returning a 20-token answer — a 28x latency regression vs. `gemma3:1b-it-qat`. Passing `"think": false` in the `/api/generate` payload eliminates this entirely: the same call dropped to **1.09s** with `eval_count: 25`, correct output preserved. `benchmark_models.py` (`run_case()`) was patched to always send `"think": false` — harmless for models without a thinking mode (confirmed on `gemma3:1b-it-qat`, no behavior change), and this is now required for anyone using Gemma 4 (or another hybrid-reasoning model) through TextPolish. **If Gemma 4 is ever adopted in production, `llm.py` must also send `"think": false` in its request payload** — it did not at the time (added in Round 6).
 
-### Results — Casual mode
+#### Results — Casual mode
 
 | Model | Median latency | **Overall** | vs. current (`gemma3:1b-it-qat`) |
 |-------|---------------:|------------:|-----------------------------------|
@@ -259,7 +302,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 | `qwen3.5:4b` | 6.46s | 4.40/5 | +0.33 quality, 4.8x slower |
 | `ministral-3:8b` | 12.58s | 4.53/5 | +0.46 quality, 9.4x slower |
 
-### Results — Pro mode
+#### Results — Pro mode
 
 | Model | Median latency | **Overall** | vs. current (`gemma3:4b`) |
 |-------|---------------:|------------:|-----------------------------|
@@ -271,7 +314,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 | `gemma4:e4b-it-qat` | 9.87s | 5.00/5 | Same quality, +30% latency (reject) |
 | `ministral-3:8b` | 14.84s | 4.87/5 | −0.13 quality, +95% latency (reject) |
 
-### Key findings
+#### Key findings
 
 **1. No candidate beats the current configuration outright.** For casual mode, every candidate that improves quality does so at 3-9x the latency — a much worse tradeoff than the ~1.3-2s target established since Round 2. For pro mode, no model matches or beats `gemma3:4b`'s perfect 5.00/5 while also being faster; the two that are faster (`ministral-3:3b`, `gemma4:e2b-it-qat`) both give up meaningful quality.
 
@@ -283,28 +326,29 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 **5. `ministral-3:8b` produced an unwanted formatting artifact** on `fr_pro_long` — it added a bold Markdown subject line (`**Objet : ...**`) not present in the input or requested by the prompt. Judge score didn't penalize it heavily, but it is a real deviation TextPolish's clipboard-paste flow would surface directly to the user.
 
-### Current configuration (unchanged after Round 4)
+#### Current configuration (unchanged after Round 4)
 
 | Setting | Value | Rationale |
 |---------|-------|-----------|
 | `OLLAMA_MODEL_CASUAL` | `gemma3:1b-it-qat` | Still the best speed/quality tradeoff — no candidate matches its ~1.3-1.5s latency |
 | `OLLAMA_MODEL_PRO` | `gemma3:4b` | Still the only model reaching 5.00/5 overall on the pro corpus |
 
-### Next steps
+#### Next steps
 
 - Re-run when Phi-5 (status unconfirmed as of Sept 2026) or a further Qwen3.5/Ministral generation ships with a smaller/faster variant.
 - If a "fast pro" mode is ever introduced as a user-facing option, `ministral-3:3b` is the pre-vetted candidate (already pulled locally, `think` not applicable — no hybrid reasoning to disable).
 - Before any future Gemma 4 adoption: add `"think": False` to the request payload in `llm.py` (not just `benchmark_models.py`) — otherwise casual mode would regress to 50+ seconds. (Done in Round 6.)
 
----
+</details>
 
-## Round 5 — September 16, 2026
+<details>
+<summary><b>Round 5 — September 16, 2026</b></summary>
 
 **Goal:** Investigate a concrete user-reported bug — casual mode left `"opérationel"`/`"operationel"` uncorrected (should be `"opérationnel"`) — and decide whether to change the casual model.
 
 **Not a corpus benchmark run** — this round is a targeted single-case investigation (`"RH et opérationel on veut plus operationel"`), run directly against Ollama outside `benchmark_models.py`, prompted by a real failure the user hit in production use.
 
-### Findings
+#### Findings
 
 **1. `gemma3:1b-it-qat` (casual) fails 100% of the time on this typo, not intermittently.** 3/3 runs returned the input unchanged. Unlike the Round 4 `"yo"/"frérot"` bug (non-deterministic — sometimes fine, sometimes not), this is a consistent miss: the model doesn't recognize `"opérationel"` as misspelled at all. A prompt fix (Round 4's added example) doesn't help here — this isn't an instruction-following problem, it's a knowledge/detection gap for this specific word.
 
@@ -312,27 +356,28 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 **3. Re-tested fairly with the real `pro.txt` prompt (not `casual.txt`) before touching the pro model.** Under its actual prompt, `gemma3:4b` correctly fixes both occurrences (`"opérationnel"`, `"opérationnelle"`) — the earlier casual-prompt test was not representative of real pro-mode behavior. `ministral-3:3b` under `pro.txt`, however, fabricated an entire formal email (`"**Objet:**"`, `"Bonjour,"`, `"Cordialement,"`, invented signature placeholder) from a two-clause fragment — a severe over-generation failure, worse than the original bug. **`ministral-3:3b` is not suitable for pro mode.**
 
-### Decision
+#### Decision
 
 | Setting | Before | After | Rationale |
 |---------|--------|-------|-----------|
 | `OLLAMA_MODEL_CASUAL` | `gemma3:1b-it-qat` | `ministral-3:3b` | Fixes a reproducible real-world typo class gemma3:1b/4b both miss; ~+2.7s median latency accepted as the tradeoff (1.3s → ~4.1s per Round 4 timing) |
 | `OLLAMA_MODEL_PRO` | `gemma3:4b` | unchanged | Already handles this case correctly under its real prompt; `ministral-3:3b` fabricates content in pro mode — a regression, not an improvement |
 
-### Next steps
+#### Next steps
 
 - Re-run the full 10-case corpus (`benchmarks/benchmark_models.py --models ministral-3:3b gemma3:1b-it-qat --judge`) now that casual has changed, to get updated aggregate scores rather than relying on a single-case spot check.
 - Watch for further over-generation from `ministral-3:3b` in casual mode on longer/more ambiguous inputs — this round only tested a short fragment.
 
----
+</details>
 
-## Round 6 — November 2, 2026
+<details>
+<summary><b>Round 6 — November 2, 2026</b></summary>
 
 **Goal:** Pick the best local model per mode after Ollama 0.40 (MLX engine for some architectures) and new small models, with a test set that has expected answers instead of a judge.
 
 **Method** (`design/model_eval.py`): Correction is scored against expected outputs on 12 realistic sentences (9 with mistakes, 3 already correct that must stay untouched), exact match after normalizing quotes and spaces. Pro and Custom use checks: language kept or translated as asked, no Markdown or email boilerplate, sensible length, plus reading every output by hand. Latency: first call (cold) and median of warm calls, Ollama 0.40.13, M2 16 GB. All requests send `"think": false`.
 
-### Correction
+#### Correction
 
 | Model | Engine | Score | Warm median | Notes |
 |-------|--------|------:|------------:|-------|
@@ -345,7 +390,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 | `qwen3.5:2b-nvfp4` | MLX | 3/12 | 0.52 s | translated, introduced mistakes |
 | `lfm3:1.7b` | MLX | 2/12 | 7.2 s | printed its reasoning into the answer |
 
-### Pro and Custom (then "Perso")
+#### Pro and Custom (then "Perso")
 
 | Model | Pro | Pro warm | Custom | Custom warm | Notes |
 |-------|----:|---------:|------:|-----------:|-------|
@@ -355,14 +400,14 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 | `qwen3.5:4b-nvfp4` | 5/5 | 2.04 s | 3/3 | 1.75 s | grammar slips ("Le réunion") |
 | `ministral-3:3b` | 3/5 | 1.98 s | 3/3* | 1.15 s | *answered a message instead of rewriting it |
 
-### Findings
+#### Findings
 
 1. **One model for all modes removes the mode-switch reload.** With `ministral-3:3b` + `gemma3:4b`, switching mode reloaded a model (~5-6 s; Ollama could not keep both in RAM on this busy 16 GB Mac). With a single Gemma 4 model, measured switches were 0.5-1 s.
 2. **MLX helps a lot but costs RAM.** `gemma4:e2b-nvfp4` was the fastest everywhere, but loading it took free memory from 52 % to 24 % and added swap on a Mac already using 20 GB of swap.
 3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting. Revised on November 4: French stop words must now outnumber English ones, so "on time as usual" stays English (`language.py`).
 4. **Temperature matters more than expected for Correction.** Gemma 4 defaults to temperature 1; three identical runs scored 9, 10 and 11/12. `llm.py` now sends 0 for Correction (same answer every run) and 0.4 for Pro/Custom (more consistent tone, still varied). Final run: **11/12** twice in a row; the remaining miss drops the "?" in "slt tu fait quoi ce soir ? on peut…". "si tout ça se passe bien" was added as an accepted answer (correct and same meaning).
 
-### Cold vs warm latency (chosen model, app pipeline)
+#### Cold vs warm latency (chosen model, app pipeline)
 
 Measured with `polish_text()` after `ollama stop` (cold) and on the next three calls (warm), 3 runs per mode, short sentences:
 
@@ -376,7 +421,7 @@ The model file stayed in macOS's file cache between runs. Cold loads with an emp
 
 The Custom mode was called "Perso" during this round; it is now **Custom** in English and **Sur mesure** in French.
 
-### English test set
+#### English test set
 
 The project and its interface are English-first, so the same evaluation was repeated on an
 English set (`design/model_eval.py --en`: their/they're, its/it's, your/you're, then/than, to/too,
@@ -388,7 +433,7 @@ subject-verb agreement, spelling, plus 3 correct sentences that must stay untouc
 | Pro | 5/5 | 5/5 (the first run also scored 5/5 but invented "Dear [Recipient Name or Hiring Manager]"; prompt fixed, and the eval now flags placeholders) | 0.94 s |
 | Custom / Sur mesure | 3/3 | 3/3 | 0.93 s |
 
-### Question-mark guard
+#### Question-mark guard
 
 The one French miss was always the same: in "slt tu fait quoi ce soir ? on peut se retrouver
 vers 19h" the model fixed "fait" but deleted the "?", merging two questions. A correction should
@@ -397,7 +442,7 @@ never remove the user's question, so `diff.keep_sentence_marks` (Correction only
 alone. Result on what the app pastes: **12/12 French, 12/12 English**. The model alone is still
 11/12 French; the guard is a rule in the app, not a better model.
 
-### Decision
+#### Decision
 
 | Setting | Before | After |
 |---------|--------|-------|
@@ -409,7 +454,10 @@ alone. Result on what the app pastes: **12/12 French, 12/12 English**. The model
 
 `gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Only `gemma4:e2b-it-qat` is kept installed; the other test models, including the `ministral-3:3b` fallback, were removed (Ollama models now take 4.3 GB). Raw outputs: `benchmarks/results/round6_20261102.md`.
 
-## Round 7 — November 4, 2026: a larger test set
+</details>
+
+<details>
+<summary><b>Round 7 — November 4, 2026: a larger test set</b></summary>
 
 12 sentences per language is a weak signal: one sentence is 8 points. Round 7
 keeps the same script and scoring (`design/model_eval.py --large`) on two
@@ -437,7 +485,7 @@ accepted. Configuration: the app as shipped (`gemma4:e2b-it-qat`, temperature
 Every miss was read; all 16 are real model errors, none is a wrong expected
 answer (raw output: `benchmarks/results/round7_20261104.md`).
 
-### Findings
+#### Findings
 
 1. **The 12/12 did not hold at scale, as expected: 93–95 %.** Accents,
    agreement, spelling and multi-mistake messages are perfect in both
@@ -462,7 +510,10 @@ answer (raw output: `benchmarks/results/round7_20261104.md`).
 The sets are written by me, not collected from real users; the next step is
 real messages.
 
-## Round 8 — November 4, 2026: wrong fixes are held, not applied
+</details>
+
+<details>
+<summary><b>Round 8 — November 4, 2026: wrong fixes are held, not applied</b></summary>
 
 Round 7 showed two kinds of failure. A **missed** mistake leaves the text as
 the user wrote it. A **wrong fix** changes what they meant ("borrow me your
@@ -493,7 +544,10 @@ The 5 left: one real word swapped for another that is not a known confusion
 ("I'm" → "Im"), and "résaux" → "réseaux", a valid correction the expected
 answer did not list. Raw output: `benchmarks/results/round8_20261104.md`.
 
-## Round 9 — November 4, 2026: known confusions, judged on a second held-out set
+</details>
+
+<details>
+<summary><b>Round 9 — November 4, 2026: known confusions, judged on a second held-out set</b></summary>
 
 The 5 wrong fixes left in Round 8 had one thing in common: a real word
 replaced by another real word that people do not actually confuse. Round 9
@@ -524,7 +578,7 @@ before, and only read for this table.
 | Missed (text left as written) | 7 | 11 | 2 | 7 | 3 | 11 |
 | Warm median per sentence | 0.83 s | 0.95 s | 1.10 s | 0.91 s | 0.83 s | 0.75 s |
 
-### Findings
+#### Findings
 
 1. **On text the rules never saw, wrong fixes went from 6 to 1 in 182
    sentences.** The one left: "je te l'écrirait" → "écrirais" (conditional)
@@ -545,7 +599,10 @@ before, and only read for this table.
 
 Raw output: `benchmarks/results/round9_20261104.md`.
 
-## Round 10 — November 4, 2026: LanguageTool after the model
+</details>
+
+<details>
+<summary><b>Round 10 — November 4, 2026: LanguageTool after the model</b></summary>
 
 What was left after Round 9 were mostly **misses**: grammar the model does not
 know ("si j'aurais", "quand au", "peut de", "have ate", fewer/less). These are
@@ -582,7 +639,7 @@ was written and committed before LanguageTool was added.
 | **Wrong fixes applied, + LanguageTool** | **3** | **2** | **0** |
 | Missed | 41 → 29 | 7 → 5 | 4 → 2 |
 
-### Findings
+#### Findings
 
 1. **English: clear gain, no cost.** 84 → 86 of 88 on unseen text; it fixed
    "less distractions" and "If I would have time"; 0 wrong fixes.
@@ -600,6 +657,44 @@ was written and committed before LanguageTool was added.
    than wrongly fixed.
 
 Raw output: `benchmarks/results/round10_20261104.md`.
+
+</details>
+
+<details>
+<summary><b>Round 11 — November 4, 2026: Pro and Custom on larger sets</b></summary>
+
+Until now Pro and Custom were checked on 10 and 6 cases. Round 11 uses 50 Pro
+messages and 30 Custom requests (half French, half English, in `eval/pro_*.json`
+and `eval/custom_*.json`), committed before the first run. A rewrite has no
+single right answer, so the checks (`design/rewrite_checks.py`) look for what
+can go wrong: a fact of the message lost (names, days, times, amounts are
+listed per message), a greeting, sign-off or placeholder the user did not
+write, the wrong language, and for Custom whether the request was met
+(translated, shorter, a list, one sentence, "vous", a question).
+
+| | First run, checks as committed | Second run, checks corrected | Real problems after reading every failure |
+|---|---:|---:|---:|
+| Pro (50) | 40/50 | **48/50** | **0** |
+| Custom (30) | 25/30 | **29/30** | **1** |
+
+#### Findings
+
+1. **The first checks were too strict, not the model.** All 10 Pro failures
+   were numbers written in words ("quinze heures", "eighteen pages"), "1,000"
+   or "quotation" for "quote": the facts were kept. The checks now read numbers
+   in words; "quote"/"quotation" was left as a failure rather than widening the
+   list of facts after seeing the results.
+2. **One real problem: "Make it more positive" erased a fact.** "The project is
+   two weeks behind schedule" became "…will be completed shortly" (and "slightly
+   behind" in the other run): to sound positive, the model drops the delay.
+3. **No invented greeting, sign-off or placeholder in 80 rewrites**, and the
+   language was always right.
+4. **Style point:** in French Pro, numbers and times sometimes come out in words
+   ("quinze heures"), which a business message would usually keep in digits.
+
+Raw output: `results/round11_20261104.md`.
+
+</details>
 
 ## Severity rubric (written before classifying, November 4, 2026)
 

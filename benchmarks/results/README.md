@@ -15,6 +15,7 @@ checked against the run it came from.
 | `round8_20261104.md` | `design/model_eval.py --large/--holdout` | safety rules, judged on the first held-out set |
 | `round9_20261104.md` | `design/model_eval.py --large/--holdout/--holdout2` | known confusions, judged on the second held-out set |
 | `round10_20261104.md` | `design/model_eval.py --holdout3` + `languagetool.improve` | LanguageTool after the model, judged on the third held-out set |
+| `round11_20261104.md` | `design/model_eval.py pro\|custom --large` | Pro (50) and Custom (30) with fact-keeping checks, two runs |
 
 Rounds 1–4 read the app's `prompts/*.txt` as they were at the time (they have
 changed since), without the app's language detection, with the default

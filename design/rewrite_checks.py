@@ -23,9 +23,34 @@ def _fold(s: str) -> str:
     return "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
 
 
+# A rewrite may write a number in words ("quinze heures", "two days") or with
+# a thousands separator ("1,000"): the fact is kept, so both count as digits.
+_UNITS = {
+    "zero": 0, "un": 1, "une": 1, "one": 1, "deux": 2, "two": 2, "trois": 3, "three": 3,
+    "quatre": 4, "four": 4, "cinq": 5, "five": 5, "six": 6, "sept": 7, "seven": 7,
+    "huit": 8, "eight": 8, "neuf": 9, "nine": 9, "dix": 10, "ten": 10, "onze": 11,
+    "eleven": 11, "douze": 12, "twelve": 12, "treize": 13, "thirteen": 13, "quatorze": 14,
+    "fourteen": 14, "quinze": 15, "fifteen": 15, "seize": 16, "sixteen": 16,
+    "dix-sept": 17, "seventeen": 17, "dix-huit": 18, "eighteen": 18, "dix-neuf": 19,
+    "nineteen": 19, "vingt": 20, "twenty": 20, "trente": 30, "thirty": 30,
+    "quarante": 40, "forty": 40, "cinquante": 50, "fifty": 50,
+}
+_SCALES = {"cent": 100, "hundred": 100, "mille": 1000, "thousand": 1000}
+_NUMBER_WORDS = re.compile(r"\b(" + "|".join(sorted(_UNITS, key=len, reverse=True)) + r")\b(?:\s+("
+                           + "|".join(_SCALES) + r"))?")
+
+
+def _digits(folded: str) -> str:
+    """'trois mille euros, 1,000 clients' -> '3000 euros, 1000 clients'."""
+    folded = re.sub(r"(?<=\d)[ ,.](?=\d{3}\b)", "", folded)
+    return _NUMBER_WORDS.sub(
+        lambda m: str(_UNITS[m.group(1)] * (_SCALES[m.group(2)] if m.group(2) else 1)), folded)
+
+
 def missing_facts(output: str, keep: list[str]) -> list[str]:
     folded = _fold(output)
-    return [fact for fact in keep if _fold(fact) not in folded]
+    numeric = _digits(folded)
+    return [fact for fact in keep if _fold(fact) not in folded and _fold(fact) not in numeric]
 
 
 def rewrite_problems(text: str, output: str, keep: list[str], lang_of) -> list[str]:
@@ -68,9 +93,13 @@ def custom_problems(kind: str, text: str, output: str, keep: list[str], lang_of)
         "to_en": lang_of(output) == "en",
         "to_fr": lang_of(output) == "fr",
         "shorter": len(output) < 0.8 * len(text) and same,
-        "bullets": len(re.findall(r"^\s*[-•*]\s", output, re.M)) >= 2 and same,
+        # a list: marked items, or one item per line
+        "bullets": (len(re.findall(r"^\s*[-•*]\s", output, re.M)) >= 2
+                    or len([ln for ln in output.splitlines() if ln.strip()]) >= 3) and same,
         "one_sentence": _sentences(output) == 1 and same,
-        "vous": bool(re.search(r"\bvous\b", output, re.I)) and not re.search(r"\b(tu|t'|ton|ta|tes)\b", output, re.I),
+        # "vous", or an imperative in -ez ("Envoyez-moi"), and no "tu"
+        "vous": bool(re.search(r"\bvous\b|\b\w+ez\b", output, re.I))
+                and not re.search(r"\b(tu|t'|ton|ta|tes)\b", output, re.I),
         "question": output.rstrip().endswith("?") and same,
         "changed": same and _fold(output) != _fold(text),
     }

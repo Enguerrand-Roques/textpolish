@@ -338,6 +338,7 @@
         <tr><td>12 sentences is a weak signal. On 130 French and 123 English messages the score fell to 95 % and 93 %; 4 of the 16 misses were wrong fixes that change the meaning (“borrow me your pen” → “borrow my pen”).</td><td>Every fix stays a suggestion to accept or ignore; the misses are listed by kind in the report.</td></tr>
         <tr><td>The wrong fixes had a pattern: a rewording, removed punctuation, an informal word “fixed”, or one real word swapped for another nobody confuses.</td><td>Those are held for review (decision 8). On 182 sentences written before the rules: 1 wrong fix applied instead of 6.</td></tr>
         <tr><td>The misses left were grammar the model doesn't know: “si j'aurais”, “quand au”, “have ate”.</td><td>A rule-based checker (LanguageTool) runs after the model (decision 9).</td></tr>
+        <tr><td>Pro and Custom were only checked on 16 cases. On 80, checked for lost facts and invented text, the first checker was too strict (it read “quinze heures” as a lost “15”), and one real problem showed: “make it more positive” erased a two-week delay.</td><td>Checker fixed and documented; the delay case stays listed as a known weakness.</td></tr>
       </tbody>
     </table>
   </div>
@@ -517,7 +518,7 @@
   <p>What the numbers above don't cover yet, and what I would test next:</p>
   <ul>
     <li><b>Real messages and real people.</b> The 802 test sentences are written by me. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
-    <li><b>Scoring Pro and Custom properly.</b> Correction was tested on 802 sentences; Pro and Custom only on 10 and 6 cases with automatic checks, because a rewrite has no single right answer. A larger set, judged by hand or by another model with a fixed grid, would show how good they really are.</li>
+    <li><b>Judging the style of Pro and Custom.</b> 80 rewrites are now checked for lost facts, invented greetings and unmet requests (1 real problem), but not for how good the tone is. That needs people, or another model with a fixed grid.</li>
     <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
     <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>
     <li><b>Windows.</b> The code runs there, but the new window has never been tested on a PC.</li>

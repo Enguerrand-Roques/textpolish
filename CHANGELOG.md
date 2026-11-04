@@ -2,6 +2,17 @@
 
 All notable changes to TextPolish. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- Larger Pro and Custom test sets (50 messages, 30 requests) with checks
+  that the facts of a message survive a rewrite, and no greeting, sign-off or
+  placeholder is invented (Round 11 in the benchmark report).
+
+### Changed
+- The benchmark report opens with the results at a glance, the method and
+  the eleven rounds in one table; each round's details are folded.
+
 ## [2.2.0] — 2026-11-04
 
 Install in one command, set up in three clicks.
