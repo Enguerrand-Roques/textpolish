@@ -696,6 +696,25 @@ Raw output: `results/round11_20261104.md`.
 
 </details>
 
+<details>
+<summary><b>Prompt check — November 4, 2026: a wider Correction prompt, not adopted</b></summary>
+
+The Correction prompt asks for spelling, accents and typos only, while the app
+also fixes agreement and verb forms (the model when they are clear,
+LanguageTool by rule). A version that also asks for agreement and verb forms
+was run the same day as the current one, on every set, with LanguageTool.
+
+| | Current prompt | Wider prompt |
+|---|---|---|
+| Development sets (253) | 242 right, 1 wrong fix applied | 247 right, 0 |
+| Held-out sets (549) | 520 right, **3 wrong fixes applied** | 518 right, **6** |
+
+The gain on the development sets does not carry over to the held-out sets,
+and wrong fixes applied double, so the current prompt stays. Raw output:
+`results/prompt_check_20261104.md`.
+
+</details>
+
 ## Severity rubric (written before classifying, November 4, 2026)
 
 A test can fail in different ways, and they do not cost the user the same.
