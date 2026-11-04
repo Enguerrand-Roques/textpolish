@@ -1,0 +1,126 @@
+[
+ {
+  "text": "I'll be a bit late tomorrow, see you around 10.",
+  "instruction": "Translate into French",
+  "kind": "to_fr",
+  "keep": [
+   "10"
+  ]
+ },
+ {
+  "text": "Thanks for your help on the project, we shipped on time thanks to you.",
+  "instruction": "Translate into French",
+  "kind": "to_fr",
+  "keep": []
+ },
+ {
+  "text": "Hi everyone, quick update on the project: we made good progress on payments but there are still bugs on the login page. I suggest we meet on Thursday to prioritize.",
+  "instruction": "Make it shorter",
+  "kind": "shorter",
+  "keep": [
+   "thursday"
+  ]
+ },
+ {
+  "text": "As we discussed in yesterday's meeting, I'm confirming that we'll move the project delivery date to March 15 so we can include the user feedback.",
+  "instruction": "Make it shorter",
+  "kind": "shorter",
+  "keep": [
+   "15",
+   "march"
+  ]
+ },
+ {
+  "text": "For tomorrow we need to buy bread, milk, eggs and coffee.",
+  "instruction": "Turn this into a list",
+  "kind": "bullets",
+  "keep": [
+   "bread",
+   "milk"
+  ]
+ },
+ {
+  "text": "The steps: create the account, confirm the email, then set up the profile.",
+  "instruction": "Turn this into a list",
+  "kind": "bullets",
+  "keep": [
+   "account",
+   "profile"
+  ]
+ },
+ {
+  "text": "The meeting is moved. It will be on Thursday. We start at 2 pm.",
+  "instruction": "Make it one sentence",
+  "kind": "one_sentence",
+  "keep": [
+   "thursday",
+   "2"
+  ]
+ },
+ {
+  "text": "We finished the site. The client is happy. We invoice on Monday.",
+  "instruction": "Make it one sentence",
+  "kind": "one_sentence",
+  "keep": [
+   "client",
+   "monday"
+  ]
+ },
+ {
+  "text": "I think we should change suppliers.",
+  "instruction": "Turn this into a question",
+  "kind": "question",
+  "keep": [
+   "supplier"
+  ]
+ },
+ {
+  "text": "We could move the launch to next week.",
+  "instruction": "Turn this into a question",
+  "kind": "question",
+  "keep": [
+   "launch"
+  ]
+ },
+ {
+  "text": "Thanks for your message, I'll get back to you tomorrow.",
+  "instruction": "Make it warmer",
+  "kind": "changed",
+  "keep": [
+   "tomorrow"
+  ]
+ },
+ {
+  "text": "The meeting is at 3 pm in room B.",
+  "instruction": "Make it funnier",
+  "kind": "changed",
+  "keep": [
+   "3",
+   "B"
+  ]
+ },
+ {
+  "text": "The project is two weeks behind schedule.",
+  "instruction": "Make it more positive",
+  "kind": "changed",
+  "keep": [
+   "weeks"
+  ]
+ },
+ {
+  "text": "I can't come to the party on Saturday.",
+  "instruction": "Make it more polite",
+  "kind": "changed",
+  "keep": [
+   "saturday"
+  ]
+ },
+ {
+  "text": "send me the file",
+  "instruction": "Make it more polite",
+  "kind": "changed",
+  "keep": [
+   "file"
+  ]
+ }
+]

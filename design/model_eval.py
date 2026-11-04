@@ -26,6 +26,7 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import diff  # noqa: E402
 import languagetool  # noqa: E402
+import rewrite_checks  # noqa: E402
 from platforms.macos.spelling import is_word  # noqa: E402
 
 import llm  # noqa: E402
@@ -175,6 +176,18 @@ if _SET:
         _large = json.load(_f)
     GOLD = [(c["text"], c["expected"]) for c in _large]
     KINDS = {c["text"]: c["kind"] for c in _large}
+KEEP = {}  # text -> facts a rewrite must keep (names, days, times, amounts)
+if "--large" in sys.argv:
+    _eval = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "benchmarks", "eval")
+    with open(os.path.join(_eval, f"pro_{LANG}.json"), encoding="utf-8") as _f:
+        _pro = json.load(_f)
+    with open(os.path.join(_eval, f"custom_{LANG}.json"), encoding="utf-8") as _f:
+        _custom = json.load(_f)
+    PRO = [c["text"] for c in _pro]
+    CUSTOM = [(c["text"], c["instruction"], c["kind"]) for c in _custom]
+    KEEP = {c["text"]: c["keep"] for c in _pro + _custom}
+# Kinds used by the small Round 6 sets, in the names of rewrite_checks
+_OLD_KINDS = {"en": "to_en", "fr_any": "to_fr", "en_changed": "changed", "fr": "changed"}
 
 
 def evaluate(mode, model):
@@ -218,28 +231,16 @@ def evaluate(mode, model):
             if not ok:
                 notes.append(f"{'TOUCHED' if expect is None else 'MISS'}: {text!r} -> {out!r}")
         elif mode == "pro":
-            bad = []
-            if llm._detect_language(text) != llm._detect_language(out):
-                bad.append("lang")
-            if re.search(r"\*\*|^objet|^subject|\[[^\]]+\]", out, re.I | re.M):
-                bad.append("boilerplate")
-            if len(out) > 3 * len(text) + 60:
-                bad.append("too long")
-            if norm(out) == norm(text):
-                bad.append("unchanged")
+            bad = rewrite_checks.pro_problems(text, out, KEEP.get(text, []), llm.detect_language)
             score += not bad
             if bad:
-                notes.append(f"{bad}: {out[:90]!r}")
+                notes.append(f"{bad}: {text!r} -> {out[:110]!r}")
         else:
-            kind = expect
-            ok = ((kind == "en" and llm._detect_language(out) == "en")
-                  or (kind == "fr_any" and llm._detect_language(out) == "fr")
-                  or (kind == "en_changed" and llm._detect_language(out) == "en" and norm(out) != norm(text))
-                  or (kind == "shorter" and len(out) < 0.8 * len(text))
-                  or (kind == "fr" and llm._detect_language(out) == "fr" and norm(out) != norm(text)))
-            score += ok
-            if not ok:
-                notes.append(f"{instr}: {out[:90]!r}")
+            kind = _OLD_KINDS.get(expect, expect)
+            bad = rewrite_checks.custom_problems(kind, text, out, KEEP.get(text, []), llm.detect_language)
+            score += not bad
+            if bad:
+                notes.append(f"{instr} {bad}: {out[:110]!r}")
     warm = statistics.median(times) if times else float("nan")
     print(f"\n### {mode} · {LANG} · {model} · {where}")
     lt = f" · LanguageTool median {statistics.median(lt_times) * 1000:.0f} ms" if lt_times else ""

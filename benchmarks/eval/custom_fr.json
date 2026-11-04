@@ -1,0 +1,126 @@
+[
+ {
+  "text": "Salut, je serai un peu en retard demain, on se voit vers 10h.",
+  "instruction": "Traduis en anglais",
+  "kind": "to_en",
+  "keep": [
+   "10"
+  ]
+ },
+ {
+  "text": "Merci pour ton aide sur le projet, on a livré à temps grâce à toi.",
+  "instruction": "Traduis en anglais",
+  "kind": "to_en",
+  "keep": []
+ },
+ {
+  "text": "Bonjour à tous, petit point sur le projet : on a bien avancé sur la partie paiement mais il reste des bugs sur la page de connexion. Je propose qu'on se fasse un point jeudi pour prioriser.",
+  "instruction": "Rends le texte plus court",
+  "kind": "shorter",
+  "keep": [
+   "jeudi"
+  ]
+ },
+ {
+  "text": "Comme discuté hier lors de notre réunion, je vous confirme que nous allons décaler la date de livraison du projet au 15 mars afin de pouvoir intégrer les retours des utilisateurs.",
+  "instruction": "Rends le texte plus court",
+  "kind": "shorter",
+  "keep": [
+   "15",
+   "mars"
+  ]
+ },
+ {
+  "text": "Pour demain il faut acheter du pain, du lait, des œufs et du café.",
+  "instruction": "Mets sous forme de liste",
+  "kind": "bullets",
+  "keep": [
+   "pain",
+   "lait"
+  ]
+ },
+ {
+  "text": "Les étapes : créer le compte, valider l'email, puis configurer le profil.",
+  "instruction": "Mets sous forme de liste",
+  "kind": "bullets",
+  "keep": [
+   "compte",
+   "profil"
+  ]
+ },
+ {
+  "text": "Tu peux m'envoyer le rapport avant vendredi ? Merci !",
+  "instruction": "Vouvoie la personne",
+  "kind": "vous",
+  "keep": [
+   "vendredi"
+  ]
+ },
+ {
+  "text": "Tu as bien reçu ma candidature ? Je reste dispo pour en parler.",
+  "instruction": "Vouvoie la personne",
+  "kind": "vous",
+  "keep": [
+   "candidature"
+  ]
+ },
+ {
+  "text": "La réunion est décalée. Elle aura lieu jeudi. On commencera à 14h.",
+  "instruction": "Fais-en une seule phrase",
+  "kind": "one_sentence",
+  "keep": [
+   "jeudi",
+   "14"
+  ]
+ },
+ {
+  "text": "On a fini le site. Le client est content. On facture lundi.",
+  "instruction": "Fais-en une seule phrase",
+  "kind": "one_sentence",
+  "keep": [
+   "client",
+   "lundi"
+  ]
+ },
+ {
+  "text": "Je pense qu'on devrait changer de fournisseur.",
+  "instruction": "Transforme en question",
+  "kind": "question",
+  "keep": [
+   "fournisseur"
+  ]
+ },
+ {
+  "text": "Merci pour ton message, je te réponds demain.",
+  "instruction": "Rends le ton plus chaleureux",
+  "kind": "changed",
+  "keep": [
+   "demain"
+  ]
+ },
+ {
+  "text": "La réunion est à 15h dans la salle B.",
+  "instruction": "Rends le ton plus drôle",
+  "kind": "changed",
+  "keep": [
+   "15",
+   "B"
+  ]
+ },
+ {
+  "text": "Le projet est en retard de deux semaines.",
+  "instruction": "Rends le ton plus positif",
+  "kind": "changed",
+  "keep": [
+   "semaines"
+  ]
+ },
+ {
+  "text": "Je ne pourrai pas venir à la fête samedi.",
+  "instruction": "Rends le ton plus poli",
+  "kind": "changed",
+  "keep": [
+   "samedi"
+  ]
+ }
+]

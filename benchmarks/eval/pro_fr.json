@@ -1,0 +1,178 @@
+[
+ {
+  "text": "dsl je serai en retard demain matin, on se retrouve chez le client à 10h30",
+  "keep": [
+   "10",
+   "30",
+   "client",
+   "demain"
+  ]
+ },
+ {
+  "text": "le devis est validé, on peut lancer la prod lundi",
+  "keep": [
+   "devis",
+   "lundi"
+  ]
+ },
+ {
+  "text": "jsuis malade aujourd'hui, je bosse pas, je reprends jeudi",
+  "keep": [
+   "jeudi"
+  ]
+ },
+ {
+  "text": "ok pour la réunion de 15h mais faut qu'on finisse avant 16h",
+  "keep": [
+   "15",
+   "16"
+  ]
+ },
+ {
+  "text": "Marc a envoyé les chiffres, le CA a pris 12% ce trimestre",
+  "keep": [
+   "Marc",
+   "12"
+  ]
+ },
+ {
+  "text": "on a un souci sur le site, la page paiement plante depuis ce matin",
+  "keep": [
+   "paiement",
+   "ce matin"
+  ]
+ },
+ {
+  "text": "je peux pas venir vendredi, on décale à mardi prochain ?",
+  "keep": [
+   "vendredi",
+   "mardi"
+  ]
+ },
+ {
+  "text": "merci pour ton aide sur le dossier Dupont, ça m'a sauvé",
+  "keep": [
+   "Dupont"
+  ]
+ },
+ {
+  "text": "le client veut une remise de 5%, je fais quoi ?",
+  "keep": [
+   "5",
+   "client"
+  ]
+ },
+ {
+  "text": "rappel : la facture 2041 est toujours pas payée",
+  "keep": [
+   "2041",
+   "facture"
+  ]
+ },
+ {
+  "text": "je pars en vacances du 12 au 26 août, Sophie me remplace",
+  "keep": [
+   "12",
+   "26",
+   "août",
+   "Sophie"
+  ]
+ },
+ {
+  "text": "la démo d'hier s'est bien passée, ils veulent un devis",
+  "keep": [
+   "démo",
+   "devis"
+  ]
+ },
+ {
+  "text": "tu peux relire ma présentation avant 17h stp",
+  "keep": [
+   "17",
+   "présentation"
+  ]
+ },
+ {
+  "text": "on a recruté 2 devs, ils arrivent le 3 mars",
+  "keep": [
+   "2",
+   "3",
+   "mars"
+  ]
+ },
+ {
+  "text": "le serveur sera coupé samedi de 22h à minuit pour la maintenance",
+  "keep": [
+   "samedi",
+   "22",
+   "minuit"
+  ]
+ },
+ {
+  "text": "je t'envoie le contrat signé ce soir",
+  "keep": [
+   "contrat",
+   "ce soir"
+  ]
+ },
+ {
+  "text": "le budget est dépassé de 3000 euros, faut en parler",
+  "keep": [
+   "3000"
+  ]
+ },
+ {
+  "text": "Julie quitte l'équipe fin juin, on fait un pot jeudi",
+  "keep": [
+   "Julie",
+   "juin",
+   "jeudi"
+  ]
+ },
+ {
+  "text": "j'ai fini le rapport, il fait 18 pages",
+  "keep": [
+   "18",
+   "rapport"
+  ]
+ },
+ {
+  "text": "on a perdu le client Axa, ils sont partis chez la concurrence",
+  "keep": [
+   "Axa"
+  ]
+ },
+ {
+  "text": "est-ce que je peux poser mon vendredi ?",
+  "keep": [
+   "vendredi"
+  ]
+ },
+ {
+  "text": "le colis est arrivé abîmé, je veux un remboursement",
+  "keep": [
+   "colis",
+   "remboursement"
+  ]
+ },
+ {
+  "text": "la réunion avec Paul est annulée, il est malade",
+  "keep": [
+   "Paul",
+   "annulée"
+  ]
+ },
+ {
+  "text": "on a besoin de 2 jours de plus pour livrer",
+  "keep": [
+   "2",
+   "jours"
+  ]
+ },
+ {
+  "text": "bravo à toute l'équipe, on a atteint 1000 clients",
+  "keep": [
+   "1000"
+  ]
+ }
+]

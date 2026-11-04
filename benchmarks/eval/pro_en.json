@@ -1,0 +1,175 @@
+[
+ {
+  "text": "sorry im running late, be there by 9:15",
+  "keep": [
+   "9",
+   "15"
+  ]
+ },
+ {
+  "text": "the quote is approved, we can start production on monday",
+  "keep": [
+   "quote",
+   "monday"
+  ]
+ },
+ {
+  "text": "im sick today, wont be working, back on thursday",
+  "keep": [
+   "thursday"
+  ]
+ },
+ {
+  "text": "ok for the 3pm meeting but we need to wrap up by 4",
+  "keep": [
+   "3",
+   "4"
+  ]
+ },
+ {
+  "text": "Mark sent the numbers, revenue is up 12% this quarter",
+  "keep": [
+   "Mark",
+   "12"
+  ]
+ },
+ {
+  "text": "checkout page is broken since this morning, customers cant pay",
+  "keep": [
+   "checkout",
+   "this morning"
+  ]
+ },
+ {
+  "text": "cant make it friday, can we move to next tuesday?",
+  "keep": [
+   "friday",
+   "tuesday"
+  ]
+ },
+ {
+  "text": "thanks for helping with the Smith account, you saved me",
+  "keep": [
+   "Smith"
+  ]
+ },
+ {
+  "text": "client wants a 5% discount, what do i do?",
+  "keep": [
+   "5",
+   "client"
+  ]
+ },
+ {
+  "text": "reminder: invoice 2041 still isnt paid",
+  "keep": [
+   "2041",
+   "invoice"
+  ]
+ },
+ {
+  "text": "im off from aug 12 to 26, Sophie covers for me",
+  "keep": [
+   "12",
+   "26",
+   "Sophie"
+  ]
+ },
+ {
+  "text": "yesterdays demo went great, they want a quote",
+  "keep": [
+   "demo",
+   "quote"
+  ]
+ },
+ {
+  "text": "can u review my slides before 5pm pls",
+  "keep": [
+   "5",
+   "slides"
+  ]
+ },
+ {
+  "text": "we hired 2 devs, they start march 3",
+  "keep": [
+   "2",
+   "3",
+   "march"
+  ]
+ },
+ {
+  "text": "server goes down saturday 10pm to midnight for maintenance",
+  "keep": [
+   "saturday",
+   "10",
+   "midnight"
+  ]
+ },
+ {
+  "text": "ill send the signed contract tonight",
+  "keep": [
+   "contract",
+   "tonight"
+  ]
+ },
+ {
+  "text": "were 3000 dollars over budget, we need to talk",
+  "keep": [
+   "3000"
+  ]
+ },
+ {
+  "text": "Julia is leaving end of june, drinks on thursday",
+  "keep": [
+   "Julia",
+   "june",
+   "thursday"
+  ]
+ },
+ {
+  "text": "finished the report, its 18 pages",
+  "keep": [
+   "18",
+   "report"
+  ]
+ },
+ {
+  "text": "we lost the Acme account, they went with a competitor",
+  "keep": [
+   "Acme"
+  ]
+ },
+ {
+  "text": "can i take friday off?",
+  "keep": [
+   "friday"
+  ]
+ },
+ {
+  "text": "package arrived damaged, i want a refund",
+  "keep": [
+   "package",
+   "refund"
+  ]
+ },
+ {
+  "text": "meeting with Paul is cancelled, hes sick",
+  "keep": [
+   "Paul",
+   "cancel"
+  ]
+ },
+ {
+  "text": "we need 2 more days to ship",
+  "keep": [
+   "2",
+   "days"
+  ]
+ },
+ {
+  "text": "great job team, we hit 1000 customers",
+  "keep": [
+   "1000"
+  ]
+ }
+]
