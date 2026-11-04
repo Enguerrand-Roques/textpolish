@@ -600,3 +600,37 @@ user wrote, not by how common the mistake is:
 Rules for applying it: every failure of the configuration being judged is
 classified, on every set, and each case is listed with its class. A case
 that is hard to decide goes to the more severe class.
+
+### Every failure of the current version, classified
+
+Current version: `gemma4:e2b-it-qat`, review rules (Round 9) and LanguageTool
+(Round 10, brackets skipped), on all 802 test sentences (the development
+sets, the three held-out sets). Re-scored from the saved model outputs; the
+model answers the same way every run (temperature 0).
+
+| Result | Sentences |
+|---|---:|
+| Right (applied by default = an expected answer) | 762 (95.0 %) |
+| Missed (left as written) | 30 |
+| Minor | 9 |
+| **Grave** | **1** |
+
+The 10 failures that changed something:
+
+| Set | Input → applied by default | Class | Why |
+|---|---|---|---|
+| dev FR | "que tu vien" → "viens" | Minor | partial: "viennes" expected |
+| dev FR | "c'est bien passée, le client a adorer" → "…c'est bien passée, le client a adoré" | Minor | partial: "s'est" left |
+| dev FR | "on pourras … si tout ce passe" → "pourra … ce passe" | Minor | partial: "se" left |
+| held-out 1 FR | "que tu est venu" → "es venu" | Minor | partial: "sois" expected |
+| held-out 1 FR | "problème de résaux" → "réseaux" | Minor | valid variant, not in the expected answers |
+| held-out 1 FR | "Il est partit avec ces amis" → "parti avec ces amis" | Minor | partial: "ses" left |
+| held-out 1 EN | "Im not sure if its ready" → "Im not sure if it's ready" | Minor | partial: "I'm" left |
+| held-out 2 FR | "je vous contact … que j'ai reçu" → "…reçue" | Minor | partial: "contacte" left |
+| held-out 3 FR | "Bcp de taff" → "taf" | Minor | spelling variant, same register (example given in the rubric) |
+| held-out 2 EN | "This kind of mistakes are common" → "This kinds of mistakes are common" | **Grave** | "This kind" was correct and is now wrong; hard to decide, so the more severe class |
+
+These numbers include the sets the rules were tuned on, so they are
+optimistic. The score to trust is the last unseen set, judged once: on the
+third held-out set (174 sentences), the first run had **1 grave**
+("délicieuses" → "(délicieuses)", since fixed), 1 minor, 7 missed.
