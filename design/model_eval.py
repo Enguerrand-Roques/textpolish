@@ -4,8 +4,9 @@
     venv/bin/python3 design/model_eval.py pro gemma4:e2b-it-qat ...
     venv/bin/python3 design/model_eval.py custom gemma4:e2b-it-qat ...
     add --en to use the English test set
-    add --large for the large Correction sets (benchmarks/eval/correction_{fr,en}.json,
-    ~120 sentences each, scored the same way, with a breakdown by kind of mistake)
+    add --large for the development Correction sets (benchmarks/eval/correction_{fr,en}.json)
+    or --holdout / --holdout2 for the frozen test sets (holdout*_{fr,en}.json); they print a breakdown by
+    kind of mistake and what the app applies by default (fixes marked for review are not)
 
 Correction is scored against expected outputs (exact match after
 normalizing quotes/spaces), plus "overreach": changing a text that had
@@ -22,6 +23,9 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import diff  # noqa: E402
+from platforms.macos.spelling import is_word  # noqa: E402
+
 import llm  # noqa: E402
 
 GOLD = [  # (input, [acceptable outputs])
@@ -86,6 +90,47 @@ def norm(t: str) -> str:
     return " ".join(t.split()).strip().rstrip(".").lower()
 
 
+def _checker_for(text):
+    """Same dictionary rule as the app: the text's own language."""
+    lang = llm.detect_language(text)
+    diff.set_word_checker(lambda w: is_word(w, lang))
+
+
+def _change_set(original, corrected):
+    return {(p["before"].strip(), p["after"].strip())
+            for p in diff.group_changes(original, corrected) if p["op"] == "change"}
+
+
+def default_report(rows):
+    """Score what the app applies by default (fixes marked for review are
+    left out) and sort the failures: a wrong fix applied changes what the
+    user wrote (grave); a missed fix leaves the text as written."""
+    ok = wrong = missed = held = 0
+    lines = []
+    for text, _, expect, out in rows:
+        if out.startswith("ERROR"):
+            continue
+        _checker_for(text)
+        parts = diff.group_changes(text, out)
+        held += sum(1 for p in parts if p["op"] == "change" and p["review"])
+        applied = diff.apply_choices(parts, diff.default_accepted(parts))
+        good = {norm(text)} if expect is None else {norm(e) for e in expect}
+        if norm(applied) in good:
+            ok += 1
+            continue
+        allowed = set().union(*(_change_set(text, e) for e in expect)) if expect else set()
+        bad = _change_set(text, applied) - allowed
+        if bad:
+            wrong += 1
+            lines.append(f"  - WRONG FIX APPLIED: {text!r} -> {applied!r}")
+        else:
+            missed += 1
+            lines.append(f"  - missed: {text!r} -> {applied!r}")
+    head = (f"applied by default: {ok}/{len(rows)} right · {wrong} wrong fix applied · "
+            f"{missed} missed · {held} fix(es) held for review")
+    return "\n".join([head] + lines)
+
+
 def run(model, mode, text, instr=None):
     if mode == "casual":
         llm.OLLAMA_MODEL_CASUAL = model
@@ -116,9 +161,11 @@ LANG = "en" if "--en" in sys.argv else "fr"
 if LANG == "en":
     GOLD, PRO, CUSTOM = GOLD_EN, PRO_EN, CUSTOM_EN
 KINDS = {}  # text -> kind of mistake, for the large sets
-if "--large" in sys.argv:
+_SET = ("holdout2" if "--holdout2" in sys.argv else "holdout" if "--holdout" in sys.argv
+        else "correction" if "--large" in sys.argv else None)
+if _SET:
     _path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                         "benchmarks", "eval", f"correction_{LANG}.json")
+                         "benchmarks", "eval", f"{_SET}_{LANG}.json")
     with open(_path, encoding="utf-8") as _f:
         _large = json.load(_f)
     GOLD = [(c["text"], c["expected"]) for c in _large]
@@ -188,6 +235,7 @@ def evaluate(mode, model):
             hit, total = by_kind.get(KINDS[text], (0, 0))
             by_kind[KINDS[text]] = (hit + ok, total + 1)
         print(" · ".join(f"{k} {h}/{n}" for k, (h, n) in sorted(by_kind.items())))
+        print(default_report(rows))
     for n in notes:
         print("  -", n)
     for text, instr, expect, out in rows:

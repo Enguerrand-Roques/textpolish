@@ -447,3 +447,85 @@ answer (raw output: `benchmarks/results/round7_20261104.md`).
 
 The sets are written by me, not collected from real users; the next step is
 real messages.
+
+## Round 8 — November 4, 2026: wrong fixes are held, not applied
+
+Round 7 showed two kinds of failure. A **missed** mistake leaves the text as
+the user wrote it. A **wrong fix** changes what they meant ("borrow me your
+pen" → "borrow my pen", "aprem" → "après"). A correction tool can live with the
+first; the second is what makes people stop trusting it. Round 8 targets wrong
+fixes only.
+
+Every fix the model makes is already classified (`diff.classify_change`). In
+Round 7, the wrong fixes were almost all rewordings that match no kind of
+mistake, removed punctuation, or informal words "corrected"; the good fixes
+were accents, agreement, conjugation and spelling. So `diff.needs_review`
+holds those three cases: the fix is shown (orange dashed underline, "Check"
+on its card) but only applied if the user clicks it.
+
+The rules were designed by reading the Round 7 (development) failures, so a
+**held-out set** (`benchmarks/eval/holdout_*.json`, 96 FR + 97 EN) was written
+and committed first, then used once to judge them.
+
+| What the app applies by default | Development FR | Development EN | Held-out FR | Held-out EN |
+|---|---:|---:|---:|---:|
+| Right | 123/130 | 112/123 | 92/96 | 89/97 |
+| Wrong fixes applied, before the rules | 1 | 4 | 4 | 4 |
+| **Wrong fixes applied, with the rules** | **0** | **0** | **3** | **2** |
+
+On text the rules were not designed from, they removed 3 of 8 wrong fixes.
+The 5 left were one real word swapped for another that is not a known
+confusion ("lui" → "fout", "there" → "the", "est" → "es") and a removed
+apostrophe ("I'm" → "Im"). Raw output: `benchmarks/results/round8_20261104.md`.
+
+## Round 9 — November 4, 2026: known confusions, judged on a second held-out set
+
+The 5 wrong fixes left in Round 8 had one thing in common: a real word
+replaced by another real word that people do not actually confuse. Round 9
+replaces the "grammar" catch-all with the approach of rule-based checkers:
+
+- **Known confusions** (`diff._CONFUSIONS`): groups of words people really
+  swap — homophones (a/à, ces/ses/c'est, their/there/they're, to/too…), the
+  forms of the same verb (was/were, has/have, go/went/gone, fait/fasse,
+  ai/est…), a/an. A fix inside a group is applied.
+- **A real word swapped for another real word outside every group is held.**
+  "Real word" is checked with the macOS dictionary, in the text's language
+  (`platforms/macos/spelling.py`), so "connection" in a French text is a
+  typo. A misspelt word ("runned", "tomorow") is still fixed.
+- **Removed punctuation is held**, the apostrophe of "I'm" included, except
+  a wrong plural apostrophe ("apple's" → "apples"). A repeated word
+  ("the the") is removed.
+
+These rules were tuned on the development set and the first held-out set
+(now development data too). A **second held-out set**
+(`benchmarks/eval/holdout2_*.json`, 93 FR + 89 EN) was written and committed
+before, and only read for this table.
+
+| What the app applies by default | Dev FR (130) | Dev EN (123) | Held-out 1 FR (96) | Held-out 1 EN (97) | **Held-out 2 FR (93)** | **Held-out 2 EN (89)** |
+|---|---:|---:|---:|---:|---:|---:|
+| Right | 123 | 112 | 92 | 90 | **89** | **78** |
+| Wrong fixes applied, without the rules | 1 | 4 | 4 | 4 | 3 | 3 |
+| **Wrong fixes applied, with the rules** | **0** | **0** | **2** | **0** | **1** | **0** |
+| Missed (text left as written) | 7 | 11 | 2 | 7 | 3 | 11 |
+| Warm median per sentence | 0.83 s | 0.95 s | 1.10 s | 0.91 s | 0.83 s | 0.75 s |
+
+### Findings
+
+1. **On text the rules never saw, wrong fixes went from 6 to 1 in 182
+   sentences.** The one left: "je te l'écrirait" → "écrirais" (conditional)
+   instead of "écrirai" (future). The 5 blocked: "Mtn" → "Maintenant",
+   "frero" → "frérot" and three commas removed ("ty, that's", "gotta run,
+   talk", "raining, so").
+2. **The 2 left on the first held-out set do not change the meaning**: "que
+   tu est venu" → "es venu" (partial; "sois" was expected) and "résaux" →
+   "réseaux" (a valid correction the expected answer did not list; the set is
+   kept as written).
+3. **The price is in recall, mostly in English.** Held fixes are shown, not
+   lost, but they are not applied by default. English misses on the second
+   held-out set are mostly the model's own (to/too, who's/whose, "have
+   ate"): the model alone scored 77/89.
+4. One partial fix is not caught by the metric: "This kind of mistakes are
+   common" → "This kinds of…" (each change appears in an accepted answer, the
+   result is still wrong).
+
+Raw output: `benchmarks/results/round9_20261104.md`.

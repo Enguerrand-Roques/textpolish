@@ -20,6 +20,8 @@ const params = new URLSearchParams(location.search);
 const theme = params.get("theme") || "light";
 const only = params.get("only");
 const lang = params.get("lang") || "en";
+// Fixes held for review (orange "Check"), from diff.group_changes on a real-looking message.
+const REVIEW_PARTS = [{"op": "equal", "text": "Hey team, can you borrow "}, {"op": "change", "id": 0, "before": "me your", "after": "my", "kind": "rewrite", "label": "Reformulation", "review": true, "context_before": "…team, can you borrow", "context_after": "charger before 3? I"}, {"op": "equal", "text": " charger before 3? I "}, {"op": "change", "id": 1, "before": "recieved", "after": "received", "kind": "spelling", "label": "Orthographe", "review": false, "context_before": "charger before 3? I", "context_after": "the slides and the…"}, {"op": "equal", "text": " the slides and the numbers look good. Great job on the launch"}, {"op": "change", "id": 2, "before": ",", "after": "", "kind": "punctuation", "label": "Ponctuation", "review": true, "context_before": "…job on the launch", "context_after": "everyone!"}, {"op": "equal", "text": " everyone! "}, {"op": "change", "id": 3, "before": "Lets", "after": "Let's", "kind": "punctuation", "label": "Ponctuation", "review": false, "context_before": "everyone!", "context_after": "meet in room B…"}, {"op": "equal", "text": " meet in room B at 4 and go over "}, {"op": "change", "id": 4, "before": "there", "after": "their", "kind": "grammar", "label": "Grammaire", "review": false, "context_before": "…4 and go over", "context_after": "feedback."}, {"op": "equal", "text": " feedback."}];
 const FR = lang === "fr";
 if (theme === "dark") document.body.classList.add("dark");
 
@@ -29,6 +31,7 @@ const SCENARIOS = [
   [FR ? "Carte — SMS (2/3)" : "Card — text message (2/3)", f => { A(f).setSourceApp("Messages"); A(f).setChanges(f.fx.sms.parts, "cards"); f.contentWindow.decide(true); }, 450],
   [FR ? "Rien à corriger" : "Nothing to fix", f => { A(f).setSourceApp("Mail"); A(f).setChanges(f.fx.clean.parts, "none"); }],
   [FR ? "Document — texte long" : "Document — long text", f => { A(f).setSourceApp("Slack"); A(f).setChanges(f.fx.long.parts, "document"); }],
+  [FR ? "Document — à vérifier" : "Document — fixes to check", f => { A(f).setSourceApp("Slack"); A(f).setChanges(REVIEW_PARTS, "document"); }],
   [FR ? "Mode Pro" : "Pro mode", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); }],
   [FR ? "Pro — comparer" : "Pro — compare", f => { A(f).setSourceApp("LinkedIn"); A(f).setMode("pro"); A(f).setChanges(f.fx.pro.parts, "rewrite"); f.contentWindow.toggleCompare(); }],
   [FR ? "Sur mesure" : "Custom", f => { A(f).setSourceApp("Notes"); A(f).setMode("custom"); f.contentWindow.document.getElementById("instrInput").value = FR ? "traduire en anglais" : "translate into French"; A(f).setInputText(f.fx.typo.input); A(f).onPolishStart(); }],

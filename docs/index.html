@@ -163,7 +163,7 @@
     <div>
       <h2>English and French</h2>
       <p>TextPolish corrects and rewrites both languages; the model follows the language of the text, and Custom can translate between them. The interface itself is in English or French: pick one from ✏️ → Language and it is remembered.</p>
-      <p>Both were tested the same way, with expected answers: 95 % of 130 French messages and 93 % of 123 English ones corrected exactly as expected, and correct messages left alone.</p>
+      <p>Both were tested the same way, with expected answers: 95 % of 130 French messages and 93 % of 123 English ones corrected exactly as expected, and correct messages left alone. Fixes the app isn't sure about are shown, not applied.</p>
     </div>
     <img class="shot" src="screenshots/menu-language.png" alt="The TextPolish menu bar menu with the Language submenu open: English is checked, the cursor is on Français." loading="lazy">
   </div>
@@ -173,7 +173,7 @@
   <h2>Measured, not guessed</h2>
   <p>17 models tested in six benchmark rounds on a MacBook Air M2 with 16 GB, then the chosen one on 253 messages. The last rounds score corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
   <div class="stats">
-    <div><div class="stat">95 % · 93 %</div><p>of 130 French and 123 English messages corrected exactly as expected, the same on every run</p></div>
+    <div><div class="stat">1 in 182</div><p>wrong fix applied on sentences written before the safety rules (6 without them); doubtful fixes wait for your click</p></div>
     <div><div class="stat">0.5–1.1 s</div><p>per sentence, model already in memory</p></div>
     <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
     <div><div class="stat">3–4 s</div><p>for a ~370-character message with 11–13 mistakes (7–11 s when the Mac is swapping)</p></div>

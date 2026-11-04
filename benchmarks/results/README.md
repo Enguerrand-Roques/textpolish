@@ -12,6 +12,8 @@ checked against the run it came from.
 | `verdict_<run>.md` | `benchmarks/benchmark_models.py --judge` | the judge's verdict per model |
 | `round6_20261102.md` | `design/model_eval.py` | expected-answer test set, French and English |
 | `round7_20261104.md` | `design/model_eval.py --large` | the large Correction sets in `../eval/` (130 FR, 123 EN) |
+| `round8_20261104.md` | `design/model_eval.py --large/--holdout` | safety rules, judged on the first held-out set |
+| `round9_20261104.md` | `design/model_eval.py --large/--holdout/--holdout2` | known confusions, judged on the second held-out set |
 
 Rounds 1–4 read the app's `prompts/*.txt` as they were at the time (they have
 changed since), without the app's language detection, with the default

@@ -16,7 +16,7 @@ LANG=${1:-en}
 SUFFIX=$([ "$LANG" = en ] && echo "" || echo "-$LANG")
 for theme in light dark; do
   "$CHROME" --headless=new --hide-scrollbars --force-device-scale-factor=2 \
-    --window-size=1700,1200 --virtual-time-budget=12000 \
+    --window-size=1700,1200 --virtual-time-budget=20000 \
     --screenshot="design/screenshots/preview-$theme$SUFFIX.png" \
     "http://localhost:$PORT/design/preview.html?theme=$theme&lang=$LANG" 2>/dev/null
 done

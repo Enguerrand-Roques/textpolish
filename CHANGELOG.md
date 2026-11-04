@@ -5,10 +5,15 @@ All notable changes to TextPolish. Versions follow [Semantic Versioning](https:/
 ## [Unreleased]
 
 ### Added
+- **Safe by default.** A fix that is not a recognised kind of mistake is
+  shown but not applied until you click it (orange dashed underline, "Check"
+  on its card): a rewording, removed punctuation, an informal word
+  ("aprem", "btw", "u") or one real word swapped for another that is not a
+  known confusion (checked with the macOS dictionary). "Accept all" leaves
+  them out.
 - Larger Correction test sets: 130 French and 123 English messages in
-  `benchmarks/eval/`, run with `design/model_eval.py --large`. Result:
-  95 % French, 93 % English, correct sentences left alone 29/30 in each
-  (Round 7 in the benchmark report).
+  `benchmarks/eval/`, plus two held-out sets written before the rules they
+  judge (Rounds 7–9 in the benchmark report).
 
 ## [2.0.0] — 2026-11-04
 

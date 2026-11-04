@@ -6,7 +6,7 @@
 <title>TextPolish UX</title>
 <meta name="description" content="How I designed and tested TextPolish, a Mac menu bar tool that fixes selected text with a local AI model: benchmark of 17 models, trade-offs, iterations and real-app tests.">
 <meta property="og:title" content="TextPolish — UX case study">
-<meta property="og:description" content="Benchmark of 17 local models, seven decisions with their cost, and nine iterations of a Mac proofreading window.">
+<meta property="og:description" content="Benchmark of 17 local models, eight decisions with their cost, and ten iterations of a Mac proofreading window.">
 <meta property="og:image" content="https://enguerrand-roques.github.io/textpolish/screenshots/video-poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -283,7 +283,8 @@
   <div class="iter"><div class="v">v6</div><div><p>One model for all three modes: switching takes under a second.</p><p class="why">Reading the French interface again, I saw that “Perso” read like a casual, personal tone, not “custom”.</p></div></div>
   <div class="iter"><div class="v">v7</div><div><p>“Perso” became “Sur mesure” (Custom in English), the hint says “Say what you want”, and the field icon no longer looks like a spinner.</p><p class="why">Every grammar mistake carried the same “Spelling” label.</p></div></div>
   <div class="iter"><div class="v">v8</div><div><p>Each fix says what it is: grammar (their/there, a/à), conjugation, agreement, spelling, punctuation. On a long message, the legend counts them.</p><p class="why">The project was in English but the interface only in French.</p></div></div>
-  <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">Current version.</p></div></div>
+  <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">On 253 messages, 4 fixes changed the meaning of what was written.</p></div></div>
+  <div class="iter"><div class="v">v10</div><div><p>Safe by default: fixes that aren't a known kind of mistake are shown with an orange “Check” and wait for a click.</p><p class="why">Current version.</p></div></div>
 </section>
 
 
@@ -317,6 +318,7 @@
         <tr><td>The same test gave 9, 10 or 11 right answers out of 12 depending on the run: the model picks its words with some randomness.</td><td>Correction now always gives the same answer: 11/12 on every run.</td></tr>
         <tr><td>The remaining miss was always the same: the model deleted the “?” in “tu fais quoi ce soir ? on peut…”, merging two questions.</td><td>A rule puts back any “?” or “!” the model removes without replacing it: 12/12 in French and English. The model alone stays at 11/12.</td></tr>
         <tr><td>12 sentences is a weak signal. On 130 French and 123 English messages the score fell to 95 % and 93 %; 4 of the 16 misses were wrong fixes that change the meaning (“borrow me your pen” → “borrow my pen”).</td><td>Every fix stays a suggestion to accept or ignore; the misses are listed by kind in the report.</td></tr>
+        <tr><td>The wrong fixes had a pattern: a rewording, removed punctuation, an informal word “fixed”, or one real word swapped for another nobody confuses.</td><td>Those are held for review (decision 8). On 182 sentences written before the rules: 1 wrong fix applied instead of 6.</td></tr>
         <tr><td>“J'ai finit le rapport hier soir” came back in English: my language detector didn't recognize it as French.</td><td>Detector fixed; it was my code, not the model.</td></tr>
         <tr><td>On a long text, “translate into English” only reworded the French: my “answer in the text's language” rule beat the request.</td><td>In Custom, the rule now yields to the request.</td></tr>
         <tr><td>The English set showed Pro writing “Dear [Recipient Name]” on a two-line message.</td><td>The Pro prompt forbids invented greetings and placeholders: 5/5 in both languages.</td></tr>
@@ -429,6 +431,19 @@
       </table></div>
       <p class="verdict"><b>Chose:</b> local as the main version; speed is a tie once loaded, privacy and offline use are not.</p>
       <p class="cost">Cost: the first-load wait and the memory. The cloud version exists as a separate project for Macs that can't spare the RAM.</p>
+    </div>
+    <div class="decision">
+      <h3>8. Fix as much as possible, or never fix wrong?</h3>
+      <p>A missed mistake leaves your text as you wrote it; a wrong fix changes what you meant (“borrow me your pen” → “borrow my pen”). The model can't tell them apart, so the app sorts its fixes: known kinds of mistake are applied, anything else is shown with an orange “Check” and waits for a click. Judged on 182 sentences written <em>before</em> the rules and never used to tune them:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>What the app applies by default</th><th>Right</th><th>Wrong fixes applied</th></tr></thead>
+        <tbody>
+          <tr><td>Every fix the model makes</td><td class="num">165 / 182</td><td class="num">6</td></tr>
+          <tr class="pick"><td>Known mistakes only; the rest held for review</td><td class="num">167 / 182</td><td class="num">1</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> hold anything that isn't a known kind of mistake. A correction tool is only useful if you can trust what it changes.</p>
+      <p class="cost">Cost: a few correct fixes need one click instead of none, and the mistakes the model misses (to/too in English, mostly) stay missed.</p>
     </div>
   </div>
 </section>
