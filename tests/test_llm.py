@@ -35,6 +35,11 @@ class TestDetectLanguage:
         # One stop word match should not trigger French detection
         assert _detect_language("de") == "en"
 
+    def test_english_function_words_count_as_english(self):
+        # "on", "or", "to", "in" are English stop words too
+        from language import _ENGLISH_STOP_WORDS
+        assert {"or", "but", "of", "to", "in", "on", "at", "for"} <= _ENGLISH_STOP_WORDS
+
     def test_words_shared_with_english_do_not_make_it_french(self):
         # "on" and "as" are French stop words too
         assert _detect_language("I will be there on time as usual.") == "en"
