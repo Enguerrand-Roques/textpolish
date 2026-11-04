@@ -28,33 +28,36 @@ type Caption = { at: number; text: string };
 type ClipName = "demo" | "menu" | "langMenu" | "langWin";
 type Scene = {
   clip: ClipName;
-  badge?: string; // shown when rate != 1
   from: number; // source seconds
   to: number;
-  rate?: number; // playback speed: typing, or a long wait (with a badge)
+  rate?: number; // playback speed, only for typing (with a badge)
   color: string;
   cams: Cam[];
   captions: Caption[];
   waits?: { start: number; end: number }[]; // model at work: show a stopwatch
-  join?: "prev" | "next" | "both"; // cut straight to/from the neighbour scene, no fade
 };
 
 type Clip = {
   src: string; w: number; h: number; cropX: number; cropW: number; cropH: number; base: number;
   events: "demo" | "menu" | "lang";
-  patches?: { left: number; width: number; height: number }[]; // menu-bar areas to paint over
+  patches?: { left: number; width: number; height: number; top?: number; color?: string }[]; // areas to paint over
 };
 const BAR = "linear-gradient(rgb(32,109,167), rgb(34,111,170))";
+const TITLE_BAR = "#25292b";
 const CLIPS: Record<ClipName, Clip> = {
   // demo: TextEdit window, 980×760 pt recorded at 2x; the empty bottom is cropped
-  demo: { src: "raw/demo.mp4", w: 1960, h: 1520, cropX: 0, cropW: 1960, cropH: 1360, base: 1000 / 1360, events: "demo" },
+  // TextEdit says "— Modifié" (French system) after the file name: painted over
+  demo: { src: "raw/demo.mp4", w: 1960, h: 1520, cropX: 0, cropW: 1960, cropH: 1360, base: 1000 / 1360, events: "demo",
+          patches: [{ left: 366, top: 10, width: 150, height: 46, color: TITLE_BAR }] },
   // menu: right side of the menu bar; hide TextEdit's (French) menus and the recording indicator
   menu: { src: "raw/menu.mp4", w: 2040, h: 600, cropX: 300, cropW: 1740, cropH: 600, base: 1700 / 1740, events: "menu",
-          patches: [{ left: 0, width: 1612 - 300, height: 62 }] },
+          patches: [{ left: 0, width: 1612 - 300, height: 62 },
+                    { left: 0, top: 204, width: 110, height: 56, color: "#1f2325" }] }, // "…ge.txt" title
   // lang: screen from the TextEdit window's left edge to the right edge, menu bar included
-  langMenu: { src: "raw/lang.mp4", w: 2640, h: 1520, cropX: 1480, cropW: 746, cropH: 320, base: 1.4, events: "lang",
-              patches: [{ left: 1582 - 1480, width: 90, height: 62 }] },
-  langWin: { src: "raw/lang.mp4", w: 2640, h: 1520, cropX: 0, cropW: 1960, cropH: 1520, base: 1000 / 1360, events: "lang" },
+  langMenu: { src: "raw/lang.mp4", w: 2640, h: 1520, cropX: 1480, cropW: 680, cropH: 320, base: 1.4, events: "lang",
+              patches: [{ left: 20, width: 100, height: 62 }] }, // recording indicator
+  langWin: { src: "raw/lang.mp4", w: 2640, h: 1520, cropX: 0, cropW: 1960, cropH: 1520, base: 1000 / 1360, events: "lang",
+             patches: [{ left: 366, top: 210, width: 150, height: 46, color: TITLE_BAR }] },
 };
 
 const WIDE: Omit<Cam, "at"> = { z: 1, fx: 980, fy: 680 };
@@ -65,75 +68,66 @@ const TEXT_LINE: Omit<Cam, "at"> = { z: 1.26, fx: 980, fy: 305 };
 // Source times are events.json times minus OFFSET (see design/record_video.py).
 const SCENES: Scene[] = [
   {
-    clip: "demo", from: 0.6, to: 8.1, rate: 3, color: BLUE,
+    clip: "demo", from: 0.6, to: 8.35, rate: 3, color: BLUE,
     cams: [{ at: 0.6, ...WIDE }],
     captions: [{ at: 0.6, text: "Write anywhere on your Mac." }],
   },
   {
-    clip: "demo", from: 8.1, to: 19.9, color: BLUE,
-    cams: [{ at: 8.1, ...WIDE }, { at: 8.8, ...PANEL }, { at: 18.6, ...TEXT_LINE }],
+    // the stopwatch starts when the text reaches the model (log: 3,516 ms)
+    clip: "demo", from: 8.35, to: 20.3, color: BLUE,
+    cams: [{ at: 8.35, ...WIDE }, { at: 9.0, ...PANEL }, { at: 18.6, ...TEXT_LINE }],
     captions: [
-      { at: 8.1, text: "Select a whole message, press ⌥⌘G." },
-      { at: 12.6, text: "11 mistakes found, each one labelled." },
-      { at: 15.0, text: "Grammar, agreement, verbs, spelling, punctuation…" },
-      { at: 18.6, text: "⌘↵ fixes them all in place." },
+      { at: 8.35, text: "Select the text, press ⌥⌘G." },
+      { at: 13.15, text: "11 mistakes found and labeled." },
+      { at: 15.4, text: "Grammar, agreement, conjugation, spelling…" },
+      { at: 18.1, text: "⌘↵ fixes them all in place." },
     ],
-    waits: [{ start: 8.72, end: 12.6 }],
+    waits: [{ start: 9.64, end: 13.155 }],
   },
   {
-    clip: "demo", from: 24.1, to: 31.5, color: INDIGO,
-    cams: [{ at: 24.1, ...PANEL }],
+    clip: "demo", from: 26.3, to: 33.9, color: INDIGO,
+    cams: [{ at: 26.3, ...PANEL }],
     captions: [
-      { at: 24.1, text: "Already correct? It tells you." },
-      { at: 26.4, text: "⌘2 · Pro rewrites it for work." },
+      { at: 26.3, text: "Already correct? It tells you." },
+      { at: 28.2, text: "⌘2 · Pro rewrites it for work." },
     ],
-    waits: [{ start: 26.4, end: 29.36 }],
+    waits: [{ start: 28.25, end: 31.45 }],
   },
   {
-    clip: "demo", from: 31.5, to: 42.0, color: PURPLE,
-    cams: [{ at: 31.5, ...PANEL }, { at: 40.34, ...TEXT_LINE }],
+    clip: "demo", from: 33.9, to: 45.0, color: PURPLE,
+    cams: [{ at: 33.9, ...PANEL }, { at: 42.6, ...TEXT_LINE }],
     captions: [
-      { at: 31.5, text: "⌘3 · Custom: ask for anything." },
-      { at: 34.1, text: "Here: “translate into French”." },
-      { at: 40.34, text: "Translated and pasted back." },
+      { at: 33.9, text: "⌘3 · Custom: ask for anything." },
+      { at: 36.19, text: "Here: “translate into French”." },
+      { at: 42.4, text: "Translated and pasted back." },
     ],
-    waits: [{ start: 34.11, end: 36.97 }],
+    waits: [{ start: 36.22, end: 39.99 }],
   },
   {
-    clip: "menu", from: 0.6, to: 8.6, color: TEAL,
+    clip: "menu", from: 0.6, to: 7.0, color: TEAL,
     cams: [{ at: 0.6, z: 1, fx: 870, fy: 300 }, { at: 3.0, z: 1.2, fx: 930, fy: 300 }],
     captions: [
-      { at: 0.6, text: "Recent corrections live in the menu bar." },
-      { at: 5.5, text: "Click one to copy it again." },
+      { at: 0.6, text: "Recent results live in the menu bar." },
+      { at: 5.4, text: "Click one to copy it again." },
     ],
   },
   {
-    clip: "langMenu", from: 0.6, to: 6.4, color: TEAL,
+    clip: "langMenu", from: 0.6, to: 5.6, color: TEAL,
     cams: [{ at: 0.6, z: 1, fx: 390, fy: 160 }],
     captions: [
       { at: 0.6, text: "Prefer French? Switch from the menu bar." },
       { at: 4.2, text: "English or Français, remembered next time." },
     ],
   },
-  // The wait is cut in two: real speed while the shortcut is pressed, then 8×
-  // while the model works. The stopwatch keeps the real time.
   {
-    clip: "langWin", from: 6.4, to: 8.6, color: BLUE, join: "next",
-    cams: [{ at: 6.4, ...PANEL, fy: 1080 }],
-    captions: [{ at: 6.4, text: "A French message. This Mac was short on memory here." }],
-    waits: [{ start: 7.53, end: 18.46 }],
-  },
-  {
-    clip: "langWin", from: 8.6, to: 18.4, rate: 8, badge: "Waiting sped up 8×", color: BLUE, join: "both",
-    cams: [{ at: 8.6, ...PANEL, fy: 1080 }],
-    captions: [{ at: 6.4, text: "A French message. This Mac was short on memory here." }], // already shown
-    waits: [{ start: 7.53, end: 18.46 }],
-  },
-  {
-    clip: "langWin", from: 18.4, to: 22.9, color: BLUE, join: "prev",
-    cams: [{ at: 18.4, ...PANEL, fy: 1080 }],
-    captions: [{ at: 18.4, text: "Same app in French: 13 fixes, each labelled." }],
-    waits: [{ start: 7.53, end: 18.46 }],
+    // the stopwatch starts when the text reaches the model (log: 3,287 ms)
+    clip: "langWin", from: 6.4, to: 16.0, color: BLUE,
+    cams: [{ at: 6.4, z: 1.55, fx: 820, fy: 690 }, { at: 8.3, ...PANEL, fy: 900 }],
+    captions: [
+      { at: 6.4, text: "Now a message in French." },
+      { at: 11.77, text: "Same app in French: 13 fixes, each labeled." },
+    ],
+    waits: [{ start: 8.48, end: 11.77 }],
   },
 ];
 
@@ -176,10 +170,8 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
   const c = CLIPS[scene.clip];
   const cam = camAt(scene.cams, t);
   const s = c.base * cam.z;
-  const joinPrev = scene.join === "prev" || scene.join === "both";
-  const joinNext = scene.join === "next" || scene.join === "both";
-  const fade = interpolate(frame, [0, 12, dur - 12, dur], [joinPrev ? 1 : 0, 1, 1, joinNext ? 1 : 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const enter = joinPrev ? 1 : interpolate(frame, [0, 18], [0.96, 1], { extrapolateRight: "clamp", easing: ease });
+  const fade = interpolate(frame, [0, 12, dur - 12, dur], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const enter = interpolate(frame, [0, 18], [0.96, 1], { extrapolateRight: "clamp", easing: ease });
 
   const caption = [...scene.captions].reverse().find((x) => t >= x.at);
   const captionAge = caption ? (t - caption.at) * FPS : 0;
@@ -190,7 +182,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
 
   return (
     <AbsoluteFill style={{ opacity: fade }}>
-      <Backdrop color={scene.color} drift={(t / 40) % 1} /* source time: continuous across joined scenes */ />
+      <Backdrop color={scene.color} drift={(t / 40) % 1} />
       <div
         style={{
           position: "absolute", left: 0, top: 0, width: c.cropW, height: c.cropH,
@@ -208,7 +200,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
           style={{ position: "absolute", left: -c.cropX, top: 0, width: c.w, height: c.h }}
         />
         {(c.patches ?? []).map((p, i) => (
-          <div key={i} style={{ position: "absolute", left: p.left, top: 0, width: p.width, height: p.height, background: BAR }} />
+          <div key={i} style={{ position: "absolute", left: p.left, top: p.top ?? 0, width: p.width, height: p.height, background: p.color ?? BAR }} />
         ))}
       </div>
 
@@ -229,7 +221,7 @@ const ClipScene: React.FC<{ scene: Scene }> = ({ scene }) => {
       )}
 
       {key && <KeyChip label={key.label} age={((t - key.t) * FPS) / rate} color={scene.color} />}
-      {rate !== 1 && <Badge text={scene.badge ?? `Typing sped up ${rate}×`} under={!!scene.waits} />}
+      {rate !== 1 && <Badge text={`Typing sped up ${rate}×`} under={!!scene.waits} />}
       {(scene.waits ?? []).map((w) =>
         t >= w.start && t < w.end + 1.6 ? (
           <Stopwatch key={w.start} seconds={Math.min(t, w.end) - w.start} done={t >= w.end}

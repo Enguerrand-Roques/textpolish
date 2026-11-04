@@ -11,7 +11,7 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
   <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 351-character English message with 11 mistakes is corrected with each fix labeled (grammar, agreement, conjugation, spelling, punctuation, capitalization), then rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
 </p>
 
-<p align="center"><b><a href="https://enguerrand-roques.github.io/textpolish/textpolish-demo.mp4">▶ Watch the 1-minute video</a></b> — real recordings of the app in English, then the switch to French; typing (and one wait, marked on screen) is sped up, and the on-screen stopwatch always shows the real model time (made with <a href="video/">Remotion</a>).</p>
+<p align="center"><b><a href="https://enguerrand-roques.github.io/textpolish/textpolish-demo.mp4">▶ Watch the 1-minute video</a></b> — real recordings of the app in English, then the switch to French; only the typing is sped up, and the on-screen stopwatch shows the real model time (made with <a href="video/">Remotion</a>).</p>
 
 The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Custom. Everything runs locally.
 
