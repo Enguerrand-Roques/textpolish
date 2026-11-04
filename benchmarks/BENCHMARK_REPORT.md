@@ -1,16 +1,20 @@
 # TextPolish — Benchmark Report
 
-## Summary — 17 models, 6 rounds (April → November 2026)
+## Summary — 17 models, 10 rounds (April → November 2026)
 
 Every model below was run on the same machine (MacBook Air M2, 16 GB) through Ollama.
-Rounds 1-4 scored outputs with an LLM judge (Claude) on a 10-case corpus; Round 5 was a
-targeted bug investigation; Round 6 switched to expected answers (`design/model_eval.py`)
-so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
+Rounds 1–6 chose the model; Rounds 7–10 tested the whole app with it. Rounds 1-4 scored
+outputs with an LLM judge (Claude) on a 10-case corpus; Round 5 was a targeted bug
+investigation; from Round 6 on, scores are counts against expected answers
+(`design/model_eval.py`), not opinions. Raw outputs: `benchmarks/results/`.
 17 models were tested; an 18th (`gemma4:e4b-nvfp4`) failed to download.
+
+In the table, "Best result" keeps the unit of the round it comes from: **x/5** is the
+judge's score (Rounds 1–4), **x/12** is right answers on the 12-sentence set (Round 6).
 
 | Model | Rounds | Best result | Why it was kept or dropped |
 |-------|--------|-------------|----------------------------|
-| **`gemma4:e2b-it-qat`** | 4, 6, 7 | **Correction 123/130 FR (94.6 %), 114/123 EN (92.7 %) on the large sets; 12/12 on the 12-sentence sets; Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
+| **`gemma4:e2b-it-qat`** | 4, 6–10 | **11/12 FR and 12/12 EN alone (Round 6); with the app's rules and LanguageTool, 165/174 unseen sentences right (Round 10); ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
 | `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Better than E2B in Pro (5.00 vs 4.73), ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
@@ -30,7 +34,7 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 | `qwen3:4b` | 1 | — | Timed out (thinking enabled) |
 
 **What the research changed in the app**, beyond the model choice: prompts in English with a
-same-language rule (Round 1), `num_ctx` sized to the input (Round 2), `"think": false` for
+same-language rule (Round 1), a small fixed `num_ctx` (Round 2, sized to the input since November), `"think": false` for
 hybrid-reasoning models (Round 4), a stricter language detector and Markdown cleanup (Round 6),
 and per-mode temperature (Round 6). Later the same day, filming the demo showed that the
 "answer in the input language" rule blocked translation requests on long texts; in Custom
@@ -355,7 +359,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 1. **One model for all modes removes the mode-switch reload.** With `ministral-3:3b` + `gemma3:4b`, switching mode reloaded a model (~5-6 s; Ollama could not keep both in RAM on this busy 16 GB Mac). With a single Gemma 4 model, measured switches were 0.5-1 s.
 2. **MLX helps a lot but costs RAM.** `gemma4:e2b-nvfp4` was the fastest everywhere, but loading it took free memory from 52 % to 24 % and added swap on a Mac already using 20 GB of swap.
-3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting.
+3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting. Revised on November 4: French stop words must now outnumber English ones, so "on time as usual" stays English (`language.py`).
 4. **Temperature matters more than expected for Correction.** Gemma 4 defaults to temperature 1; three identical runs scored 9, 10 and 11/12. `llm.py` now sends 0 for Correction (same answer every run) and 0.4 for Pro/Custom (more consistent tone, still varied). Final run: **11/12** twice in a row; the remaining miss drops the "?" in "slt tu fait quoi ce soir ? on peut…". "si tout ça se passe bien" was added as an accepted answer (correct and same meaning).
 
 ### Cold vs warm latency (chosen model, app pipeline)
@@ -452,6 +456,8 @@ answer (raw output: `benchmarks/results/round7_20261104.md`).
    text as the user wrote it; a wrong fix changes what they meant. Four of the
    16 misses are of that kind, which is why every fix stays a suggestion the
    user accepts or ignores.
+   (With the severity rubric written later, 5 of the 16 are grave: these four
+   and the removed comma, which introduces a mistake.)
 
 The sets are written by me, not collected from real users; the next step is
 real messages.
@@ -482,9 +488,10 @@ and committed first, then used once to judge them.
 | **Wrong fixes applied, with the rules** | **0** | **0** | **3** | **2** |
 
 On text the rules were not designed from, they removed 3 of 8 wrong fixes.
-The 5 left were one real word swapped for another that is not a known
-confusion ("lui" → "fout", "there" → "the", "est" → "es") and a removed
-apostrophe ("I'm" → "Im"). Raw output: `benchmarks/results/round8_20261104.md`.
+The 5 left: one real word swapped for another that is not a known confusion
+("lui" → "fout", "there" → "the", "est" → "es"), a removed apostrophe
+("I'm" → "Im"), and "résaux" → "réseaux", a valid correction the expected
+answer did not list. Raw output: `benchmarks/results/round8_20261104.md`.
 
 ## Round 9 — November 4, 2026: known confusions, judged on a second held-out set
 
@@ -585,8 +592,9 @@ was written and committed before LanguageTool was added.
    containing brackets are now skipped; re-scored with that change the set
    gives 80/86 and 1 wrong fix, but that number is optimistic because the
    change was found on this set.
-3. **The remaining wrong fix is the model's**: "Bcp de taff" → "taf" (a slang
-   spelling the dictionary does not know, so it looked like a typo).
+3. **The other wrong fix is the model's**: "Bcp de taff" → "taf" (a slang
+   spelling the dictionary does not know, so it looked like a typo); minor
+   under the rubric below, since the meaning and the register are unchanged.
 4. **LanguageTool skips what it is unsure about**: "si j'aurais" gets two
    suggestions ("ai", "avais") and is left alone, so it stays missed rather
    than wrongly fixed.
@@ -608,6 +616,9 @@ user wrote, not by how common the mistake is:
 Rules for applying it: every failure of the configuration being judged is
 classified, on every set, and each case is listed with its class. A case
 that is hard to decide goes to the more severe class.
+
+Rounds 8–10 were written before this rubric: their "wrong fixes applied" count
+grave and minor failures together. The table below separates them.
 
 ### Every failure of the current version, classified
 
@@ -640,5 +651,6 @@ The 10 failures that changed something:
 
 These numbers include the sets the rules were tuned on, so they are
 optimistic. The score to trust is the last unseen set, judged once: on the
-third held-out set (174 sentences), the first run had **1 grave**
-("délicieuses" → "(délicieuses)", since fixed), 1 minor, 7 missed.
+third held-out set (174 sentences), the first run with LanguageTool had
+**1 grave** ("délicieuses" → "(délicieuses)", since fixed), 1 minor ("taff" →
+"taf") and 5 missed.
