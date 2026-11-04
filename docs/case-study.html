@@ -197,7 +197,7 @@
 <section class="col tldr" aria-label="In short">
   <p><b>What:</b> a Mac tool that fixes the text you select, with an AI model running on your Mac. I designed both sides: the <b>interface</b> (a popup that adapts to the text, where each fix is accepted or ignored) and the <b>mechanism behind it</b> (a model chosen by benchmark, safety rules, a grammar checker).</p>
   <p><b>Key number:</b> 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without a click.</p>
-  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.</p>
+  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed. Built with Claude Code as a coding assistant (<a href="https://github.com/Enguerrand-Roques/textpolish#how-i-built-this-with-claude">how the work was split</a>).</p>
 </section>
 <section class="col">
   <h2>Why I built it</h2>
@@ -355,12 +355,12 @@
           <tr><td><code>ministral-3:8b</code></td><td class="num">4.87/5 Pro · 12–15 s</td><td>Too slow</td></tr>
           <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro until round 6; “Dear [Recipient Name]”</td></tr>
           <tr><td><code>gemma3:4b-it-qat</code></td><td class="num">4.77/5</td><td>Slower than the regular build</td></tr>
-          <tr><td><code>gemma3:1b-it-qat</code></td><td class="num">4.53/5 · 1.3 s</td><td>Never saw “opérationel”</td></tr>
-          <tr><td><code>gemma3:1b</code></td><td class="num">4.47/5</td><td>Beaten by its QAT build</td></tr>
-          <tr><td><code>qwen3.5:4b</code></td><td class="num">4.40/5 · 6.5 s</td><td>Turned “RH et” into “RHO”</td></tr>
+          <tr><td><code>gemma3:1b-it-qat</code></td><td class="num">4.53/5 · 1.8 s</td><td>Never saw “opérationel”</td></tr>
+          <tr><td><code>gemma3:1b</code></td><td class="num">4.53/5</td><td>Beaten by its QAT build</td></tr>
+          <tr><td><code>qwen3.5:4b</code></td><td class="num">4.73/5 Pro · 6.5 s</td><td>Turned “RH et” into “RHO”</td></tr>
           <tr><td><code>qwen3.5:4b-nvfp4</code> (MLX)</td><td class="num">10/12</td><td>Rewrote a correct sentence; “Le réunion”</td></tr>
           <tr><td><code>qwen3.5:2b</code> (two builds)</td><td class="num">3–5/12</td><td>Added mistakes, translated</td></tr>
-          <tr><td><code>qwen3.5:0.8b</code></td><td class="num">2.93/5</td><td>Changed the meaning in French</td></tr>
+          <tr><td><code>qwen3.5:0.8b</code></td><td class="num">3.33/5 Pro</td><td>Changed the meaning in French</td></tr>
           <tr><td><code>lfm3:1.7b</code> (MLX)</td><td class="num">2/12 · 7.2 s</td><td>Wrote its reasoning into the answer</td></tr>
           <tr><td><code>command-r7b</code></td><td class="num">3.90/5 · 11.8 s</td><td>Too slow</td></tr>
           <tr><td><code>qwen3:4b</code></td><td class="num">—</td><td>Didn't answer in time</td></tr>
@@ -517,7 +517,7 @@
   <h2>What's next</h2>
   <p>What the numbers above don't cover yet, and what I would test next:</p>
   <ul>
-    <li><b>Real messages and real people.</b> The 802 test sentences are written by me. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
+    <li><b>Real messages and real people.</b> The 802 test sentences were written for the test with Claude, not collected from real people. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
     <li><b>Judging the style of Pro and Custom.</b> 80 rewrites are now checked for lost facts, invented greetings and unmet requests (1 real problem), but not for how good the tone is. That needs people, or another model with a fixed grid.</li>
     <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
     <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>

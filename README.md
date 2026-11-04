@@ -6,7 +6,7 @@
 > **In short**
 > - **What:** a Mac tool that fixes the text you select, with an AI model running on your Mac. It is built on two sides: the **interface** (a popup that adapts to the text and lets you accept or ignore each fix) and the **mechanism behind it** (a model chosen by benchmark, safety rules, a grammar checker).
 > - **Key number:** 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without your click.
-> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.
+> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed. Built with Claude Code as a coding assistant ([how the work was split](#how-i-built-this-with-claude)).
 
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. Everything runs on your Mac: it works offline once installed, with no account, and your text is never sent anywhere. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`).
 
@@ -196,7 +196,7 @@ textpolish/
 
 ## How models were chosen
 
-TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds and 17 models tested on an Apple M2 16 GB (full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#summary--17-models-10-rounds-april--november-2026)).
+TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds and 17 models tested on an Apple M2 16 GB; five more rounds then tested it on 802 sentences (11 rounds in all, full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#the-17-models)).
 
 **Current configuration:** one model, `gemma4:e2b-it-qat`, for the three modes.
 
@@ -230,6 +230,15 @@ Key findings that shaped this choice:
 
 ---
 
+## How I built this with Claude
+
+TextPolish was built with [Claude Code](https://claude.com/claude-code) as a coding assistant; most commits are co-authored with it. How the work was split:
+
+- **What I decided:** what the app does and for whom, the priorities (a wrong fix is worse than a missed one, so doubtful fixes wait for a click; an install in one command), every popup design choice after trying it in real apps, and what to keep or drop after each benchmark round.
+- **What I delegated:** most of the code, the tests, the benchmark scripts, the test sentences and first drafts of the docs. I tested the app on my Mac and sent back what was wrong.
+- **Where I caught it wrong:** an 11/12 French score presented as good enough (it led to `keep_sentence_marks` and the held-out sets); a 39-second wait left in the demo video; a setup window described as reopening from the menu, which was never built; a mode table comparing scores measured in different ways; sections of the docs that contradicted each other.
+- **What it means for the numbers:** the same assistant wrote the test sentences and the rules they judge, so they can share blind spots. Freezing each held-out set in git before the change it judges stops score tuning, not that; real messages are the next step.
+
 ## Background
 
 This project started as a way to understand how to integrate a language model into a real personal tool — not just a script that calls an API, but something actually usable every day.
@@ -238,7 +247,7 @@ Building it surfaced a few things that tutorials don't really cover:
 
 - **Model size vs. latency** — in early rounds a 4B model rewrote better but took 5–8 s, and a 1B model was fast but missed real typos. Gemma 4 E2B (2B effective) ended that trade-off at about 1 s, after disabling its "thinking" and fixing the temperature.
 - **Keeping a model in RAM** — loading the model takes 3–6 s (9–15 s after a reboot). `keep_alive` keeps it warm between requests but holds 4.3 GB of RAM; TextPolish frees it after 5 minutes idle. It's a trade-off you have to tune per machine.
-- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–1.1 s, close to Gemini Flash-Lite over the network (~0.5 s). Once loaded, local matches the cloud on speed and adds privacy and offline use.
+- **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–1.1 s, close to Gemini Flash-Lite over the network (~0.5 s), with privacy and offline use on top.
 - **Integrating an LLM into an OS-level tool** — the LLM part ended up being the simplest piece. The hard parts were the global shortcut, clipboard handling, and making a window appear above fullscreen apps.
 
 Beyond the technical side, this project was also an exercise in building something the way a real open source project is built — using Conventional Commits (`feat:`, `fix:`, `chore:`...), maintaining a proper `LICENSE`, writing a README that someone else can actually follow, and structuring code so it makes sense to a stranger reading it on GitHub. Small habits that make a big difference when a project grows or gets contributors.
