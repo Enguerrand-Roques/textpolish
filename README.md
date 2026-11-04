@@ -198,15 +198,17 @@ textpolish/
 
 TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds and 17 models tested on an Apple M2 16 GB (full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#summary--17-models-6-rounds-april--november-2026)).
 
-**Current configuration:**
+**Current configuration:** one model, `gemma4:e2b-it-qat`, for the three modes.
 
-| Mode | Model | Warm (median) | Cold (median, range) | Score |
-|------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 174 new sentences (written before the last change): 165 right by default (79/86 French, 86/88 English), 1 grave fix, since fixed. All 802 test sentences: 95 % right, 1 grave |
-| Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
-| Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
+| Mode | Tested on | How it is scored | Result | Warm | Cold |
+|------|-----------|------------------|-------:|-----:|-----:|
+| Correction | 174 sentences never seen before (86 FR, 88 EN) | the fix must match an expected answer | **165 / 174** (95 %) | 0.9 s | 5.0 s |
+| Pro | 10 messages (5 FR, 5 EN) | automatic checks: same language, no "Dear [Name]", sensible length, actually rewritten | 10 / 10 | 1.1 s | 3.4 s |
+| Custom | 6 requests (3 FR, 3 EN) | automatic checks: translated when asked, shorter when asked, otherwise changed and in the right language | 6 / 6 | 1.1 s | 3.1 s |
 
-Warm = median over the test set with the model in RAM. Cold = `ollama stop`, then one request, 3 runs per mode; the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
+Correction is where the testing went: 802 sentences in all, held-out sets and a severity rubric (1 grave fix left in 802: "This kind of mistakes" → "This kinds of mistakes") ([report](benchmarks/BENCHMARK_REPORT.md)). Pro and Custom are only checked on a handful of cases and read by hand, so their 100 % means "no problem found", not "proven": a rewrite has no single right answer, which makes it harder to score. That is the next gap to close.
+
+Warm = median per sentence with the model in RAM. Cold = `ollama stop`, then one request, median of 3 runs (range 3.0–6.3 s); the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
 
 Key findings that shaped this choice:
 
