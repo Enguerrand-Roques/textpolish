@@ -12,5 +12,5 @@
 Each entry: `text`, `expected` (accepted corrections, or `null` when the text is
 correct and must come back unchanged) and `kind` (the kind of mistake). Run with
 `design/model_eval.py casual <model> --large` (development), `--holdout`, `--holdout2` or `--holdout3`,
-add `--en` for English. All sentences were written for the test with Claude,
-not collected from users.
+add `--en` for English. All sentences are written for the test, not collected
+from users.

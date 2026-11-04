@@ -197,7 +197,7 @@
 <section class="col tldr" aria-label="In short">
   <p><b>What:</b> a Mac tool that fixes the text you select, with an AI model running on your Mac. I designed both sides: the <b>interface</b> (a popup that adapts to the text, where each fix is accepted or ignored) and the <b>mechanism behind it</b> (a model chosen by benchmark, safety rules, a grammar checker).</p>
   <p><b>Key number:</b> 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without a click.</p>
-  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed. Built with Claude Code as a coding assistant (<a href="https://github.com/Enguerrand-Roques/textpolish#how-i-built-this-with-claude">how the work was split</a>).</p>
+  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.</p>
 </section>
 <section class="col">
   <h2>Why I built it</h2>
@@ -517,7 +517,7 @@
   <h2>What's next</h2>
   <p>What the numbers above don't cover yet, and what I would test next:</p>
   <ul>
-    <li><b>Real messages and real people.</b> The 802 test sentences were written for the test with Claude, not collected from real people. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
+    <li><b>Real messages and real people.</b> The 802 test sentences were written for the test, not collected from real people. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
     <li><b>Judging the style of Pro and Custom.</b> 80 rewrites are now checked for lost facts, invented greetings and unmet requests (1 real problem), but not for how good the tone is. That needs people, or another model with a fixed grid.</li>
     <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
     <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>

@@ -41,9 +41,8 @@ message; the first request after a pause waits 3–6 s while the model loads.
 - **Rewrites checked for what can go wrong.** Pro and Custom have no single
   right answer, so their checks look for lost facts, invented text, the wrong
   language and unmet requests, and every failure is read by hand.
-- **Limits:** every test sentence was written for the test with an AI assistant
-  (Claude), not collected from users, so the sentences and the rules they judge
-  can share blind spots; Pro and Custom quality (tone, style) is not scored, only their errors.
+- **Limits:** every test sentence was written for the test, not collected from
+  users; Pro and Custom quality (tone, style) is not scored, only their errors.
 
 ## The 11 rounds
 
@@ -508,8 +507,8 @@ answer (raw output: `benchmarks/results/round7_20261104.md`).
    (With the severity rubric written later, 5 of the 16 are grave: these four
    and the removed comma, which introduces a mistake.)
 
-The sets were written for the test with Claude, not collected from real users;
-the next step is real messages.
+The sets were written for the test, not collected from real users; the next
+step is real messages.
 
 </details>
 

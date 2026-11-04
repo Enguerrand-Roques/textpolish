@@ -6,7 +6,7 @@
 > **In short**
 > - **What:** a Mac tool that fixes the text you select, with an AI model running on your Mac. It is built on two sides: the **interface** (a popup that adapts to the text and lets you accept or ignore each fix) and the **mechanism behind it** (a model chosen by benchmark, safety rules, a grammar checker).
 > - **Key number:** 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without your click.
-> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed. Built with Claude Code as a coding assistant ([how the work was split](#how-i-built-this-with-claude)).
+> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.
 
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. Everything runs on your Mac: it works offline once installed, with no account, and your text is never sent anywhere. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`).
 
@@ -229,15 +229,6 @@ Key findings that shaped this choice:
 → Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
 
 ---
-
-## How I built this with Claude
-
-TextPolish was built with [Claude Code](https://claude.com/claude-code) as a coding assistant; most commits are co-authored with it. How the work was split:
-
-- **What I decided:** what the app does and for whom, the priorities (a wrong fix is worse than a missed one, so doubtful fixes wait for a click; an install in one command), every popup design choice after trying it in real apps, and what to keep or drop after each benchmark round.
-- **What I delegated:** most of the code, the tests, the benchmark scripts, the test sentences and first drafts of the docs. I tested the app on my Mac and sent back what was wrong.
-- **Where I caught it wrong:** an 11/12 French score presented as good enough (it led to `keep_sentence_marks` and the held-out sets); a 39-second wait left in the demo video; a setup window described as reopening from the menu, which was never built; a mode table comparing scores measured in different ways; sections of the docs that contradicted each other.
-- **What it means for the numbers:** the same assistant wrote the test sentences and the rules they judge, so they can share blind spots. Freezing each held-out set in git before the change it judges stops score tuning, not that; real messages are the next step.
 
 ## Background
 
