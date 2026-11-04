@@ -584,3 +584,19 @@ was written and committed before LanguageTool was added.
    than wrongly fixed.
 
 Raw output: `benchmarks/results/round10_20261104.md`.
+
+## Severity rubric (written before classifying, November 4, 2026)
+
+A test can fail in different ways, and they do not cost the user the same.
+Every failure is put in one of three classes, by its effect on the text the
+user wrote, not by how common the mistake is:
+
+| Class | Definition | Examples |
+|---|---|---|
+| **Grave** | The meaning changes, a mistake is introduced into text that was correct, or the user's register or informal words are changed | "borrow me your pen" → "borrow my pen"; "délicieuses" → "(délicieuses)"; "aprem" → "après" |
+| **Minor** | The result is still not the expected one, but the meaning is unchanged and nothing that was correct became wrong: a partial fix, a valid variant the expected answers did not list | "que tu est venu" → "es venu" (expected "sois"); "taff" → "taf" |
+| **Missed** | The mistake is left as written | "si j'aurais su" unchanged |
+
+Rules for applying it: every failure of the configuration being judged is
+classified, on every set, and each case is listed with its class. A case
+that is hard to decide goes to the more severe class.
