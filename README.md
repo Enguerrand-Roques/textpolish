@@ -63,136 +63,48 @@ It installs what is missing — a recent Python (with [uv](https://docs.astral.s
 | The model (4.3 GB, once) | **Download** button, progress bar and time left; you can close the window, it goes on; an interrupted download resumes |
 | Accessibility permission | **Open Settings** button; the step turns green as soon as you switch it on, and the shortcut starts working without a restart |
 
-[What `install.sh` does](install.sh) is about 100 readable lines.
-
 <p align="center"><img src="docs/screenshots/onboarding-dark.png" width="460" alt="The setup window: Ollama running, the model downloading with a progress bar (2.5 of 4.3 GB, about 2 minutes left), and the Accessibility permission with an Open Settings button."></p>
 
-<details>
-<summary><strong>macOS, step by step from source</strong></summary>
+Then select text in any app and press **⌥⌘G**. [What `install.sh` does](install.sh) is about 100 readable lines.
 
-### Requirements
-- macOS 13+
-- Python 3.10+ (developed and tested on 3.13)
-- [Ollama](https://ollama.com) 0.40+ installed and running
-- Accessibility permission (granted on first launch)
-
-### Setup
-
-Download the [latest release](https://github.com/Enguerrand-Roques/textpolish/releases/latest) (just the app, 1.5 MB) and run `bash setup.sh` in its folder, or clone the repo:
-
-```bash
-git clone https://github.com/Enguerrand-Roques/textpolish.git
-cd textpolish
-bash setup.sh
-```
-
-`setup.sh` handles everything:
-- Creates the Python virtual environment and installs dependencies
-- Copies `config.example.py` → `config.py`
-- Registers a Launch Agent (it starts when you open the app; auto-start on login is optional, see below)
-- Creates **TextPolish.app** on your Desktop
-
-Then pull the AI model (one-time, 4.3 GB):
-
-```bash
-ollama pull gemma4:e2b-it-qat   # one model for all three modes (Ollama 0.40+)
-```
-
-Optional, recommended: a second, rule-based check after the model (local, ~0.5 GB of RAM, ~15 ms per correction). TextPolish starts it by itself when it is installed:
-
-```bash
-brew install languagetool
-```
-
-### Start
-
-Double-click **TextPolish.app** on your Desktop.
-A pencil icon appears in the menu bar — the app is running.
-
-### Shortcut
-
-`Cmd + Option + G`
-
-### Permissions
-
-On first launch, macOS will ask for:
-- **Accessibility** — required for the global shortcut and simulated copy/paste
-- **Input Monitoring** — may appear alongside Accessibility
-
-Grant both in **System Settings → Privacy & Security**.
-
-### Auto-start on login (optional)
-
-In `~/Library/LaunchAgents/com.user.textpolish.plist`, set `RunAtLoad` to `<true/>`, then reload:
-
-```bash
-launchctl bootout gui/$(id -u)/com.user.textpolish
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plist
-```
-
-### Troubleshooting
+### If something goes wrong
 
 | Problem | Fix |
 |---------|-----|
-| `Cannot connect to Ollama` | Run `ollama serve` in a terminal |
-| `Model not found` | Run `ollama pull gemma4:e2b-it-qat` |
-| Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
-| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` in `config.py` (0 frees the 4.3 GB right away, but every request then waits 3–6 s for the model to load) |
-| Shortcut not working | Grant Accessibility in System Settings |
-| Text not pasted back | Keep the source app focused |
-| App won't start | Check `~/Library/Logs/TextPolish/textpolish.log` for errors |
+| The setup window shows a step in red | Its message says why (no network, disk full: 5 GB free needed); the button retries, and a download resumes where it stopped |
+| The shortcut does nothing | The Accessibility permission is off. Quit and reopen TextPolish: the setup window comes back whenever something is missing. Or turn it on in System Settings → Privacy & Security → Accessibility |
+| Text not pasted back | Keep the app you were writing in focused until the popup closes |
+| Slow first correction | Normal after 5 minutes idle: the model reloads (3–6 s). Raise `OLLAMA_KEEP_ALIVE` in `config.py` to keep it loaded longer |
+| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` (0 frees the 4.3 GB at once, but every request then waits 3–6 s) |
+| Anything else | `~/Library/Logs/TextPolish/textpolish.log` |
 
-</details>
-
----
+To start TextPolish when you log in: in `~/Library/LaunchAgents/com.user.textpolish.plist` set `RunAtLoad` to `<true/>`, then run `launchctl bootout gui/$(id -u)/com.user.textpolish && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plist`.
 
 <details>
-<summary><strong>Windows (experimental, untested since the redesign)</strong></summary>
+<summary><strong>Other ways to install: by hand on macOS, or Windows (experimental)</strong></summary>
 
-### Requirements
-- Windows 10+
-- Python 3.11+
-- [Ollama](https://ollama.com) installed and running
+**By hand on macOS** (Python 3.10+ and Ollama 0.40+ already installed):
 
-### Setup
+```bash
+git clone https://github.com/Enguerrand-Roques/textpolish.git && cd textpolish
+bash setup.sh                    # venv, config.py, TextPolish.app on your Desktop
+ollama pull gemma4:e2b-it-qat    # the model, 4.3 GB, once
+brew install languagetool        # optional grammar checker
+```
+
+Then open **TextPolish.app** on your Desktop.
+
+**Windows** (experimental, untested since the redesign; Python 3.11+ and Ollama installed):
 
 ```bat
-git clone https://github.com/Enguerrand-Roques/textpolish.git
-cd textpolish
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements-windows.txt
-copy config.example.py config.py
-```
-
-Then pull the AI model (one-time, 4.3 GB):
-
-```bash
+git clone https://github.com/Enguerrand-Roques/textpolish.git && cd textpolish
+python -m venv venv && venv\Scripts\activate
+pip install -r requirements-windows.txt && copy config.example.py config.py
 ollama pull gemma4:e2b-it-qat
-```
-
-### Start
-
-```bash
 python main.py
 ```
 
-A ✏️ icon appears in the system tray — the app is running.
-
-### Shortcut
-
-`Ctrl + Alt + G`
-
-### Troubleshooting
-
-| Problem | Fix |
-|---------|-----|
-| `Cannot connect to Ollama` | Run `ollama serve` in a terminal |
-| `Model not found` | Run `ollama pull gemma4:e2b-it-qat` |
-| Timeout errors | Use a smaller model or raise `OLLAMA_TIMEOUT` in `config.py` |
-| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` in `config.py` (0 frees the 4.3 GB right away, but every request then waits 3–6 s for the model to load) |
-| Shortcut not working | Make sure no other app uses Ctrl+Alt+G |
-| Text not pasted back | Keep the source app focused |
+A ✏️ icon appears in the system tray; the shortcut is **Ctrl+Alt+G**. The Windows version has a simpler window, no setup window and no LanguageTool pass.
 
 </details>
 
