@@ -529,3 +529,58 @@ before, and only read for this table.
    result is still wrong).
 
 Raw output: `benchmarks/results/round9_20261104.md`.
+
+## Round 10 — November 4, 2026: LanguageTool after the model
+
+What was left after Round 9 were mostly **misses**: grammar the model does not
+know ("si j'aurais", "quand au", "peut de", "have ate", fewer/less). These are
+exactly what a rule-based checker is built for. LanguageTool 6.8 (open source,
+LGPL) now runs as a local server after the model, in Correction only
+(`languagetool.py`):
+
+- Only rules from safe categories (French grammar and homophones, English
+  grammar and confused words) with **exactly one suggestion** are applied;
+  spelling, typography, style, casing and punctuation are left to the model.
+- Two French rules are disabled because they correct the register, not a
+  mistake: `P_V_PAS` ("j'ai pas" → "je n'ai pas") and `IL_FAUT` ("Faut que" →
+  "Il faut que"). Found on the development sets, where they produced 5 wrong
+  fixes.
+- Its fixes are applied by default (the review rules of Round 9 still apply to
+  the model's own fixes).
+- Optional: without `brew install languagetool` the app works as before.
+
+**Speed and memory.** Out of the box the server rebuilds its French pipeline on
+every request (~700 ms); with `pipelineCaching=true` a check takes 9–20 ms
+(median per sentence), 1.5–3 s the first time for each language, which the app
+does at launch. The server takes ~540 MB of RAM (`-Xmx512m`) and starts in
+about 1 s. In the real app, Correction times are unchanged within noise
+(short message ~1.0 s, 338-character report 2.9 s).
+
+The **third held-out set** (`benchmarks/eval/holdout3_*.json`, 86 FR + 88 EN)
+was written and committed before LanguageTool was added.
+
+| What the app applies by default | Dev sets, 628 sentences | **Held-out 3 FR (86)** | **Held-out 3 EN (88)** |
+|---|---:|---:|---:|
+| Right, model + review rules | 584 | 78 | 84 |
+| **Right, + LanguageTool** | **596** | **79** | **86** |
+| Wrong fixes applied, model + review rules | 3 | 1 | 0 |
+| **Wrong fixes applied, + LanguageTool** | **3** | **2** | **0** |
+| Missed | 41 → 29 | 7 → 5 | 4 → 2 |
+
+### Findings
+
+1. **English: clear gain, no cost.** 84 → 86 of 88 on unseen text; it fixed
+   "less distractions" and "If I would have time"; 0 wrong fixes.
+2. **French: two misses fixed, one new wrong fix.** It fixed "Quand au
+   budget" and "peut de chances", but one rule returns a hint, not a fix
+   ("délicieuses" → "(délicieuses)", meaning "check the agreement"). Suggestions
+   containing brackets are now skipped; re-scored with that change the set
+   gives 80/86 and 1 wrong fix, but that number is optimistic because the
+   change was found on this set.
+3. **The remaining wrong fix is the model's**: "Bcp de taff" → "taf" (a slang
+   spelling the dictionary does not know, so it looked like a typo).
+4. **LanguageTool skips what it is unsure about**: "si j'aurais" gets two
+   suggestions ("ai", "avais") and is left alone, so it stays missed rather
+   than wrongly fixed.
+
+Raw output: `benchmarks/results/round10_20261104.md`.

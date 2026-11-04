@@ -7,6 +7,7 @@
     add --large for the development Correction sets (benchmarks/eval/correction_{fr,en}.json)
     or --holdout / --holdout2 / --holdout3 for the frozen test sets (holdout*_{fr,en}.json); they print a breakdown by
     kind of mistake and what the app applies by default (fixes marked for review are not)
+    add --lt to run LanguageTool after the model, as the app does when it is installed
 
 Correction is scored against expected outputs (exact match after
 normalizing quotes/spaces), plus "overreach": changing a text that had
@@ -24,6 +25,7 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import diff  # noqa: E402
+import languagetool  # noqa: E402
 from platforms.macos.spelling import is_word  # noqa: E402
 
 import llm  # noqa: E402
@@ -111,7 +113,7 @@ def default_report(rows):
         if out.startswith("ERROR"):
             continue
         _checker_for(text)
-        parts = diff.group_changes(text, out)
+        parts = diff.group_changes(text, out, TRUSTED.get(text, ()))
         held += sum(1 for p in parts if p["op"] == "change" and p["review"])
         applied = diff.apply_choices(parts, diff.default_accepted(parts))
         good = {norm(text)} if expect is None else {norm(e) for e in expect}
@@ -161,6 +163,8 @@ LANG = "en" if "--en" in sys.argv else "fr"
 if LANG == "en":
     GOLD, PRO, CUSTOM = GOLD_EN, PRO_EN, CUSTOM_EN
 KINDS = {}  # text -> kind of mistake, for the large sets
+USE_LT = "--lt" in sys.argv  # second pass with LanguageTool, as in the app
+TRUSTED = {}  # text -> ranges LanguageTool rewrote (applied by default)
 _SET = ("holdout3" if "--holdout3" in sys.argv else "holdout2" if "--holdout2" in sys.argv
         else "holdout" if "--holdout" in sys.argv
         else "correction" if "--large" in sys.argv else None)
@@ -184,8 +188,19 @@ def evaluate(mode, model):
     else:
         cases = [(t, i, k) for t, i, k in CUSTOM]
     first = None
+    lt_times = []
+    TRUSTED.clear()
+    if USE_LT and mode == "casual":
+        languagetool.start()
+        for lang_, text_ in (("fr", "Bonjour à tous."), ("en", "Hello everyone.")):
+            languagetool.check(text_, lang_)  # build both pipelines first
     for text, instr, expect in cases:
         out, dt = run(model, mode, text, instr)
+        if USE_LT and mode == "casual" and not out.startswith("ERROR"):
+            t0 = time.time()
+            out, TRUSTED[text] = languagetool.improve(out, llm.detect_language(text))
+            lt_times.append(time.time() - t0)
+            dt += lt_times[-1]
         if first is None:
             first = dt
         else:
@@ -227,7 +242,8 @@ def evaluate(mode, model):
                 notes.append(f"{instr}: {out[:90]!r}")
     warm = statistics.median(times) if times else float("nan")
     print(f"\n### {mode} · {LANG} · {model} · {where}")
-    print(f"score {score}/{len(rows)} · cold {first:.1f}s · warm median {warm:.2f}s")
+    lt = f" · LanguageTool median {statistics.median(lt_times) * 1000:.0f} ms" if lt_times else ""
+    print(f"score {score}/{len(rows)} · cold {first:.1f}s · warm median {warm:.2f}s{lt}")
     if KINDS and mode == "casual":
         by_kind = {}
         for text, instr, expect, out in rows:

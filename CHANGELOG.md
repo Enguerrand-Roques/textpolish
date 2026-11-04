@@ -11,9 +11,14 @@ All notable changes to TextPolish. Versions follow [Semantic Versioning](https:/
   ("aprem", "btw", "u") or one real word swapped for another that is not a
   known confusion (checked with the macOS dictionary). "Accept all" leaves
   them out.
+- **LanguageTool as a second pass** (optional, `brew install languagetool`):
+  after the model, a local LanguageTool server fixes the grammar it knows by
+  rule ("quand au" → "quant au", "have ate" → "have eaten"). Only grammar and
+  confused-word rules with a single suggestion are applied; register rules
+  ("j'ai pas" → "je n'ai pas") are off. About 15 ms per check, ~540 MB of RAM.
 - Larger Correction test sets: 130 French and 123 English messages in
-  `benchmarks/eval/`, plus two held-out sets written before the rules they
-  judge (Rounds 7–9 in the benchmark report).
+  `benchmarks/eval/`, plus three held-out sets, each written before the change
+  it judges (Rounds 7–10 in the benchmark report).
 
 ## [2.0.0] — 2026-11-04
 

@@ -6,7 +6,7 @@ project venv (`venv/bin/python3 design/<script>`).
 
 | Tool | What it does | Needs |
 |------|--------------|-------|
-| `model_eval.py` | Rounds 6–7 benchmark: expected-answer test sets (French, `--en` for English; `--large` for the 130/123-sentence Correction sets in `benchmarks/eval/`) per mode, cold and warm latency. Prints its results; the saved output is `benchmarks/results/round6_*.md` | Ollama |
+| `model_eval.py` | Rounds 6–7 benchmark: expected-answer test sets (French, `--en` for English; `--large` for the 130/123-sentence Correction sets in `benchmarks/eval/`, `--holdout*` for the frozen ones, `--lt` to add the LanguageTool pass) per mode, cold and warm latency. Prints its results; the saved output is `benchmarks/results/round6_*.md` | Ollama |
 | `battery.py` | Runs realistic texts through every mode and prints the layout the popup would pick | Ollama |
 | `fluidity.py` | Drives the real app in TextEdit like a user (HID keystrokes) and reads timings from `design/app.log`: 7 scenarios | Running app, Accessibility |
 | `type_text.py`, `human_shortcut.py` | HID helpers used by `fluidity.py` and `record_video.py` | Accessibility |

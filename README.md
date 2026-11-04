@@ -71,6 +71,12 @@ Then pull the AI model (one-time, 4.3 GB):
 ollama pull gemma4:e2b-it-qat   # one model for all three modes (Ollama 0.40+)
 ```
 
+Optional, recommended: a second, rule-based check after the model (local, ~0.5 GB of RAM, ~15 ms per correction). TextPolish starts it by itself when it is installed:
+
+```bash
+brew install languagetool
+```
+
 ### Start
 
 Double-click **TextPolish.app** on your Desktop.
@@ -212,6 +218,7 @@ textpolish/
 ├── main.py              # Entry point — detects OS, loads the right backend
 ├── clipboard.py         # Copy / paste logic          ─┐
 ├── llm.py               # Ollama request layer         │
+├── languagetool.py      # Optional rule-based 2nd pass │
 ├── diff.py              # Groups and labels fixes      │
 ├── i18n.py              # English / French strings     ├─ shared across platforms
 ├── language.py          # French or English, no model  │
@@ -249,7 +256,7 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 
 | Mode | Model | Warm (median) | Cold (median, range) | Score |
 |------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | On 182 sentences written before the safety rules: 89/93 French, 78/89 English corrected as expected, 1 wrong fix applied (6 without the rules). On the 253-sentence development sets: 95 % / 93 %, 0 wrong fix applied |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | On 174 new sentences (written before the last change): 79/86 French, 86/88 English corrected as expected by default with LanguageTool, 2 wrong fixes applied. Development sets (628 sentences): 596 right, 3 wrong |
 | Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
 | Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
 
@@ -261,6 +268,7 @@ Key findings that shaped this choice:
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Custom.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
+- **A rule-based checker catches what the model misses.** LanguageTool runs locally after the model and fixes the grammar it knows by rule ("quand au" → "quant au", "have ate" → "have eaten"); only single-suggestion grammar rules are applied, and the French rules that "fix" informal register ("j'ai pas" → "je n'ai pas") are off. On unseen sentences it took English from 84 to 86 of 88 and French from 78 to 79 of 86, for ~15 ms per correction and ~540 MB of RAM.
 - **Safe by default.** A missed mistake leaves your text as written; a wrong fix changes what you meant. Fixes that are not a known kind of mistake (a rewording, removed punctuation, an informal word, a real word swapped for one nobody confuses it with, checked with the macOS dictionary) are shown with an orange "Check" and only applied if you click them. Judged on two test sets written before the rules: wrong fixes applied fell from 6 to 1 in 182 sentences.
 - **A larger test set lowers the score, as it should.** On 130 French and 123 English everyday messages (`benchmarks/eval/`), Correction gets 95 % and 93 %: accents, agreement and spelling are perfect, the misses are rarer constructions ("si j'aurais su", fewer/less) and 4 wrong fixes that change the meaning — the reason every fix stays a suggestion you accept or ignore.
 - **A rule fixes the model's one French miss.** It kept deleting the "?" in "tu fais quoi ce soir ? on peut…". Correction now puts back any "?" or "!" the model removed without replacing it (`diff.keep_sentence_marks`): 12/12 on both sets, while the model alone stays at 11/12 in French.

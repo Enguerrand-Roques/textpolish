@@ -6,7 +6,7 @@
 <title>TextPolish UX</title>
 <meta name="description" content="How I designed and tested TextPolish, a Mac menu bar tool that fixes selected text with a local AI model: benchmark of 17 models, trade-offs, iterations and real-app tests.">
 <meta property="og:title" content="TextPolish — UX case study">
-<meta property="og:description" content="Benchmark of 17 local models, eight decisions with their cost, and ten iterations of a Mac proofreading window.">
+<meta property="og:description" content="Benchmark of 17 local models, nine decisions with their cost, and ten iterations of a Mac proofreading window.">
 <meta property="og:image" content="https://enguerrand-roques.github.io/textpolish/screenshots/video-poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -319,6 +319,7 @@
         <tr><td>The remaining miss was always the same: the model deleted the “?” in “tu fais quoi ce soir ? on peut…”, merging two questions.</td><td>A rule puts back any “?” or “!” the model removes without replacing it: 12/12 in French and English. The model alone stays at 11/12.</td></tr>
         <tr><td>12 sentences is a weak signal. On 130 French and 123 English messages the score fell to 95 % and 93 %; 4 of the 16 misses were wrong fixes that change the meaning (“borrow me your pen” → “borrow my pen”).</td><td>Every fix stays a suggestion to accept or ignore; the misses are listed by kind in the report.</td></tr>
         <tr><td>The wrong fixes had a pattern: a rewording, removed punctuation, an informal word “fixed”, or one real word swapped for another nobody confuses.</td><td>Those are held for review (decision 8). On 182 sentences written before the rules: 1 wrong fix applied instead of 6.</td></tr>
+        <tr><td>The misses left were grammar the model doesn't know: “si j'aurais”, “quand au”, “have ate”.</td><td>A rule-based checker (LanguageTool) runs after the model (decision 9).</td></tr>
         <tr><td>“J'ai finit le rapport hier soir” came back in English: my language detector didn't recognize it as French.</td><td>Detector fixed; it was my code, not the model.</td></tr>
         <tr><td>On a long text, “translate into English” only reworded the French: my “answer in the text's language” rule beat the request.</td><td>In Custom, the rule now yields to the request.</td></tr>
         <tr><td>The English set showed Pro writing “Dear [Recipient Name]” on a two-line message.</td><td>The Pro prompt forbids invented greetings and placeholders: 5/5 in both languages.</td></tr>
@@ -444,6 +445,19 @@
       </table></div>
       <p class="verdict"><b>Chose:</b> hold anything that isn't a known kind of mistake. A correction tool is only useful if you can trust what it changes.</p>
       <p class="cost">Cost: a few correct fixes need one click instead of none, and the mistakes the model misses (to/too in English, mostly) stay missed.</p>
+    </div>
+    <div class="decision">
+      <h3>9. A bigger model for the misses, or rules?</h3>
+      <p>The misses left were grammar a linguist would write as a rule: “si j'aurais”, “quand au”, “have ate”. LanguageTool, an open-source rule-based checker, runs locally after the model; only its grammar rules with a single suggestion are applied. Judged on 174 sentences written before it was added:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Right, French</th><th>Right, English</th><th>Wrong fixes</th><th>Time added</th><th>Memory</th></tr></thead>
+        <tbody>
+          <tr><td>Model and review rules</td><td class="num">78 / 86</td><td class="num">84 / 88</td><td class="num">1</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="pick"><td>+ LanguageTool</td><td class="num">79 / 86</td><td class="num">86 / 88</td><td class="num">2</td><td class="num">~15 ms</td><td class="num">~540 MB</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> add it, as an option. Out of the box its French checks took 700 ms each; one server setting (pipeline caching) brought them to 15 ms. Two French rules were turned off because they “fix” informal register (“j'ai pas” → “je n'ai pas”), and its one wrong fix on this set was a hint it returns in brackets, now skipped.</p>
+      <p class="cost">Cost: half a gigabyte of RAM on a 16 GB Mac, and an extra install (<code>brew install languagetool</code>); without it the app works as before.</p>
     </div>
   </div>
 </section>
