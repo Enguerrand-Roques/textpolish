@@ -1,0 +1,547 @@
+[
+ {
+  "kind": "accent",
+  "text": "Je t'envoie le resume de la reunion",
+  "expected": [
+   "Je t'envoie le résumé de la réunion"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "Ca fait plaisir de te revoir",
+  "expected": [
+   "Ça fait plaisir de te revoir"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "On s'est deja croises quelque part ?",
+  "expected": [
+   "On s'est déjà croisés quelque part ?"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "Le marche est ouvert le samedi matin",
+  "expected": [
+   "Le marché est ouvert le samedi matin"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "J'ai prepare le diner pour ce soir",
+  "expected": [
+   "J'ai préparé le dîner pour ce soir",
+   "J'ai préparé le diner pour ce soir"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "Tu as reussi ton examen ? Felicitations !",
+  "expected": [
+   "Tu as réussi ton examen ? Félicitations !"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "La reunion est annulee a cause de la greve",
+  "expected": [
+   "La réunion est annulée à cause de la grève"
+  ]
+ },
+ {
+  "kind": "accent",
+  "text": "Je suis arrive a l'heure pour une fois",
+  "expected": [
+   "Je suis arrivé à l'heure pour une fois",
+   "Je suis arrivée à l'heure pour une fois"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Les documents sont prêt pour la signature",
+  "expected": [
+   "Les documents sont prêts pour la signature"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Elle s'est levé très tôt ce matin",
+  "expected": [
+   "Elle s'est levée très tôt ce matin"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Les tartes que j'ai fait étaient délicieuses",
+  "expected": [
+   "Les tartes que j'ai faites étaient délicieuses"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Il y avait beaucoup de voiture sur l'autoroute",
+  "expected": [
+   "Il y avait beaucoup de voitures sur l'autoroute"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Mes sœurs sont très content pour toi",
+  "expected": [
+   "Mes sœurs sont très contentes pour toi"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Les portes étaient fermé à clé",
+  "expected": [
+   "Les portes étaient fermées à clé"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Nous sommes ravi de vous accueillir",
+  "expected": [
+   "Nous sommes ravis de vous accueillir",
+   "Nous sommes ravies de vous accueillir"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Les photos que tu as pris sont superbes",
+  "expected": [
+   "Les photos que tu as prises sont superbes"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Toute les places sont réservées",
+  "expected": [
+   "Toutes les places sont réservées"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Les nouveaux collègue arrivent lundi",
+  "expected": [
+   "Les nouveaux collègues arrivent lundi"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Il faut que nous partons avant 8h",
+  "expected": [
+   "Il faut que nous partions avant 8h"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Je vous enverrez le devis demain",
+  "expected": [
+   "Je vous enverrai le devis demain"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Tu pourras me rappeler quand tu sera rentré ?",
+  "expected": [
+   "Tu pourras me rappeler quand tu seras rentré ?",
+   "Tu pourras me rappeler quand tu seras rentrée ?"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Il faut que je finis ce rapport",
+  "expected": [
+   "Il faut que je finisse ce rapport"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Nous avons parler au directeur ce matin",
+  "expected": [
+   "Nous avons parlé au directeur ce matin"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Si tu veux, je peut passer te chercher",
+  "expected": [
+   "Si tu veux, je peux passer te chercher"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Il ont accepté notre proposition",
+  "expected": [
+   "Ils ont accepté notre proposition"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "J'aimerai bien venir avec vous",
+  "expected": [
+   "J'aimerais bien venir avec vous"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Quand je serais grand, je serai pilote",
+  "expected": [
+   "Quand je serai grand, je serai pilote"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Il faudrait que tu viens plus tôt",
+  "expected": [
+   "Il faudrait que tu viennes plus tôt"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Je me suis rendu compte que j'avais oublier mes clés",
+  "expected": [
+   "Je me suis rendu compte que j'avais oublié mes clés"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Vous pouvez me dire ou vous êtes ?",
+  "expected": [
+   "Vous pouvez me dire où vous êtes ?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Je ne sais pas ou j'ai mis mon portable",
+  "expected": [
+   "Je ne sais pas où j'ai mis mon portable"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Ces dommage que tu ne puisses pas venir",
+  "expected": [
+   "C'est dommage que tu ne puisses pas venir"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Ils sont partis avec leur valises",
+  "expected": [
+   "Ils sont partis avec leurs valises"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Je pense que sa ira mieux demain",
+  "expected": [
+   "Je pense que ça ira mieux demain"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "On à rendez-vous à 15h",
+  "expected": [
+   "On a rendez-vous à 15h"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Il ses inscrit à la salle de sport",
+  "expected": [
+   "Il s'est inscrit à la salle de sport"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Quelle sont les horaires d'ouverture ?",
+  "expected": [
+   "Quels sont les horaires d'ouverture ?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Je n'ai pas compris se que tu voulais dire",
+  "expected": [
+   "Je n'ai pas compris ce que tu voulais dire"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Quand au budget, on en reparle demain",
+  "expected": [
+   "Quant au budget, on en reparle demain"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Il y a peut de chances que ça marche",
+  "expected": [
+   "Il y a peu de chances que ça marche"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Mon frère et ma sœur son en vacances",
+  "expected": [
+   "Mon frère et ma sœur sont en vacances"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Ils on raté le train de peu",
+  "expected": [
+   "Ils ont raté le train de peu"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Si j'aurais le temps, je t'aiderais",
+  "expected": [
+   "Si j'avais le temps, je t'aiderais"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Je suis sur qu'il va réussir",
+  "expected": [
+   "Je suis sûr qu'il va réussir",
+   "Je suis sûre qu'il va réussir"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Je dois renouveller mon passeport",
+  "expected": [
+   "Je dois renouveler mon passeport"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "C'est un exellent restaurant",
+  "expected": [
+   "C'est un excellent restaurant"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Merci pour ta gentillesse et ta patiance",
+  "expected": [
+   "Merci pour ta gentillesse et ta patience"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "On se voit au rendez-vous habituelle",
+  "expected": [
+   "On se voit au rendez-vous habituel"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Il a eu un accident de voiture mais rien de grâve",
+  "expected": [
+   "Il a eu un accident de voiture mais rien de grave"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Je vais faire un tour au parc, il fait un temps magnifiqe",
+  "expected": [
+   "Je vais faire un tour au parc, il fait un temps magnifique"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Le dévelopement de l'application prend du temps",
+  "expected": [
+   "Le développement de l'application prend du temps"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Bonjour, je me permet de vous écrire car je n'ai pas reçu ma commande",
+  "expected": [
+   "Bonjour, je me permets de vous écrire car je n'ai pas reçu ma commande"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Salut, tu es dispo demain soir ? On pourrais aller au ciné",
+  "expected": [
+   "Salut, tu es dispo demain soir ? On pourrait aller au ciné"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Les enfants on bien dormi, ils était fatigués",
+  "expected": [
+   "Les enfants ont bien dormi, ils étaient fatigués"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Merci a toi pour ton aide, ces vraiment gentil",
+  "expected": [
+   "Merci à toi pour ton aide, c'est vraiment gentil"
+  ]
+ },
+ {
+  "kind": "correct",
+  "text": "Je suis désolée pour le retard, le bus est tombé en panne",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Slt, jsuis en retard dsl",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Tkt, on se capte demain",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Mdr j'ai pas vu le message",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Rdv à 19h au resto ?",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Stp tu peux m'envoyer le lien ?",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Je suis dispo jeudi aprem",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Bcp de taff cette semaine",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "J'ai push sur la branche dev",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "On fait un call à 11h ?",
+  "expected": null
+ },
+ {
+  "kind": "informal",
+  "text": "Ptdr la vidéo est trop drôle",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Merci pour ton retour rapide.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "On se retrouve devant la gare à midi.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Je t'envoie le document dès que possible.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Elle a obtenu son diplôme en juin.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Peux-tu confirmer ta présence ?",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Les invités sont arrivés en avance.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Il faut que tu viennes voir ça.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Si j'avais su, je serais venu plus tôt.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Quant à moi, je reste à la maison.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Il y a peu de monde aujourd'hui.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "C'est ce qu'il m'a dit hier.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Ils se sont trompés de route.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Je suis sûr que tout ira bien.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Où as-tu garé la voiture ?",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Ce n'est pas grave, on recommencera.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "La réunion de demain est maintenue.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Nous vous remercions pour votre patience.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Leurs parents arrivent ce soir.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Je reviens dans cinq minutes.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Ça me va très bien.",
+  "expected": null
+ }
+]
