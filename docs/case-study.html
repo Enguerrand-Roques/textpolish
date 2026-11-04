@@ -184,7 +184,7 @@
       <span class="label">Python · PyObjC · WebKit</span>
       <span class="label">Ollama · Gemma 4 E2B</span>
       <span class="label">macOS first · Windows experimental</span>
-      <span class="label">156 tests</span>
+      <span class="label">163 tests</span>
     </div>
   </div>
   <figure>
@@ -203,7 +203,7 @@
   <h2>Why I built it</h2>
   <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
   <p>I wanted three things: never leave the app, never send anything online, and have a correction ready before I even wonder which setting to pick.</p>
-  <p>It is also a learning project: I wanted to learn how to build an AI product end to end, and how to know whether it works. It isn't distributed, so the evidence on this page comes from the real app on my Mac and from 802 test sentences, not from users.</p>
+  <p>It is also a learning project: I wanted to learn how to build an AI product end to end, and how to know whether it works. Until the one-command install (v11) it was too hard to install for anyone else, so the evidence on this page comes from the real app on my Mac and from 802 test sentences, not from a user study.</p>
   <p>It is built for the Mac first: the popup, the menu bar icon and every test on this page are macOS. A Windows version exists with a simpler window; it hasn't been tested since the redesign.</p>
 </section>
 
@@ -251,6 +251,7 @@
     <span><i style="background:var(--teal)"></i>Teal: grammar, agreement, conjugation</span>
     <span><i style="background:var(--orange)"></i>Orange: punctuation</span>
     <span><i style="background:#0a84ff"></i>Blue: rewording</span>
+    <span><i style="background:var(--orange);border-radius:1px;height:3px"></i>Orange dashes: a fix held for review, applied only if clicked</span>
   </div>
 </section>
 
@@ -279,7 +280,8 @@
     <div><div class="stat">0.5–1.1 s</div><p>to fix or rewrite a sentence, model already loaded</p></div>
     <div><div class="stat">3–6 s</div><p>first request, or after 5 minutes idle (9–15 s after a reboot)</p></div>
     <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s</p></div>
-    <div><div class="stat">0</div><p>bytes sent over the Internet</p></div>
+    <div><div class="stat">165 / 174</div><p>new sentences corrected as expected by default; doubtful fixes wait for a click</p></div>
+    <div><div class="stat">0</div><p>bytes of your text sent over the Internet</p></div>
   </div>
 </section>
 
@@ -297,6 +299,7 @@
   <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">On 253 messages, 4 fixes changed the meaning of what was written.</p></div></div>
   <div class="iter"><div class="v">v10</div><div><p>Safe by default: fixes that aren't a known kind of mistake are shown with an orange “Check” and wait for a click.</p><p class="why">Installing took 7 steps, 4 of them in Terminal: nobody would try it.</p></div></div>
   <div class="iter"><div class="v">v11</div><div><p>One command installs what is missing in about 10 s; a setup window downloads the model with a progress bar and turns each step green as soon as it is done, the Accessibility permission included.</p><p class="why">Current version.</p></div></div>
+  <figure style="margin:18px 0 0"><img class="shot" loading="lazy" src="screenshots/onboarding-dark.png" alt="The setup window: Ollama running, the model downloading with a progress bar, and the Accessibility permission with an Open Settings button." style="max-width:460px"></figure>
 </section>
 
 
@@ -329,12 +332,12 @@
         <tr><td><code>gemma4:e2b</code> corrected as well (10/12), rewrote better, and answered in about 1 s once loaded.</td><td>One model for all three modes: no more reloads.</td></tr>
         <tr><td>The same test gave 9, 10 or 11 right answers out of 12 depending on the run: the model picks its words with some randomness.</td><td>Correction now always gives the same answer: 11/12 on every run.</td></tr>
         <tr><td>The remaining miss was always the same: the model deleted the “?” in “tu fais quoi ce soir ? on peut…”, merging two questions.</td><td>A rule puts back any “?” or “!” the model removes without replacing it: 12/12 in French and English. The model alone stays at 11/12.</td></tr>
-        <tr><td>12 sentences is a weak signal. On 130 French and 123 English messages the score fell to 95 % and 93 %; 4 of the 16 misses were wrong fixes that change the meaning (“borrow me your pen” → “borrow my pen”).</td><td>Every fix stays a suggestion to accept or ignore; the misses are listed by kind in the report.</td></tr>
-        <tr><td>The wrong fixes had a pattern: a rewording, removed punctuation, an informal word “fixed”, or one real word swapped for another nobody confuses.</td><td>Those are held for review (decision 8). On 182 sentences written before the rules: 1 wrong fix applied instead of 6.</td></tr>
-        <tr><td>The misses left were grammar the model doesn't know: “si j'aurais”, “quand au”, “have ate”.</td><td>A rule-based checker (LanguageTool) runs after the model (decision 9).</td></tr>
         <tr><td>“J'ai finit le rapport hier soir” came back in English: my language detector didn't recognize it as French.</td><td>Detector fixed; it was my code, not the model.</td></tr>
         <tr><td>On a long text, “translate into English” only reworded the French: my “answer in the text's language” rule beat the request.</td><td>In Custom, the rule now yields to the request.</td></tr>
         <tr><td>The English set showed Pro writing “Dear [Recipient Name]” on a two-line message.</td><td>The Pro prompt forbids invented greetings and placeholders: 5/5 in both languages.</td></tr>
+        <tr><td>12 sentences is a weak signal. On 130 French and 123 English messages the score fell to 95 % and 93 %; 4 of the 16 misses were wrong fixes that change the meaning (“borrow me your pen” → “borrow my pen”).</td><td>Every fix stays a suggestion to accept or ignore; the misses are listed by kind in the report.</td></tr>
+        <tr><td>The wrong fixes had a pattern: a rewording, removed punctuation, an informal word “fixed”, or one real word swapped for another nobody confuses.</td><td>Those are held for review (decision 8). On 182 sentences written before the rules: 1 wrong fix applied instead of 6.</td></tr>
+        <tr><td>The misses left were grammar the model doesn't know: “si j'aurais”, “quand au”, “have ate”.</td><td>A rule-based checker (LanguageTool) runs after the model (decision 9).</td></tr>
       </tbody>
     </table>
   </div>
@@ -456,6 +459,7 @@
         </tbody>
       </table></div>
       <p class="verdict"><b>Chose:</b> hold anything that isn't a known kind of mistake. A correction tool is only useful if you can trust what it changes.</p>
+      <figure style="margin:14px 0 4px"><img class="shot" loading="lazy" src="screenshots/popup-check-dark.png" alt="Document view with two fixes held for review: “me your” and a removed comma are underlined in orange dashes and not applied; the footer says 2 fixes to check, click to apply." style="max-width:420px"><figcaption>Two fixes held: “borrow me your” → “my” would change the meaning, and the comma before “everyone” would be removed. They stay as written unless clicked.</figcaption></figure>
       <p class="cost">Cost: a few correct fixes need one click instead of none, and the mistakes the model misses (to/too in English, mostly) stay missed.</p>
     </div>
     <div class="decision">

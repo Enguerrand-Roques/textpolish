@@ -8,9 +8,7 @@
 > - **Key number:** on 174 sentences it had never seen, 95 % come out as expected by default; fixes it isn't sure about wait for your click, so a fix that changes your meaning is rare (1 in 802 test sentences).
 > - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.
 
-**TextPolish** polishes your text using a local AI model — no internet, no subscription, no data sent anywhere.
-
-Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`). It runs quietly in the macOS menu bar.
+Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. Everything runs on your Mac: it works offline once installed, with no account, and your text is never sent anywhere. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`).
 
 <p align="center">
   <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 351-character English message with 11 mistakes is corrected with each fix labeled (grammar, agreement, conjugation, spelling, punctuation, capitalization), then rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
@@ -18,20 +16,18 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
 
 <p align="center"><b><a href="https://enguerrand-roques.github.io/textpolish/textpolish-demo.mp4">▶ Watch the 1-minute video</a></b> — real recordings of the app in English, then the switch to French; only the typing is sped up, and the on-screen stopwatch shows the real model time (made with <a href="video/">Remotion</a>).</p>
 
-The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Custom. Everything runs locally.
-
 → **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png) · [what changed in each version](CHANGELOG.md)
 
-> **About this project.** A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. It is not distributed (installing needs Python, Ollama and a 4.3 GB model), so its users are me and the tests. What it shows:
-> - **Product and UX:** a popup that adapts to the text, three modes, English and French, ten iterations ([case study](https://enguerrand-roques.github.io/textpolish/case-study.html)).
+> **About this project.** A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. So far it has mostly been used by me and measured with test sets; the one-command install (v2.2) is what makes testing with other people possible. What it shows:
+> - **Product and UX:** a popup that adapts to the text, three modes, English and French, a guided setup, eleven iterations ([case study](https://enguerrand-roques.github.io/textpolish/case-study.html)).
 > - **A model chosen by measurement:** 17 local models benchmarked against expected answers ([report](benchmarks/BENCHMARK_REPORT.md)).
 > - **Safety over coverage:** a wrong fix is worse than a missed one, so doubtful fixes wait for a click, and every failure is classified as grave, minor or missed with a rubric written first.
 > - **Honest evaluation:** 802 test sentences, and three held-out sets each committed before the change it judges, so the scores can't be tuned to the test.
 > - **AI and rules together:** the model, a review layer, then LanguageTool's grammar rules, each measured on its own.
 
-> **Built for macOS.** The popup, the menu-bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A Windows version exists with a simpler window; it has not been tested since the redesign.
+> **Built for macOS.** The popup, the menu bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A Windows version exists with a simpler window; it has not been tested since the redesign.
 
-> **Prefer a cloud version?** → [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) uses Google Gemini — no local model required, free API key.
+> **Prefer a cloud version?** [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) is the same tool with Google Gemini: no local model, a free API key.
 
 ---
 
@@ -40,13 +36,14 @@ The popup reads the selection, then adapts: one card per correction for short te
 | Feature | Description |
 |---------|-------------|
 | **Three modes** | Correction (fixes mistakes only, default), Pro (⌘2, professional rewrite), Custom (⌘3, your own request: translate, shorten, warmer…) |
-| **English and French** | Corrects and rewrites both languages (tested on an English and a French set). The interface is in English or French: switch from ✏️ → Language, it is remembered |
+| **English and French** | Corrects and rewrites both languages (tested on English and French sets). The interface is in English or French: switch from the menu bar icon → Language, it is remembered |
 | **Every fix explained** | Each correction is labeled: spelling, accent, capitalization, punctuation, agreement, conjugation, grammar (including homophones like their/there) or rewrite. Short texts get one card per fix, long ones a highlighted document |
-| **Correction history** | Last 10 corrections in the ✏️ menu → History. Click an entry to copy the corrected text |
+| **Safe by default** | A fix that isn't a known kind of mistake (a rewording, removed punctuation, an informal word…) is shown with an orange "Check" and only applied if you click it |
+| **Grammar rules on top of the model** | Optional: LanguageTool, a rule-based checker, runs locally after the model and fixes the grammar it knows by rule (~15 ms) |
+| **Correction history** | Last 10 corrections in the menu bar icon → History. Click an entry to copy the corrected text |
 | **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from the menu bar icon → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
 | **Native-feeling popup** (macOS) | Opens under the selection with macOS vibrancy, light and dark mode, full keyboard control (↵ ⇥ ⌘↵ ⌘1-3 esc) |
-| **Fully private** | Everything runs on your machine. No API key, no telemetry, no data ever leaves your computer |
-| **System-level** | Works in any app — VS Code, Notion, Mail, Slack. Panel stays above fullscreen apps |
+| **Works everywhere** | Any app where you can select text: Mail, Slack, Notion, VS Code… The popup stays above fullscreen apps |
 
 ---
 
@@ -67,6 +64,8 @@ It installs what is missing — a recent Python (with [uv](https://docs.astral.s
 | Accessibility permission | **Open Settings** button; the step turns green as soon as you switch it on, and the shortcut starts working without a restart |
 
 [What `install.sh` does](install.sh) is about 100 readable lines.
+
+<p align="center"><img src="docs/screenshots/onboarding-dark.png" width="460" alt="The setup window: Ollama running, the model downloading with a progress bar (2.5 of 4.3 GB, about 2 minutes left), and the Accessibility permission with an Open Settings button."></p>
 
 <details>
 <summary><strong>macOS, step by step from source</strong></summary>
@@ -210,21 +209,15 @@ OLLAMA_MODEL_PRO    = "gemma4:e2b-it-qat"   # Pro
 OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Custom (your own request)
 OLLAMA_TIMEOUT      = 60
 OLLAMA_KEEP_ALIVE   = 300
-UI_LANGUAGE         = "en"                # "en" or "fr", also from ✏️ → Language
+UI_LANGUAGE         = "en"                # "en" or "fr", also from the menu bar icon → Language
 SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+Alt+G
 ```
 
 ---
 
-## Rewrite Modes
+## Speed
 
-| Mode | Best for |
-|------|----------|
-| **Correction** (default) | Fixes mistakes, keeps your wording |
-| **Pro** (⌘2) | Emails, LinkedIn, formal writing — full rewrite |
-| **Custom** (⌘3) | Your own request: translate, shorter, warmer, funnier (“Sur mesure” in the French interface) |
-
-**Speed, measured on an M2 16 GB:**
+Measured on an M2 with 16 GB:
 
 | | Warm (model in RAM) | Cold (model not loaded) |
 |---|---:|---:|
@@ -283,11 +276,11 @@ textpolish/
 
 TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds and 17 models tested on an Apple M2 16 GB (full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#summary--17-models-6-rounds-april--november-2026)).
 
-**Current configuration (Round 6, November 2026):**
+**Current configuration:**
 
 | Mode | Model | Warm (median) | Cold (median, range) | Score |
 |------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | On 174 new sentences (written before the last change): 79/86 French, 86/88 English corrected as expected by default with LanguageTool; 1 grave fix (since fixed) and 1 minor. Development sets (628 sentences): 596 right, 3 wrong |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 174 new sentences (written before the last change): 165 right by default (79/86 French, 86/88 English), 1 grave fix, since fixed. All 802 test sentences: 95 % right, 1 grave |
 | Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
 | Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
 
@@ -306,7 +299,7 @@ Key findings that shaped this choice:
 - **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
 - **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
 - **Free RAM matters as much as the model.** With the Mac swapping heavily (14 of 15 GB of swap in use), generation fell from ~35 to ~13 tokens per second and the same ~370-character message took 7–11 s instead of 3–4 s.
-- **Language detection had a bug** that sent short unaccented French ("J'ai finit le rapport hier soir") to English; fixed in `llm.py`.
+- **Language detection had bugs** that sent short unaccented French ("J'ai finit le rapport hier soir") to English, and English with "on" or "as" to French; fixed and tested in `language.py`.
 - Earlier rounds: `gemma3:1b-it-qat` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 
 → Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
@@ -328,8 +321,3 @@ Beyond the technical side, this project was also an exercise in building somethi
 
 The companion project [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) explores the same use case but with a cloud API (Google Gemini), which removes the local model complexity entirely in exchange for an internet dependency.
 
----
-
-## Related
-
-- [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) — same tool, powered by Google Gemini (no local model, free API)

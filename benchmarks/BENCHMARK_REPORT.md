@@ -37,6 +37,14 @@ and per-mode temperature (Round 6). Later the same day, filming the demo showed 
 the rule now yields to the instruction. Only `gemma4:e2b-it-qat` is installed now; every other
 model was removed after testing.
 
+**After the model was chosen (Rounds 7–10)**, the tests moved from models to the whole app:
+a 253-sentence development set (Round 7: 95 % French, 93 % English), review rules that hold
+doubtful fixes instead of applying them (Rounds 8–9), and LanguageTool after the model (Round
+10). Each change was judged on a held-out set written and committed before it, and every
+failure is classified as grave, minor or missed with a rubric written first. On all 802 test
+sentences the current app gets 762 right by default, with 1 grave fix; on the last unseen set
+(174 sentences), 165 right and 1 grave fix, since fixed.
+
 ---
 
 ## Round 1 — April 5–6, 2026

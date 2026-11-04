@@ -145,7 +145,7 @@
   <div class="split">
     <div>
       <h2>Every fix says what it is</h2>
-      <p>On a long message the popup switches to a document view: the whole text, each fix highlighted, and a legend that counts them. Click a fix to ignore it, <kbd>⌘↵</kbd> to apply the rest.</p>
+      <p>On a long message the popup switches to a document view: the whole text, each fix highlighted, and a legend that counts them. Click a fix to ignore it, <kbd>⌘↵</kbd> to apply the rest. A fix the app isn't sure about (a rewording, a removed comma, an informal word) is underlined in orange dashes and only applied if you click it.</p>
       <ul class="kinds">
         <li><i style="background:var(--red)"></i><span><b>Spelling, accent, capitals</b> — tomorow → tomorrow, reunion → réunion, friday → Friday</span></li>
         <li><i style="background:var(--teal)"></i><span><b>Grammar &amp; homophones</b> — their → there, its → it's, ces → c'est</span></li>
@@ -162,7 +162,7 @@
   <div class="split">
     <div>
       <h2>English and French</h2>
-      <p>TextPolish corrects and rewrites both languages; the model follows the language of the text, and Custom can translate between them. The interface itself is in English or French: pick one from ✏️ → Language and it is remembered.</p>
+      <p>TextPolish corrects and rewrites both languages; the model follows the language of the text, and Custom can translate between them. The interface itself is in English or French: pick one from the menu bar icon → Language and it is remembered.</p>
       <p>Both were tested the same way, with expected answers: 95 % of 130 French messages and 93 % of 123 English ones corrected exactly as expected, and correct messages left alone. Fixes the app isn't sure about are shown, not applied.</p>
     </div>
     <img class="shot" src="screenshots/menu-language.png" alt="The TextPolish menu bar menu with the Language submenu open: English is checked, the cursor is on Français." loading="lazy">
@@ -171,7 +171,7 @@
 
 <section class="col">
   <h2>Measured, not guessed</h2>
-  <p>17 models tested in six benchmark rounds on a MacBook Air M2 with 16 GB, then the chosen one on 253 messages. The last rounds score corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
+  <p>17 models tested in six benchmark rounds on a MacBook Air M2 with 16 GB, then the chosen one on 802 test sentences. The last rounds score corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
   <div class="stats">
     <div><div class="stat">165 / 174</div><p>new sentences corrected as expected by default; 1 fix that changed the meaning (since fixed), doubtful ones wait for your click</p></div>
     <div><div class="stat">0.5–1.1 s</div><p>per sentence, model already in memory</p></div>
@@ -194,14 +194,14 @@
 
 <section class="col">
   <h2>About this project</h2>
-  <p>A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. It isn't distributed (it needs Python, Ollama and a 4.3 GB model), so its users are me and 802 test sentences. What I worked on: a popup that adapts to the text, a model chosen by benchmark, safety over coverage (a wrong fix is worse than a missed one), test sets frozen before each change, and the model combined with grammar rules. The <a href="case-study.html">case study</a> shows each decision and what it cost.</p>
+  <p>A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. So far it has mostly been used by me and measured with 802 test sentences; the one-command install is what makes testing with other people possible. What I worked on: a popup that adapts to the text, a model chosen by benchmark, safety over coverage (a wrong fix is worse than a missed one), test sets frozen before each change, and the model combined with grammar rules. The <a href="case-study.html">case study</a> shows each decision and what it cost.</p>
 </section>
 
 <section class="col" id="install">
   <h2>Install</h2>
-  <p>macOS with Python 3.10+ and <a href="https://ollama.com">Ollama</a> 0.40+. Apple Silicon recommended. Download the <a href="https://github.com/Enguerrand-Roques/textpolish/releases/latest">latest release</a> (<a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/CHANGELOG.md">what changed in each version</a>), or clone the repo:</p>
+  <p>macOS 13 or later, Apple Silicon recommended. Paste this in Terminal:</p>
   <pre><code>curl -fsSL https://raw.githubusercontent.com/Enguerrand-Roques/textpolish/main/install.sh | bash</code></pre>
-  <p>One command in Terminal installs what is missing (Python, Ollama) and opens the app. Its setup window then downloads the model (4.3 GB, once) with a progress bar, and takes you to the Accessibility permission with one button. No administrator password. <a href="https://github.com/Enguerrand-Roques/textpolish#installation">Step-by-step install from source</a>.</p>
+  <p>One command in Terminal installs what is missing (Python, Ollama) and opens the app. Its setup window then downloads the model (4.3 GB, once) with a progress bar, and takes you to the Accessibility permission with one button. No administrator password. Prefer to do it by hand? <a href="https://github.com/Enguerrand-Roques/textpolish#installation">Step-by-step install</a> · <a href="https://github.com/Enguerrand-Roques/textpolish/releases/latest">latest release</a> · <a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/CHANGELOG.md">what changed in each version</a>.</p>
   <p>Then select text anywhere and press <kbd>⌥⌘G</kbd>. TextPolish is built and tested for the Mac. A Windows version exists (<kbd>Ctrl+Alt+G</kbd>) with a simpler window; it is experimental and has not been tested since the redesign.</p>
 </section>
 
