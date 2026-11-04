@@ -22,46 +22,41 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME}"
           ARCHIVE="textpolish-${VERSION}.zip"
-
-          # Package the repo without venv, cache, and local config
-          zip -r "$ARCHIVE" . \
-            --exclude "*.pyc" \
-            --exclude "*/__pycache__/*" \
-            --exclude "*/venv/*" \
-            --exclude "config.py" \
-            --exclude "benchmarks/results/*" \
-            --exclude ".git/*"
-
+          # Only the app: .gitattributes marks docs, video, design, benchmarks
+          # and tests as export-ignore.
+          git archive --format=zip --prefix="textpolish-${VERSION}/" -o "$ARCHIVE" "$VERSION"
           echo "ARCHIVE=$ARCHIVE" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Write release notes
+        run: |
+          # This version's section of CHANGELOG.md, then the install steps.
+          awk -v v="${VERSION#v}" '
+            $0 ~ "^## \\[" v "\\]" {on=1; next}
+            on && /^## \[/ {exit}
+            on && /^\[[0-9.]+\]:/ {exit}
+            on {print}
+          ' CHANGELOG.md > notes.md
+          cat >> notes.md <<EOF
+
+          ## Install (macOS)
+
+          Requires [Ollama](https://ollama.com) 0.40 or later. Extract the zip, then:
+
+          \`\`\`bash
+          ollama pull gemma4:e2b-it-qat   # one-time, 4.3 GB
+          cd textpolish-${VERSION}
+          bash setup.sh
+          \`\`\`
+
+          \`setup.sh\` creates a Python venv, installs the dependencies and puts **TextPolish.app** on your Desktop. Windows (experimental): see the [README](https://github.com/Enguerrand-Roques/textpolish#readme).
+          EOF
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: "TextPolish ${{ env.VERSION }}"
-          body: |
-            ## Install
-
-            **macOS** — extract the zip, then:
-            ```bash
-            cd textpolish-${{ env.VERSION }}
-            bash setup.sh
-            ```
-            `setup.sh` creates a Python venv, installs dependencies, and puts **TextPolish.app** on your Desktop.
-
-            **Windows** — extract the zip, then:
-            ```bash
-            cd textpolish-${{ env.VERSION }}
-            pip install -r requirements-windows.txt
-            python main.py
-            ```
-
-            Then pull the AI model (one-time, 4.3 GB):
-            ```bash
-            ollama pull gemma4:e2b-it-qat
-            ```
-
-            See [README](https://github.com/Enguerrand-Roques/textpolish#readme) for full instructions.
+          body_path: notes.md
           files: ${{ env.ARCHIVE }}
           draft: false
           prerelease: false

@@ -15,7 +15,7 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
 
 The popup reads the selection, then adapts: one card per correction for short texts, a highlighted document for long ones, a single rewrite in Pro / Custom. Everything runs locally.
 
-→ **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png)
+→ **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png) · [what changed in 2.0](CHANGELOG.md)
 
 > **Built for macOS.** The popup, the menu-bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A Windows version exists with a simpler window; it has not been tested since the redesign.
 
@@ -31,7 +31,7 @@ The popup reads the selection, then adapts: one card per correction for short te
 | **English and French** | Corrects and rewrites both languages (tested on an English and a French set). The interface is in English or French: switch from ✏️ → Language, it is remembered |
 | **Every fix explained** | Each correction is labeled: spelling, accent, capitalization, punctuation, agreement, conjugation, grammar (including homophones like their/there) or rewrite. Short texts get one card per fix, long ones a highlighted document |
 | **Correction history** | Last 10 corrections in the ✏️ menu → History. Click an entry to copy the corrected text |
-| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
+| **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from the menu bar icon → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
 | **Native-feeling popup** (macOS) | Opens under the selection with macOS vibrancy, light and dark mode, full keyboard control (↵ ⇥ ⌘↵ ⌘1-3 esc) |
 | **Fully private** | Everything runs on your machine. No API key, no telemetry, no data ever leaves your computer |
 | **System-level** | Works in any app — VS Code, Notion, Mail, Slack. Panel stays above fullscreen apps |
@@ -50,6 +50,8 @@ The popup reads the selection, then adapts: one card per correction for short te
 - Accessibility permission (granted on first launch)
 
 ### Setup
+
+Download the [latest release](https://github.com/Enguerrand-Roques/textpolish/releases/latest) (just the app, 1.5 MB) and run `bash setup.sh` in its folder, or clone the repo:
 
 ```bash
 git clone https://github.com/Enguerrand-Roques/textpolish.git
