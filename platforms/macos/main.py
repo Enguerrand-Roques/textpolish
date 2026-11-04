@@ -25,7 +25,8 @@ from AppKit import (
 import languagetool
 from config import SHORTCUT
 from platforms.macos.hotkey import install as install_hotkey
-from platforms.macos.ui import setup as setup_panel, show_accessibility_denied_alert
+from platforms.macos.onboarding import Onboarding, needed as onboarding_needed
+from platforms.macos.ui import on_main, setup as setup_panel, shortcut_label
 
 logging.basicConfig(
     level=logging.INFO,
@@ -57,10 +58,25 @@ def main() -> None:
 
     panel = setup_panel()
     languagetool.warm_up()  # optional second pass; no-op if not installed
-    install_hotkey(
-        SHORTCUT, panel.trigger_polish,
-        on_permission_denied=show_accessibility_denied_alert,
-    )
+
+    # First launch: the setup window shows what is missing (Ollama, the model,
+    # the Accessibility permission). The shortcut needs that permission, so
+    # it is installed again as soon as the permission appears.
+    hotkey = {"ok": True}
+
+    def start_hotkey():
+        hotkey["ok"] = True
+        install_hotkey(SHORTCUT, panel.trigger_polish, on_permission_denied=hotkey_denied)
+
+    def hotkey_denied():
+        hotkey["ok"] = False
+        on_main(setup_window.show)
+
+    setup_window = Onboarding.alloc().initWithOnMain_shortcut_onAccessGranted_(
+        on_main, shortcut_label(SHORTCUT), lambda: hotkey["ok"] or start_hotkey())
+    if onboarding_needed() or os.environ.get("TEXTPOLISH_SETUP"):  # the env var forces it, for testing
+        setup_window.show()
+    start_hotkey()
 
     print(f"TextPolish started — shortcut active: {SHORTCUT}")
     print("Press Ctrl+C in this terminal to quit.")

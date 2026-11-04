@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TextPolish setup</title>
+<style>
+  :root {
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    --label: rgba(0,0,0,.88); --secondary: rgba(0,0,0,.55); --tertiary: rgba(0,0,0,.32);
+    --fill: rgba(0,0,0,.05); --separator: rgba(0,0,0,.1);
+    --accent: #007aff; --green: #34c759; --orange: #ff9500; --red: #ff3b30;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --label: rgba(255,255,255,.9); --secondary: rgba(255,255,255,.6); --tertiary: rgba(255,255,255,.35);
+      --fill: rgba(255,255,255,.07); --separator: rgba(255,255,255,.12);
+      --accent: #0a84ff; --green: #30d158; --orange: #ff9f0a; --red: #ff453a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: transparent; font: 13px/1.45 var(--font); color: var(--label);
+               -webkit-user-select: none; user-select: none; }
+  main { padding: 34px 26px 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  header { display: flex; gap: 12px; align-items: center; }
+  .glyph { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+           background: linear-gradient(145deg, #3b9bff, #0a84ff 55%, #5e5ce6); }
+  h1 { font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+  header p { margin: 1px 0 0; color: var(--secondary); }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  li > div, footer p { min-width: 0; }  /* long text wraps instead of widening the row */
+  li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: start;
+       background: var(--fill); border-radius: 10px; padding: 12px 12px 12px 10px; }
+  .dot { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; margin-top: 1px;
+         border: 1.5px solid var(--tertiary); color: transparent; font-size: 12px; font-weight: 700; }
+  li[data-state="ok"] .dot { background: var(--green); border-color: var(--green); color: #fff; }
+  li[data-state="busy"] .dot { border-color: var(--accent); border-top-color: transparent; animation: spin .8s linear infinite; }
+  li[data-state="error"] .dot { border-color: var(--red); color: var(--red); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .title { font-weight: 600; }
+  .detail { color: var(--secondary); font-size: 12px; margin-top: 2px; }
+  li[data-state="error"] .detail { color: var(--red); }
+  .bar { height: 4px; border-radius: 2px; background: var(--separator); margin-top: 8px; overflow: hidden; display: none; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 2px; transition: width .4s; }
+  li[data-state="busy"] .bar.on { display: block; }
+  button { font: 600 12px var(--font); border: 0; border-radius: 6px; padding: 5px 11px; cursor: pointer;
+           background: var(--accent); color: #fff; white-space: nowrap; }
+  button:hover { filter: brightness(1.08); }
+  li[data-state="ok"] button, li[data-state="busy"] button, li[data-state="wait"] button { display: none; }
+  footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 28px; }
+  footer p { margin: 0; color: var(--secondary); font-size: 12px; }
+  kbd { font: 500 11px var(--font); background: var(--fill); border-radius: 4px; padding: 1px 5px; }
+  #done { display: none; }
+  body.ready #done { display: inline-block; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="glyph" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.2-1L19 8.2a2.1 2.1 0 0 0-3-3L5.2 16 4 20z"/></svg>
+    </div>
+    <div><h1 data-i18n="title"></h1><p data-i18n="subtitle"></p></div>
+  </header>
+  <ol>
+    <li id="ollama" data-state="wait">
+      <span class="dot">✓</span>
+      <div><div class="title" data-i18n="ollama_title"></div><div class="detail"></div></div>
+      <button onclick="act('ollama')"></button>
+    </li>
+    <li id="model" data-state="wait">
+      <span class="dot">✓</span>
+      <div><div class="title" data-i18n="model_title"></div><div class="detail"></div><div class="bar"><i></i></div></div>
+      <button onclick="act('model')"></button>
+    </li>
+    <li id="access" data-state="wait">
+      <span class="dot">✓</span>
+      <div><div class="title" data-i18n="access_title"></div><div class="detail"></div></div>
+      <button onclick="act('access')"></button>
+    </li>
+  </ol>
+  <footer>
+    <p id="foot"></p>
+    <button id="done" onclick="send({type: 'close'})" data-i18n="done"></button>
+  </footer>
+</main>
+<script>
+const I18N = {
+  en: {
+    title: "Set up TextPolish", subtitle: "Three steps, once. Everything stays on your Mac.",
+    ollama_title: "Ollama, the engine that runs the model", model_title: "The language model",
+    access_title: "Permission to read the shortcut",
+    checking: "Checking…", ollama_ok: "Running", ollama_missing: "Not installed",
+    ollama_old: "Version {v} is too old: 0.40 or later is needed", ollama_starting: "Starting…",
+    install: "Get Ollama", update: "Update",
+    model_ok: "Ready", model_missing: "Gemma 4 E2B · 4.3 GB to download, once", download: "Download",
+    model_wait: "After Ollama", retry: "Try again",
+    access_ok: "Allowed", access_missing: "macOS asks you to allow it in System Settings → Accessibility",
+    open_settings: "Open Settings", access_waiting: "Waiting for you to switch it on…",
+    left: "left", foot: "You can close this window: the download goes on.",
+    ready: "Ready. Select text in any app and press {k}.", done: "Done",
+  },
+  fr: {
+    title: "Installer TextPolish", subtitle: "Trois étapes, une seule fois. Tout reste sur ton Mac.",
+    ollama_title: "Ollama, le moteur qui fait tourner le modèle", model_title: "Le modèle de langage",
+    access_title: "L'autorisation de lire le raccourci",
+    checking: "Vérification…", ollama_ok: "En marche", ollama_missing: "Pas installé",
+    ollama_old: "La version {v} est trop ancienne : il faut 0.40 ou plus", ollama_starting: "Démarrage…",
+    install: "Obtenir Ollama", update: "Mettre à jour",
+    model_ok: "Prêt", model_missing: "Gemma 4 E2B · 4,3 Go à télécharger, une seule fois", download: "Télécharger",
+    model_wait: "Après Ollama", retry: "Réessayer",
+    access_ok: "Autorisée", access_missing: "macOS demande de l'autoriser dans Réglages Système → Accessibilité",
+    open_settings: "Ouvrir les Réglages", access_waiting: "En attente que tu l'actives…",
+    left: "restantes", foot: "Tu peux fermer cette fenêtre : le téléchargement continue.",
+    ready: "C'est prêt. Sélectionne du texte dans n'importe quelle app et appuie sur {k}.", done: "Terminé",
+  },
+};
+let L = I18N.en;
+const $ = id => document.getElementById(id);
+function send(msg) { window.webkit?.messageHandlers?.bridge?.postMessage(msg); }
+function act(step) { send({ type: "action", step }); }
+function fill(s, vars) { return s.replace(/\{(\w+)\}/g, (_, k) => vars?.[k] ?? ""); }
+
+window.App = {
+  setLanguage(lang) {
+    L = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang in I18N ? lang : "en";
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = L[el.dataset.i18n]; });
+  },
+  // state: wait | busy | ok | todo | error; detail and button are i18n keys
+  setStep(step, state, detailKey, buttonKey, vars) {
+    const li = $(step);
+    li.dataset.state = state;
+    li.querySelector(".detail").textContent = detailKey ? fill(L[detailKey] || detailKey, vars) : "";
+    li.querySelector("button").textContent = buttonKey ? L[buttonKey] : "";
+    li.querySelector(".dot").textContent = state === "error" ? "!" : "✓";
+  },
+  setProgress(fraction, doneGB, totalGB, minutesLeft) {
+    const li = $("model");
+    li.querySelector(".bar").classList.add("on");
+    li.querySelector(".bar i").style.width = (fraction * 100).toFixed(1) + "%";
+    const sep = L === I18N.fr ? "," : ".";
+    const gb = x => x.toFixed(1).replace(".", sep);
+    li.querySelector(".detail").textContent =
+      `${gb(doneGB)} / ${gb(totalGB)} GB` + (minutesLeft != null ? ` · ~${Math.max(1, Math.round(minutesLeft))} min ${L.left}` : "");
+    $("foot").textContent = L.foot;
+  },
+  ready(shortcut) {
+    document.body.classList.add("ready");
+    $("foot").innerHTML = fill(L.ready, { k: `<kbd>${shortcut}</kbd>` });
+  },
+};
+App.setLanguage(new URLSearchParams(location.search).get("lang") || "en");
+</script>
+</body>
+</html>

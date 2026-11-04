@@ -345,6 +345,10 @@ def _on_main(fn):
     _bridge.schedule(fn)
 
 
+on_main = _on_main  # public names, used by main.py and the setup window
+shortcut_label = _shortcut_label
+
+
 def show_accessibility_denied_alert() -> None:
     """Show a native alert when the Accessibility permission is missing,
     with a button that deep-links into System Settings. Safe to call from
