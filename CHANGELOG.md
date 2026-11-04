@@ -2,6 +2,14 @@
 
 All notable changes to TextPolish. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- Larger Correction test sets: 130 French and 123 English messages in
+  `benchmarks/eval/`, run with `design/model_eval.py --large`. Result:
+  95 % French, 93 % English, correct sentences left alone 29/30 in each
+  (Round 7 in the benchmark report).
+
 ## [2.0.0] — 2026-11-04
 
 A redesign of the whole experience, a new model chosen by benchmark, and an

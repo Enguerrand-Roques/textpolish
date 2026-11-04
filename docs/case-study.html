@@ -289,7 +289,7 @@
 
 <section class="col">
   <h2>Choosing the model</h2>
-  <p>17 models in six rounds, April to November. The last round stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6). Ollama can run a model two ways: <b>GGUF</b> files through llama.cpp (compressed, lighter) or Apple's <b>MLX</b> engine (faster, heavier in memory).</p>
+  <p>17 models in six rounds, April to November, then a seventh round on a larger set. Round 6 stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6). Ollama can run a model two ways: <b>GGUF</b> files through llama.cpp (compressed, lighter) or Apple's <b>MLX</b> engine (faster, heavier in memory).</p>
   <div class="chart" id="bench">
     <div class="legend" aria-hidden="true">
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--blue)"/></svg>chosen</span>
@@ -316,6 +316,7 @@
         <tr><td><code>gemma4:e2b</code> corrected as well (10/12), rewrote better, and answered in about 1 s once loaded.</td><td>One model for all three modes: no more reloads.</td></tr>
         <tr><td>The same test gave 9, 10 or 11 right answers out of 12 depending on the run: the model picks its words with some randomness.</td><td>Correction now always gives the same answer: 11/12 on every run.</td></tr>
         <tr><td>The remaining miss was always the same: the model deleted the “?” in “tu fais quoi ce soir ? on peut…”, merging two questions.</td><td>A rule puts back any “?” or “!” the model removes without replacing it: 12/12 in French and English. The model alone stays at 11/12.</td></tr>
+        <tr><td>12 sentences is a weak signal. On 130 French and 123 English messages the score fell to 95 % and 93 %; 4 of the 16 misses were wrong fixes that change the meaning (“borrow me your pen” → “borrow my pen”).</td><td>Every fix stays a suggestion to accept or ignore; the misses are listed by kind in the report.</td></tr>
         <tr><td>“J'ai finit le rapport hier soir” came back in English: my language detector didn't recognize it as French.</td><td>Detector fixed; it was my code, not the model.</td></tr>
         <tr><td>On a long text, “translate into English” only reworded the French: my “answer in the text's language” rule beat the request.</td><td>In Custom, the rule now yields to the request.</td></tr>
         <tr><td>The English set showed Pro writing “Dear [Recipient Name]” on a two-line message.</td><td>The Pro prompt forbids invented greetings and placeholders: 5/5 in both languages.</td></tr>
@@ -328,7 +329,7 @@
       <table>
         <thead><tr><th>Model</th><th>Best result</th><th>Verdict</th></tr></thead>
         <tbody>
-          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">12/12 FR and EN (model alone: 11/12 FR) · ~1 s</td><td>Chosen for all three modes</td></tr>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">95 % FR · 93 % EN (130 and 123 messages) · ~1 s</td><td>Chosen for all three modes</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0.34 s</td><td>Fastest, but 7.4 GB of memory</td></tr>
           <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5.00/5 Pro (judge)</td><td>Same quality, 1.6× slower</td></tr>
           <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole emails in Pro</td></tr>
@@ -470,7 +471,7 @@
   <h2>What's next</h2>
   <p>What the numbers above don't cover yet, and what I would test next:</p>
   <ul>
-    <li><b>A bigger test set.</b> The 12/12 scores (French with the question-mark rule) come from 12 sentences per language. The next step is a few hundred real messages, to see whether the score holds.</li>
+    <li><b>Real messages.</b> The 253 test sentences are written by me. The next step is messages from real users, to see whether 93–95 % holds.</li>
     <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
     <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>
     <li><b>Windows.</b> The code runs there, but the new window has never been tested on a PC.</li>

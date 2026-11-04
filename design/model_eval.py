@@ -4,6 +4,8 @@
     venv/bin/python3 design/model_eval.py pro gemma4:e2b-it-qat ...
     venv/bin/python3 design/model_eval.py custom gemma4:e2b-it-qat ...
     add --en to use the English test set
+    add --large for the large Correction sets (benchmarks/eval/correction_{fr,en}.json,
+    ~120 sentences each, scored the same way, with a breakdown by kind of mistake)
 
 Correction is scored against expected outputs (exact match after
 normalizing quotes/spaces), plus "overreach": changing a text that had
@@ -11,6 +13,7 @@ no mistake. Pro and Custom are scored with simple checks (language kept or
 translated, no Markdown/email boilerplate, sensible length).
 Latency: first call (cold load) and median of warm calls.
 """
+import json
 import os
 import re
 import statistics
@@ -112,6 +115,14 @@ def runner(model):
 LANG = "en" if "--en" in sys.argv else "fr"
 if LANG == "en":
     GOLD, PRO, CUSTOM = GOLD_EN, PRO_EN, CUSTOM_EN
+KINDS = {}  # text -> kind of mistake, for the large sets
+if "--large" in sys.argv:
+    _path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "benchmarks", "eval", f"correction_{LANG}.json")
+    with open(_path, encoding="utf-8") as _f:
+        _large = json.load(_f)
+    GOLD = [(c["text"], c["expected"]) for c in _large]
+    KINDS = {c["text"]: c["kind"] for c in _large}
 
 
 def evaluate(mode, model):
@@ -169,6 +180,14 @@ def evaluate(mode, model):
     warm = statistics.median(times) if times else float("nan")
     print(f"\n### {mode} · {LANG} · {model} · {where}")
     print(f"score {score}/{len(rows)} · cold {first:.1f}s · warm median {warm:.2f}s")
+    if KINDS and mode == "casual":
+        by_kind = {}
+        for text, instr, expect, out in rows:
+            ok = not out.startswith("ERROR") and (
+                norm(out) == norm(text) if expect is None else norm(out) in {norm(e) for e in expect})
+            hit, total = by_kind.get(KINDS[text], (0, 0))
+            by_kind[KINDS[text]] = (hit + ok, total + 1)
+        print(" · ".join(f"{k} {h}/{n}" for k, (h, n) in sorted(by_kind.items())))
     for n in notes:
         print("  -", n)
     for text, instr, expect, out in rows:

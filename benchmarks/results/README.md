@@ -11,6 +11,7 @@ checked against the run it came from.
 | `review_<run>.md` | `benchmarks/benchmark_models.py` | outputs side by side, for reading |
 | `verdict_<run>.md` | `benchmarks/benchmark_models.py --judge` | the judge's verdict per model |
 | `round6_20261102.md` | `design/model_eval.py` | expected-answer test set, French and English |
+| `round7_20261104.md` | `design/model_eval.py --large` | the large Correction sets in `../eval/` (130 FR, 123 EN) |
 
 Rounds 1–4 read the app's `prompts/*.txt` as they were at the time (they have
 changed since), without the app's language detection, with the default

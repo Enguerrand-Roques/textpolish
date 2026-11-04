@@ -1,0 +1,810 @@
+[
+ {
+  "kind": "grammar",
+  "text": "Their coming to the party tonight",
+  "expected": [
+   "They're coming to the party tonight"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "I left my keys over their",
+  "expected": [
+   "I left my keys over there"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Is this you're laptop?",
+  "expected": [
+   "Is this your laptop?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Your going to love this place",
+  "expected": [
+   "You're going to love this place"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "The company changed it's logo",
+  "expected": [
+   "The company changed its logo"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Its raining again",
+  "expected": [
+   "It's raining again"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "I want to come to",
+  "expected": [
+   "I want to come too"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "We have to many meetings this week",
+  "expected": [
+   "We have too many meetings this week"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "She is taller then her brother",
+  "expected": [
+   "She is taller than her brother"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "We had lunch and than went back to work",
+  "expected": [
+   "We had lunch and then went back to work"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "The new policy will effect everyone",
+  "expected": [
+   "The new policy will affect everyone"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Don't loose your ticket",
+  "expected": [
+   "Don't lose your ticket"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Whose coming to the meeting?",
+  "expected": [
+   "Who's coming to the meeting?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Who's bag is this?",
+  "expected": [
+   "Whose bag is this?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Were are you right now?",
+  "expected": [
+   "Where are you right now?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Where going to be late",
+  "expected": [
+   "We're going to be late"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "I should of called you earlier",
+  "expected": [
+   "I should have called you earlier",
+   "I should've called you earlier"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "I'll be their in five minutes",
+  "expected": [
+   "I'll be there in five minutes"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Its been a long week",
+  "expected": [
+   "It's been a long week"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Your welcome!",
+  "expected": [
+   "You're welcome!"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Whose ready for the demo?",
+  "expected": [
+   "Who's ready for the demo?"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Its not you're fault",
+  "expected": [
+   "It's not your fault"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Their is a problem with the server",
+  "expected": [
+   "There is a problem with the server"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Thanks for you help yesterday",
+  "expected": [
+   "Thanks for your help yesterday"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "I'm not sure weather we can make it",
+  "expected": [
+   "I'm not sure whether we can make it"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Please advice me on the next steps",
+  "expected": [
+   "Please advise me on the next steps"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "The principle reason is cost",
+  "expected": [
+   "The principal reason is cost"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Less people came than expected",
+  "expected": [
+   "Fewer people came than expected"
+  ]
+ },
+ {
+  "kind": "grammar",
+  "text": "Can you borrow me your pen?",
+  "expected": [
+   "Can you lend me your pen?"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "He don't like coffee",
+  "expected": [
+   "He doesn't like coffee"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "The results of the test was surprising",
+  "expected": [
+   "The results of the test were surprising"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Everyone have finished their work",
+  "expected": [
+   "Everyone has finished their work"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "There is three options on the table",
+  "expected": [
+   "There are three options on the table"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "She go to the office every day",
+  "expected": [
+   "She goes to the office every day"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "They was at the airport when I called",
+  "expected": [
+   "They were at the airport when I called"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "I has a question about the invoice",
+  "expected": [
+   "I have a question about the invoice"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "We was hoping to finish today",
+  "expected": [
+   "We were hoping to finish today"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "The price have gone up again",
+  "expected": [
+   "The price has gone up again"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Every employees must sign the form",
+  "expected": [
+   "Every employee must sign the form"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Let me know if you has any questions",
+  "expected": [
+   "Let me know if you have any questions"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "Me and Sarah is going to the conference",
+  "expected": [
+   "Sarah and I are going to the conference",
+   "Me and Sarah are going to the conference"
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "She dont know where they is.",
+  "expected": [
+   "She doesn't know where they are."
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "We was planning to meet at the cafe, but it were closed.",
+  "expected": [
+   "We were planning to meet at the cafe, but it was closed."
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "The results was better then expected.",
+  "expected": [
+   "The results were better than expected."
+  ]
+ },
+ {
+  "kind": "agreement",
+  "text": "He go to the gym every morning befor work.",
+  "expected": [
+   "He goes to the gym every morning before work."
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I seen that movie last week",
+  "expected": [
+   "I saw that movie last week"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Yesterday we goes to the beach",
+  "expected": [
+   "Yesterday we went to the beach"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I have went there before",
+  "expected": [
+   "I have gone there before"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "He has wrote three reports this month",
+  "expected": [
+   "He has written three reports this month"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "When I was young I use to play football",
+  "expected": [
+   "When I was young I used to play football"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I will call you when I will arrive",
+  "expected": [
+   "I will call you when I arrive"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "She did not knew the answer",
+  "expected": [
+   "She did not know the answer"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I am agree with you",
+  "expected": [
+   "I agree with you"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I am working here since 2020",
+  "expected": [
+   "I have been working here since 2020",
+   "I've been working here since 2020"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I'm looking forward to hear from you",
+  "expected": [
+   "I'm looking forward to hearing from you"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Who did you gave the keys to?",
+  "expected": [
+   "Who did you give the keys to?"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "Did she finished the slides?",
+  "expected": [
+   "Did she finish the slides?"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "He doesn't wants to come",
+  "expected": [
+   "He doesn't want to come"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "I has finished the report yesterday",
+  "expected": [
+   "I have finished the report yesterday",
+   "I finished the report yesterday"
+  ]
+ },
+ {
+  "kind": "conjugation",
+  "text": "We finish the new version last night and its working great",
+  "expected": [
+   "We finished the new version last night and it's working great"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "I recieved your message",
+  "expected": [
+   "I received your message"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "It was definately the right choice",
+  "expected": [
+   "It was definitely the right choice"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Please seperate the files",
+  "expected": [
+   "Please separate the files"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "We need to acommodate more guests",
+  "expected": [
+   "We need to accommodate more guests"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "I'll see you tommorow",
+  "expected": [
+   "I'll see you tomorrow"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "The meeting is on wensday",
+  "expected": [
+   "The meeting is on Wednesday"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "That's a wierd idea",
+  "expected": [
+   "That's a weird idea"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Thank you for your buisness",
+  "expected": [
+   "Thank you for your business"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "I beleive in you",
+  "expected": [
+   "I believe in you"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "The enviroment matters",
+  "expected": [
+   "The environment matters"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "It's a goverment decision",
+  "expected": [
+   "It's a government decision"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "Untill next time",
+  "expected": [
+   "Until next time"
+  ]
+ },
+ {
+  "kind": "spelling",
+  "text": "I recieve to many emails every day",
+  "expected": [
+   "I receive too many emails every day"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "Thats a good point",
+  "expected": [
+   "That's a good point"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "I cant make it tonight",
+  "expected": [
+   "I can't make it tonight"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "Lets grab lunch tomorrow",
+  "expected": [
+   "Let's grab lunch tomorrow"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "The dogs bowl is empty",
+  "expected": [
+   "The dog's bowl is empty"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "We bought three apple's",
+  "expected": [
+   "We bought three apples"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "I've attached the file's you asked for",
+  "expected": [
+   "I've attached the files you asked for"
+  ]
+ },
+ {
+  "kind": "punctuation",
+  "text": "Its a great idea, lets do it.",
+  "expected": [
+   "It's a great idea, let's do it."
+  ]
+ },
+ {
+  "kind": "article",
+  "text": "She is a engineer",
+  "expected": [
+   "She is an engineer"
+  ]
+ },
+ {
+  "kind": "article",
+  "text": "It took me a hour to get home",
+  "expected": [
+   "It took me an hour to get home"
+  ]
+ },
+ {
+  "kind": "article",
+  "text": "I need an new laptop",
+  "expected": [
+   "I need a new laptop"
+  ]
+ },
+ {
+  "kind": "article",
+  "text": "He gave me a advice",
+  "expected": [
+   "He gave me some advice",
+   "He gave me advice",
+   "He gave me a piece of advice"
+  ]
+ },
+ {
+  "kind": "article",
+  "text": "Can you send me the the report?",
+  "expected": [
+   "Can you send me the report?"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "hey, im running late, their was an accident on the highway",
+  "expected": [
+   "hey, I'm running late, there was an accident on the highway"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Thanks for the update, I will reveiw the document tomorow",
+  "expected": [
+   "Thanks for the update, I will review the document tomorrow"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "The client were happy with the demo, but they wants a few changes",
+  "expected": [
+   "The client was happy with the demo, but they want a few changes"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Could you check if there is any update's on the ticket?",
+  "expected": [
+   "Could you check if there are any updates on the ticket?"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "I dont think we can finish everything before friday",
+  "expected": [
+   "I don't think we can finish everything before Friday"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Sorry for the late reply, I was out of office untill monday",
+  "expected": [
+   "Sorry for the late reply, I was out of office until Monday",
+   "Sorry for the late reply, I was out of the office until Monday"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Their going to the store tomorow",
+  "expected": [
+   "They're going to the store tomorrow"
+  ]
+ },
+ {
+  "kind": "mixed",
+  "text": "Can you send me you're notes before the meeting?",
+  "expected": [
+   "Can you send me your notes before the meeting?"
+  ]
+ },
+ {
+  "kind": "correct",
+  "text": "Thanks for the update, I will review the document tomorrow.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Let's meet on Friday at 10 to go over the plan.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "The new version is live and the client is happy with it.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Can you send me the slides before the call?",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "I'm running a bit late, start without me.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Great job on the launch, everyone!",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "lol that's hilarious, see you tonight",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "The invoice is attached; let me know if anything is missing.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "We're out of coffee again.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "I'll ping you once the build is green.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Could you review my PR when you have a minute?",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Happy birthday! Hope you have an amazing day.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "The train was delayed, so I'll be there around nine.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "She's working from home today.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Their team won the match, but ours played better.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "It's too late to change the deadline now.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Who's taking notes in today's meeting?",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Whose turn is it to order lunch?",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "We'll know more after the meeting with legal.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "I've already booked the room for Thursday.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Thanks, that works for me.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "The dashboard loads faster than before.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Don't forget to bring your laptop charger.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "btw the wifi password changed",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "If you need anything, just let me know.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Its battery lasts all day.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "I'd rather wait until we have the numbers.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Then we can decide which option to keep.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "The weather is nice, let's eat outside.",
+  "expected": null
+ },
+ {
+  "kind": "correct",
+  "text": "Your feedback was really helpful.",
+  "expected": null
+ }
+]

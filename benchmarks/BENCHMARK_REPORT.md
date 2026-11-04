@@ -10,7 +10,7 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 
 | Model | Rounds | Best result | Why it was kept or dropped |
 |-------|--------|-------------|----------------------------|
-| **`gemma4:e2b-it-qat`** | 4, 6 | **Correction 12/12 FR and EN (model alone 11/12 FR, plus a question-mark guard); Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
+| **`gemma4:e2b-it-qat`** | 4, 6, 7 | **Correction 123/130 FR (94.6 %), 114/123 EN (92.7 %) on the large sets; 12/12 on the 12-sentence sets; Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
 | `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Better than E2B in Pro (5.00 vs 4.73), ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
@@ -396,3 +396,54 @@ alone. Result on what the app pastes: **12/12 French, 12/12 English**. The model
 | Temperature | model default (1) | 0 Correction, 0.4 Pro/Custom |
 
 `gemma4:e2b-nvfp4` (MLX) is documented in `config.example.py` as the faster option for Macs with 24 GB or more. Only `gemma4:e2b-it-qat` is kept installed; the other test models, including the `ministral-3:3b` fallback, were removed (Ollama models now take 4.3 GB). Raw outputs: `benchmarks/results/round6_20261102.md`.
+
+## Round 7 — November 4, 2026: a larger test set
+
+12 sentences per language is a weak signal: one sentence is 8 points. Round 7
+keeps the same script and scoring (`design/model_eval.py --large`) on two
+larger sets, `benchmarks/eval/correction_fr.json` (130 sentences) and
+`correction_en.json` (123): everyday messages written for the test, grouped by
+kind of mistake, with 30 correct sentences per language that must come back
+unchanged. Where two corrections are both right ("parti"/"partie"), both are
+accepted. Configuration: the app as shipped (`gemma4:e2b-it-qat`, temperature
+0, sentence-mark guard).
+
+| Kind | French | English |
+|------|-------:|--------:|
+| Accent | 12/12 | — |
+| Agreement | 18/18 | 16/16 |
+| Conjugation / verb forms | 21/23 | 14/15 |
+| Grammar (homophones…) | 21/25 | 23/29 |
+| Spelling | 13/13 | 13/13 |
+| Punctuation, apostrophes | — | 6/7 |
+| Articles | — | 5/5 |
+| Several mistakes in one message | 9/9 | 8/8 |
+| Correct sentences left alone | 29/30 | 29/30 |
+| **Total** | **123/130 (94.6 %)** | **114/123 (92.7 %)** |
+| Warm median per sentence | 0.83 s | 0.77 s |
+
+Every miss was read; all 16 are real model errors, none is a wrong expected
+answer (raw output: `benchmarks/results/round7_20261104.md`).
+
+### Findings
+
+1. **The 12/12 did not hold at scale, as expected: 93–95 %.** Accents,
+   agreement, spelling and multi-mistake messages are perfect in both
+   languages; the misses concentrate on rarer constructions.
+2. **French misses (7):** subjunctive "que tu vien" and "si j'aurais su" left
+   as is; three homophones not caught ("peut de trains", "c'est clés",
+   "quand à moi"); "c'est bien passée" kept instead of "s'est"; and one
+   overreach, "Jsuis dispo demain aprem" rewritten as "Je suis dispo demain
+   après", which changes the meaning.
+3. **English misses (9):** too/to, whose/who's, principal/principle,
+   fewer/less and "since 2020" not fixed; three wrong fixes that change the
+   meaning ("Where going to be late" → "Where are you going…", "borrow me
+   your pen" → "borrow my pen", "file's" → "file"); one overreach (the comma
+   in "Great job on the launch, everyone!" removed).
+4. **Wrong fixes matter more than missed ones.** A missed mistake leaves the
+   text as the user wrote it; a wrong fix changes what they meant. Four of the
+   16 misses are of that kind, which is why every fix stays a suggestion the
+   user accepts or ignores.
+
+The sets are written by me, not collected from real users; the next step is
+real messages.
