@@ -55,7 +55,17 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
 curl -fsSL https://raw.githubusercontent.com/Enguerrand-Roques/textpolish/main/install.sh | bash
 ```
 
-It installs what is missing — a recent Python (with [uv](https://docs.astral.sh/uv/), no Homebrew needed), [Ollama](https://ollama.com), and LanguageTool if Homebrew is there — puts the latest release in `~/Library/Application Support/TextPolish`, and opens the app. Nothing asks for an administrator password. On first launch a setup window checks the three things TextPolish needs and fixes them with one button each:
+What the command does, in order:
+
+1. Installs a recent Python if yours is too old (through [uv](https://docs.astral.sh/uv/), no Homebrew needed).
+2. Installs [Ollama](https://ollama.com), the engine that runs the model, if it isn't there.
+3. Downloads the latest TextPolish into `~/Library/Application Support/TextPolish` and puts **TextPolish.app** on your Desktop.
+4. Installs LanguageTool, the optional grammar checker, if you have Homebrew.
+5. Opens TextPolish.
+
+About 10 seconds when Python and Ollama are already there. Nothing asks for an administrator password, and you can [read the script](install.sh) before running it.
+
+On first launch, a setup window checks the three things TextPolish needs and fixes each with one button:
 
 | Step | What happens |
 |---|---|
@@ -65,7 +75,7 @@ It installs what is missing — a recent Python (with [uv](https://docs.astral.s
 
 <p align="center"><img src="docs/screenshots/onboarding-dark.png" width="460" alt="The setup window: Ollama running, the model downloading with a progress bar (2.5 of 4.3 GB, about 2 minutes left), and the Accessibility permission with an Open Settings button."></p>
 
-Then select text in any app and press **⌥⌘G**. [What `install.sh` does](install.sh) is about 100 readable lines.
+Then select text in any app and press **⌥⌘G**.
 
 ### If something goes wrong
 
