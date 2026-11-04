@@ -12,19 +12,19 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 |-------|--------|-------------|----------------------------|
 | **`gemma4:e2b-it-qat`** | 4, 6 | **Correction 12/12 FR and EN (model alone 11/12 FR, plus a question-mark guard); Pro 5/5; Custom 3/3; ~1 s warm, 3–6 s cold** | **In use for all modes.** Needs `"think": false` and temperature 0 for Correction |
 | `gemma4:e2b-nvfp4` (MLX) | 6 | 10/12, 0.34 s | Fastest tested; ~7.4 GB RAM swaps a busy 16 GB Mac. Option for 24 GB+ |
-| `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Same quality as E2B, ~1.6x slower |
+| `gemma4:e4b-it-qat` | 4 | 5.00/5 Pro (judge) | Better than E2B in Pro (5.00 vs 4.73), ~1.6x slower |
 | `gemma4:e4b-nvfp4` (MLX) | 6 | — | Download failed; not tested |
 | `ministral-3:3b` | 4, 5, 6 | 10/12 clean run (11/12 on a first, busier pass), 0.67 s | Correction model in Round 5; in Pro it wrote whole emails, in Custom (then "Perso") it answered the message |
-| `ministral-3:8b` | 4 | 4.53/5 (judge) | 12-15 s per request; added Markdown |
+| `ministral-3:8b` | 4 | 4.87/5 Pro (judge) | 12-15 s per request; added Markdown |
 | `gemma3:4b` | 1-6 | 5.00/5 Pro (Round 4) | Pro model until Round 6; 6/12 Correction, "Dear [Recipient Name]" |
-| `gemma3:4b-it-qat` | 1, 3 | 4.77/5 (judge) | Slower than `gemma3:4b` once `num_ctx` was reduced |
-| `gemma3:1b-it-qat` | 1-5 | 4.53/5, 1.3 s | Correction model in Rounds 1-4; never fixed "opérationel" |
-| `gemma3:1b` | 1-3 | 4.47/5 | Beaten by its QAT build |
-| `qwen3.5:4b` | 4, 5 | 4.40/5 | ~6.5 s; turned "RH et" into "RHO" |
+| `gemma3:4b-it-qat` | 1, 3 | 4.77/5 (judge) | Slower than `gemma3:4b` in Round 3 (5.79 s vs 4.94 s) |
+| `gemma3:1b-it-qat` | 1, 3-5 | 4.53/5, 1.77 s | Correction model from Round 3 to Round 5; never fixed "opérationel" |
+| `gemma3:1b` | 1-3 | 4.53/5 | Beaten by its QAT build |
+| `qwen3.5:4b` | 4, 5 | 4.73/5 Pro | ~6.5 s; turned "RH et" into "RHO" |
 | `qwen3.5:4b-nvfp4` (MLX) | 6 | 10/12, 0.95 s | Rewrote a correct sentence; "Le réunion" in Pro |
 | `qwen3.5:2b-mtp-q4_K_M` | 6 | 5/12 | Introduced mistakes |
 | `qwen3.5:2b-nvfp4` (MLX) | 6 | 3/12 | Translated French to English |
-| `qwen3.5:0.8b` | 4 | 2.93/5 | Distorted meaning in French |
+| `qwen3.5:0.8b` | 4 | 3.33/5 Pro | Distorted meaning in French |
 | `lfm3:1.7b` (MLX) | 6 | 2/12, 7.2 s | Printed its reasoning into the answer |
 | `command-r7b` | 1 | 3.90/5, 11.8 s | Too slow |
 | `qwen3:4b` | 1 | — | Timed out (thinking enabled) |
@@ -33,7 +33,7 @@ so a score is a count, not an opinion. Raw outputs: `benchmarks/results/`.
 same-language rule (Round 1), `num_ctx` sized to the input (Round 2), `"think": false` for
 hybrid-reasoning models (Round 4), a stricter language detector and Markdown cleanup (Round 6),
 and per-mode temperature (Round 6). Later the same day, filming the demo showed that the
-"answer in the input language" rule blocked translation requests on long texts; in Sur mesure
+"answer in the input language" rule blocked translation requests on long texts; in Custom
 the rule now yields to the instruction. Only `gemma4:e2b-it-qat` is installed now; every other
 model was removed after testing.
 
@@ -48,7 +48,7 @@ model was removed after testing.
 - **Corpus:** 10 representative cases (pro/casual, French/English, short/long, with typos)
 - **Models tested:** gemma3:1b, gemma3:1b-it-qat, gemma3:4b, gemma3:4b-it-qat, command-r7b, qwen3:4b (timed out)
 - **Quality judge:** Claude Haiku 4.5 (Anthropic API), scoring 1–5 on three criteria
-- **Configuration:** `num_ctx: 1024`, `keep_alive: 300s`
+- **Configuration:** `keep_alive: 0` (model reloaded every call); the harness never sets `num_ctx`, so Ollama's default applies
 
 ### Results
 
@@ -69,7 +69,9 @@ model was removed after testing.
 
 **3. `num_ctx: 1024` has no quality impact** — the longest case in the corpus is ~544 tokens. `num_ctx: 1024` provides a safety margin while reducing KV cache from ~2 GB to ~16 MB.
 
-### Optimisations applied after Round 1
+### Optimizations applied to the app after Round 1
+
+These changed `llm.py` and `config.py`; the benchmark harness kept `keep_alive: 0` and the default `num_ctx` in every round.
 
 | Parameter | Before | After | Estimated gain |
 |-----------|--------|-------|---------------|
@@ -128,7 +130,7 @@ Round 1 showed every model replying in French on English input. With the new Eng
 The same fix that solved English input introduced a new failure: gemma3:1b now translates French professional text to English. The model is too small to balance *"write professionally"* and *"stay in the input language"* simultaneously when driven by an English prompt. The judge still scores these outputs 4.67–5.0/5 because the English output is technically excellent — but it is the wrong language for a French user.
 
 **3. gemma3:1b handles French casual mode correctly**
-In casual mode, the instruction is conservative (*"fix typos, keep structure"*) — the model has no reason to change language and doesn't. All six French casual cases are output in correct French.
+In casual mode, the instruction is conservative (*"fix typos, keep structure"*) — the model has no reason to change language and doesn't. All three French casual cases are output in correct French.
 
 **4. This confirms and validates the per-mode model architecture**
 - `casual` → `gemma3:1b`: 1.87s median, handles both French and English correctly
@@ -137,7 +139,7 @@ In casual mode, the instruction is conservative (*"fix typos, keep structure"*) 
 Using gemma3:1b for pro mode would be a regression on French inputs. The current split is the right configuration.
 
 **5. Latency improvements are unexpectedly large**
-gemma3:1b went from 4.18s (Round 1) to 1.87s (−55%). gemma3:4b from 8.71s to 4.50s (−48%). The combined effect of `num_ctx: 1024`, `keep_alive: 300s`, and warm model state (models already loaded at test start) explains the gain.
+gemma3:1b went from 4.18s (Round 1) to 1.87s (−55%). gemma3:4b from 8.71s to 4.50s (−48%). The harness sends `keep_alive: 0` and no `num_ctx` in every round, so these settings do not explain the gain; the shorter English prompts are the only known change.
 
 **6. Remaining weakness: heavy abbreviations in casual mode**
 `fr_casual_abbrev` ("tkt c bon g geré, jte redis ds 10 min") scores 2/5 on correction for both models — they barely touch it. This is actually correct behavior: casual mode is designed to preserve style, not expand abbreviations. The low correction score reflects the judge's expectation, not a real bug. To be documented as a known scope limitation.
@@ -165,7 +167,7 @@ gemma3:1b went from 4.18s (Round 1) to 1.87s (−55%). gemma3:4b from 8.71s to 4
 
 ### Context
 
-Round 1 found QAT to be ~30% faster than Q4_K_M (`gemma3:4b-it-qat` 6.1s vs `gemma3:4b` 8.7s). However, those benchmarks used the **default `num_ctx: 131072`**. Round 2 reduced `num_ctx` to 1024, which cut latency by ~48%. Round 3 tests whether QAT retains its advantage under these tighter conditions.
+Round 1 found QAT to be ~30% faster than Q4_K_M (`gemma3:4b-it-qat` 6.1s vs `gemma3:4b` 8.7s). Round 3 tests whether QAT keeps that advantage with the English prompts.
 
 Note: the benchmark runner calls Ollama directly and does **not** pass through `polish_text()` in `llm.py`. Language injection (`_detect_language`) is therefore **not active** during benchmarking — results reflect raw model capability, not the app pipeline.
 
@@ -192,13 +194,13 @@ Note: benchmark runs models without the `_detect_language()` injection from `llm
 ### Key Findings
 
 **1. `gemma3:1b-it-qat` beats `gemma3:1b` on both axes**
-Faster (1.77s vs 1.96s, −9%) and better quality (4.53 vs 4.47, +0.06). Clear config switch for casual mode.
+Faster (1.77s vs 1.96s, −10%) and better quality (4.53 vs 4.47, +0.06). Clear config switch for casual mode.
 
 **2. `gemma3:4b-it-qat` is higher quality but slower than `gemma3:4b`**
 Quality: 4.77 vs 4.67 (+0.10). Latency: 5.79s vs 4.94s (+17%). The quality gain doesn't justify the latency cost for pro mode.
 
-**3. QAT advantage at `num_ctx: 1024` is model-size dependent**
-For the 1b model, QAT is a strict improvement. For the 4b model, QAT is slower at this context size. The 30% gain found in Round 1 for 4b-it-qat was driven by the default `num_ctx: 131072` — not by quantization speed.
+**3. The QAT advantage depends on model size**
+For the 1b model, QAT is a strict improvement. For the 4b model, QAT is slower. The Round 1 gap was not reproduced; the harness never changed `num_ctx`, so the cause is unknown.
 
 ### Current configuration (updated after Round 3)
 
@@ -230,7 +232,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 **1. Ollama's MLX engine is present but not used for these GGUF models.** Upgrading Ollama pulls in `mlx`/`mlx-c` as bundled dependencies, and a `mlx_metal_v3` runner ships in `libexec/lib/ollama/`. However, a live-traced generation (`gemma3:1b-it-qat`) shows Ollama routing through `llama-server` (llama.cpp) with the classic Metal GPU backend (`msg="using llama-server for model"`), not the MLX runtime. All models pulled here are standard GGUF blobs, which llama.cpp handles directly — the MLX path would require MLX-native model weights, not something these Ollama library tags provide. **No latency gain from the Ollama/MLX transition was observed on this M2 16 GB for the models tested; the standalone MLX backend explored in earlier project notes is not made obsolete by this Ollama upgrade.**
 
-**2. Gemma 4 has "thinking" enabled by default and it is catastrophic for this use case.** A raw call to `gemma4:e2b-it-qat` on a short casual-mode case took **51.6s** and generated **1099 tokens** internally (`eval_count`) before returning a 20-token answer — a 28x latency regression vs. `gemma3:1b-it-qat`. Passing `"think": false` in the `/api/generate` payload eliminates this entirely: the same call dropped to **1.09s** with `eval_count: 25`, correct output preserved. `benchmark_models.py` (`run_case()`) was patched to always send `"think": false` — harmless for models without a thinking mode (confirmed on `gemma3:1b-it-qat`, no behavior change), and this is now required for anyone using Gemma 4 (or another hybrid-reasoning model) through TextPolish. **If Gemma 4 is ever adopted in production, `llm.py` must also send `"think": false` in its request payload — it currently does not.**
+**2. Gemma 4 has "thinking" enabled by default and it is catastrophic for this use case.** A raw call to `gemma4:e2b-it-qat` on a short casual-mode case took **51.6s** and generated **1099 tokens** internally (`eval_count`) before returning a 20-token answer — a 28x latency regression vs. `gemma3:1b-it-qat`. Passing `"think": false` in the `/api/generate` payload eliminates this entirely: the same call dropped to **1.09s** with `eval_count: 25`, correct output preserved. `benchmark_models.py` (`run_case()`) was patched to always send `"think": false` — harmless for models without a thinking mode (confirmed on `gemma3:1b-it-qat`, no behavior change), and this is now required for anyone using Gemma 4 (or another hybrid-reasoning model) through TextPolish. **If Gemma 4 is ever adopted in production, `llm.py` must also send `"think": false` in its request payload** — it did not at the time (added in Round 6).
 
 ### Results — Casual mode
 
@@ -280,7 +282,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 
 - Re-run when Phi-5 (status unconfirmed as of Sept 2026) or a further Qwen3.5/Ministral generation ships with a smaller/faster variant.
 - If a "fast pro" mode is ever introduced as a user-facing option, `ministral-3:3b` is the pre-vetted candidate (already pulled locally, `think` not applicable — no hybrid reasoning to disable).
-- Before any future Gemma 4 adoption: add `"think": False` to the request payload in `llm.py` (not just `benchmark_models.py`) — otherwise casual mode would regress to 50+ seconds.
+- Before any future Gemma 4 adoption: add `"think": False` to the request payload in `llm.py` (not just `benchmark_models.py`) — otherwise casual mode would regress to 50+ seconds. (Done in Round 6.)
 
 ---
 
@@ -337,7 +339,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 |-------|----:|---------:|------:|-----------:|-------|
 | `gemma4:e2b-nvfp4` | 5/5 | 0.88 s | 3/3 | 0.56 s | keeps "tu" with a friend |
 | `gemma4:e2b-it-qat` | 5/5 | 1.06 s | 3/3 | 1.10 s | |
-| `gemma3:4b` (previous Pro) | 5/5 | 1.65 s | 2/3 | 1.85 s | "Dear [Recipient Name]"; missed "make it shorter"; on a rerun reversed who thanked whom |
+| `gemma3:4b` (previous Pro) | 5/5 | 1.65 s | 2/3 | 1.83 s | "Dear [Recipient Name]"; missed "make it shorter"; on a rerun reversed who thanked whom |
 | `qwen3.5:4b-nvfp4` | 5/5 | 2.04 s | 3/3 | 1.75 s | grammar slips ("Le réunion") |
 | `ministral-3:3b` | 3/5 | 1.98 s | 3/3* | 1.15 s | *answered a message instead of rewriting it |
 
@@ -346,7 +348,7 @@ Between Round 3 and Round 4, several relevant model families shipped new generat
 1. **One model for all modes removes the mode-switch reload.** With `ministral-3:3b` + `gemma3:4b`, switching mode reloaded a model (~5-6 s; Ollama could not keep both in RAM on this busy 16 GB Mac). With a single Gemma 4 model, measured switches were 0.5-1 s.
 2. **MLX helps a lot but costs RAM.** `gemma4:e2b-nvfp4` was the fastest everywhere, but loading it took free memory from 52 % to 24 % and added swap on a Mac already using 20 GB of swap.
 3. **Language detection bug.** Short unaccented French ("J'ai finit le rapport hier soir") was detected as English and the model was told to answer in English; Gemma 4 obeyed and translated. Fixed with a larger stop-word list and apostrophe splitting.
-4. **Temperature matters more than expected for Correction.** Gemma 4 defaults to temperature 1; three identical runs scored 9, 10 and 11/12. `llm.py` now sends 0 for Correction (same answer every run) and 0.4 for Pro/Perso (more consistent tone, still varied). Final run: **11/12** twice in a row; the remaining miss drops the "?" in "slt tu fais quoi ce soir ? on peut…". "si tout ça se passe bien" was added as an accepted answer (correct and same meaning).
+4. **Temperature matters more than expected for Correction.** Gemma 4 defaults to temperature 1; three identical runs scored 9, 10 and 11/12. `llm.py` now sends 0 for Correction (same answer every run) and 0.4 for Pro/Custom (more consistent tone, still varied). Final run: **11/12** twice in a row; the remaining miss drops the "?" in "slt tu fait quoi ce soir ? on peut…". "si tout ça se passe bien" was added as an accepted answer (correct and same meaning).
 
 ### Cold vs warm latency (chosen model, app pipeline)
 
@@ -371,17 +373,15 @@ subject-verb agreement, spelling, plus 3 correct sentences that must stay untouc
 | Mode | French set | English set | Warm median (EN) |
 |------|-----------:|------------:|-----------------:|
 | Correction | 11/12 | **12/12** (two identical runs) | 0.84 s |
-| Pro | 5/5 | 5/5 (the first run also scored 5/5 but invented "Dear [Recipient Name]"; prompt fixed, and the eval now flags placeholders) | 0.94 s |
+| Pro | 5/5 | 5/5 (the first run also scored 5/5 but invented "Dear [Recipient Name or Hiring Manager]"; prompt fixed, and the eval now flags placeholders) | 0.94 s |
 | Custom / Sur mesure | 3/3 | 3/3 | 0.93 s |
-
-The UI was renamed again for the English interface: Sur mesure is **Custom** in English.
 
 ### Question-mark guard
 
 The one French miss was always the same: in "slt tu fait quoi ce soir ? on peut se retrouver
 vers 19h" the model fixed "fait" but deleted the "?", merging two questions. A correction should
-never remove the user's question, so `diff.keep_question_marks` (Correction only) puts back a
-"?" or "!" that the model removed without replacing it. A mark turned into "." or moved is left
+never remove the user's question, so `diff.keep_sentence_marks` (Correction only) puts back a
+"?" or "!" that the model removed without replacing it. A mark turned into ".", moved, or a "??" reduced to "?" is left
 alone. Result on what the app pastes: **12/12 French, 12/12 English**. The model alone is still
 11/12 French; the guard is a rule in the app, not a better model.
 

@@ -183,7 +183,7 @@
     </div>
   </div>
   <figure>
-    <video class="shot" src="demo-loop.mp4" autoplay muted loop playsinline width="960" height="540" aria-label="Demo in TextEdit: an English message with 11 mistakes is corrected with each fix labelled, rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back."></video>
+    <video class="shot" src="demo-loop.mp4" autoplay muted loop playsinline width="960" height="540" aria-label="Demo in TextEdit: an English message with 11 mistakes is corrected with each fix labeled, rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back."></video>
     <figcaption>The real app in TextEdit: an 11-mistake message corrected, then Pro (<kbd>⌘2</kbd>), then Custom “translate into French”. Only the typing is sped up; the stopwatch shows the real model time.</figcaption>
   </figure>
 </header>
@@ -193,7 +193,7 @@
   <h2>Why I built it</h2>
   <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
   <p>I wanted three things: never leave the app, never send anything online, and have a correction ready before I even wonder which setting to pick.</p>
-  <p>It is built for the Mac first: the popup, the menu-bar icon and every test on this page are macOS. A Windows version exists with a simpler window; it hasn't been tested since the redesign.</p>
+  <p>It is built for the Mac first: the popup, the menu bar icon and every test on this page are macOS. A Windows version exists with a simpler window; it hasn't been tested since the redesign.</p>
 </section>
 
 <section class="col">
@@ -211,13 +211,13 @@
 <section class="col">
   <h2>Three modes, three colors</h2>
   <p>The default mode, Correction, only corrects. That's on purpose: most of the time I just want my sentence to be right, not rewritten. A message to a friend should stay my message. When I want more, I switch to Pro or Custom.</p>
-  <p>Each mode has its color everywhere in the window: the icon, the tab, the main button and the highlights. Without reading anything you know which mode you're in, so you don't replace a whole text by mistake while thinking you only fix a typo. A line under the tabs says plainly what the mode does.</p>
+  <p>Each mode has its color everywhere in the window: the icon, the tab, the main button and the highlights. Without reading anything you know which mode you're in, so you don't replace a whole text by mistake while thinking you're only fixing a typo. A line under the tabs says plainly what the mode does.</p>
 </section>
 <div class="wide">
   <div class="modes">
     <figure>
       <div class="swatch"><i style="background:#0a84ff"></i>Correction · <kbd>⌘1</kbd></div>
-      <p>Fixes mistakes without changing how you write. Keeps slang, nicknames, and English words in French text like “deadline”.</p>
+      <p>Fixes mistakes without changing how you write. Keeps slang, nicknames and English words in French text like “deadline”.</p>
       <img class="shot" loading="lazy" src="screenshots/popup-card-dark.png" alt="Correction mode, blue card: Their → They're.">
     </figure>
     <figure>
@@ -249,7 +249,7 @@
 </section>
 <div class="wide">
   <div class="twoshots">
-    <figure><img class="shot" loading="lazy" src="screenshots/popup-document-dark.png" alt="Document view: an English message with 11 highlighted fixes and the legend Grammar 5, Agreement 2, Conjugation 1, Spelling 1, Punctuation 1, Capitalization 1."><figcaption>Long text: the whole message, each fix highlighted with its kind. Click one to undo it.</figcaption></figure>
+    <figure><img class="shot" loading="lazy" src="screenshots/popup-document-dark.png" alt="Document view: an English message with 11 highlighted fixes and the legend Grammar 5, Agreement 2, Conjugation 1, Spelling 1, Punctuation 1, Capitalization 1."><figcaption>Long text: the whole message, each fix highlighted with its kind. Click one to ignore it.</figcaption></figure>
     <figure><img class="shot" loading="lazy" src="screenshots/popup-clean-dark.png" alt="No mistakes: a green check and two buttons, Pro version and Custom."><figcaption>No mistakes: the window stays open and offers the next step, a Pro version or a request.</figcaption></figure>
   </div>
 </div>
@@ -258,7 +258,7 @@
   <h2>English and French</h2>
   <p>I write in both, so the tool had to handle both. The model follows the language of the text, and Custom can translate between them. The interface is in English or French too: one click in the menu bar, and the choice is remembered.</p>
   <figure style="margin:22px 0 0"><img class="shot" loading="lazy" src="screenshots/menu-language.png" alt="The TextPolish menu with the Language submenu open: English is checked, the cursor is on Français."></figure>
-  <p style="margin-top:18px">Supporting a second language is also a testing question. I ran the same evaluation on an English set (their/they're, its/it's, then/than, subject-verb agreement…) as on the French one. It scored 12/12, and it caught a problem the French set had missed (see below).</p>
+  <p style="margin-top:18px">Supporting a second language is also a testing question. I ran the same evaluation on an English set (their/they're, its/it's, then/than, subject-verb agreement…) as on the French one. The model scored 12/12 on it, and the set caught a problem the French set had missed (see below).</p>
 </section>
 
 <section class="col">
@@ -282,7 +282,7 @@
   <div class="iter"><div class="v">v5</div><div><p>“No mistakes” offers the next step, each mode explains what it does, and the third mode has ready-made ideas.</p><p class="why">Switching modes still took 5 seconds.</p></div></div>
   <div class="iter"><div class="v">v6</div><div><p>One model for all three modes: switching takes under a second.</p><p class="why">Reading the French interface again, I saw that “Perso” read like a casual, personal tone, not “custom”.</p></div></div>
   <div class="iter"><div class="v">v7</div><div><p>“Perso” became “Sur mesure” (Custom in English), the hint says “Say what you want”, and the field icon no longer looks like a spinner.</p><p class="why">Every grammar mistake carried the same “Spelling” label.</p></div></div>
-  <div class="iter"><div class="v">v8</div><div><p>Each fix says what it is: conjugation, agreement, homophone (their/there, a/à), spelling, punctuation. On a long message, the legend counts them.</p><p class="why">The project was in English but the interface only in French.</p></div></div>
+  <div class="iter"><div class="v">v8</div><div><p>Each fix says what it is: grammar (their/there, a/à), conjugation, agreement, spelling, punctuation. On a long message, the legend counts them.</p><p class="why">The project was in English but the interface only in French.</p></div></div>
   <div class="iter"><div class="v">v9</div><div><p>Bilingual interface, English by default, switchable from the menu bar; the whole evaluation repeated in English.</p><p class="why">Current version.</p></div></div>
 </section>
 
@@ -296,20 +296,20 @@
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--muted)"/></svg>llama.cpp (GGUF)</span>
       <span><svg width="12" height="12"><rect x="1.5" y="1.5" width="9" height="9" transform="rotate(45 6 6)" fill="var(--muted)"/></svg>MLX build</span>
     </div>
-    <svg viewBox="0 0 620 340" role="img" aria-labelledby="benchTitle benchDesc">
+    <svg viewBox="0 0 620 340" role="img" aria-labeledby="benchTitle benchDesc">
       <title id="benchTitle">Correct fixes out of 12 against time per sentence</title>
       <desc id="benchDesc">Gemma 4 E2B GGUF, chosen: 11 of 12 at about 0.9 s. Gemma 4 E2B MLX: 10 at 0.34 s. Ministral 3 3B: 10 at 0.67 s. Qwen 3.5 4B MLX: 10 at 0.95 s. Gemma 3 4B: 6 at 1.43 s. Qwen 3.5 2B: 5 at 0.78 s. Qwen 3.5 2B MLX: 3 at 0.52 s. LFM3 1.7B MLX: 2 at 7.2 s, off the chart.</desc>
       <g id="plot"></g>
     </svg>
     <div class="tip" id="tip"></div>
   </div>
-  <p style="margin-top:14px;font-size:0.95rem;color:var(--muted)">Top left is best. Four models reach 10/12; the decision between them was not quality but memory and behavior in the other modes (next section). Gemma 4 E2B scored 10/12 before its temperature was fixed, 11/12 after; on the English set it scores 12/12.</p>
+  <p style="margin-top:14px;font-size:0.95rem;color:var(--muted)">Top left is best. Four models reach 10/12; the decision between them was not quality but memory and behavior in the other modes (next section). Gemma 4 E2B scored 10/12 before its temperature was fixed and 11/12 after. A question-mark rule in the app brings French to 12/12; on the English set the model alone scores 12/12.</p>
   <h3 style="margin-top:34px">What the tests revealed</h3>
   <div class="table-wrap">
     <table>
       <thead><tr><th>What I saw</th><th>What I changed</th></tr></thead>
       <tbody>
-        <tr><td><code>gemma3:1b</code> never noticed that <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> was wrong.</td><td>Correction moved to <code>ministral-3:3b</code>, a bit slower but reliable.</td></tr>
+        <tr><td><code>gemma3:1b-it-qat</code> never noticed that <span class="fix"><s>opérationel</s> <ins>opérationnel</ins></span> was wrong.</td><td>Correction moved to <code>ministral-3:3b</code>, about 3× slower but reliable on that word.</td></tr>
         <tr><td>In Pro, <code>ministral-3:3b</code> invented a whole email from two sentences.</td><td>Pro kept <code>gemma3:4b</code>.</td></tr>
         <tr><td>The correction model put words in bold and translated “deadline” into French.</td><td>Bold is stripped, and the prompt keeps English words in French text.</td></tr>
         <tr><td>It replaced <code>'</code> with <code>’</code> and added non-breaking spaces.</td><td>Those details no longer count as fixes.</td></tr>
@@ -328,11 +328,11 @@
       <table>
         <thead><tr><th>Model</th><th>Best result</th><th>Verdict</th></tr></thead>
         <tbody>
-          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">12/12 FR and EN (11/12 FR alone) · ~1 s</td><td>Chosen for all three modes</td></tr>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">12/12 FR and EN (model alone: 11/12 FR) · ~1 s</td><td>Chosen for all three modes</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0.34 s</td><td>Fastest, but 7.4 GB of memory</td></tr>
           <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5.00/5 Pro (judge)</td><td>Same quality, 1.6× slower</td></tr>
           <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole emails in Pro</td></tr>
-          <tr><td><code>ministral-3:8b</code></td><td class="num">12–15 s</td><td>Too slow</td></tr>
+          <tr><td><code>ministral-3:8b</code></td><td class="num">4.87/5 Pro · 12–15 s</td><td>Too slow</td></tr>
           <tr><td><code>gemma3:4b</code></td><td class="num">5/5 Pro · 6/12</td><td>Pro until round 6; “Dear [Recipient Name]”</td></tr>
           <tr><td><code>gemma3:4b-it-qat</code></td><td class="num">4.77/5</td><td>Slower than the regular build</td></tr>
           <tr><td><code>gemma3:1b-it-qat</code></td><td class="num">4.53/5 · 1.3 s</td><td>Never saw “opérationel”</td></tr>
@@ -341,8 +341,8 @@
           <tr><td><code>qwen3.5:4b-nvfp4</code> (MLX)</td><td class="num">10/12</td><td>Rewrote a correct sentence; “Le réunion”</td></tr>
           <tr><td><code>qwen3.5:2b</code> (two builds)</td><td class="num">3–5/12</td><td>Added mistakes, translated</td></tr>
           <tr><td><code>qwen3.5:0.8b</code></td><td class="num">2.93/5</td><td>Changed the meaning in French</td></tr>
-          <tr><td><code>lfm3:1.7b</code> (MLX)</td><td class="num">2/12 · 7 s</td><td>Wrote its reasoning into the answer</td></tr>
-          <tr><td><code>command-r7b</code></td><td class="num">11.8 s</td><td>Too slow</td></tr>
+          <tr><td><code>lfm3:1.7b</code> (MLX)</td><td class="num">2/12 · 7.2 s</td><td>Wrote its reasoning into the answer</td></tr>
+          <tr><td><code>command-r7b</code></td><td class="num">3.90/5 · 11.8 s</td><td>Too slow</td></tr>
           <tr><td><code>qwen3:4b</code></td><td class="num">—</td><td>Didn't answer in time</td></tr>
         </tbody>
       </table>
@@ -364,7 +364,7 @@
           <tr class="pick"><td>Gemma 4 E2B for all</td><td class="num">0.75–0.8 s</td><td class="num">10/12 → 11/12</td><td class="num">5/5</td></tr>
         </tbody>
       </table></div>
-      <p class="verdict"><b>Chose:</b> one model. Same correction score, better rewrites, and switching modes stops costing a reload.</p>
+      <p class="verdict"><b>Chose:</b> one model. Same correction score at the default temperature (10/12), better rewrites, and switching modes stops costing a reload.</p>
       <p class="cost">Cost: every mode shares the same model's weaknesses.</p>
     </div>
     <div class="decision">
@@ -397,10 +397,10 @@
       <h3>4. Let the model vary, or make it repeatable?</h3>
       <p>Temperature is how much randomness the model adds: at 0 the same text always gets the same answer.</p>
       <div class="table-wrap"><table>
-        <thead><tr><th>Temperature</th><th>Correction, 3 identical runs</th></tr></thead>
+        <thead><tr><th>Temperature</th><th>Correction, identical runs</th></tr></thead>
         <tbody>
           <tr><td>1 (model default)</td><td class="num">9, 10, 11 / 12</td></tr>
-          <tr class="pick"><td>0 for Correction, 0.4 for rewrites</td><td class="num">11, 11 / 12</td></tr>
+          <tr class="pick"><td>0 for Correction, 0.4 for rewrites</td><td class="num">11, 11 / 12 (model alone; 12/12 with the question-mark rule)</td></tr>
         </tbody>
       </table></div>
       <p class="verdict"><b>Chose:</b> a correction must give the same answer for the same text. Rewrites keep a little variety.</p>
@@ -409,7 +409,7 @@
     <div class="decision">
       <h3>5. Cards or the whole document?</h3>
       <p style="margin:0 0 8px;font-size:0.95rem">Cards let you judge each fix; on a long message, 13 cards mean 13 key presses. The popup picks: <b>up to 3 fixes and 280 characters → cards</b>, otherwise the document view with every fix highlighted and one <kbd>⌘↵</kbd> to apply.</p>
-      <p class="cost">Cost: the thresholds are a judgement call, set by using it, not measured on users.</p>
+      <p class="cost">Cost: the thresholds are a judgment call, set by using it, not measured on users.</p>
     </div>
     <div class="decision">
       <h3>6. Live underlining, or a shortcut?</h3>
@@ -436,7 +436,7 @@
   <h2>Testing like a user</h2>
   <p>I didn't want to judge from mock-ups. I ran the real app with everyday messages: a text to a friend, an email to my manager, a LinkedIn application, messages in English and French, a long report. The text was typed in TextEdit and the shortcut sent like a real keyboard. Several bugs only showed up then.</p>
   <div class="bugs">
-    <div class="bug"><h3>Copy failed one time in two</h3><p>The shortcut fires while ⌥ is still held. Copy became ⌥⌘C, “copy style”, and nothing was copied. The app now waits for the keys to be released.</p></div>
+    <div class="bug"><h3>Copy failed half the time</h3><p>The shortcut fires while ⌥ is still held. Copy became ⌥⌘C, “copy style”, and nothing was copied. The app now waits for the keys to be released.</p></div>
     <div class="bug"><h3>Switching to Pro during a correction did nothing</h3><p>The tab changed, but the correction was shown. The new request now replaces the old one.</p></div>
     <div class="bug"><h3><kbd>⌘2</kbd> didn't work on my keyboard</h3><p>On a French AZERTY keyboard, the 2 key types “é”. Shortcuts now read the physical key.</p></div>
     <div class="bug"><h3>Translation stopped working on long texts</h3><p>Found while filming the demo. To avoid accidental translations, the app tells the model to answer in the text's language. In Custom, that rule contradicted the request. It now gives way to it.</p></div>
@@ -457,18 +457,24 @@
         <tr><td><kbd>⌘2</kbd> during the correction</td><td class="num">1.6–1.7 s</td><td>The Pro version is the one shown</td></tr>
         <tr><td>Custom “in English”, then <kbd>⌘↵</kbd></td><td class="num">0.6 s</td><td>Translated sentence pasted</td></tr>
         <tr><td>338-character report, accept all</td><td class="num">2.7 s</td><td>9 fixes pasted</td></tr>
-        <tr><td>~370-character message, 11–13 mistakes (video, EN and FR)</td><td class="num">3–4 s</td><td>Every fix labelled with its kind</td></tr>
+        <tr><td>~370-character message, 11–13 mistakes (video, EN and FR)</td><td class="num">3–4 s</td><td>Every fix labeled with its kind</td></tr>
         <tr><td>No text selected</td><td class="num">1.2 s</td><td>Help message, the model isn't called</td></tr>
         <tr><td><kbd>Esc</kbd></td><td class="num">0.35 s</td><td>Window closed, text untouched</td></tr>
       </tbody>
     </table>
   </div>
-  <p>The window appears about 0.7 s after the key press, 0.3 s of which the keys are still held: the app waits for them to be released so the copy is clean.</p>
+  <p>The window appears about 0.7 s after the key press, 0.3 s of it while the keys are still held: the app waits for them to be released so the copy is clean.</p>
 </section>
 
 <section class="col">
   <h2>What's next</h2>
-  <p>The current model is still small: on its own it misses one French mistake out of twelve (the app now catches that one), and its humor in Custom is limited. The next leads are a model trained specifically on French grammar, and the MLX build once I have a Mac with more memory. The smaller models I tried (Qwen 3.5 2B, LFM3) were fast but added mistakes or printed their reasoning in the answer.</p>
+  <p>What the numbers above don't cover yet, and what I would test next:</p>
+  <ul>
+    <li><b>A bigger test set.</b> The 12/12 scores (French with the question-mark rule) come from 12 sentences per language. The next step is a few hundred real messages, to see whether the score holds.</li>
+    <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
+    <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>
+    <li><b>Windows.</b> The code runs there, but the new window has never been tested on a PC.</li>
+  </ul>
 </section>
 
 <section class="col">

@@ -8,7 +8,7 @@
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`). It runs quietly in the macOS menu bar.
 
 <p align="center">
-  <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 351-character English message with 11 mistakes is corrected with each fix labelled (grammar, agreement, verbs, spelling, punctuation, capitalization), then rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
+  <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: a 351-character English message with 11 mistakes is corrected with each fix labeled (grammar, agreement, conjugation, spelling, punctuation, capitalization), then rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
 </p>
 
 <p align="center"><b><a href="https://enguerrand-roques.github.io/textpolish/textpolish-demo.mp4">▶ Watch the 1-minute video</a></b> — real recordings of the app in English, then the switch to French; typing (and one wait, marked on screen) is sped up, and the on-screen stopwatch always shows the real model time (made with <a href="video/">Remotion</a>).</p>
@@ -29,7 +29,7 @@ The popup reads the selection, then adapts: one card per correction for short te
 |---------|-------------|
 | **Three modes** | Correction (fixes mistakes only, default), Pro (⌘2, professional rewrite), Custom (⌘3, your own request: translate, shorten, warmer…) |
 | **English and French** | Corrects and rewrites both languages (tested on an English and a French set). The interface is in English or French: switch from ✏️ → Language, it is remembered |
-| **Every fix explained** | Each correction is labelled: spelling, accent, capitalization, punctuation, agreement, conjugation, grammar (including homophones like their/there) or rewrite. Short texts get one card per fix, long ones a highlighted document |
+| **Every fix explained** | Each correction is labeled: spelling, accent, capitalization, punctuation, agreement, conjugation, grammar (including homophones like their/there) or rewrite. Short texts get one card per fix, long ones a highlighted document |
 | **Correction history** | Last 10 corrections in the ✏️ menu → History. Click an entry to copy the corrected text |
 | **Configurable shortcut** (macOS only) | Change the keyboard shortcut live from ✏️ → Preferences… (Cmd+,) — no restart needed. On Windows, edit `SHORTCUT` in `config.py` and restart the app |
 | **Native-feeling popup** (macOS) | Opens under the selection with macOS vibrancy, light and dark mode, full keyboard control (↵ ⇥ ⌘↵ ⌘1-3 esc) |
@@ -46,7 +46,7 @@ The popup reads the selection, then adapts: one card per correction for short te
 ### Requirements
 - macOS 13+
 - Python 3.10+ (developed and tested on 3.13)
-- [Ollama](https://ollama.com) installed and running
+- [Ollama](https://ollama.com) 0.40+ installed and running
 - Accessibility permission (granted on first launch)
 
 ### Setup
@@ -60,7 +60,7 @@ bash setup.sh
 `setup.sh` handles everything:
 - Creates the Python virtual environment and installs dependencies
 - Copies `config.example.py` → `config.py`
-- Registers the Launch Agent (survives reboots)
+- Registers a Launch Agent (it starts when you open the app; auto-start on login is optional, see below)
 - Creates **TextPolish.app** on your Desktop
 
 Then pull the AI model (one-time, 4.3 GB):
@@ -72,7 +72,7 @@ ollama pull gemma4:e2b-it-qat   # one model for all three modes (Ollama 0.40+)
 ### Start
 
 Double-click **TextPolish.app** on your Desktop.
-A ✏️ icon appears in the menubar — the app is running.
+A pencil icon appears in the menu bar — the app is running.
 
 ### Shortcut
 
@@ -91,7 +91,7 @@ Grant both in **System Settings → Privacy & Security**.
 In `~/Library/LaunchAgents/com.user.textpolish.plist`, set `RunAtLoad` to `<true/>`, then reload:
 
 ```bash
-launchctl bootout gui/$(id -u) com.user.textpolish
+launchctl bootout gui/$(id -u)/com.user.textpolish
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plist
 ```
 
@@ -121,7 +121,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plis
 
 ### Setup
 
-```bash
+```bat
 git clone https://github.com/Enguerrand-Roques/textpolish.git
 cd textpolish
 python -m venv venv
@@ -194,7 +194,7 @@ SHORTCUT            = "<cmd>+<alt>+g"     # macOS: Cmd+Option+G, Windows: Ctrl+A
 |---|---:|---:|
 | Short sentence, any mode | 0.5–1.1 s | 3–6 s |
 | 338-character report (Correction) | 2.7 s | — |
-| ~350–380-character message, 11–13 mistakes (demo video, EN and FR) | 3–4 s | — |
+| ~370-character message, 11–13 mistakes (demo video, EN and FR) | 3–4 s | — |
 | ~1,500 characters (Correction) | ~10 s | — |
 
 Time grows with the length of the answer (about 30–35 tokens per second, much less if the Mac is swapping). The 4,000-character input limit stays under the 60 s timeout.
@@ -245,7 +245,7 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 
 | Mode | Model | Warm (median) | Cold (median, range) | Score |
 |------|-------|-------------:|------------:|:-----:|
-| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 12 / 12 expected fixes in French and English (the model alone: 11 / 12 French, see below); correct texts left untouched |
+| Correction | `gemma4:e2b-it-qat` | 0.9 s | 5.0 s (3.7–6.3) | 12/12 expected fixes in French and English (the model alone: 11/12 French, see below); correct texts left untouched |
 | Pro | `gemma4:e2b-it-qat` | 1.1 s | 3.4 s (3.0–4.0) | 5 / 5 checks (FR and EN) |
 | Custom | `gemma4:e2b-it-qat` | 1.1 s | 3.1 s (3.0–3.8) | 3 / 3 checks (FR and EN) |
 
@@ -257,12 +257,12 @@ Key findings that shaped this choice:
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Custom.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
-- **A rule fixes the model's one French miss.** It kept deleting the "?" in "tu fais quoi ce soir ? on peut…". Correction now puts back any "?" or "!" the model removed without replacing it (`diff.keep_question_marks`): 12/12 on both sets, while the model alone stays at 11/12 in French.
+- **A rule fixes the model's one French miss.** It kept deleting the "?" in "tu fais quoi ce soir ? on peut…". Correction now puts back any "?" or "!" the model removed without replacing it (`diff.keep_sentence_marks`): 12/12 on both sets, while the model alone stays at 11/12 in French.
 - **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
 - **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
-- **Free RAM matters as much as the model.** With the Mac swapping heavily (14 of 15 GB of swap in use), generation fell from ~35 to ~13 tokens per second and the same 380-character message took 7–11 s instead of 3–4 s.
+- **Free RAM matters as much as the model.** With the Mac swapping heavily (14 of 15 GB of swap in use), generation fell from ~35 to ~13 tokens per second and the same ~370-character message took 7–11 s instead of 3–4 s.
 - **Language detection had a bug** that sent short unaccented French ("J'ai finit le rapport hier soir") to English; fixed in `llm.py`.
-- Earlier rounds: QAT builds and `num_ctx: 1024` cut latency and RAM; `gemma3:1b` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
+- Earlier rounds: `gemma3:1b-it-qat` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 
 → Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
 

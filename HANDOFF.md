@@ -1,7 +1,8 @@
 # TextPolish — Handoff notes
 
-Status snapshot for resuming work later. The newest state is first; the dated
-sections below it are the history, kept as written at the time.
+Status snapshot for resuming work later. Current state comes first; the History
+sections below run oldest to newest, are kept as written, and may name files or
+settings that have since changed.
 
 ## Current state (November 3, 2026)
 
@@ -11,16 +12,16 @@ sections below it are the history, kept as written at the time.
 | Ollama | 0.40.13, `"think": false`, temperature 0 Correction / 0.4 Pro & Custom |
 | Modes (UI) | Correction (`casual`), Pro (`pro`), Custom (`custom`, "Sur mesure" in French) |
 | Interface language | English (default) or French: `UI_LANGUAGE` in config.py, or menu bar ✎ → Language (live, saved). Strings: `i18n.py` (Python) and the `I18N` dict in `panel.html` |
-| Quality (Round 6) | Correction 12/12 FR and EN with the question-mark guard (model alone 11/12 FR); Pro 5/5; Custom 3/3 (`design/model_eval.py`, `--en` for the English set) |
+| Quality (Round 6) | Correction 12/12 FR and EN with the sentence-mark guard (model alone 11/12 FR); Pro 5/5; Custom 3/3 (`design/model_eval.py`, `--en` for the English set) |
 | Speed, M2 16 GB | warm 0.5–1.1 s per sentence, 3–4 s for ~370 chars, ~10 s for 1,500 chars; cold 3–6 s (9–15 s after reboot); model freed after 5 min idle. With heavy swap, ~13 tok/s instead of ~35 and 7–11 s for ~370 chars |
 | Mistake labels | spelling, accent, case, agreement, conjugation, homophone/grammar, punctuation, rewrite (`diff.classify_change`) |
-| Tests | 132 (textpolish), 110 (textpolish-cloud) |
+| Tests | 134 (textpolish), 112 (textpolish-cloud) |
 | Public | GitHub Pages serves `docs/` at https://enguerrand-roques.github.io/textpolish/ (landing page, case study, video) |
 | Demo | `docs/demo.gif`, `docs/textpolish-demo.mp4` (1 min, English then the switch to French; Remotion project in `video/`, clips from `design/record_video.py`) |
 
 Open items:
 - Windows UI only got a style refresh; never tested on Windows.
-- Correction: the model alone still drops a "?" (11/12 FR); `diff.keep_question_marks` restores it. Humor in Custom is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
+- Correction: the model alone still drops a "?" (11/12 FR); `diff.keep_sentence_marks` restores it. Humor in Custom is weak. Next lead: a French-grammar fine-tuned model, or MLX (`gemma4:e2b-nvfp4`, 0.34 s) on a 24 GB+ Mac.
 - `docs/textpolish-cloud.html` (legacy browser demo) is still French-only with the old UI.
 - The popup closes when it loses focus; another app grabbing focus mid-request (seen once with Grammarly running) hides it.
 - Real-time "as you type" underlining was ruled out (see the September notes below).
@@ -104,14 +105,14 @@ Not done: same clipboard fix in `textpolish-cloud` (its `clipboard.py` was ident
 
 - macOS popup rebuilt Apple-style: native vibrancy behind a transparent WKWebView, no title-bar chrome, content-height panel, popover dismissal. Adaptive layouts chosen by `diff.choose_layout`: per-correction cards (short text), highlighted document (long text), single rewrite with compare (Pro/Perso), "no mistakes" auto-close. Keyboard: ↵ accept, ⇥ ignore, ⌘↵ all, ⌘1-3 modes (physical keys, AZERTY-safe), esc.
 - `diff.py`: `group_changes` / `classify_change` / `apply_choices` / `choose_layout`; typographic-only differences (' vs ’, nbsp) are not corrections.
-- Bugs found by driving the real app (design/scenario.sh): copy sent ⌥⌘C while the shortcut's ⌥ was held (now waits for release); several instances could run (now single-instance lock); Windows crashed at import (QAction from QtWidgets).
+- Bugs found by driving the real app (design/scenario.sh, since removed): copy sent ⌥⌘C while the shortcut's ⌥ was held (now waits for release); several instances could run (now single-instance lock); Windows crashed at import (QAction from QtWidgets).
 - `design/`: preview harness with fixtures from real model outputs, headless-Chrome screenshots, real-app drivers, offscreen Qt render. Driving the real app needs Accessibility, Automation and Screen Recording for VS Code.
-- Portfolio: `docs/case-study.html` (also published as a private artifact), screenshots in `docs/screenshots/`. Demo GIF: `docs/demo.gif`, recorded from the real app by `design/record_demo.py` (warm the model through the app first, or the first correction shows a cold load).
+- Portfolio: `docs/case-study.html` (also published as a private artifact), screenshots in `docs/screenshots/`. Demo GIF: `docs/demo.gif`, recorded from the real app by `design/record_demo.py` (since removed) (warm the model through the app first, or the first correction shows a cold load).
 - Not ported to `textpolish-cloud` yet (diff.py, clipboard.py and the panel are identical candidates). Windows only got a style refresh, untested on Windows.
 
 ## Model switch and UX fixes (November 2026, second pass)
 
-- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Custom (then "Perso"). Same correction score as Ministral, better Pro/Custom, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. All other models removed, `ministral-3:3b` included; only `gemma4:e2b-it-qat` is installed (4.0 GB). Raw outputs archived in `benchmarks/results/round6_20261102.md`; the report opens with a 17-model summary.
+- Ollama upgraded to 0.40.13. Round 6 (`design/model_eval.py`, expected-answer test set): one model, `gemma4:e2b-it-qat`, now serves Correction, Pro and Custom (then "Perso"). Same correction score as Ministral, better Pro/Custom, and no ~5 s reload when switching modes. `gemma4:e2b-nvfp4` (MLX, 0.34 s) is faster but needs ~7.4 GB RAM; documented for bigger Macs. All other models removed, `ministral-3:3b` included; only `gemma4:e2b-it-qat` is installed (4.3 GB). Raw outputs archived in `benchmarks/results/round6_20261102.md`; the report opens with a 17-model summary.
 - `llm.py` sends temperature 0 for Correction, 0.4 for Pro/Perso (Gemma 4's default of 1 made Correction score 9-11/12 between identical runs; now 11/12 every run).
 - `llm.py` sends `"think": false`; strips Markdown the model adds; language detection handles short unaccented French.
 - Popup: "no mistakes" no longer auto-closes (offers Pro/Perso), switching mode during a request works, one-line explanation per mode, Perso presets.

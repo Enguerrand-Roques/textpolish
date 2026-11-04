@@ -3,7 +3,7 @@
 benchmark_models.py — Compare multiple Ollama models on TextPolish cases.
 
 This is the harness of Rounds 1-4 (scores from a Claude judge, 1-5). It keeps
-the simplified prompt those rounds used, so their numbers stay reproducible;
+the request those rounds sent (keep_alive 0, default num_ctx and temperature);
 Round 6 uses design/model_eval.py, which calls the app's own llm.polish_text.
 
 Usage (from anywhere; the judge key comes from ANTHROPIC_API_KEY):
@@ -63,7 +63,8 @@ def _load_prompt(name: str) -> str:
 
 
 def _build_prompt(text: str, mode: str) -> str:
-    # Rounds 1-4 prompt, kept as run (French header, no language rule).
+    # Rounds 1-4 framing, kept as run: the app's prompt file, a French header,
+    # no language detection.
     system = _load_prompt(mode)
     return f"{system}\n\nTexte à réécrire :\n{text}"
 
