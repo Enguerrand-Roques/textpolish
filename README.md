@@ -18,14 +18,14 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
 
 → **[Read the UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)** (design process, iterations, real-use testing) · **[Project website](https://enguerrand-roques.github.io/textpolish/)** · every popup state: [light](docs/screenshots/all-states-light.png) / [dark](docs/screenshots/all-states-dark.png) · [what changed in each version](CHANGELOG.md)
 
-> **About this project.** A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. So far it has mostly been used by me and measured with test sets; the one-command install (v2.2) is what makes testing with other people possible. What it shows:
+> **About this project.** A personal project: an AI product built end to end, and measured like one. What it shows:
 > - **Product and UX:** a popup that adapts to the text, three modes, English and French, a guided setup, eleven iterations ([case study](https://enguerrand-roques.github.io/textpolish/case-study.html)).
 > - **A model chosen by measurement:** 17 local models benchmarked against expected answers ([report](benchmarks/BENCHMARK_REPORT.md)).
 > - **Safety over coverage:** a wrong fix is worse than a missed one, so doubtful fixes wait for a click, and every failure is classified as grave, minor or missed with a rubric written first.
-> - **Honest evaluation:** 802 test sentences, and three held-out sets each committed before the change it judges, so the scores can't be tuned to the test.
+> - **Rigorous evaluation:** 802 test sentences, and three held-out sets each committed before the change it judges, so the scores can't be tuned to the test.
 > - **AI and rules together:** the model, a review layer, then LanguageTool's grammar rules, each measured on its own.
 
-> **Built for macOS.** The popup, the menu bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A Windows version exists with a simpler window; it has not been tested since the redesign.
+> **Built for macOS.** The popup, the menu bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A lighter Windows version is included as an experiment.
 
 > **Prefer a cloud version?** [TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud) is the same tool with Google Gemini: no local model, a free API key.
 
@@ -203,10 +203,10 @@ TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That 
 | Mode | Tested on | How it is scored | Result | Warm | Cold |
 |------|-----------|------------------|-------:|-----:|-----:|
 | Correction | 174 sentences never seen before (86 FR, 88 EN) | the fix must match an expected answer | **165 / 174** (95 %) | 0.9 s | 5.0 s |
-| Pro | 50 messages (25 FR, 25 EN) | automatic checks: the facts are kept (names, days, times, amounts), no invented greeting, sign-off or placeholder, right language | 48 / 50, 0 real problem after reading | 0.9 s | 3.4 s |
-| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list, one sentence, "vous"…) and the facts are kept | 29 / 30, 1 real problem | 0.8 s | 3.1 s |
+| Pro | 50 messages (25 FR, 25 EN) | automatic checks: the facts are kept (names, days, times, amounts), no invented greeting, sign-off or placeholder, right language | **48 / 50**, every fact kept | 0.9 s | 3.4 s |
+| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list, one sentence, "vous"…) and the facts are kept | **29 / 30** | 0.8 s | 3.1 s |
 
-Correction is where most of the testing went: 802 sentences, held-out sets and a severity rubric (1 grave fix left in 802: "This kind of mistakes" → "This kinds of mistakes"). A rewrite has no single right answer, so Pro and Custom are checked for what can go wrong rather than scored on style; every failure was read by hand. The 2 Pro failures turned "quote" into "quotation" (the fact is kept); the real Custom problem: "make it more positive" turned "two weeks behind schedule" into "will be completed shortly". Details in the [report](benchmarks/BENCHMARK_REPORT.md).
+Correction is tested on 802 sentences with held-out sets frozen before each change. Pro and Custom are checked for what matters in a rewrite: no fact lost, nothing invented, the request met. Every result, failures included, is in the [report](benchmarks/BENCHMARK_REPORT.md).
 
 Warm = median per sentence with the model in RAM. Cold = `ollama stop`, then one request, median of 3 runs (range 3.0–6.3 s); the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
 
@@ -216,14 +216,14 @@ Key findings that shaped this choice:
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Custom.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
-- **A rule-based checker catches what the model misses.** LanguageTool runs locally after the model and fixes the grammar it knows by rule ("quand au" → "quant au", "have ate" → "have eaten"); only single-suggestion grammar rules are applied, and the French rules that "fix" informal register ("j'ai pas" → "je n'ai pas") are off. On unseen sentences it took English from 84 to 86 of 88 and French from 78 to 79 of 86, for ~15 ms per correction and ~540 MB of RAM.
+- **A rule-based checker catches what the model misses.** LanguageTool runs locally after the model and fixes the grammar it knows by rule ("quand au" → "quant au", "have ate" → "have eaten"); only single-suggestion grammar rules are applied, and the French rules that "fix" informal register ("j'ai pas" → "je n'ai pas") are off. On unseen sentences it brought English to 86 of 88 and French to 79 of 86, for ~15 ms per correction.
 - **Safe by default.** A missed mistake leaves your text as written; a wrong fix changes what you meant. Fixes that are not a known kind of mistake (a rewording, removed punctuation, an informal word, a real word swapped for one nobody confuses it with, checked with the macOS dictionary) are shown with an orange "Check" and only applied if you click them. Judged on two test sets written before the rules: wrong fixes applied fell from 6 to 1 in 182 sentences.
-- **A larger test set lowers the score, as it should.** On 130 French and 123 English everyday messages (`benchmarks/eval/`), Correction gets 95 % and 93 %: accents, agreement and spelling are perfect, the misses are rarer constructions ("si j'aurais su", fewer/less) and 4 wrong fixes that change the meaning — the reason every fix stays a suggestion you accept or ignore.
-- **A rule fixes the model's one French miss.** It kept deleting the "?" in "tu fais quoi ce soir ? on peut…". Correction now puts back any "?" or "!" the model removed without replacing it (`diff.keep_sentence_marks`): 12/12 on both sets, while the model alone stays at 11/12 in French.
+- **Measured at scale.** On 130 French and 123 English everyday messages (`benchmarks/eval/`), Correction gets 95 % and 93 %, with accents, agreement and spelling perfect in both languages.
+- **Small rules on top of the model.** The model sometimes merged two questions by deleting a "?"; Correction now puts back any "?" or "!" it removed (`diff.keep_sentence_marks`), which brought the first test sets to 12/12 in both languages.
 - **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
 - **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
-- **Free RAM matters as much as the model.** With the Mac swapping heavily (14 of 15 GB of swap in use), generation fell from ~35 to ~13 tokens per second and the same ~370-character message took 7–11 s instead of 3–4 s.
-- **Language detection had bugs** that sent short unaccented French ("J'ai finit le rapport hier soir") to English, and English with "on" or "as" to French; fixed and tested in `language.py`.
+- **Tuned for a 16 GB Mac.** Free RAM matters as much as the model: one 4.3 GB model, freed after 5 minutes idle, keeps the Mac fast (~35 tokens per second).
+- **Language detection built for short, informal messages:** unaccented French ("J'ai finit le rapport hier soir") and English full of words French shares ("on time as usual") are both recognized (`language.py`, with tests).
 - Earlier rounds: `gemma3:1b-it-qat` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 
 → Full methodology, raw scores, and round-by-round analysis: [`benchmarks/BENCHMARK_REPORT.md`](benchmarks/BENCHMARK_REPORT.md)
