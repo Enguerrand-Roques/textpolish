@@ -182,9 +182,9 @@
     <p class="lede" style="margin-top:18px">I type fast and mistakes slip through. I built a small Mac tool that fixes them <span class="fix"><s>whitout</s> <ins>without</ins></span> leaving the app I'm writing in: I select the text, press <kbd>⌥⌘G</kbd>, and a window offers the fixes one by one. The model runs on my Mac; nothing goes online. It works in English and French.</p>
     <div class="meta">
       <span class="label">Python · PyObjC · WebKit</span>
-      <span class="label">Ollama · Gemma 4 E2B</span>
+      <span class="label">Ollama · Gemma 4 E2B · LanguageTool</span>
       <span class="label">macOS first · Windows experimental</span>
-      <span class="label">163 tests</span>
+      <span class="label">169 tests</span>
     </div>
   </div>
   <figure>
@@ -270,7 +270,7 @@
   <h2>English and French</h2>
   <p>I write in both, so the tool had to handle both. The model follows the language of the text, and Custom can translate between them. The interface is in English or French too: one click in the menu bar, and the choice is remembered.</p>
   <figure style="margin:22px 0 0"><img class="shot" loading="lazy" src="screenshots/menu-language.png" alt="The TextPolish menu with the Language submenu open: English is checked, the cursor is on Français."></figure>
-  <p style="margin-top:18px">Supporting a second language is also a testing question. I ran the same evaluation on an English set (their/they're, its/it's, then/than, subject-verb agreement…) as on the French one. The model scored 12/12 on it, and the set caught a problem the French set had missed (see below).</p>
+  <p style="margin-top:18px">Supporting a second language is also a testing question. I ran the same evaluation on an English set (their/they're, its/it's, then/than, subject-verb agreement…) as on the French one. The model scored 12/12 on it, and the set caught a problem the French set had missed (see below). On the larger sets that followed (130 French and 123 English messages) it scored 95 % and 93 %.</p>
 </section>
 
 <section class="col">
@@ -305,7 +305,7 @@
 
 <section class="col">
   <h2>Choosing the model</h2>
-  <p>17 models in six rounds, April to November, then a seventh round on a larger set. Round 6 stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6). Ollama can run a model two ways: <b>GGUF</b> files through llama.cpp (compressed, lighter) or Apple's <b>MLX</b> engine (faster, heavier in memory).</p>
+  <p>17 models in six rounds, April to November; then five more rounds tested the whole app with the chosen one. Round 6 stopped trusting impressions: 12 sentences with the expected correction, 3 of them already correct and to be left alone. Each dot below is one model on that set (French, round 6). Ollama can run a model two ways: <b>GGUF</b> files through llama.cpp (compressed, lighter) or Apple's <b>MLX</b> engine (faster, heavier in memory).</p>
   <div class="chart" id="bench">
     <div class="legend" aria-hidden="true">
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--blue)"/></svg>chosen</span>
@@ -494,7 +494,7 @@
 
 <section class="col">
   <h2>Timed in the real app</h2>
-  <p>A script (<code>design/fluidity.py</code>) plays seven scenarios in TextEdit the way someone at the keyboard would, and measures what you feel. All seven pass, twice in a row, with consistent times; the ~370-character row comes from the video recordings. Times are with the model loaded; the very first request adds the 3–6 seconds of loading.</p>
+  <p>A script (<code>design/fluidity.py</code>) plays seven scenarios in TextEdit the way someone at the keyboard would, and measures what you feel. All seven pass, twice in a row, with consistent times; the ~370-character row comes from the video recordings. Times are with the model loaded; the very first request adds the 3–6 seconds of loading. They were measured before LanguageTool was added; with it, the same scenarios were within noise (it adds about 15 ms).</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Scenario</th><th>Result shown</th><th>Checked</th></tr></thead>
