@@ -273,6 +273,12 @@ class TestPayload:
         assert "make it a haiku" in prompt
         assert prompt.endswith("Hello")
 
+    def test_sent_prompt_is_build_prompt(self):
+        # Fine-tuning data is built with build_prompt: it must be what the app sends.
+        for kwargs in ({"mode": "casual"}, {"mode": "pro"}, {"mode": "custom", "custom_prompt": "shorter"}):
+            sent = self._call(text="Je suis la", **kwargs)["prompt"]
+            assert sent == llm.build_prompt("Je suis la", kwargs["mode"], kwargs.get("custom_prompt"))
+
     def test_switching_model_unloads_the_previous_one(self):
         with patch("llm._unload_model") as unload:
             self._call(mode="casual")

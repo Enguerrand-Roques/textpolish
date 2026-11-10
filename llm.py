@@ -67,6 +67,40 @@ def _num_ctx_for(prompt_text: str) -> int:
     return max(1024, ((est_tokens * 2 + 255) // 256) * 256)
 
 
+def build_prompt(text: str, mode: str, custom_prompt: str | None = None) -> str:
+    """The exact text the model receives for *text* in *mode*. Fine-tuning
+    data is built with it too (finetune/make_data.py), so the model is trained
+    on what the app sends."""
+    system = _load_prompt("custom" if custom_prompt else mode)
+    # Small models ignore the "same language" rule in the system prompt when
+    # the task is demanding (e.g. Pro rewriting turned French into English).
+    # We detect the input language and prepend an explicit override so the
+    # model cannot miss it — this was validated in benchmark Round 2.
+    lang = _detect_language(text)
+    lang_names = {"fr": "French", "en": "English"}
+    if custom_prompt:
+        # "Translate to English" must win over "answer in the input language".
+        lang_instruction = (
+            f"The input text is in {lang_names[lang]}. Answer in {lang_names[lang]} "
+            "unless the custom instruction asks for another language.\n\n"
+        )
+    else:
+        lang_instruction = (
+            f"IMPORTANT: The input text is in {lang_names[lang]}. "
+            f"You MUST output in {lang_names[lang]} only.\n\n"
+        )
+
+    if custom_prompt:
+        return (
+            f"{lang_instruction}{system}\n\n"
+            "Custom instruction to apply:\n"
+            f"{custom_prompt.strip()}\n\n"
+            "Text to rewrite:\n"
+            f"{text}"
+        )
+    return f"{lang_instruction}{system}\n\nText to rewrite:\n{text}"
+
+
 def polish_text(
     text: str,
     mode: str = "pro",
@@ -99,9 +133,6 @@ def polish_text(
             "Select a shorter passage."
         )
 
-    prompt_name = "custom" if custom_prompt else mode
-    system = _load_prompt(prompt_name)
-
     if mode == "pro":
         model = OLLAMA_MODEL_PRO
     elif mode == "casual":
@@ -115,34 +146,7 @@ def polish_text(
         _unload_model(_active_model)
     _active_model = model
 
-    # Small models ignore the "same language" rule in the system prompt when
-    # the task is demanding (e.g. Pro rewriting turned French into English).
-    # We detect the input language and prepend an explicit override so the
-    # model cannot miss it — this was validated in benchmark Round 2.
-    lang = _detect_language(text)
-    lang_names = {"fr": "French", "en": "English"}
-    if custom_prompt:
-        # "Translate to English" must win over "answer in the input language".
-        lang_instruction = (
-            f"The input text is in {lang_names[lang]}. Answer in {lang_names[lang]} "
-            "unless the custom instruction asks for another language.\n\n"
-        )
-    else:
-        lang_instruction = (
-            f"IMPORTANT: The input text is in {lang_names[lang]}. "
-            f"You MUST output in {lang_names[lang]} only.\n\n"
-        )
-
-    if custom_prompt:
-        prompt_text = (
-            f"{lang_instruction}{system}\n\n"
-            "Custom instruction to apply:\n"
-            f"{custom_prompt.strip()}\n\n"
-            "Text to rewrite:\n"
-            f"{text}"
-        )
-    else:
-        prompt_text = f"{lang_instruction}{system}\n\nText to rewrite:\n{text}"
+    prompt_text = build_prompt(text, mode, custom_prompt)
 
     is_streaming = on_token is not None
     payload = {
