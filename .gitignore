@@ -17,3 +17,7 @@ design/screenshots/
 
 # private working notes (kept locally, not published)
 HANDOFF.md
+
+# Fine-tuning (environment, downloads and trained weights)
+finetune/.venv/
+finetune/out/

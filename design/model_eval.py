@@ -5,7 +5,7 @@
     venv/bin/python3 design/model_eval.py custom gemma4:e2b-it-qat ...
     add --en to use the English test set
     add --large for the development Correction sets (benchmarks/eval/correction_{fr,en}.json)
-    or --holdout / --holdout2 / --holdout3 for the frozen test sets (holdout*_{fr,en}.json); they print a breakdown by
+    or --holdout / --holdout2 / --holdout3 / --holdout4 for the frozen test sets (holdout*_{fr,en}.json); they print a breakdown by
     kind of mistake and what the app applies by default (fixes marked for review are not)
     add --lt to run LanguageTool after the model, as the app does when it is installed
 
@@ -166,8 +166,8 @@ if LANG == "en":
 KINDS = {}  # text -> kind of mistake, for the large sets
 USE_LT = "--lt" in sys.argv  # second pass with LanguageTool, as in the app
 TRUSTED = {}  # text -> ranges LanguageTool rewrote (applied by default)
-_SET = ("holdout3" if "--holdout3" in sys.argv else "holdout2" if "--holdout2" in sys.argv
-        else "holdout" if "--holdout" in sys.argv
+_SET = ("holdout4" if "--holdout4" in sys.argv else "holdout3" if "--holdout3" in sys.argv
+        else "holdout2" if "--holdout2" in sys.argv else "holdout" if "--holdout" in sys.argv
         else "correction" if "--large" in sys.argv else None)
 if _SET:
     _path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
