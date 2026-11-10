@@ -1,0 +1,450 @@
+{"kind": "homophones", "text": "hey can you check if the printer is working? its been jamming all morning", "expected": "hey can you check if the printer is working? it's been jamming all morning"}
+{"kind": "homophones", "text": "Your going to love the new coffee place on 5th street, the oat lattes are amazing.", "expected": "You're going to love the new coffee place on 5th street, the oat lattes are amazing."}
+{"kind": "homophones", "text": "Just tell them to leave the boxes over their by the loading dock.", "expected": "Just tell them to leave the boxes over there by the loading dock."}
+{"kind": "homophones", "text": "I think there running late because of the traffic on 95.", "expected": "I think they're running late because of the traffic on 95."}
+{"kind": "homophones", "text": "Does anyone know who's jacket this is? It was left in the conference room.", "expected": "Does anyone know whose jacket this is? It was left in the conference room."}
+{"kind": "homophones", "text": "The new laptop is way faster then my old one, honestly worth every penny.", "expected": "The new laptop is way faster than my old one, honestly worth every penny."}
+{"kind": "homophones", "text": "I'm to tired to cook tonight, want to just order pizza?", "expected": "I'm too tired to cook tonight, want to just order pizza?"}
+{"kind": "homophones", "text": "Make sure you don't loose the spare key, it's the only one we have.", "expected": "Make sure you don't lose the spare key, it's the only one we have."}
+{"kind": "homophones", "text": "Everyone accept Marcus has signed the birthday card for Jen.", "expected": "Everyone except Marcus has signed the birthday card for Jen."}
+{"kind": "homophones", "text": "The new schedule didn't effect our team much, we still start at 9.", "expected": "The new schedule didn't affect our team much, we still start at 9."}
+{"kind": "homophones", "text": "Let me know weather you want the window seat or the aisle.", "expected": "Let me know whether you want the window seat or the aisle."}
+{"kind": "homophones", "text": "The principle called a meeting with all the parents on Thursday.", "expected": "The principal called a meeting with all the parents on Thursday."}
+{"kind": "homophones", "text": "Thanks for the complement on my presentation, that really made my day!", "expected": "Thanks for the compliment on my presentation, that really made my day!"}
+{"kind": "homophones", "text": "Can you advice me on which health plan makes more sense for a family of four?", "expected": "Can you advise me on which health plan makes more sense for a family of four?"}
+{"kind": "homophones", "text": "We drove passed your old house on the way to the lake yesterday.", "expected": "We drove past your old house on the way to the lake yesterday."}
+{"kind": "homophones", "text": "Take a deep breathe before you go on stage, you've got this.", "expected": "Take a deep breath before you go on stage, you've got this."}
+{"kind": "homophones", "text": "I ordered new stationary for the office, the envelopes should arrive Monday.", "expected": "I ordered new stationery for the office, the envelopes should arrive Monday."}
+{"kind": "homophones", "text": "The dog keeps chasing it's tail whenever someone rings the doorbell.", "expected": "The dog keeps chasing its tail whenever someone rings the doorbell."}
+{"kind": "homophones", "text": "Is this you're charger or Priya's? Found it under the couch.", "expected": "Is this your charger or Priya's? Found it under the couch."}
+{"kind": "homophones", "text": "The kids left there bikes in the driveway again.", "expected": "The kids left their bikes in the driveway again."}
+{"kind": "homophones", "text": "Their are still a few seats left if you want to join us Friday.", "expected": "There are still a few seats left if you want to join us Friday."}
+{"kind": "homophones", "text": "Whose bringing the drinks to the barbecue on Saturday?", "expected": "Who's bringing the drinks to the barbecue on Saturday?"}
+{"kind": "homophones", "text": "We had dinner and than went for a walk along the river.", "expected": "We had dinner and then went for a walk along the river."}
+{"kind": "homophones", "text": "Do you want to come to? There's room in the car.", "expected": "Do you want to come too? There's room in the car."}
+{"kind": "homophones", "text": "My belt is so lose now, I need to punch another hole in it.", "expected": "My belt is so loose now, I need to punch another hole in it."}
+{"kind": "homophones", "text": "I'm happy to except the offer, just need to confirm the start date with HR.", "expected": "I'm happy to accept the offer, just need to confirm the start date with HR."}
+{"kind": "homophones", "text": "The affect of the new lighting in the lobby is really nice.", "expected": "The effect of the new lighting in the lobby is really nice."}
+{"kind": "homophones", "text": "I can't breath in this heat, the AC in the office is broken again.", "expected": "I can't breathe in this heat, the AC in the office is broken again."}
+{"kind": "homophones", "text": "The car was stationery when the truck hit it, so insurance should cover everything.", "expected": "The car was stationary when the truck hit it, so insurance should cover everything."}
+{"kind": "homophones", "text": "The deadline has past, but Tom said he'd still take late submissions until noon.", "expected": "The deadline has passed, but Tom said he'd still take late submissions until noon."}
+{"kind": "homophones", "text": "His advise was to wait a few months before selling the house.", "expected": "His advice was to wait a few months before selling the house."}
+{"kind": "homophones", "text": "That scarf really compliments your coat, where did you get it?", "expected": "That scarf really complements your coat, where did you get it?"}
+{"kind": "homophones", "text": "On principal, I don't reply to work emails after 8pm.", "expected": "On principle, I don't reply to work emails after 8pm."}
+{"kind": "homophones", "text": "Let me know when your free to chat about the budget. Their are a few things I want to flag.", "expected": "Let me know when you're free to chat about the budget. There are a few things I want to flag."}
+{"kind": "could_of", "text": "You could of told me the meeting was moved to 3!", "expected": "You could have told me the meeting was moved to 3!"}
+{"kind": "could_of", "text": "I should of brought a jacket, it's freezing out here.", "expected": "I should have brought a jacket, it's freezing out here."}
+{"kind": "could_of", "text": "We would of won if Diego hadn't missed that last shot.", "expected": "We would have won if Diego hadn't missed that last shot."}
+{"kind": "could_of", "text": "She must of left her phone at the gym, it keeps going to voicemail.", "expected": "She must have left her phone at the gym, it keeps going to voicemail."}
+{"kind": "could_of", "text": "Honestly I could of sworn I locked the door.", "expected": "Honestly I could have sworn I locked the door."}
+{"kind": "could_of", "text": "You should of seen the look on his face when he opened the gift.", "expected": "You should have seen the look on his face when he opened the gift."}
+{"kind": "could_of", "text": "They would of called if there was a problem, don't worry.", "expected": "They would have called if there was a problem, don't worry."}
+{"kind": "could_of", "text": "He must of forgotten about our lunch, he's not answering.", "expected": "He must have forgotten about our lunch, he's not answering."}
+{"kind": "could_of", "text": "We could of saved so much money by booking earlier.", "expected": "We could have saved so much money by booking earlier."}
+{"kind": "could_of", "text": "I would of helped you move if I'd known you were doing it this weekend.", "expected": "I would have helped you move if I'd known you were doing it this weekend."}
+{"kind": "could_of", "text": "Lena must of worked really hard on that report, it's excellent.", "expected": "Lena must have worked really hard on that report, it's excellent."}
+{"kind": "could_of", "text": "The package should of arrived yesterday but tracking still says in transit.", "expected": "The package should have arrived yesterday but tracking still says in transit."}
+{"kind": "could_of", "text": "I might of left the oven on, can you check when you get home?", "expected": "I might have left the oven on, can you check when you get home?"}
+{"kind": "could_of", "text": "You could of at least texted that you'd be late.", "expected": "You could have at least texted that you'd be late."}
+{"kind": "could_of", "text": "If the train had been on time we would of made it to the concert.", "expected": "If the train had been on time we would have made it to the concert."}
+{"kind": "could_of", "text": "Kenji should of asked before borrowing my car.", "expected": "Kenji should have asked before borrowing my car."}
+{"kind": "could_of", "text": "Someone must of moved my stapler, it was right here this morning.", "expected": "Someone must have moved my stapler, it was right here this morning."}
+{"kind": "could_of", "text": "I wouldn't of guessed she was 60, she looks so young.", "expected": "I wouldn't have guessed she was 60, she looks so young."}
+{"kind": "could_of", "text": "We couldn't of done it without your help, thank you so much.", "expected": "We couldn't have done it without your help, thank you so much."}
+{"kind": "could_of", "text": "You shouldn't of paid for dinner, next time it's on me.", "expected": "You shouldn't have paid for dinner, next time it's on me."}
+{"kind": "could_of", "text": "They must of changed the password because I can't log in anymore.", "expected": "They must have changed the password because I can't log in anymore."}
+{"kind": "could_of", "text": "I could of finished the draft last night but I fell asleep on the couch.", "expected": "I could have finished the draft last night but I fell asleep on the couch."}
+{"kind": "could_of", "text": "The meeting would of been way shorter with an agenda.", "expected": "The meeting would have been way shorter with an agenda."}
+{"kind": "could_of", "text": "Sofia may of already booked the venue, check with her first.", "expected": "Sofia may have already booked the venue, check with her first."}
+{"kind": "could_of", "text": "That must of cost a fortune, it looks amazing.", "expected": "That must have cost a fortune, it looks amazing."}
+{"kind": "could_of", "text": "We should of left earlier, the line is around the block.", "expected": "We should have left earlier, the line is around the block."}
+{"kind": "could_of", "text": "Sorry, I would of replied sooner but I was on a flight.", "expected": "Sorry, I would have replied sooner but I was on a flight."}
+{"kind": "could_of", "text": "He could of been hurt, that ladder was totally unstable.", "expected": "He could have been hurt, that ladder was totally unstable."}
+{"kind": "could_of", "text": "You must of been exhausted after that double shift.", "expected": "You must have been exhausted after that double shift."}
+{"kind": "could_of", "text": "I should of double-checked the address before sending the invites.", "expected": "I should have double-checked the address before sending the invites."}
+{"kind": "past_participle", "text": "Sorry, Ben has went home already, can I take a message?", "expected": "Sorry, Ben has gone home already, can I take a message?"}
+{"kind": "past_participle", "text": "We have ate at that place twice and it was great both times.", "expected": "We have eaten at that place twice and it was great both times."}
+{"kind": "past_participle", "text": "You should have took the highway, the back roads are a mess.", "expected": "You should have taken the highway, the back roads are a mess."}
+{"kind": "past_participle", "text": "She had wrote the whole speech before anyone asked her to.", "expected": "She had written the whole speech before anyone asked her to."}
+{"kind": "past_participle", "text": "The dishwasher has broke again, I'm calling the repair guy.", "expected": "The dishwasher has broken again, I'm calling the repair guy."}
+{"kind": "past_participle", "text": "I have drove this route a hundred times and never seen traffic like this.", "expected": "I have driven this route a hundred times and never seen traffic like this."}
+{"kind": "past_participle", "text": "Hannah was chose to lead the new project, congrats to her!", "expected": "Hannah was chosen to lead the new project, congrats to her!"}
+{"kind": "past_participle", "text": "Have you ate yet? We're heading to lunch in 10.", "expected": "Have you eaten yet? We're heading to lunch in 10."}
+{"kind": "past_participle", "text": "I have spoke to the landlord about the leak twice now.", "expected": "I have spoken to the landlord about the leak twice now."}
+{"kind": "past_participle", "text": "The kids have drank all the juice, can you grab more on the way home?", "expected": "The kids have drunk all the juice, can you grab more on the way home?"}
+{"kind": "past_participle", "text": "He had already began the presentation when I walked in.", "expected": "He had already begun the presentation when I walked in."}
+{"kind": "past_participle", "text": "Somebody has stole my lunch from the fridge again.", "expected": "Somebody has stolen my lunch from the fridge again."}
+{"kind": "past_participle", "text": "I would have went but I had to pick up my sister.", "expected": "I would have gone but I had to pick up my sister."}
+{"kind": "past_participle", "text": "The pipe must have froze last night, there's no water in the kitchen.", "expected": "The pipe must have frozen last night, there's no water in the kitchen."}
+{"kind": "past_participle", "text": "Omar has took the day off, he's not feeling great.", "expected": "Omar has taken the day off, he's not feeling great."}
+{"kind": "past_participle", "text": "We have swam in that lake every summer since we were kids.", "expected": "We have swum in that lake every summer since we were kids."}
+{"kind": "past_participle", "text": "The price has rose by almost 20 percent since last year.", "expected": "The price has risen by almost 20 percent since last year."}
+{"kind": "past_participle", "text": "I had forgot all about the dentist until they called me.", "expected": "I had forgotten all about the dentist until they called me."}
+{"kind": "past_participle", "text": "Has the bell rang yet? I can't hear anything from this room.", "expected": "Has the bell rung yet? I can't hear anything from this room."}
+{"kind": "past_participle", "text": "My phone was stole on the subway yesterday, so text my work number.", "expected": "My phone was stolen on the subway yesterday, so text my work number."}
+{"kind": "past_participle", "text": "She has wore that dress to three weddings already, haha.", "expected": "She has worn that dress to three weddings already, haha."}
+{"kind": "past_participle", "text": "They have gave us until Friday to finish the audit.", "expected": "They have given us until Friday to finish the audit."}
+{"kind": "past_participle", "text": "Have you wrote the thank-you notes for the wedding gifts yet?", "expected": "Have you written the thank-you notes for the wedding gifts yet?"}
+{"kind": "past_participle", "text": "The vase was broke when it arrived, so I'm asking for a refund.", "expected": "The vase was broken when it arrived, so I'm asking for a refund."}
+{"kind": "past_participle", "text": "Chloe has did an amazing job organizing the fundraiser.", "expected": "Chloe has done an amazing job organizing the fundraiser."}
+{"kind": "past_participle", "text": "If I'd known, I would have came earlier to help set up.", "expected": "If I'd known, I would have come earlier to help set up."}
+{"kind": "past_participle", "text": "The sun had already went down by the time we reached the summit.", "expected": "The sun had already gone down by the time we reached the summit."}
+{"kind": "past_participle", "text": "I have saw that movie three times and still cry at the end.", "expected": "I have seen that movie three times and still cry at the end."}
+{"kind": "past_participle", "text": "The ice has began to melt, so the rink is closed today.", "expected": "The ice has begun to melt, so the rink is closed today."}
+{"kind": "past_participle", "text": "Raj had ran five miles before breakfast, I don't know how he does it.", "expected": "Raj had run five miles before breakfast, I don't know how he does it."}
+{"kind": "past_participle", "text": "I should have knew it would sell out in minutes.", "expected": "I should have known it would sell out in minutes."}
+{"kind": "past_tense", "text": "I seen your post about the new apartment, it looks amazing!", "expected": "I saw your post about the new apartment, it looks amazing!"}
+{"kind": "past_tense", "text": "Mia brang cookies to the office again, come grab some before they're gone.", "expected": "Mia brought cookies to the office again, come grab some before they're gone."}
+{"kind": "past_tense", "text": "I buyed the wrong size, so I'll have to return them tomorrow.", "expected": "I bought the wrong size, so I'll have to return them tomorrow."}
+{"kind": "past_tense", "text": "The phone rung at like 3am and nobody was there.", "expected": "The phone rang at like 3am and nobody was there."}
+{"kind": "past_tense", "text": "The kids drug the cooler all the way down to the beach.", "expected": "The kids dragged the cooler all the way down to the beach."}
+{"kind": "past_tense", "text": "I done the dishes already, you can relax.", "expected": "I did the dishes already, you can relax."}
+{"kind": "past_tense", "text": "We seen Greg at the airport yesterday, small world.", "expected": "We saw Greg at the airport yesterday, small world."}
+{"kind": "past_tense", "text": "He brung his whole family to the company picnic.", "expected": "He brought his whole family to the company picnic."}
+{"kind": "past_tense", "text": "She buyed a new car last week and already got a scratch on it.", "expected": "She bought a new car last week and already got a scratch on it."}
+{"kind": "past_tense", "text": "The doorbell rung twice but when I opened the door nobody was there.", "expected": "The doorbell rang twice but when I opened the door nobody was there."}
+{"kind": "past_tense", "text": "Last night I swum 40 laps, my arms are dead today.", "expected": "Last night I swam 40 laps, my arms are dead today."}
+{"kind": "past_tense", "text": "They drug the old couch out to the curb on Sunday.", "expected": "They dragged the old couch out to the curb on Sunday."}
+{"kind": "past_tense", "text": "I knowed something was off when he didn't reply all day.", "expected": "I knew something was off when he didn't reply all day."}
+{"kind": "past_tense", "text": "We sung happy birthday to Nadia at lunch, she was so embarrassed.", "expected": "We sang happy birthday to Nadia at lunch, she was so embarrassed."}
+{"kind": "past_tense", "text": "He done a great job on the deck, it looks brand new.", "expected": "He did a great job on the deck, it looks brand new."}
+{"kind": "past_tense", "text": "I catched a cold on the flight back from Denver.", "expected": "I caught a cold on the flight back from Denver."}
+{"kind": "past_tense", "text": "My son throwed the ball right through the neighbor's window.", "expected": "My son threw the ball right through the neighbor's window."}
+{"kind": "past_tense", "text": "She drunk way too much coffee and couldn't sleep.", "expected": "She drank way too much coffee and couldn't sleep."}
+{"kind": "past_tense", "text": "I sended you the invoice this morning, let me know if it didn't come through.", "expected": "I sent you the invoice this morning, let me know if it didn't come through."}
+{"kind": "past_tense", "text": "We begun the renovation in March and it's still not finished.", "expected": "We began the renovation in March and it's still not finished."}
+{"kind": "past_tense", "text": "Luis growed like six inches this year, he's taller than me now.", "expected": "Luis grew like six inches this year, he's taller than me now."}
+{"kind": "past_tense", "text": "Yesterday I teached my grandma how to use video calls.", "expected": "Yesterday I taught my grandma how to use video calls."}
+{"kind": "past_tense", "text": "I thinked the meeting was at 2, sorry for missing it.", "expected": "I thought the meeting was at 2, sorry for missing it."}
+{"kind": "past_tense", "text": "Somebody stoled the packages off our porch again.", "expected": "Somebody stole the packages off our porch again."}
+{"kind": "past_tense", "text": "He blowed out all the candles in one try.", "expected": "He blew out all the candles in one try."}
+{"kind": "past_tense", "text": "My dad drived us to the airport at 5am, bless him.", "expected": "My dad drove us to the airport at 5am, bless him."}
+{"kind": "past_tense", "text": "She rung me as soon as she landed in Tokyo.", "expected": "She rang me as soon as she landed in Tokyo."}
+{"kind": "past_tense", "text": "I brang the wrong charger, can I borrow yours?", "expected": "I brought the wrong charger, can I borrow yours?"}
+{"kind": "past_tense", "text": "We done everything the manual said and it still won't turn on.", "expected": "We did everything the manual said and it still won't turn on."}
+{"kind": "past_tense", "text": "Fatima seen the email but forgot to reply, she says sorry.", "expected": "Fatima saw the email but forgot to reply, she says sorry."}
+{"kind": "past_tense", "text": "They buyed tickets for the wrong date, so now we're scrambling.", "expected": "They bought tickets for the wrong date, so now we're scrambling."}
+{"kind": "agreement", "text": "The keys is on the kitchen counter next to the fruit bowl.", "expected": "The keys are on the kitchen counter next to the fruit bowl."}
+{"kind": "agreement", "text": "She don't want to go to the party if Mark is coming.", "expected": "She doesn't want to go to the party if Mark is coming."}
+{"kind": "agreement", "text": "We was just about to call you!", "expected": "We were just about to call you!"}
+{"kind": "agreement", "text": "Each of the boxes have a label with the room it goes in.", "expected": "Each of the boxes has a label with the room it goes in."}
+{"kind": "agreement", "text": "One of my friends are getting married in Napa next month.", "expected": "One of my friends is getting married in Napa next month."}
+{"kind": "agreement", "text": "The list of items are attached, let me know if I missed anything.", "expected": "The list of items is attached, let me know if I missed anything."}
+{"kind": "agreement", "text": "There's three cars blocking the driveway right now.", "expected": "There are three cars blocking the driveway right now."}
+{"kind": "agreement", "text": "This shoes are killing me, I should have worn sneakers.", "expected": "These shoes are killing me, I should have worn sneakers."}
+{"kind": "agreement", "text": "He don't know about the surprise yet, so keep it quiet.", "expected": "He doesn't know about the surprise yet, so keep it quiet."}
+{"kind": "agreement", "text": "The results of the survey was pretty surprising, honestly.", "expected": "The results of the survey were pretty surprising, honestly."}
+{"kind": "agreement", "text": "My parents wasn't home when the package came.", "expected": "My parents weren't home when the package came."}
+{"kind": "agreement", "text": "Everyone in the group have to submit a separate report.", "expected": "Everyone in the group has to submit a separate report."}
+{"kind": "agreement", "text": "The price of the tickets have gone up again.", "expected": "The price of the tickets has gone up again."}
+{"kind": "agreement", "text": "The team leads wants everyone in the office on Tuesday.", "expected": "The team leads want everyone in the office on Tuesday."}
+{"kind": "agreement", "text": "That receipts need to be filed before the end of the month.", "expected": "Those receipts need to be filed before the end of the month."}
+{"kind": "agreement", "text": "My brother and sister lives in Chicago now.", "expected": "My brother and sister live in Chicago now."}
+{"kind": "agreement", "text": "It don't matter what time you get here, we'll wait.", "expected": "It doesn't matter what time you get here, we'll wait."}
+{"kind": "agreement", "text": "They was out of the blue ones, so I got green.", "expected": "They were out of the blue ones, so I got green."}
+{"kind": "agreement", "text": "The quality of these photos are amazing, what camera did you use?", "expected": "The quality of these photos is amazing, what camera did you use?"}
+{"kind": "agreement", "text": "The new hires starts on Monday, so please clean up the desks.", "expected": "The new hires start on Monday, so please clean up the desks."}
+{"kind": "agreement", "text": "There is a lot of people waiting outside the store.", "expected": "There are a lot of people waiting outside the store."}
+{"kind": "agreement", "text": "Every one of the cookies were gone before noon.", "expected": "Every one of the cookies was gone before noon."}
+{"kind": "agreement", "text": "The box of old photos are in the attic somewhere.", "expected": "The box of old photos is in the attic somewhere."}
+{"kind": "agreement", "text": "You was right about the restaurant, it was overpriced.", "expected": "You were right about the restaurant, it was overpriced."}
+{"kind": "agreement", "text": "Where is my headphones? I swear I left them on the desk.", "expected": "Where are my headphones? I swear I left them on the desk."}
+{"kind": "agreement", "text": "This are the best tacos I've ever had.", "expected": "These are the best tacos I've ever had."}
+{"kind": "agreement", "text": "My manager have been out sick all week.", "expected": "My manager has been out sick all week."}
+{"kind": "agreement", "text": "The bags was too heavy to carry up the stairs, so we took the elevator.", "expected": "The bags were too heavy to carry up the stairs, so we took the elevator."}
+{"kind": "agreement", "text": "Each of the kids get a goodie bag at the end of the party.", "expected": "Each of the kids gets a goodie bag at the end of the party."}
+{"kind": "agreement", "text": "How is the kids doing? Haven't seen them in ages.", "expected": "How are the kids doing? Haven't seen them in ages."}
+{"kind": "agreement", "text": "The flowers in the vase needs fresh water.", "expected": "The flowers in the vase need fresh water."}
+{"kind": "agreement", "text": "One of the tires look a little flat, you should check it before the trip.", "expected": "One of the tires looks a little flat, you should check it before the trip."}
+{"kind": "agreement", "text": "Some of my coworkers thinks the new policy is unfair.", "expected": "Some of my coworkers think the new policy is unfair."}
+{"kind": "agreement", "text": "The cost of the repairs were way higher than we expected.", "expected": "The cost of the repairs was way higher than we expected."}
+{"kind": "fewer_less", "text": "There were less people at the gym today than usual.", "expected": "There were fewer people at the gym today than usual."}
+{"kind": "fewer_less", "text": "We need to send less emails and have more quick calls.", "expected": "We need to send fewer emails and have more quick calls."}
+{"kind": "fewer_less", "text": "I'm trying to eat less cookies, but you keep bringing them in!", "expected": "I'm trying to eat fewer cookies, but you keep bringing them in!"}
+{"kind": "fewer_less", "text": "The amount of complaints went down after we changed the menu.", "expected": "The number of complaints went down after we changed the menu."}
+{"kind": "fewer_less", "text": "I don't understand these kind of jokes at all.", "expected": "I don't understand these kinds of jokes at all."}
+{"kind": "fewer_less", "text": "This kind of mistakes is easy to avoid if you proofread.", "expected": "This kind of mistake is easy to avoid if you proofread."}
+{"kind": "fewer_less", "text": "There are less cars on the road on Sundays.", "expected": "There are fewer cars on the road on Sundays."}
+{"kind": "fewer_less", "text": "A huge amount of people showed up for the open house.", "expected": "A huge number of people showed up for the open house."}
+{"kind": "fewer_less", "text": "I like those kind of movies where nothing really happens.", "expected": "I like those kinds of movies where nothing really happens."}
+{"kind": "fewer_less", "text": "We had less customers this week, probably because of the snow.", "expected": "We had fewer customers this week, probably because of the snow."}
+{"kind": "fewer_less", "text": "Can you print less copies next time? We had a ton left over.", "expected": "Can you print fewer copies next time? We had a ton left over."}
+{"kind": "fewer_less", "text": "The amount of tabs I have open right now is embarrassing.", "expected": "The number of tabs I have open right now is embarrassing."}
+{"kind": "fewer_less", "text": "These sort of problems usually go away after a restart.", "expected": "These sorts of problems usually go away after a restart."}
+{"kind": "fewer_less", "text": "I've been getting less calls since I updated my voicemail.", "expected": "I've been getting fewer calls since I updated my voicemail."}
+{"kind": "fewer_less", "text": "There were less typos in this draft, great progress.", "expected": "There were fewer typos in this draft, great progress."}
+{"kind": "fewer_less", "text": "We should invite less people so the dinner feels more intimate.", "expected": "We should invite fewer people so the dinner feels more intimate."}
+{"kind": "fewer_less", "text": "The amount of students in my class doubled this year.", "expected": "The number of students in my class doubled this year."}
+{"kind": "fewer_less", "text": "I hate these kind of meetings where nobody makes a decision.", "expected": "I hate these kinds of meetings where nobody makes a decision."}
+{"kind": "fewer_less", "text": "Those type of questions always come up in interviews.", "expected": "Those types of questions always come up in interviews."}
+{"kind": "fewer_less", "text": "Less kids signed up for soccer this year.", "expected": "Fewer kids signed up for soccer this year."}
+{"kind": "fewer_less", "text": "You'll need less eggs if you halve the recipe.", "expected": "You'll need fewer eggs if you halve the recipe."}
+{"kind": "fewer_less", "text": "A large amount of the files were corrupted during the transfer.", "expected": "A large number of the files were corrupted during the transfer."}
+{"kind": "fewer_less", "text": "This kind of errors shows up when the cache is full.", "expected": "This kind of error shows up when the cache is full."}
+{"kind": "fewer_less", "text": "The new phone has less buttons, which I actually like.", "expected": "The new phone has fewer buttons, which I actually like."}
+{"kind": "fewer_less", "text": "There have been less accidents at that corner since they added the stop sign.", "expected": "There have been fewer accidents at that corner since they added the stop sign."}
+{"kind": "fewer_less", "text": "I'd like less meetings and more time to actually work.", "expected": "I'd like fewer meetings and more time to actually work."}
+{"kind": "fewer_less", "text": "The amount of emails I got while on vacation is ridiculous.", "expected": "The number of emails I got while on vacation is ridiculous."}
+{"kind": "fewer_less", "text": "I'm not a fan of these type of restaurants, too loud.", "expected": "I'm not a fan of these types of restaurants, too loud."}
+{"kind": "fewer_less", "text": "We sold less tickets than last year but made more money.", "expected": "We sold fewer tickets than last year but made more money."}
+{"kind": "fewer_less", "text": "That kind of plants needs a lot of sun.", "expected": "That kind of plant needs a lot of sun."}
+{"kind": "pronoun_case", "text": "Just between you and I, I think she's going to quit.", "expected": "Just between you and me, I think she's going to quit."}
+{"kind": "pronoun_case", "text": "Can you save two seats for John and I?", "expected": "Can you save two seats for John and me?"}
+{"kind": "pronoun_case", "text": "Thanks for inviting Jess and I to the wedding!", "expected": "Thanks for inviting Jess and me to the wedding!"}
+{"kind": "pronoun_case", "text": "The manager asked Tom and I to stay late tonight.", "expected": "The manager asked Tom and me to stay late tonight."}
+{"kind": "pronoun_case", "text": "Send the files to Aisha and I when they're ready.", "expected": "Send the files to Aisha and me when they're ready."}
+{"kind": "pronoun_case", "text": "It was a big day for my husband and I.", "expected": "It was a big day for my husband and me."}
+{"kind": "pronoun_case", "text": "Grandma made a quilt for my sister and I.", "expected": "Grandma made a quilt for my sister and me."}
+{"kind": "pronoun_case", "text": "Feel free to reach out to Carlos or I with any questions.", "expected": "Feel free to reach out to Carlos or me with any questions."}
+{"kind": "pronoun_case", "text": "This stays between he and Sarah, okay?", "expected": "This stays between him and Sarah, okay?"}
+{"kind": "pronoun_case", "text": "The final decision is up to Priya and I.", "expected": "The final decision is up to Priya and me."}
+{"kind": "pronoun_case", "text": "Would you like to come with Dan and I to the farmers market?", "expected": "Would you like to come with Dan and me to the farmers market?"}
+{"kind": "pronoun_case", "text": "She sat right behind Mei and I at the concert.", "expected": "She sat right behind Mei and me at the concert."}
+{"kind": "pronoun_case", "text": "The coach gave we players the afternoon off.", "expected": "The coach gave us players the afternoon off."}
+{"kind": "pronoun_case", "text": "Let me know if you want to grab dinner with Zoe and I later.", "expected": "Let me know if you want to grab dinner with Zoe and me later."}
+{"kind": "pronoun_case", "text": "There's always been tension between she and her brother.", "expected": "There's always been tension between her and her brother."}
+{"kind": "pronoun_case", "text": "Mom left a note for Ruby and I on the fridge.", "expected": "Mom left a note for Ruby and me on the fridge."}
+{"kind": "pronoun_case", "text": "He took a photo of we all on the boat.", "expected": "He took a photo of us all on the boat."}
+{"kind": "pronoun_case", "text": "Can you pick up coffee for Noah and I on your way in?", "expected": "Can you pick up coffee for Noah and me on your way in?"}
+{"kind": "pronoun_case", "text": "The landlord sent a letter to my roommate and I.", "expected": "The landlord sent a letter to my roommate and me."}
+{"kind": "pronoun_case", "text": "It's a great opportunity for both you and I.", "expected": "It's a great opportunity for both you and me."}
+{"kind": "pronoun_case", "text": "Our neighbors invited my wife and I over for dinner.", "expected": "Our neighbors invited my wife and me over for dinner."}
+{"kind": "pronoun_case", "text": "Nobody told Kwame and I about the schedule change.", "expected": "Nobody told Kwame and me about the schedule change."}
+{"kind": "pronoun_case", "text": "Please don't tell anyone except Theo and I.", "expected": "Please don't tell anyone except Theo and me."}
+{"kind": "pronoun_case", "text": "The project was assigned to Lena and I last week.", "expected": "The project was assigned to Lena and me last week."}
+{"kind": "pronoun_case", "text": "Come sit next to Olivia and I, there's room.", "expected": "Come sit next to Olivia and me, there's room."}
+{"kind": "pronoun_case", "text": "The rest of we are meeting at the bar at 7.", "expected": "The rest of us are meeting at the bar at 7."}
+{"kind": "pronoun_case", "text": "Thanks again for helping my dad and I with the move.", "expected": "Thanks again for helping my dad and me with the move."}
+{"kind": "pronoun_case", "text": "The judges gave first place to she and her partner.", "expected": "The judges gave first place to her and her partner."}
+{"kind": "pronoun_case", "text": "I'll forward the tickets to you and he tonight.", "expected": "I'll forward the tickets to you and him tonight."}
+{"kind": "pronoun_case", "text": "The professor emailed Jake and I about the lab report.", "expected": "The professor emailed Jake and me about the lab report."}
+{"kind": "if_clause", "text": "If I would have known you were in town, I would have called.", "expected": "If I had known you were in town, I would have called."}
+{"kind": "if_clause", "text": "If you would have told me earlier, I could have helped.", "expected": "If you had told me earlier, I could have helped."}
+{"kind": "if_clause", "text": "If we would have left at 6, we wouldn't have missed the flight.", "expected": "If we had left at 6, we wouldn't have missed the flight."}
+{"kind": "if_clause", "text": "I wish I would have bought that house when prices were low.", "expected": "I wish I had bought that house when prices were low."}
+{"kind": "if_clause", "text": "If she would have asked, I would have said yes.", "expected": "If she had asked, I would have said yes."}
+{"kind": "if_clause", "text": "If they would have checked the forecast, they wouldn't have gone hiking.", "expected": "If they had checked the forecast, they wouldn't have gone hiking."}
+{"kind": "if_clause", "text": "If he would've studied more, he would have passed easily.", "expected": "If he had studied more, he would have passed easily."}
+{"kind": "if_clause", "text": "I wish you would have called before coming over.", "expected": "I wish you had called before coming over."}
+{"kind": "if_clause", "text": "If I would have saved the file, none of this would have happened.", "expected": "If I had saved the file, none of this would have happened."}
+{"kind": "if_clause", "text": "If the store would have had my size, I'd have bought two pairs.", "expected": "If the store had had my size, I'd have bought two pairs."}
+{"kind": "if_clause", "text": "If we would have booked earlier, we could have gotten the ocean view.", "expected": "If we had booked earlier, we could have gotten the ocean view."}
+{"kind": "if_clause", "text": "If you would've mentioned the allergy, I'd have made something else.", "expected": "If you had mentioned the allergy, I'd have made something else."}
+{"kind": "if_clause", "text": "If Marcus would have shown up on time, we could have started earlier.", "expected": "If Marcus had shown up on time, we could have started earlier."}
+{"kind": "if_clause", "text": "I wish I would have listened to my mom about that guy.", "expected": "I wish I had listened to my mom about that guy."}
+{"kind": "if_clause", "text": "If the bus would have come on time, I wouldn't have been late.", "expected": "If the bus had come on time, I wouldn't have been late."}
+{"kind": "if_clause", "text": "If I would have seen the email, I would have replied right away.", "expected": "If I had seen the email, I would have replied right away."}
+{"kind": "if_clause", "text": "If they would have hired a real contractor, the roof wouldn't leak.", "expected": "If they had hired a real contractor, the roof wouldn't leak."}
+{"kind": "if_clause", "text": "If you would have been there, you would have laughed so hard.", "expected": "If you had been there, you would have laughed so hard."}
+{"kind": "if_clause", "text": "If we would have known it was a costume party, we'd have dressed up.", "expected": "If we had known it was a costume party, we'd have dressed up."}
+{"kind": "if_clause", "text": "I wish we would have taken more photos on that trip.", "expected": "I wish we had taken more photos on that trip."}
+{"kind": "if_clause", "text": "If I would have remembered my umbrella, I wouldn't be soaked right now.", "expected": "If I had remembered my umbrella, I wouldn't be soaked right now."}
+{"kind": "if_clause", "text": "If she would have read the contract, she wouldn't have signed it.", "expected": "If she had read the contract, she wouldn't have signed it."}
+{"kind": "if_clause", "text": "If the client would have approved the design, we'd be done by now.", "expected": "If the client had approved the design, we'd be done by now."}
+{"kind": "if_clause", "text": "If I would have gotten more sleep, I'd have nailed that interview.", "expected": "If I had gotten more sleep, I'd have nailed that interview."}
+{"kind": "if_clause", "text": "Honestly if you would have asked me, I'd have said no.", "expected": "Honestly if you had asked me, I'd have said no."}
+{"kind": "if_clause", "text": "If he would have locked the car, nothing would have been stolen.", "expected": "If he had locked the car, nothing would have been stolen."}
+{"kind": "if_clause", "text": "I wish they would have warned us about the construction.", "expected": "I wish they had warned us about the construction."}
+{"kind": "if_clause", "text": "If we would have stayed another night, we could have seen the fireworks.", "expected": "If we had stayed another night, we could have seen the fireworks."}
+{"kind": "if_clause", "text": "If Diego would have passed the ball, we'd have won.", "expected": "If Diego had passed the ball, we'd have won."}
+{"kind": "if_clause", "text": "If I would have checked the tire pressure, we wouldn't be stuck here.", "expected": "If I had checked the tire pressure, we wouldn't be stuck here."}
+{"kind": "article", "text": "The meeting should take about a hour, maybe less.", "expected": "The meeting should take about an hour, maybe less."}
+{"kind": "article", "text": "That's an useful tip, thanks for sharing!", "expected": "That's a useful tip, thanks for sharing!"}
+{"kind": "article", "text": "He's a honest guy, I'd trust him with my keys.", "expected": "He's an honest guy, I'd trust him with my keys."}
+{"kind": "article", "text": "It was an unique experience, I'd definitely do it again.", "expected": "It was a unique experience, I'd definitely do it again."}
+{"kind": "article", "text": "My cousin just finished a MBA at Wharton.", "expected": "My cousin just finished an MBA at Wharton."}
+{"kind": "article", "text": "I'll be there in about half a hour.", "expected": "I'll be there in about half an hour."}
+{"kind": "article", "text": "She works as a FBI analyst in DC.", "expected": "She works as an FBI analyst in DC."}
+{"kind": "article", "text": "He got into an university in Scotland, so he's moving in August.", "expected": "He got into a university in Scotland, so he's moving in August."}
+{"kind": "article", "text": "Do you want a apple or a banana with your lunch?", "expected": "Do you want an apple or a banana with your lunch?"}
+{"kind": "article", "text": "It's a easy recipe, only five ingredients.", "expected": "It's an easy recipe, only five ingredients."}
+{"kind": "article", "text": "Can you send me a email with the details?", "expected": "Can you send me an email with the details?"}
+{"kind": "article", "text": "It's a honor to work with all of you.", "expected": "It's an honor to work with all of you."}
+{"kind": "article", "text": "We need a umbrella, it's pouring.", "expected": "We need an umbrella, it's pouring."}
+{"kind": "article", "text": "That was a interesting talk, I learned a lot.", "expected": "That was an interesting talk, I learned a lot."}
+{"kind": "article", "text": "They bought a SUV for all the road trips.", "expected": "They bought an SUV for all the road trips."}
+{"kind": "article", "text": "The doctor ordered a X-ray just to be safe.", "expected": "The doctor ordered an X-ray just to be safe."}
+{"kind": "article", "text": "My brother swears he saw an UFO over the desert.", "expected": "My brother swears he saw a UFO over the desert."}
+{"kind": "article", "text": "We pay a hourly rate for the babysitter.", "expected": "We pay an hourly rate for the babysitter."}
+{"kind": "article", "text": "Can you grab a extra chair from the break room?", "expected": "Can you grab an extra chair from the break room?"}
+{"kind": "article", "text": "It's a 8-hour drive, so let's leave early.", "expected": "It's an 8-hour drive, so let's leave early."}
+{"kind": "article", "text": "I have a 11am call, can we push lunch to 12:30?", "expected": "I have an 11am call, can we push lunch to 12:30?"}
+{"kind": "article", "text": "You'll need to sign a NDA before the demo.", "expected": "You'll need to sign an NDA before the demo."}
+{"kind": "article", "text": "He bought an used car from his neighbor.", "expected": "He bought a used car from his neighbor."}
+{"kind": "article", "text": "Do you have a idea of when you'll be back?", "expected": "Do you have an idea of when you'll be back?"}
+{"kind": "article", "text": "Just a update: the shipment arrived this morning.", "expected": "Just an update: the shipment arrived this morning."}
+{"kind": "article", "text": "We got a offer on the house!", "expected": "We got an offer on the house!"}
+{"kind": "article", "text": "Is there a open table for four on the patio?", "expected": "Is there an open table for four on the patio?"}
+{"kind": "article", "text": "She's an European citizen, so she doesn't need a visa.", "expected": "She's a European citizen, so she doesn't need a visa."}
+{"kind": "article", "text": "It was an one-time thing, I promise.", "expected": "It was a one-time thing, I promise."}
+{"kind": "article", "text": "We waited a hour for a table, never again.", "expected": "We waited an hour for a table, never again."}
+{"kind": "article", "text": "Let's try a Italian place near the office tonight.", "expected": "Let's try an Italian place near the office tonight."}
+{"kind": "article", "text": "She has to wear an uniform at her new job.", "expected": "She has to wear a uniform at her new job."}
+{"kind": "apostrophe", "text": "I dont think we need to bring anything, they said it's catered.", "expected": "I don't think we need to bring anything, they said it's catered."}
+{"kind": "apostrophe", "text": "Sorry, I cant make it tonight, something came up.", "expected": "Sorry, I can't make it tonight, something came up."}
+{"kind": "apostrophe", "text": "He wont answer his phone, is he okay?", "expected": "He won't answer his phone, is he okay?"}
+{"kind": "apostrophe", "text": "im running 10 minutes late, start without me", "expected": "I'm running 10 minutes late, start without me"}
+{"kind": "apostrophe", "text": "Lets grab lunch after the meeting.", "expected": "Let's grab lunch after the meeting."}
+{"kind": "apostrophe", "text": "Did you see todays schedule? They moved the call.", "expected": "Did you see today's schedule? They moved the call."}
+{"kind": "apostrophe", "text": "The companys new logo looks a lot like the old one.", "expected": "The company's new logo looks a lot like the old one."}
+{"kind": "apostrophe", "text": "I posted the photo's from the trip in the shared album.", "expected": "I posted the photos from the trip in the shared album."}
+{"kind": "apostrophe", "text": "The cat knocked over it's water bowl again.", "expected": "The cat knocked over its water bowl again."}
+{"kind": "apostrophe", "text": "Is this book your's? It was on my desk.", "expected": "Is this book yours? It was on my desk."}
+{"kind": "apostrophe", "text": "Its been a long week, I'm so ready for Friday.", "expected": "It's been a long week, I'm so ready for Friday."}
+{"kind": "apostrophe", "text": "My moms birthday is on Sunday, any gift ideas?", "expected": "My mom's birthday is on Sunday, any gift ideas?"}
+{"kind": "apostrophe", "text": "We didnt get the email, can you resend it?", "expected": "We didn't get the email, can you resend it?"}
+{"kind": "apostrophe", "text": "She doesnt eat meat, so let's pick somewhere with veggie options.", "expected": "She doesn't eat meat, so let's pick somewhere with veggie options."}
+{"kind": "apostrophe", "text": "Thats exactly what I was thinking.", "expected": "That's exactly what I was thinking."}
+{"kind": "apostrophe", "text": "Whats the wifi password here?", "expected": "What's the wifi password here?"}
+{"kind": "apostrophe", "text": "You shouldnt have to pay for that, it was their mistake.", "expected": "You shouldn't have to pay for that, it was their mistake."}
+{"kind": "apostrophe", "text": "Ive been trying to reach you all day.", "expected": "I've been trying to reach you all day."}
+{"kind": "apostrophe", "text": "The apple's at the market were incredible this week.", "expected": "The apples at the market were incredible this week."}
+{"kind": "apostrophe", "text": "Johns car is blocking mine, can someone tell him?", "expected": "John's car is blocking mine, can someone tell him?"}
+{"kind": "apostrophe", "text": "The decision is their's, not ours.", "expected": "The decision is theirs, not ours."}
+{"kind": "apostrophe", "text": "I bought three new plant's for the balcony.", "expected": "I bought three new plants for the balcony."}
+{"kind": "apostrophe", "text": "It isnt supposed to rain until tonight.", "expected": "It isn't supposed to rain until tonight."}
+{"kind": "apostrophe", "text": "Lindas party starts at 8, don't be late.", "expected": "Linda's party starts at 8, don't be late."}
+{"kind": "apostrophe", "text": "Youre the best, thanks for covering my shift.", "expected": "You're the best, thanks for covering my shift."}
+{"kind": "apostrophe", "text": "We havent heard back from the landlord yet.", "expected": "We haven't heard back from the landlord yet."}
+{"kind": "apostrophe", "text": "We sold all the cupcake's in an hour!", "expected": "We sold all the cupcakes in an hour!"}
+{"kind": "apostrophe", "text": "Theyre coming over at 7 for dinner.", "expected": "They're coming over at 7 for dinner."}
+{"kind": "apostrophe", "text": "Can you check whos on call this weekend?", "expected": "Can you check who's on call this weekend?"}
+{"kind": "apostrophe", "text": "I couldnt find parking, so I'm circling the block.", "expected": "I couldn't find parking, so I'm circling the block."}
+{"kind": "apostrophe", "text": "Next weeks meeting is canceled, enjoy the free hour.", "expected": "Next week's meeting is canceled, enjoy the free hour."}
+{"kind": "apostrophe", "text": "Sarahs flight lands at 4:15, can you pick her up?", "expected": "Sarah's flight lands at 4:15, can you pick her up?"}
+{"kind": "apostrophe", "text": "The old CD's are in a box in the garage.", "expected": "The old CDs are in a box in the garage."}
+{"kind": "apostrophe", "text": "Arent you coming to the game tonight?", "expected": "Aren't you coming to the game tonight?"}
+{"kind": "spelling", "text": "Did you recieve my email about the schedule change?", "expected": "Did you receive my email about the schedule change?"}
+{"kind": "spelling", "text": "I'll definately be there by 7.", "expected": "I'll definitely be there by 7."}
+{"kind": "spelling", "text": "Can we keep these in seperate folders?", "expected": "Can we keep these in separate folders?"}
+{"kind": "spelling", "text": "The error occured right after the update.", "expected": "The error occurred right after the update."}
+{"kind": "spelling", "text": "The hotel can accomodate up to 40 guests.", "expected": "The hotel can accommodate up to 40 guests."}
+{"kind": "spelling", "text": "I won't be back untill Thursday, so email me if it's urgent.", "expected": "I won't be back until Thursday, so email me if it's urgent."}
+{"kind": "spelling", "text": "Let's talk tommorow morning, I'm wiped.", "expected": "Let's talk tomorrow morning, I'm wiped."}
+{"kind": "spelling", "text": "That was so wierd, the lights just turned off by themselves.", "expected": "That was so weird, the lights just turned off by themselves."}
+{"kind": "spelling", "text": "She started her own buisness last year and it's doing great.", "expected": "She started her own business last year and it's doing great."}
+{"kind": "spelling", "text": "The goverment website is down again.", "expected": "The government website is down again."}
+{"kind": "spelling", "text": "Is it really neccessary to have three meetings about this?", "expected": "Is it really necessary to have three meetings about this?"}
+{"kind": "spelling", "text": "I don't want to embarass him in front of everyone.", "expected": "I don't want to embarrass him in front of everyone."}
+{"kind": "spelling", "text": "Can you add it to the shared calender?", "expected": "Can you add it to the shared calendar?"}
+{"kind": "spelling", "text": "I didn't even know about the existance of that rule.", "expected": "I didn't even know about the existence of that rule."}
+{"kind": "spelling", "text": "Sofia will liase with the vendors while I'm out.", "expected": "Sofia will liaise with the vendors while I'm out."}
+{"kind": "spelling", "text": "The building was finished just before the millenium.", "expected": "The building was finished just before the millennium."}
+{"kind": "spelling", "text": "They haven't publically announced the merger yet.", "expected": "They haven't publicly announced the merger yet."}
+{"kind": "spelling", "text": "I can't beleive it's already November.", "expected": "I can't believe it's already November."}
+{"kind": "spelling", "text": "We finally acheived our sales target for the quarter!", "expected": "We finally achieved our sales target for the quarter!"}
+{"kind": "spelling", "text": "Thanks for the reccomendation, the book was great.", "expected": "Thanks for the recommendation, the book was great."}
+{"kind": "spelling", "text": "Make sure you check the adress before you mail it.", "expected": "Make sure you check the address before you mail it."}
+{"kind": "spelling", "text": "It was a really succesful launch, great work everyone.", "expected": "It was a really successful launch, great work everyone."}
+{"kind": "spelling", "text": "I'm basicly done, just need to proofread.", "expected": "I'm basically done, just need to proofread."}
+{"kind": "spelling", "text": "Thier dog barked all night again.", "expected": "Their dog barked all night again."}
+{"kind": "spelling", "text": "I'll let you know wich day works best.", "expected": "I'll let you know which day works best."}
+{"kind": "spelling", "text": "The enviroment at the new office is so much calmer.", "expected": "The environment at the new office is so much calmer."}
+{"kind": "spelling", "text": "We had a little arguement but it's all good now.", "expected": "We had a little argument but it's all good now."}
+{"kind": "spelling", "text": "I'll foward you the confirmation once it comes in.", "expected": "I'll forward you the confirmation once it comes in."}
+{"kind": "spelling", "text": "Apparantly the meeting is optional now.", "expected": "Apparently the meeting is optional now."}
+{"kind": "spelling", "text": "Please reply immediatly if you can't make it.", "expected": "Please reply immediately if you can't make it."}
+{"kind": "spelling", "text": "I had to renew my driver's lisence today, took forever.", "expected": "I had to renew my driver's license today, took forever."}
+{"kind": "spelling", "text": "My freind is visiting from Toronto this weekend.", "expected": "My friend is visiting from Toronto this weekend."}
+{"kind": "spelling", "text": "The resturant was fully booked so we got takeout.", "expected": "The restaurant was fully booked so we got takeout."}
+{"kind": "spelling", "text": "I need to get more excercise, I'm out of breath after one flight of stairs.", "expected": "I need to get more exercise, I'm out of breath after one flight of stairs."}
+{"kind": "correct_tricky", "text": "If I were you, I'd take the job in Seattle.", "expected": "If I were you, I'd take the job in Seattle."}
+{"kind": "correct_tricky", "text": "I wish I were at the beach right now instead of this meeting.", "expected": "I wish I were at the beach right now instead of this meeting."}
+{"kind": "correct_tricky", "text": "None of the cake was left by the time I got to the break room.", "expected": "None of the cake was left by the time I got to the break room."}
+{"kind": "correct_tricky", "text": "Fewer than ten people showed up to the workshop, which was a little sad.", "expected": "Fewer than ten people showed up to the workshop, which was a little sad."}
+{"kind": "correct_tricky", "text": "It's less than five miles from here, we can bike it.", "expected": "It's less than five miles from here, we can bike it."}
+{"kind": "correct_tricky", "text": "Neither of them is ready to make a decision yet.", "expected": "Neither of them is ready to make a decision yet."}
+{"kind": "correct_tricky", "text": "Whom did you invite to the dinner on Friday?", "expected": "Whom did you invite to the dinner on Friday?"}
+{"kind": "correct_tricky", "text": "The team is meeting at 2 to go over the launch plan.", "expected": "The team is meeting at 2 to go over the launch plan."}
+{"kind": "correct_tricky", "text": "Who's coming to the game tonight?", "expected": "Who's coming to the game tonight?"}
+{"kind": "correct_tricky", "text": "Whose turn is it to clean the fridge?", "expected": "Whose turn is it to clean the fridge?"}
+{"kind": "correct_tricky", "text": "Honestly the app isn't a copy of anything, it's its own thing.", "expected": "Honestly the app isn't a copy of anything, it's its own thing."}
+{"kind": "correct_tricky", "text": "The new policy will affect everyone who works remotely.", "expected": "The new policy will affect everyone who works remotely."}
+{"kind": "correct_tricky", "text": "The effect of the new layout was huge, sales went up 15 percent.", "expected": "The effect of the new layout was huge, sales went up 15 percent."}
+{"kind": "correct_tricky", "text": "First preheat the oven, then mix the dry ingredients.", "expected": "First preheat the oven, then mix the dry ingredients."}
+{"kind": "correct_tricky", "text": "yeah sure, I can swing by around 6:30", "expected": "yeah sure, I can swing by around 6:30"}
+{"kind": "correct_tricky", "text": "I'd rather walk than wait for the bus.", "expected": "I'd rather walk than wait for the bus."}
+{"kind": "correct_tricky", "text": "Their house is bigger than ours, but ours has a better yard.", "expected": "Their house is bigger than ours, but ours has a better yard."}
+{"kind": "correct_tricky", "text": "They're over there by the fountain, can you see them?", "expected": "They're over there by the fountain, can you see them?"}
+{"kind": "correct_tricky", "text": "You're welcome to bring your dog, we have a fenced yard.", "expected": "You're welcome to bring your dog, we have a fenced yard."}
+{"kind": "correct_tricky", "text": "The meeting is at 9:15, so don't be late.", "expected": "The meeting is at 9:15, so don't be late."}
+{"kind": "correct_tricky", "text": "Each of the students has a locker on the second floor.", "expected": "Each of the students has a locker on the second floor."}
+{"kind": "correct_tricky", "text": "Everyone has their own opinion about pineapple on pizza.", "expected": "Everyone has their own opinion about pineapple on pizza."}
+{"kind": "correct_tricky", "text": "Let's meet at Jen's place around 7.", "expected": "Let's meet at Jen's place around 7."}
+{"kind": "correct_tricky", "text": "We spent less money than we expected on the trip.", "expected": "We spent less money than we expected on the trip."}
+{"kind": "correct_tricky", "text": "There were fewer complaints this month than last month.", "expected": "There were fewer complaints this month than last month."}
+{"kind": "correct_tricky", "text": "Whether or not it rains, the parade is happening.", "expected": "Whether or not it rains, the parade is happening."}
+{"kind": "correct_tricky", "text": "The weather in Denver changes every five minutes.", "expected": "The weather in Denver changes every five minutes."}
+{"kind": "correct_tricky", "text": "He accepted the offer, except for the relocation clause.", "expected": "He accepted the offer, except for the relocation clause."}
+{"kind": "correct_tricky", "text": "Don't lose your ticket, you'll need it to get back in.", "expected": "Don't lose your ticket, you'll need it to get back in."}
+{"kind": "correct_tricky", "text": "The principal reason we moved was the commute.", "expected": "The principal reason we moved was the commute."}
+{"kind": "correct_tricky", "text": "That tie really complements your suit.", "expected": "That tie really complements your suit."}
+{"kind": "correct_tricky", "text": "Thanks for the compliment, I made it myself!", "expected": "Thanks for the compliment, I made it myself!"}
+{"kind": "correct_tricky", "text": "My advice is to wait until spring to sell.", "expected": "My advice is to wait until spring to sell."}
+{"kind": "correct_tricky", "text": "Can you advise me on what to wear to the gala?", "expected": "Can you advise me on what to wear to the gala?"}
+{"kind": "correct_tricky", "text": "We walked past the old theater on our way home.", "expected": "We walked past the old theater on our way home."}
+{"kind": "correct_tricky", "text": "Time passed so quickly on that trip.", "expected": "Time passed so quickly on that trip."}
+{"kind": "correct_tricky", "text": "Take a deep breath and breathe out slowly.", "expected": "Take a deep breath and breathe out slowly."}
+{"kind": "correct_tricky", "text": "The bike was stationary when the car hit it.", "expected": "The bike was stationary when the car hit it."}
+{"kind": "correct_tricky", "text": "I need to buy stationery for the thank-you cards.", "expected": "I need to buy stationery for the thank-you cards."}
+{"kind": "correct_tricky", "text": "If I had known about the traffic, I would have left earlier.", "expected": "If I had known about the traffic, I would have left earlier."}
+{"kind": "correct_tricky", "text": "If she were here, she'd know exactly what to do.", "expected": "If she were here, she'd know exactly what to do."}
+{"kind": "correct_tricky", "text": "The number of applicants has doubled since last year.", "expected": "The number of applicants has doubled since last year."}
+{"kind": "correct_tricky", "text": "A number of people have asked about parking.", "expected": "A number of people have asked about parking."}
+{"kind": "correct_tricky", "text": "Between you and me, I think the movie was overrated.", "expected": "Between you and me, I think the movie was overrated."}
+{"kind": "correct_tricky", "text": "Thanks for inviting Tom and me!", "expected": "Thanks for inviting Tom and me!"}
+{"kind": "correct_tricky", "text": "My wife and I are going to Lisbon in May.", "expected": "My wife and I are going to Lisbon in May."}
+{"kind": "correct_tricky", "text": "She's taller than I am, but I'm faster.", "expected": "She's taller than I am, but I'm faster."}
+{"kind": "correct_tricky", "text": "It's an honor to be here, truly.", "expected": "It's an honor to be here, truly."}
+{"kind": "correct_tricky", "text": "He's an MBA student at Columbia.", "expected": "He's an MBA student at Columbia."}
+{"kind": "correct_tricky", "text": "She's a European history professor at a small college.", "expected": "She's a European history professor at a small college."}
+{"kind": "correct_tricky", "text": "We need a one-way ticket to Boston for Thursday.", "expected": "We need a one-way ticket to Boston for Thursday."}
+{"kind": "correct_tricky", "text": "It's a university town, so everything closes in summer.", "expected": "It's a university town, so everything closes in summer."}
+{"kind": "correct_tricky", "text": "I'll be there in an hour or so.", "expected": "I'll be there in an hour or so."}
+{"kind": "correct_tricky", "text": "The kids' toys are all over the living room.", "expected": "The kids' toys are all over the living room."}
+{"kind": "correct_tricky", "text": "Its battery lasts all day, which is why I bought it.", "expected": "Its battery lasts all day, which is why I bought it."}
+{"kind": "correct_tricky", "text": "The company's profits doubled this quarter.", "expected": "The company's profits doubled this quarter."}
+{"kind": "correct_tricky", "text": "Let's go! The Uber is outside.", "expected": "Let's go! The Uber is outside."}
+{"kind": "correct_tricky", "text": "The app lets you split the bill with friends.", "expected": "The app lets you split the bill with friends."}
+{"kind": "correct_tricky", "text": "The 1990s were a weird time for fashion.", "expected": "The 1990s were a weird time for fashion."}
+{"kind": "correct_tricky", "text": "She got all A's this semester!", "expected": "She got all A's this semester!"}
+{"kind": "correct_tricky", "text": "None of the students were late today, which is a first.", "expected": "None of the students were late today, which is a first."}
+{"kind": "correct_tricky", "text": "Ten dollars is too much for a coffee.", "expected": "Ten dollars is too much for a coffee."}
+{"kind": "correct_tricky", "text": "Five miles is a long way to walk in the rain.", "expected": "Five miles is a long way to walk in the rain."}
+{"kind": "correct_tricky", "text": "The jury is still out on that one.", "expected": "The jury is still out on that one."}
+{"kind": "correct_tricky", "text": "The news is pretty bad, I'm afraid.", "expected": "The news is pretty bad, I'm afraid."}
+{"kind": "correct_tricky", "text": "Neither the manager nor the employees were told about the change.", "expected": "Neither the manager nor the employees were told about the change."}
+{"kind": "correct_tricky", "text": "Either Sam or his parents are picking us up from the airport.", "expected": "Either Sam or his parents are picking us up from the airport."}
+{"kind": "correct_tricky", "text": "There are a lot of people in line already.", "expected": "There are a lot of people in line already."}
+{"kind": "correct_tricky", "text": "There's a lot of traffic on the bridge this morning.", "expected": "There's a lot of traffic on the bridge this morning."}
+{"kind": "correct_tricky", "text": "I could have sworn I left my keys here.", "expected": "I could have sworn I left my keys here."}
+{"kind": "correct_tricky", "text": "You should've seen the sunset last night.", "expected": "You should've seen the sunset last night."}
+{"kind": "correct_tricky", "text": "He has gone to the store, he'll be back soon.", "expected": "He has gone to the store, he'll be back soon."}
+{"kind": "correct_tricky", "text": "We've eaten there before and loved it.", "expected": "We've eaten there before and loved it."}
+{"kind": "correct_tricky", "text": "I saw your text but forgot to reply, sorry!", "expected": "I saw your text but forgot to reply, sorry!"}
+{"kind": "correct_tricky", "text": "She brought her famous lasagna to the potluck.", "expected": "She brought her famous lasagna to the potluck."}
+{"kind": "correct_tricky", "text": "The phone rang right as I was falling asleep.", "expected": "The phone rang right as I was falling asleep."}
+{"kind": "correct_tricky", "text": "They dragged the canoe up the beach before the storm hit.", "expected": "They dragged the canoe up the beach before the storm hit."}
+{"kind": "correct_tricky", "text": "Can you lay the towels on the bed, please?", "expected": "Can you lay the towels on the bed, please?"}
+{"kind": "correct_tricky", "text": "I'm going to lie down for a bit, wake me at 4.", "expected": "I'm going to lie down for a bit, wake me at 4."}
+{"kind": "correct_tricky", "text": "Yesterday I lay in bed until noon, no regrets.", "expected": "Yesterday I lay in bed until noon, no regrets."}
+{"kind": "correct_tricky", "text": "I feel bad about missing your call.", "expected": "I feel bad about missing your call."}
+{"kind": "correct_tricky", "text": "She did well on her exam, she's so relieved.", "expected": "She did well on her exam, she's so relieved."}
+{"kind": "correct_tricky", "text": "Could you send it to Maria and me by Friday?", "expected": "Could you send it to Maria and me by Friday?"}
+{"kind": "correct_tricky", "text": "This kind of mistake is easy to make.", "expected": "This kind of mistake is easy to make."}
+{"kind": "correct_tricky", "text": "These kinds of meetings are a waste of time.", "expected": "These kinds of meetings are a waste of time."}
+{"kind": "correct_tricky", "text": "Less than 20 percent of the budget is left.", "expected": "Less than 20 percent of the budget is left."}
+{"kind": "correct_tricky", "text": "We had fewer than 50 orders today.", "expected": "We had fewer than 50 orders today."}
+{"kind": "correct_tricky", "text": "Is this yours or theirs?", "expected": "Is this yours or theirs?"}
+{"kind": "correct_tricky", "text": "I'm not sure whose idea this was, but it's brilliant.", "expected": "I'm not sure whose idea this was, but it's brilliant."}
+{"kind": "correct_tricky", "text": "ok cool, see you at 6:45 then", "expected": "ok cool, see you at 6:45 then"}
+{"kind": "correct_tricky", "text": "Then again, maybe we should wait for Raj.", "expected": "Then again, maybe we should wait for Raj."}
+{"kind": "correct_tricky", "text": "The dress is too loose, I need a smaller size.", "expected": "The dress is too loose, I need a smaller size."}
+{"kind": "correct_tricky", "text": "I'm too tired to go out tonight, rain check?", "expected": "I'm too tired to go out tonight, rain check?"}
+{"kind": "correct_tricky", "text": "The Johnsons are coming over for dinner on Saturday.", "expected": "The Johnsons are coming over for dinner on Saturday."}
+{"kind": "correct_tricky", "text": "Had I known, I'd have stayed longer.", "expected": "Had I known, I'd have stayed longer."}
+{"kind": "correct_tricky", "text": "The new manager effected real change in the department.", "expected": "The new manager effected real change in the department."}
+{"kind": "correct_tricky", "text": "Her speech affected me more than I expected.", "expected": "Her speech affected me more than I expected."}
+{"kind": "correct_tricky", "text": "Everyone except Marcus accepted the invitation.", "expected": "Everyone except Marcus accepted the invitation."}
+{"kind": "correct_tricky", "text": "Me neither, honestly. That show lost me after season two.", "expected": "Me neither, honestly. That show lost me after season two."}
+{"kind": "correct_tricky", "text": "Stress can really affect your sleep.", "expected": "Stress can really affect your sleep."}

@@ -1,0 +1,449 @@
+{"kind": "subjonctif", "text": "Il faut que tu viens avant 10h demain, sinon on commence sans toi.", "expected": "Il faut que tu viennes avant 10h demain, sinon on commence sans toi."}
+{"kind": "subjonctif", "text": "Je veux que tu me dis la vérité sur ce qui s'est passé hier soir.", "expected": "Je veux que tu me dises la vérité sur ce qui s'est passé hier soir."}
+{"kind": "subjonctif", "text": "Bien qu'il est malade, Thomas a quand même fini le rapport.", "expected": "Bien qu'il soit malade, Thomas a quand même fini le rapport."}
+{"kind": "subjonctif", "text": "Envoie-moi le fichier avant que je pars en réunion stp.", "expected": "Envoie-moi le fichier avant que je parte en réunion stp."}
+{"kind": "subjonctif", "text": "Je t'appelle pour que tu sais où on se retrouve ce soir.", "expected": "Je t'appelle pour que tu saches où on se retrouve ce soir."}
+{"kind": "subjonctif", "text": "À moins que tu as une meilleure idée, on part sur la pizzeria.", "expected": "À moins que tu aies une meilleure idée, on part sur la pizzeria."}
+{"kind": "subjonctif", "text": "Il faut qu'on fait le point sur le budget avant vendredi.", "expected": "Il faut qu'on fasse le point sur le budget avant vendredi."}
+{"kind": "subjonctif", "text": "Je voudrais que vous pouvez valider le devis d'ici jeudi.", "expected": "Je voudrais que vous puissiez valider le devis d'ici jeudi."}
+{"kind": "subjonctif", "text": "Il faut que je vais chez le médecin cet aprèm, je serai pas joignable.", "expected": "Il faut que j'aille chez le médecin cet aprèm, je serai pas joignable."}
+{"kind": "subjonctif", "text": "Bien que nous avons relancé trois fois, le client n'a toujours pas répondu.", "expected": "Bien que nous ayons relancé trois fois, le client n'a toujours pas répondu."}
+{"kind": "subjonctif", "text": "Je préfère qu'on attend la réponse de Claire avant de signer.", "expected": "Je préfère qu'on attende la réponse de Claire avant de signer."}
+{"kind": "subjonctif", "text": "Il faut absolument que vous lisez ce mail avant la réunion de 14h.", "expected": "Il faut absolument que vous lisiez ce mail avant la réunion de 14h."}
+{"kind": "subjonctif", "text": "Range ta chambre avant que papa revient, sinon ça va chauffer.", "expected": "Range ta chambre avant que papa revienne, sinon ça va chauffer."}
+{"kind": "subjonctif", "text": "On doit finir la maquette pour que le client peut la tester lundi.", "expected": "On doit finir la maquette pour que le client puisse la tester lundi."}
+{"kind": "subjonctif", "text": "Il faut que tu prends tes billets de train cette semaine, les prix montent vite.", "expected": "Il faut que tu prennes tes billets de train cette semaine, les prix montent vite."}
+{"kind": "subjonctif", "text": "Personne ne touche au serveur de prod avant que l'audit est terminé.", "expected": "Personne ne touche au serveur de prod avant que l'audit soit terminé."}
+{"kind": "subjonctif", "text": "Bien qu'elle a beaucoup de boulot, Léa a accepté de nous aider.", "expected": "Bien qu'elle ait beaucoup de boulot, Léa a accepté de nous aider."}
+{"kind": "subjonctif", "text": "Je reste à la maison demain à moins qu'il fait vraiment beau.", "expected": "Je reste à la maison demain à moins qu'il fasse vraiment beau."}
+{"kind": "subjonctif", "text": "Il faudrait que tu mets à jour ton antivirus, ton PC rame.", "expected": "Il faudrait que tu mettes à jour ton antivirus, ton PC rame."}
+{"kind": "subjonctif", "text": "Je souhaite que vous êtes tous présents à l'assemblée générale.", "expected": "Je souhaite que vous soyez tous présents à l'assemblée générale."}
+{"kind": "subjonctif", "text": "Il faut que nous partons à 7h pour éviter les bouchons.", "expected": "Il faut que nous partions à 7h pour éviter les bouchons."}
+{"kind": "subjonctif", "text": "Je t'envoie le lien pour que tu peux t'inscrire directement.", "expected": "Je t'envoie le lien pour que tu puisses t'inscrire directement."}
+{"kind": "subjonctif", "text": "Avant qu'on oublie, il faut que tu me rends le chargeur.", "expected": "Avant qu'on oublie, il faut que tu me rendes le chargeur."}
+{"kind": "subjonctif", "text": "Je veux que tu vas voir le prof pour lui expliquer la situation.", "expected": "Je veux que tu ailles voir le prof pour lui expliquer la situation."}
+{"kind": "subjonctif", "text": "Bien que le train avait du retard, on est arrivés à l'heure au concert.", "expected": "Bien que le train ait eu du retard, on est arrivés à l'heure au concert."}
+{"kind": "subjonctif", "text": "Il faut qu'ils savent que la date limite est repoussée au 15.", "expected": "Il faut qu'ils sachent que la date limite est repoussée au 15."}
+{"kind": "subjonctif", "text": "Je ne partirai pas en week-end à moins que tu viens avec moi.", "expected": "Je ne partirai pas en week-end à moins que tu viennes avec moi."}
+{"kind": "subjonctif", "text": "Il faut que tu écris à la mairie pour le permis de construire.", "expected": "Il faut que tu écrives à la mairie pour le permis de construire."}
+{"kind": "subjonctif", "text": "Mon chef veut que je finis la présentation ce soir, je vais rentrer tard.", "expected": "Mon chef veut que je finisse la présentation ce soir, je vais rentrer tard."}
+{"kind": "subjonctif", "text": "Pour que ça marche, il faut que chacun fait un effort.", "expected": "Pour que ça marche, il faut que chacun fasse un effort."}
+{"kind": "subjonctif", "text": "Bien que je suis d'accord sur le fond, je trouve le ton un peu agressif.", "expected": "Bien que je sois d'accord sur le fond, je trouve le ton un peu agressif."}
+{"kind": "subjonctif", "text": "Préviens-moi avant que tu pars, je voudrais te passer un truc.", "expected": "Préviens-moi avant que tu partes, je voudrais te passer un truc."}
+{"kind": "subjonctif", "text": "Il faut que vous choisissez une date pour l'entretien annuel.", "expected": "Il faut que vous choisissiez une date pour l'entretien annuel."}
+{"kind": "subjonctif", "text": "J'aimerais que tu reçois les invités avec moi samedi soir.", "expected": "J'aimerais que tu reçoives les invités avec moi samedi soir."}
+{"kind": "subjonctif", "text": "Il faut que tu fais les courses et que tu prends du pain en rentrant.", "expected": "Il faut que tu fasses les courses et que tu prennes du pain en rentrant."}
+{"kind": "si_conditionnel", "text": "Si j'aurais su, je serais venu plus tôt à la fête.", "expected": "Si j'avais su, je serais venu plus tôt à la fête."}
+{"kind": "si_conditionnel", "text": "Si tu viendrais samedi, on pourrait faire un barbecue.", "expected": "Si tu venais samedi, on pourrait faire un barbecue."}
+{"kind": "si_conditionnel", "text": "Si on partirait plus tôt, on éviterait les bouchons sur l'A6.", "expected": "Si on partait plus tôt, on éviterait les bouchons sur l'A6."}
+{"kind": "si_conditionnel", "text": "Si vous auriez des questions, n'hésitez pas à me contacter.", "expected": "Si vous avez des questions, n'hésitez pas à me contacter."}
+{"kind": "si_conditionnel", "text": "Si j'aurais le temps ce week-end, je t'aiderais pour le déménagement.", "expected": "Si j'avais le temps ce week-end, je t'aiderais pour le déménagement."}
+{"kind": "si_conditionnel", "text": "Je t'aurais appelé si j'aurais eu ton numéro.", "expected": "Je t'aurais appelé si j'avais eu ton numéro."}
+{"kind": "si_conditionnel", "text": "Si le client accepterait le devis, on pourrait commencer en janvier.", "expected": "Si le client acceptait le devis, on pourrait commencer en janvier."}
+{"kind": "si_conditionnel", "text": "Si tu pourrais m'envoyer le fichier avant midi, ce serait top.", "expected": "Si tu pouvais m'envoyer le fichier avant midi, ce serait top."}
+{"kind": "si_conditionnel", "text": "S'il ferait beau demain, on irait à la plage avec les enfants.", "expected": "S'il faisait beau demain, on irait à la plage avec les enfants."}
+{"kind": "si_conditionnel", "text": "Si nous aurions reçu le colis, nous l'aurions signalé tout de suite.", "expected": "Si nous avions reçu le colis, nous l'aurions signalé tout de suite."}
+{"kind": "si_conditionnel", "text": "Si elle serait là, elle saurait quoi faire avec ce client.", "expected": "Si elle était là, elle saurait quoi faire avec ce client."}
+{"kind": "si_conditionnel", "text": "Si je gagnerais au loto, je m'achèterais une maison en Bretagne.", "expected": "Si je gagnais au loto, je m'achèterais une maison en Bretagne."}
+{"kind": "si_conditionnel", "text": "Si t'aurais vu sa tête quand il a ouvert le cadeau !", "expected": "Si t'avais vu sa tête quand il a ouvert le cadeau !"}
+{"kind": "si_conditionnel", "text": "Si ça te dérangerait, tu me le dirais franchement ?", "expected": "Si ça te dérangeait, tu me le dirais franchement ?"}
+{"kind": "si_conditionnel", "text": "Si les prix baisseraient, on pourrait enfin acheter un appart.", "expected": "Si les prix baissaient, on pourrait enfin acheter un appart."}
+{"kind": "si_conditionnel", "text": "On serait déjà arrivés si tu aurais pris l'autoroute.", "expected": "On serait déjà arrivés si tu avais pris l'autoroute."}
+{"kind": "si_conditionnel", "text": "Si vous pourriez me rappeler avant 17h, ce serait parfait.", "expected": "Si vous pouviez me rappeler avant 17h, ce serait parfait."}
+{"kind": "si_conditionnel", "text": "Si Paul me demanderait de l'aide, je dirais oui sans hésiter.", "expected": "Si Paul me demandait de l'aide, je dirais oui sans hésiter."}
+{"kind": "si_conditionnel", "text": "Si tu voudrais venir, il reste une place dans la voiture.", "expected": "Si tu veux venir, il reste une place dans la voiture."}
+{"kind": "si_conditionnel", "text": "Si on aurait commencé plus tôt, on aurait fini à temps.", "expected": "Si on avait commencé plus tôt, on aurait fini à temps."}
+{"kind": "si_conditionnel", "text": "Si le train aurait pas eu de retard, j'aurais pas raté mon rendez-vous.", "expected": "Si le train avait pas eu de retard, j'aurais pas raté mon rendez-vous."}
+{"kind": "si_conditionnel", "text": "Si je serais toi, je prendrais le poste à Lyon sans hésiter.", "expected": "Si j'étais toi, je prendrais le poste à Lyon sans hésiter."}
+{"kind": "si_conditionnel", "text": "Si vous seriez intéressés, je peux vous envoyer la brochure.", "expected": "Si vous êtes intéressés, je peux vous envoyer la brochure."}
+{"kind": "si_conditionnel", "text": "Si Marc viendrait avec nous, il faudrait prendre deux voitures.", "expected": "Si Marc venait avec nous, il faudrait prendre deux voitures."}
+{"kind": "si_conditionnel", "text": "Si le serveur planterait encore, on repasserait sur l'ancienne version.", "expected": "Si le serveur plantait encore, on repasserait sur l'ancienne version."}
+{"kind": "si_conditionnel", "text": "Si j'aurais pas oublié mes clés, je serais déjà à la maison.", "expected": "Si j'avais pas oublié mes clés, je serais déjà à la maison."}
+{"kind": "si_conditionnel", "text": "Si ma sœur saurait conduire, elle pourrait m'emmener à la gare.", "expected": "Si ma sœur savait conduire, elle pourrait m'emmener à la gare."}
+{"kind": "si_conditionnel", "text": "Si tu mettrais un peu plus de sel, ce serait parfait.", "expected": "Si tu mettais un peu plus de sel, ce serait parfait."}
+{"kind": "si_conditionnel", "text": "Si les enfants dormiraient mieux, on serait moins fatigués.", "expected": "Si les enfants dormaient mieux, on serait moins fatigués."}
+{"kind": "si_conditionnel", "text": "Si l'équipe aurait eu plus de moyens, le projet aurait abouti.", "expected": "Si l'équipe avait eu plus de moyens, le projet aurait abouti."}
+{"kind": "si_conditionnel", "text": "Si tu irais voir le médecin, tu saurais enfin ce que t'as.", "expected": "Si tu allais voir le médecin, tu saurais enfin ce que t'as."}
+{"kind": "si_conditionnel", "text": "Si je pourrais, je viendrais, mais j'ai déjà un truc ce soir.", "expected": "Si je pouvais, je viendrais, mais j'ai déjà un truc ce soir."}
+{"kind": "si_conditionnel", "text": "Si on prendrait le menu du midi, ça nous coûterait moins cher.", "expected": "Si on prenait le menu du midi, ça nous coûterait moins cher."}
+{"kind": "si_conditionnel", "text": "Si tu me l'aurais dit plus tôt, j'aurais pu m'organiser.", "expected": "Si tu me l'avais dit plus tôt, j'aurais pu m'organiser."}
+{"kind": "si_conditionnel", "text": "Si les invités arriveraient en avance, tu pourrais les accueillir ?", "expected": "Si les invités arrivaient en avance, tu pourrais les accueillir ?"}
+{"kind": "futur_conditionnel", "text": "Demain je serais au bureau à partir de 9h, passe me voir.", "expected": "Demain je serai au bureau à partir de 9h, passe me voir."}
+{"kind": "futur_conditionnel", "text": "J'aimerai bien venir à ta soirée mais je suis de garde.", "expected": "J'aimerais bien venir à ta soirée mais je suis de garde."}
+{"kind": "futur_conditionnel", "text": "Je te rendrais ton livre la semaine prochaine, promis.", "expected": "Je te rendrai ton livre la semaine prochaine, promis."}
+{"kind": "futur_conditionnel", "text": "Bonjour, je voudrai réserver une table pour quatre personnes ce soir.", "expected": "Bonjour, je voudrais réserver une table pour quatre personnes ce soir."}
+{"kind": "futur_conditionnel", "text": "Quand j'aurais fini le rapport, je te l'enverrai direct.", "expected": "Quand j'aurai fini le rapport, je te l'enverrai direct."}
+{"kind": "futur_conditionnel", "text": "Lundi prochain je ferais les courses, tu t'occupes du linge ?", "expected": "Lundi prochain je ferai les courses, tu t'occupes du linge ?"}
+{"kind": "futur_conditionnel", "text": "Si tu veux, je t'appellerais ce soir après le dîner.", "expected": "Si tu veux, je t'appellerai ce soir après le dîner."}
+{"kind": "futur_conditionnel", "text": "J'aurai aimé être prévenu plus tôt de ce changement.", "expected": "J'aurais aimé être prévenu plus tôt de ce changement."}
+{"kind": "futur_conditionnel", "text": "J'arriverais vers 20h ce soir, garde-moi une assiette.", "expected": "J'arriverai vers 20h ce soir, garde-moi une assiette."}
+{"kind": "futur_conditionnel", "text": "Je t'aurai bien aidé, mais j'étais coincé au boulot.", "expected": "Je t'aurais bien aidé, mais j'étais coincé au boulot."}
+{"kind": "futur_conditionnel", "text": "Dès que je serais rentré, je te rappellerai, promis.", "expected": "Dès que je serai rentré, je te rappellerai, promis."}
+{"kind": "futur_conditionnel", "text": "À ta place, je prendrai le train plutôt que la voiture.", "expected": "À ta place, je prendrais le train plutôt que la voiture."}
+{"kind": "futur_conditionnel", "text": "Je ferai bien une pause, je suis crevé depuis ce matin.", "expected": "Je ferais bien une pause, je suis crevé depuis ce matin."}
+{"kind": "futur_conditionnel", "text": "Je viendrais te chercher à la gare demain à 18h, comme prévu.", "expected": "Je viendrai te chercher à la gare demain à 18h, comme prévu."}
+{"kind": "futur_conditionnel", "text": "Je souhaiterai obtenir un rendez-vous pour la semaine prochaine si possible.", "expected": "Je souhaiterais obtenir un rendez-vous pour la semaine prochaine si possible."}
+{"kind": "futur_conditionnel", "text": "L'année prochaine, je partirais au Japon avec ma copine, c'est réservé.", "expected": "L'année prochaine, je partirai au Japon avec ma copine, c'est réservé."}
+{"kind": "futur_conditionnel", "text": "Je vous enverrais le contrat signé d'ici vendredi sans faute.", "expected": "Je vous enverrai le contrat signé d'ici vendredi sans faute."}
+{"kind": "futur_conditionnel", "text": "Tu crois que je pourrai emprunter ta voiture si la mienne tombait en panne ?", "expected": "Tu crois que je pourrais emprunter ta voiture si la mienne tombait en panne ?"}
+{"kind": "futur_conditionnel", "text": "Il m'a confirmé qu'il venait, donc demain je l'attendrais devant la gare jusqu'à 19h.", "expected": "Il m'a confirmé qu'il venait, donc demain je l'attendrai devant la gare jusqu'à 19h."}
+{"kind": "futur_conditionnel", "text": "Je voudrai savoir si la salle est disponible jeudi après-midi.", "expected": "Je voudrais savoir si la salle est disponible jeudi après-midi."}
+{"kind": "futur_conditionnel", "text": "Promis, je ne recommencerais plus, je suis vraiment désolé.", "expected": "Promis, je ne recommencerai plus, je suis vraiment désolé."}
+{"kind": "futur_conditionnel", "text": "Si j'avais plus de temps, j'apprendrai l'espagnol avec une appli.", "expected": "Si j'avais plus de temps, j'apprendrais l'espagnol avec une appli."}
+{"kind": "futur_conditionnel", "text": "Je serai curieux de savoir ce qu'il en pense vraiment.", "expected": "Je serais curieux de savoir ce qu'il en pense vraiment."}
+{"kind": "futur_conditionnel", "text": "Je passerais te voir quand je serai à Bordeaux en mars.", "expected": "Je passerai te voir quand je serai à Bordeaux en mars."}
+{"kind": "futur_conditionnel", "text": "Je t'avoue que j'aurai préféré un autre resto pour ce soir.", "expected": "Je t'avoue que j'aurais préféré un autre resto pour ce soir."}
+{"kind": "futur_conditionnel", "text": "Je finirais le montage ce soir et je t'enverrai la vidéo demain.", "expected": "Je finirai le montage ce soir et je t'enverrai la vidéo demain."}
+{"kind": "futur_conditionnel", "text": "Je préférerai qu'on en parle de vive voix si ça te va.", "expected": "Je préférerais qu'on en parle de vive voix si ça te va."}
+{"kind": "futur_conditionnel", "text": "D'ici la fin du mois, j'aurais terminé ma formation et je serai dispo.", "expected": "D'ici la fin du mois, j'aurai terminé ma formation et je serai dispo."}
+{"kind": "futur_conditionnel", "text": "Je pourrai venir si j'avais une voiture, mais là c'est compliqué.", "expected": "Je pourrais venir si j'avais une voiture, mais là c'est compliqué."}
+{"kind": "futur_conditionnel", "text": "Pour info, l'été prochain je serais en congé du 3 au 10 août.", "expected": "Pour info, l'été prochain je serai en congé du 3 au 10 août."}
+{"kind": "futur_conditionnel", "text": "Je mangerai bien une crêpe, pas toi ? J'ai un petit creux.", "expected": "Je mangerais bien une crêpe, pas toi ? J'ai un petit creux."}
+{"kind": "futur_conditionnel", "text": "La prochaine fois, je ferais attention à bien fermer la porte.", "expected": "La prochaine fois, je ferai attention à bien fermer la porte."}
+{"kind": "futur_conditionnel", "text": "Je n'aurai jamais cru qu'il oserait faire ça devant tout le monde.", "expected": "Je n'aurais jamais cru qu'il oserait faire ça devant tout le monde."}
+{"kind": "futur_conditionnel", "text": "Je t'écrirais dès que j'aurai les résultats de l'analyse.", "expected": "Je t'écrirai dès que j'aurai les résultats de l'analyse."}
+{"kind": "futur_conditionnel", "text": "Demain je serais en télétravail, donc je pourrais pas venir à la réunion de 10h.", "expected": "Demain je serai en télétravail, donc je pourrai pas venir à la réunion de 10h."}
+{"kind": "infinitif_participe", "text": "Je vais mangé chez mes parents ce soir, je rentrerai tard.", "expected": "Je vais manger chez mes parents ce soir, je rentrerai tard."}
+{"kind": "infinitif_participe", "text": "Il a manger tout le gâteau sans rien nous laisser.", "expected": "Il a mangé tout le gâteau sans rien nous laisser."}
+{"kind": "infinitif_participe", "text": "Vous pouvez m'appelez au 06 12 34 56 78 après 18h.", "expected": "Vous pouvez m'appeler au 06 12 34 56 78 après 18h."}
+{"kind": "infinitif_participe", "text": "Je dois envoyé le dossier avant midi au service compta.", "expected": "Je dois envoyer le dossier avant midi au service compta."}
+{"kind": "infinitif_participe", "text": "On a commencer la réunion sans toi, désolé.", "expected": "On a commencé la réunion sans toi, désolé."}
+{"kind": "infinitif_participe", "text": "N'hésitez pas à me contactez si vous avez besoin d'aide.", "expected": "N'hésitez pas à me contacter si vous avez besoin d'aide."}
+{"kind": "infinitif_participe", "text": "Tu peux passé me chercher vers 19h ce soir ?", "expected": "Tu peux passer me chercher vers 19h ce soir ?"}
+{"kind": "infinitif_participe", "text": "J'ai oublier mon badge, tu peux m'ouvrir la porte ?", "expected": "J'ai oublié mon badge, tu peux m'ouvrir la porte ?"}
+{"kind": "infinitif_participe", "text": "Il faut réservé la salle au moins une semaine à l'avance.", "expected": "Il faut réserver la salle au moins une semaine à l'avance."}
+{"kind": "infinitif_participe", "text": "Elle m'a demander de te transmettre le message ce matin.", "expected": "Elle m'a demandé de te transmettre le message ce matin."}
+{"kind": "infinitif_participe", "text": "Je viens de terminé le dossier, je te l'envoie.", "expected": "Je viens de terminer le dossier, je te l'envoie."}
+{"kind": "infinitif_participe", "text": "Nous avons décider de reporter le séminaire à juin.", "expected": "Nous avons décidé de reporter le séminaire à juin."}
+{"kind": "infinitif_participe", "text": "Pensez à signé la feuille de présence en partant.", "expected": "Pensez à signer la feuille de présence en partant."}
+{"kind": "infinitif_participe", "text": "J'ai essayer de t'appeler mais ça sonnait occupé.", "expected": "J'ai essayé de t'appeler mais ça sonnait occupé."}
+{"kind": "infinitif_participe", "text": "Merci de bien vouloir confirmé votre présence avant lundi.", "expected": "Merci de bien vouloir confirmer votre présence avant lundi."}
+{"kind": "infinitif_participe", "text": "Il est aller chercher les enfants à l'école, il revient vite.", "expected": "Il est allé chercher les enfants à l'école, il revient vite."}
+{"kind": "infinitif_participe", "text": "Je sais pas comment réglé ce problème d'imprimante.", "expected": "Je sais pas comment régler ce problème d'imprimante."}
+{"kind": "infinitif_participe", "text": "Tu as regarder le match hier soir ? Quelle fin !", "expected": "Tu as regardé le match hier soir ? Quelle fin !"}
+{"kind": "infinitif_participe", "text": "Avant de partir, pense à fermé toutes les fenêtres.", "expected": "Avant de partir, pense à fermer toutes les fenêtres."}
+{"kind": "infinitif_participe", "text": "Ils ont gagner le tournoi de foot du quartier !", "expected": "Ils ont gagné le tournoi de foot du quartier !"}
+{"kind": "infinitif_participe", "text": "Je voulais vous remerciez pour votre accueil chaleureux.", "expected": "Je voulais vous remercier pour votre accueil chaleureux."}
+{"kind": "infinitif_participe", "text": "Je me suis tromper de salle, j'arrive dans deux minutes.", "expected": "Je me suis trompé de salle, j'arrive dans deux minutes."}
+{"kind": "infinitif_participe", "text": "Faut que j'aille acheté du pain avant que ça ferme.", "expected": "Faut que j'aille acheter du pain avant que ça ferme."}
+{"kind": "infinitif_participe", "text": "Il m'a aidé à rangé le garage tout l'après-midi.", "expected": "Il m'a aidé à ranger le garage tout l'après-midi."}
+{"kind": "infinitif_participe", "text": "J'aurais aimé te parlé avant la réunion de ce matin.", "expected": "J'aurais aimé te parler avant la réunion de ce matin."}
+{"kind": "infinitif_participe", "text": "Elle a trouver un appart à deux pas du boulot.", "expected": "Elle a trouvé un appart à deux pas du boulot."}
+{"kind": "infinitif_participe", "text": "Je compte sur vous pour respectez les délais cette fois.", "expected": "Je compte sur vous pour respecter les délais cette fois."}
+{"kind": "infinitif_participe", "text": "Le plombier répond pas, il faut le rappelé demain matin.", "expected": "Le plombier répond pas, il faut le rappeler demain matin."}
+{"kind": "infinitif_participe", "text": "Je vous ai envoyer le lien par mail hier soir.", "expected": "Je vous ai envoyé le lien par mail hier soir."}
+{"kind": "infinitif_participe", "text": "C'est difficile de travaillé avec autant de bruit dans l'open space.", "expected": "C'est difficile de travailler avec autant de bruit dans l'open space."}
+{"kind": "infinitif_participe", "text": "Tu veux venir dîné à la maison samedi ?", "expected": "Tu veux venir dîner à la maison samedi ?"}
+{"kind": "infinitif_participe", "text": "Le technicien est passé et il a changer la chaudière.", "expected": "Le technicien est passé et il a changé la chaudière."}
+{"kind": "infinitif_participe", "text": "Veuillez trouvé ci-joint mon CV et ma lettre de motivation.", "expected": "Veuillez trouver ci-joint mon CV et ma lettre de motivation."}
+{"kind": "infinitif_participe", "text": "J'étais en train de cuisiné quand tu as appelé.", "expected": "J'étais en train de cuisiner quand tu as appelé."}
+{"kind": "infinitif_participe", "text": "Tu peux m'envoyé le fichier ? J'ai pas réussi à le téléchargé.", "expected": "Tu peux m'envoyer le fichier ? J'ai pas réussi à le télécharger."}
+{"kind": "accord_participe", "text": "Elle s'est inscrit au cours de yoga du mardi soir.", "expected": "Elle s'est inscrite au cours de yoga du mardi soir."}
+{"kind": "accord_participe", "text": "Les photos que j'ai pris pendant le mariage sont sur le drive.", "expected": "Les photos que j'ai prises pendant le mariage sont sur le drive."}
+{"kind": "accord_participe", "text": "Ma sœur est arrivé hier soir de Montréal, on va la chercher.", "expected": "Ma sœur est arrivée hier soir de Montréal, on va la chercher."}
+{"kind": "accord_participe", "text": "La lettre de résiliation ? Je l'ai envoyé ce matin.", "expected": "La lettre de résiliation ? Je l'ai envoyée ce matin."}
+{"kind": "accord_participe", "text": "Les clés, je les ai laissé sur la table de la cuisine.", "expected": "Les clés, je les ai laissées sur la table de la cuisine."}
+{"kind": "accord_participe", "text": "Nos voisines sont parti en vacances sans prévenir personne.", "expected": "Nos voisines sont parties en vacances sans prévenir personne."}
+{"kind": "accord_participe", "text": "La réunion que tu as organisé était super utile, merci.", "expected": "La réunion que tu as organisée était super utile, merci."}
+{"kind": "accord_participe", "text": "Les filles se sont bien amusé à la fête foraine.", "expected": "Les filles se sont bien amusées à la fête foraine."}
+{"kind": "accord_participe", "text": "Les factures ont été payé le 5 du mois comme d'habitude.", "expected": "Les factures ont été payées le 5 du mois comme d'habitude."}
+{"kind": "accord_participe", "text": "Elle s'est assis au fond de la salle sans rien dire.", "expected": "Elle s'est assise au fond de la salle sans rien dire."}
+{"kind": "accord_participe", "text": "Quelle belle maison vous avez acheté à la campagne !", "expected": "Quelle belle maison vous avez achetée à la campagne !"}
+{"kind": "accord_participe", "text": "Les propositions que vous m'avez fait sont intéressantes.", "expected": "Les propositions que vous m'avez faites sont intéressantes."}
+{"kind": "accord_participe", "text": "Claire et Sophie sont venu me voir à l'hôpital.", "expected": "Claire et Sophie sont venues me voir à l'hôpital."}
+{"kind": "accord_participe", "text": "La décision a été pris en comité de direction hier.", "expected": "La décision a été prise en comité de direction hier."}
+{"kind": "accord_participe", "text": "Ma valise ? Je l'ai déjà fait hier soir.", "expected": "Ma valise ? Je l'ai déjà faite hier soir."}
+{"kind": "accord_participe", "text": "Les erreurs que j'ai commis sont corrigées dans la V2.", "expected": "Les erreurs que j'ai commises sont corrigées dans la V2."}
+{"kind": "accord_participe", "text": "Elle s'est blessé en jouant au tennis dimanche.", "expected": "Elle s'est blessée en jouant au tennis dimanche."}
+{"kind": "accord_participe", "text": "Les tables ont été réservé au nom de Dupont pour 20h.", "expected": "Les tables ont été réservées au nom de Dupont pour 20h."}
+{"kind": "accord_participe", "text": "Ta mère est passé à la maison cet après-midi.", "expected": "Ta mère est passée à la maison cet après-midi."}
+{"kind": "accord_participe", "text": "Les chansons qu'il a écrit pour elle sont magnifiques.", "expected": "Les chansons qu'il a écrites pour elle sont magnifiques."}
+{"kind": "accord_participe", "text": "Ma collègue s'est trompé de date pour le séminaire.", "expected": "Ma collègue s'est trompée de date pour le séminaire."}
+{"kind": "accord_participe", "text": "Toutes les places ont été vendu en dix minutes.", "expected": "Toutes les places ont été vendues en dix minutes."}
+{"kind": "accord_participe", "text": "Les infos que tu m'as donné étaient fausses, j'ai perdu une heure.", "expected": "Les infos que tu m'as données étaient fausses, j'ai perdu une heure."}
+{"kind": "accord_participe", "text": "Ces chaussures, je les ai acheté en solde l'an dernier.", "expected": "Ces chaussures, je les ai achetées en solde l'an dernier."}
+{"kind": "accord_participe", "text": "Les invitées sont reparti vers minuit, ravies de leur soirée.", "expected": "Les invitées sont reparties vers minuit, ravies de leur soirée."}
+{"kind": "accord_participe", "text": "Ma grand-mère est né en 1938 à Alger.", "expected": "Ma grand-mère est née en 1938 à Alger."}
+{"kind": "accord_participe", "text": "La voiture que j'ai loué tombe déjà en panne.", "expected": "La voiture que j'ai louée tombe déjà en panne."}
+{"kind": "accord_participe", "text": "Elles se sont levé tôt pour voir le lever du soleil.", "expected": "Elles se sont levées tôt pour voir le lever du soleil."}
+{"kind": "accord_participe", "text": "La porte du garage était resté ouverte toute la nuit.", "expected": "La porte du garage était restée ouverte toute la nuit."}
+{"kind": "accord_participe", "text": "Vos remarques ont bien été pris en compte dans la nouvelle version.", "expected": "Vos remarques ont bien été prises en compte dans la nouvelle version."}
+{"kind": "accord_participe", "text": "Les pizzas que vous avez commandé viennent d'arriver.", "expected": "Les pizzas que vous avez commandées viennent d'arriver."}
+{"kind": "accord_participe", "text": "Ma fille s'est endormi dans la voiture au retour.", "expected": "Ma fille s'est endormie dans la voiture au retour."}
+{"kind": "accord_participe", "text": "La salle de réunion a été repeint pendant les vacances.", "expected": "La salle de réunion a été repeinte pendant les vacances."}
+{"kind": "accord_participe", "text": "Cette série, je l'ai regardé en entier ce week-end.", "expected": "Cette série, je l'ai regardée en entier ce week-end."}
+{"kind": "accord_participe", "text": "Ma cousine est venu et s'est installé chez nous pour l'été.", "expected": "Ma cousine est venue et s'est installée chez nous pour l'été."}
+{"kind": "accord_nom_adjectif", "text": "On a eu des réunions important toute la semaine.", "expected": "On a eu des réunions importantes toute la semaine."}
+{"kind": "accord_nom_adjectif", "text": "Les résultats sont très bon ce trimestre, bravo à tous.", "expected": "Les résultats sont très bons ce trimestre, bravo à tous."}
+{"kind": "accord_nom_adjectif", "text": "J'ai acheté deux baguette et des croissants pour le petit-déj.", "expected": "J'ai acheté deux baguettes et des croissants pour le petit-déj."}
+{"kind": "accord_nom_adjectif", "text": "Elle porte toujours des robes noir au travail.", "expected": "Elle porte toujours des robes noires au travail."}
+{"kind": "accord_nom_adjectif", "text": "Ces dernières semaines ont été vraiment difficile pour moi.", "expected": "Ces dernières semaines ont été vraiment difficiles pour moi."}
+{"kind": "accord_nom_adjectif", "text": "Il y a plusieurs problème sur le site depuis la mise à jour.", "expected": "Il y a plusieurs problèmes sur le site depuis la mise à jour."}
+{"kind": "accord_nom_adjectif", "text": "Les conditions générales sont disponible sur notre site.", "expected": "Les conditions générales sont disponibles sur notre site."}
+{"kind": "accord_nom_adjectif", "text": "On a passé des vacances génial en Corse avec les cousins.", "expected": "On a passé des vacances géniales en Corse avec les cousins."}
+{"kind": "accord_nom_adjectif", "text": "Merci pour vos conseils précieux et toutes vos idée.", "expected": "Merci pour vos conseils précieux et toutes vos idées."}
+{"kind": "accord_nom_adjectif", "text": "Les nouveaux bureau sont au troisième étage, à gauche.", "expected": "Les nouveaux bureaux sont au troisième étage, à gauche."}
+{"kind": "accord_nom_adjectif", "text": "Sa voiture est neuf, il l'a eue la semaine dernière.", "expected": "Sa voiture est neuve, il l'a eue la semaine dernière."}
+{"kind": "accord_nom_adjectif", "text": "J'ai lu tous les rapport annuels avant la réunion.", "expected": "J'ai lu tous les rapports annuels avant la réunion."}
+{"kind": "accord_nom_adjectif", "text": "Ma grand-mère est très heureux de vous revoir dimanche.", "expected": "Ma grand-mère est très heureuse de vous revoir dimanche."}
+{"kind": "accord_nom_adjectif", "text": "Les journaux locals en ont parlé ce matin.", "expected": "Les journaux locaux en ont parlé ce matin."}
+{"kind": "accord_nom_adjectif", "text": "C'est une idée original, je valide à fond.", "expected": "C'est une idée originale, je valide à fond."}
+{"kind": "accord_nom_adjectif", "text": "Nous avons reçu de nombreuses candidature pour le poste.", "expected": "Nous avons reçu de nombreuses candidatures pour le poste."}
+{"kind": "accord_nom_adjectif", "text": "Les enfants étaient tout content de voir la neige.", "expected": "Les enfants étaient tout contents de voir la neige."}
+{"kind": "accord_nom_adjectif", "text": "Ces chaussures sont trop petit pour moi, je les rends.", "expected": "Ces chaussures sont trop petites pour moi, je les rends."}
+{"kind": "accord_nom_adjectif", "text": "Mes deux frère habitent à Nantes depuis 2020.", "expected": "Mes deux frères habitent à Nantes depuis 2020."}
+{"kind": "accord_nom_adjectif", "text": "Les animaux sont interdit dans le parc municipal.", "expected": "Les animaux sont interdits dans le parc municipal."}
+{"kind": "accord_nom_adjectif", "text": "Je fais des journées très long en ce moment.", "expected": "Je fais des journées très longues en ce moment."}
+{"kind": "accord_nom_adjectif", "text": "Les premiers retour clients sont plutôt positifs.", "expected": "Les premiers retours clients sont plutôt positifs."}
+{"kind": "accord_nom_adjectif", "text": "Une réponse rapide serait appréciée, la situation est sérieux.", "expected": "Une réponse rapide serait appréciée, la situation est sérieuse."}
+{"kind": "accord_nom_adjectif", "text": "On cherche des solutions concret pour réduire les coûts.", "expected": "On cherche des solutions concrètes pour réduire les coûts."}
+{"kind": "accord_nom_adjectif", "text": "Les chevaux de mon oncle sont magnifique, viens les voir.", "expected": "Les chevaux de mon oncle sont magnifiques, viens les voir."}
+{"kind": "accord_nom_adjectif", "text": "J'ai trois examens final la semaine prochaine.", "expected": "J'ai trois examens finaux la semaine prochaine."}
+{"kind": "accord_nom_adjectif", "text": "La réunion était long et franchement inutile.", "expected": "La réunion était longue et franchement inutile."}
+{"kind": "accord_nom_adjectif", "text": "Les pommes sont bien mûr, on peut faire une tarte.", "expected": "Les pommes sont bien mûres, on peut faire une tarte."}
+{"kind": "accord_nom_adjectif", "text": "Il nous faut des chaises supplémentaire pour samedi.", "expected": "Il nous faut des chaises supplémentaires pour samedi."}
+{"kind": "accord_nom_adjectif", "text": "Ses explications étaient clair et précises, merci à lui.", "expected": "Ses explications étaient claires et précises, merci à lui."}
+{"kind": "accord_nom_adjectif", "text": "Les tarifs actuel ne changeront pas avant 2027.", "expected": "Les tarifs actuels ne changeront pas avant 2027."}
+{"kind": "accord_nom_adjectif", "text": "Ma voisine est très gentil, elle arrose mes plantes.", "expected": "Ma voisine est très gentille, elle arrose mes plantes."}
+{"kind": "accord_nom_adjectif", "text": "On a vu des films vraiment nul ce week-end.", "expected": "On a vu des films vraiment nuls ce week-end."}
+{"kind": "accord_nom_adjectif", "text": "Ces deux dossiers sont prioritaire, le reste peut attendre.", "expected": "Ces deux dossiers sont prioritaires, le reste peut attendre."}
+{"kind": "accord_nom_adjectif", "text": "Les nouvelles règles sont plus strict et plus complexe qu'avant.", "expected": "Les nouvelles règles sont plus strictes et plus complexes qu'avant."}
+{"kind": "homophones", "text": "Je suis allé a la boulangerie ce matin avant le boulot.", "expected": "Je suis allé à la boulangerie ce matin avant le boulot."}
+{"kind": "homophones", "text": "Tu préfères le cinéma ou le resto ? Dis-moi ou tu veux aller.", "expected": "Tu préfères le cinéma ou le resto ? Dis-moi où tu veux aller."}
+{"kind": "homophones", "text": "Il a encore oublié ces clés chez moi.", "expected": "Il a encore oublié ses clés chez moi."}
+{"kind": "homophones", "text": "Mes parents son partis en vacances hier.", "expected": "Mes parents sont partis en vacances hier."}
+{"kind": "homophones", "text": "Le dossier et prêt, tu peux le récupérer.", "expected": "Le dossier est prêt, tu peux le récupérer."}
+{"kind": "homophones", "text": "Je leurs ai dit de venir à 18h.", "expected": "Je leur ai dit de venir à 18h."}
+{"kind": "homophones", "text": "Quand à moi, je préfère attendre la fin du mois.", "expected": "Quant à moi, je préfère attendre la fin du mois."}
+{"kind": "homophones", "text": "Il ce demande s'il a bien fait d'accepter.", "expected": "Il se demande s'il a bien fait d'accepter."}
+{"kind": "homophones", "text": "Sa me fait plaisir que tu viennes ce week-end.", "expected": "Ça me fait plaisir que tu viennes ce week-end."}
+{"kind": "homophones", "text": "Il peu venir demain si tu veux.", "expected": "Il peut venir demain si tu veux."}
+{"kind": "homophones", "text": "J'ai tout essayé, mes ça ne marche toujours pas.", "expected": "J'ai tout essayé, mais ça ne marche toujours pas."}
+{"kind": "homophones", "text": "Ils on fini le projet en avance, chapeau.", "expected": "Ils ont fini le projet en avance, chapeau."}
+{"kind": "homophones", "text": "Je t'appelle des que j'arrive à la gare.", "expected": "Je t'appelle dès que j'arrive à la gare."}
+{"kind": "homophones", "text": "Pose le carton la, à côté de la porte.", "expected": "Pose le carton là, à côté de la porte."}
+{"kind": "homophones", "text": "Je suis près à partir, tu viens ?", "expected": "Je suis prêt à partir, tu viens ?"}
+{"kind": "homophones", "text": "Quel bonne surprise de te voir ici !", "expected": "Quelle bonne surprise de te voir ici !"}
+{"kind": "homophones", "text": "Quelque soient tes raisons, tu aurais dû prévenir.", "expected": "Quelles que soient tes raisons, tu aurais dû prévenir."}
+{"kind": "homophones", "text": "Il faudrait d'avantage de temps pour finir correctement.", "expected": "Il faudrait davantage de temps pour finir correctement."}
+{"kind": "homophones", "text": "Tous le monde était content du résultat.", "expected": "Tout le monde était content du résultat."}
+{"kind": "homophones", "text": "Elle a dit quelle viendrait plus tard.", "expected": "Elle a dit qu'elle viendrait plus tard."}
+{"kind": "homophones", "text": "Ou est-ce que tu as rangé les ciseaux ?", "expected": "Où est-ce que tu as rangé les ciseaux ?"}
+{"kind": "homophones", "text": "Les enfants on mangé tous les bonbons.", "expected": "Les enfants ont mangé tous les bonbons."}
+{"kind": "homophones", "text": "Ces un bon plan, je te le conseille.", "expected": "C'est un bon plan, je te le conseille."}
+{"kind": "homophones", "text": "Mon frère et ces amis arrivent ce soir.", "expected": "Mon frère et ses amis arrivent ce soir."}
+{"kind": "homophones", "text": "Les invités son arrivés vers 20h.", "expected": "Les invités sont arrivés vers 20h."}
+{"kind": "homophones", "text": "Il y a peut de chances qu'il pleuve demain.", "expected": "Il y a peu de chances qu'il pleuve demain."}
+{"kind": "homophones", "text": "Elle est partie a 8h ce matin.", "expected": "Elle est partie à 8h ce matin."}
+{"kind": "homophones", "text": "Tu as vu ses gens bizarres devant l'immeuble ?", "expected": "Tu as vu ces gens bizarres devant l'immeuble ?"}
+{"kind": "homophones", "text": "Il est temps de ce mettre au travail.", "expected": "Il est temps de se mettre au travail."}
+{"kind": "homophones", "text": "Je suis passé chez toi mais tu n'étais pas la.", "expected": "Je suis passé chez toi mais tu n'étais pas là."}
+{"kind": "homophones", "text": "Il a tout perdu en un an, ça maison et son boulot.", "expected": "Il a tout perdu en un an, sa maison et son boulot."}
+{"kind": "homophones", "text": "Tout les participants doivent s'inscrire avant lundi.", "expected": "Tous les participants doivent s'inscrire avant lundi."}
+{"kind": "homophones", "text": "Il habite prêt de la gare, c'est pratique.", "expected": "Il habite près de la gare, c'est pratique."}
+{"kind": "homophones", "text": "C'est quoi le problème avec c'est horaires ?", "expected": "C'est quoi le problème avec ces horaires ?"}
+{"kind": "homophones", "text": "Il a oublié son sac a la gare avec ces papiers dedans.", "expected": "Il a oublié son sac à la gare avec ses papiers dedans."}
+{"kind": "conjugaison", "text": "Je croit que la réunion de cet après-midi est annulée.", "expected": "Je crois que la réunion de cet après-midi est annulée."}
+{"kind": "conjugaison", "text": "Tu veut un café ou un thé avant de partir ?", "expected": "Tu veux un café ou un thé avant de partir ?"}
+{"kind": "conjugaison", "text": "Ils prendrons le train de 8h pour Marseille.", "expected": "Ils prendront le train de 8h pour Marseille."}
+{"kind": "conjugaison", "text": "Nous avons prit la mauvaise sortie sur l'autoroute.", "expected": "Nous avons pris la mauvaise sortie sur l'autoroute."}
+{"kind": "conjugaison", "text": "Il a finit son rapport hier soir vers minuit.", "expected": "Il a fini son rapport hier soir vers minuit."}
+{"kind": "conjugaison", "text": "Je t'envoi le document dans la soirée, sans faute.", "expected": "Je t'envoie le document dans la soirée, sans faute."}
+{"kind": "conjugaison", "text": "Dit-moi quand tu es dispo cette semaine.", "expected": "Dis-moi quand tu es dispo cette semaine."}
+{"kind": "conjugaison", "text": "Va-y, je te rejoins dans cinq minutes.", "expected": "Vas-y, je te rejoins dans cinq minutes."}
+{"kind": "conjugaison", "text": "Vous faites quoi ce soir ? Nous, on sortons au resto.", "expected": "Vous faites quoi ce soir ? Nous, on sort au resto."}
+{"kind": "conjugaison", "text": "Je dormé quand tu as appelé, désolé.", "expected": "Je dormais quand tu as appelé, désolé."}
+{"kind": "conjugaison", "text": "Ils voyent bien que tu fais des efforts.", "expected": "Ils voient bien que tu fais des efforts."}
+{"kind": "conjugaison", "text": "Je résouds le bug et je reviens vers toi.", "expected": "Je résous le bug et je reviens vers toi."}
+{"kind": "conjugaison", "text": "Tu peut m'aider à porter les cartons ?", "expected": "Tu peux m'aider à porter les cartons ?"}
+{"kind": "conjugaison", "text": "Elle a mit sa robe rouge pour la soirée.", "expected": "Elle a mis sa robe rouge pour la soirée."}
+{"kind": "conjugaison", "text": "Vous disez quoi ? J'ai pas entendu.", "expected": "Vous dites quoi ? J'ai pas entendu."}
+{"kind": "conjugaison", "text": "Les voisins faisent beaucoup de bruit la nuit.", "expected": "Les voisins font beaucoup de bruit la nuit."}
+{"kind": "conjugaison", "text": "Les enfants courrent partout dans le jardin.", "expected": "Les enfants courent partout dans le jardin."}
+{"kind": "conjugaison", "text": "J'ai éteins la lumière en partant ce matin.", "expected": "J'ai éteint la lumière en partant ce matin."}
+{"kind": "conjugaison", "text": "Tu as recevu mon message de ce matin ?", "expected": "Tu as reçu mon message de ce matin ?"}
+{"kind": "conjugaison", "text": "Elle a ouvri la fenêtre parce qu'il faisait chaud.", "expected": "Elle a ouvert la fenêtre parce qu'il faisait chaud."}
+{"kind": "conjugaison", "text": "Si tu veux, je te rejoinds au café.", "expected": "Si tu veux, je te rejoins au café."}
+{"kind": "conjugaison", "text": "Il a pleuvé toute la journée à Brest.", "expected": "Il a plu toute la journée à Brest."}
+{"kind": "conjugaison", "text": "Ils doivents rendre le dossier avant midi.", "expected": "Ils doivent rendre le dossier avant midi."}
+{"kind": "conjugaison", "text": "Il parlait trop vite. Tu l'as compri, toi ?", "expected": "Il parlait trop vite. Tu l'as compris, toi ?"}
+{"kind": "conjugaison", "text": "Je vais au marché, je revien vite.", "expected": "Je vais au marché, je reviens vite."}
+{"kind": "conjugaison", "text": "Il m'a offert des fleurs et il a écrivu une carte.", "expected": "Il m'a offert des fleurs et il a écrit une carte."}
+{"kind": "conjugaison", "text": "Mange pas trop vite et prend ton temps.", "expected": "Mange pas trop vite et prends ton temps."}
+{"kind": "conjugaison", "text": "Ils allent à la piscine tous les mercredis.", "expected": "Ils vont à la piscine tous les mercredis."}
+{"kind": "conjugaison", "text": "Je m'en rappel très bien, c'était en 2019.", "expected": "Je m'en rappelle très bien, c'était en 2019."}
+{"kind": "conjugaison", "text": "Il a conduis toute la nuit pour arriver à temps.", "expected": "Il a conduit toute la nuit pour arriver à temps."}
+{"kind": "conjugaison", "text": "Franchement, ça vaux le coup d'essayer.", "expected": "Franchement, ça vaut le coup d'essayer."}
+{"kind": "conjugaison", "text": "Hier on a boit un verre en terrasse.", "expected": "Hier on a bu un verre en terrasse."}
+{"kind": "conjugaison", "text": "Ils ont acquéri un nouveau local en centre-ville.", "expected": "Ils ont acquis un nouveau local en centre-ville."}
+{"kind": "conjugaison", "text": "Je sait pas encore si je viens samedi.", "expected": "Je sais pas encore si je viens samedi."}
+{"kind": "conjugaison", "text": "Je croit que Paul a finit le devis.", "expected": "Je crois que Paul a fini le devis."}
+{"kind": "orthographe", "text": "C'était vraiment interressant, merci pour la présentation.", "expected": "C'était vraiment intéressant, merci pour la présentation."}
+{"kind": "orthographe", "text": "Le dévelopement de l'appli prend plus de temps que prévu.", "expected": "Le développement de l'appli prend plus de temps que prévu."}
+{"kind": "orthographe", "text": "J'ai un souci de connection avec le VPN depuis ce matin.", "expected": "J'ai un souci de connexion avec le VPN depuis ce matin."}
+{"kind": "orthographe", "text": "Il faut que je rapelle le plombier demain.", "expected": "Il faut que je rappelle le plombier demain."}
+{"kind": "orthographe", "text": "Tu peux m'apeller ce soir après 20h ?", "expected": "Tu peux m'appeler ce soir après 20h ?"}
+{"kind": "orthographe", "text": "Parmis les candidats, deux sortent vraiment du lot.", "expected": "Parmi les candidats, deux sortent vraiment du lot."}
+{"kind": "orthographe", "text": "Malgrés la pluie, on a fait le marché.", "expected": "Malgré la pluie, on a fait le marché."}
+{"kind": "orthographe", "text": "Le language de programmation qu'on utilise est Python.", "expected": "Le langage de programmation qu'on utilise est Python."}
+{"kind": "orthographe", "text": "J'ai reçu une ammende pour excès de vitesse.", "expected": "J'ai reçu une amende pour excès de vitesse."}
+{"kind": "orthographe", "text": "Il y a beaucoup de traffic ce matin sur le périph.", "expected": "Il y a beaucoup de trafic ce matin sur le périph."}
+{"kind": "orthographe", "text": "C'est une bonne opportunitée pour toi, fonce.", "expected": "C'est une bonne opportunité pour toi, fonce."}
+{"kind": "orthographe", "text": "L'addresse exacte est indiquée sur l'invitation.", "expected": "L'adresse exacte est indiquée sur l'invitation."}
+{"kind": "orthographe", "text": "Accident sans gravitée, mais la voiture est au garage.", "expected": "Accident sans gravité, mais la voiture est au garage."}
+{"kind": "orthographe", "text": "On se retrouve au restaurent à 20h ?", "expected": "On se retrouve au restaurant à 20h ?"}
+{"kind": "orthographe", "text": "Je te confirme le rendez vous de jeudi à 10h.", "expected": "Je te confirme le rendez-vous de jeudi à 10h."}
+{"kind": "orthographe", "text": "J'ai acceuilli les nouveaux stagiaires ce matin.", "expected": "J'ai accueilli les nouveaux stagiaires ce matin."}
+{"kind": "orthographe", "text": "C'est un vrai dilemne pour moi, je sais pas quoi faire.", "expected": "C'est un vrai dilemme pour moi, je sais pas quoi faire."}
+{"kind": "orthographe", "text": "On a un problème de résau au bureau depuis lundi.", "expected": "On a un problème de réseau au bureau depuis lundi."}
+{"kind": "orthographe", "text": "Le personnel de l'hôtel est très professionel.", "expected": "Le personnel de l'hôtel est très professionnel."}
+{"kind": "orthographe", "text": "Je te remercie pour ta gentillesse et ta patiance.", "expected": "Je te remercie pour ta gentillesse et ta patience."}
+{"kind": "orthographe", "text": "Il faut renouveller ton passeport avant l'été.", "expected": "Il faut renouveler ton passeport avant l'été."}
+{"kind": "orthographe", "text": "C'est un événement exceptionel, il faut pas le rater.", "expected": "C'est un événement exceptionnel, il faut pas le rater."}
+{"kind": "orthographe", "text": "Il a été hospitalisé d'urgense cette nuit.", "expected": "Il a été hospitalisé d'urgence cette nuit."}
+{"kind": "orthographe", "text": "J'ai du mal à suivre le rytme en ce moment.", "expected": "J'ai du mal à suivre le rythme en ce moment."}
+{"kind": "orthographe", "text": "Je vais à la bibliotèque pour réviser cet après-midi.", "expected": "Je vais à la bibliothèque pour réviser cet après-midi."}
+{"kind": "orthographe", "text": "Je vous prie d'accepter mes excuses pour ce mal entendu.", "expected": "Je vous prie d'accepter mes excuses pour ce malentendu."}
+{"kind": "orthographe", "text": "Son ton était assez aggressif dans le dernier mail.", "expected": "Son ton était assez agressif dans le dernier mail."}
+{"kind": "orthographe", "text": "C'est un appartement tranquil, loin du bruit.", "expected": "C'est un appartement tranquille, loin du bruit."}
+{"kind": "orthographe", "text": "J'aurais besoin d'un example concret pour comprendre.", "expected": "J'aurais besoin d'un exemple concret pour comprendre."}
+{"kind": "orthographe", "text": "On a eu une discution intéressante avec le client.", "expected": "On a eu une discussion intéressante avec le client."}
+{"kind": "orthographe", "text": "Le résultat final dépend de plusieurs paramêtres techniques.", "expected": "Le résultat final dépend de plusieurs paramètres techniques."}
+{"kind": "orthographe", "text": "Je t'envoie le fichier, c'est un document confidenciel.", "expected": "Je t'envoie le fichier, c'est un document confidentiel."}
+{"kind": "orthographe", "text": "On va faire un pic-nic au bord du lac dimanche.", "expected": "On va faire un pique-nique au bord du lac dimanche."}
+{"kind": "orthographe", "text": "J'ai rendez-vous chez le dentiste, j'ai une carrie.", "expected": "J'ai rendez-vous chez le dentiste, j'ai une carie."}
+{"kind": "orthographe", "text": "C'était un projet interressant malgrés les délais serrés.", "expected": "C'était un projet intéressant malgré les délais serrés."}
+{"kind": "accents", "text": "J'ai deja envoyé le mail au client hier.", "expected": "J'ai déjà envoyé le mail au client hier."}
+{"kind": "accents", "text": "Le resto est juste a cote de la gare.", "expected": "Le resto est juste à côté de la gare."}
+{"kind": "accents", "text": "Ca te dit d'aller au ciné ce soir ?", "expected": "Ça te dit d'aller au ciné ce soir ?"}
+{"kind": "accents", "text": "C'est tres gentil de ta part, merci.", "expected": "C'est très gentil de ta part, merci."}
+{"kind": "accents", "text": "Je suis vraiment interesse par le poste de chef de projet.", "expected": "Je suis vraiment intéressé par le poste de chef de projet."}
+{"kind": "accents", "text": "On se voit apres le boulot pour un verre ?", "expected": "On se voit après le boulot pour un verre ?"}
+{"kind": "accents", "text": "Elle est deja partie, desolee pour le retard.", "expected": "Elle est déjà partie, désolée pour le retard."}
+{"kind": "accents", "text": "Il fait trop chaud, on va a la piscine ?", "expected": "Il fait trop chaud, on va à la piscine ?"}
+{"kind": "accents", "text": "Merci pour ta reponse rapide, ça m'aide beaucoup !", "expected": "Merci pour ta réponse rapide, ça m'aide beaucoup !"}
+{"kind": "accents", "text": "Je suis passe chez toi mais t'étais pas là.", "expected": "Je suis passé chez toi mais t'étais pas là."}
+{"kind": "accents", "text": "La reunion de lundi est decalee à mardi.", "expected": "La réunion de lundi est décalée à mardi."}
+{"kind": "accents", "text": "Tu as recu mon colis cette semaine ?", "expected": "Tu as reçu mon colis cette semaine ?"}
+{"kind": "accents", "text": "Je prefere le train, c'est moins stressant.", "expected": "Je préfère le train, c'est moins stressant."}
+{"kind": "accents", "text": "On a ete super bien accueillis par ta famille.", "expected": "On a été super bien accueillis par ta famille."}
+{"kind": "accents", "text": "C'est un probleme recurrent sur cette appli.", "expected": "C'est un problème récurrent sur cette appli."}
+{"kind": "accents", "text": "Je t'ai envoye les photos de la soirée.", "expected": "Je t'ai envoyé les photos de la soirée."}
+{"kind": "accents", "text": "La fenetre de la cuisine est cassée depuis hier.", "expected": "La fenêtre de la cuisine est cassée depuis hier."}
+{"kind": "accents", "text": "Il est a l'hopital depuis hier soir.", "expected": "Il est à l'hôpital depuis hier soir."}
+{"kind": "accents", "text": "J'ai hate de te revoir le mois prochain !", "expected": "J'ai hâte de te revoir le mois prochain !"}
+{"kind": "accents", "text": "On a mange une super fondue chez Lucie.", "expected": "On a mangé une super fondue chez Lucie."}
+{"kind": "accents", "text": "Peux-tu verifier le planning de la semaine ?", "expected": "Peux-tu vérifier le planning de la semaine ?"}
+{"kind": "accents", "text": "Le theatre est complet ce soir, on y va demain.", "expected": "Le théâtre est complet ce soir, on y va demain."}
+{"kind": "accents", "text": "C'est vrai que c'etait un peu long.", "expected": "C'est vrai que c'était un peu long."}
+{"kind": "accents", "text": "Bonne fete a toi et à toute ta famille !", "expected": "Bonne fête à toi et à toute ta famille !"}
+{"kind": "accents", "text": "Je suis fatigue, je vais me coucher tot.", "expected": "Je suis fatigué, je vais me coucher tôt."}
+{"kind": "accents", "text": "Le gateau de ta mère était delicieux.", "expected": "Le gâteau de ta mère était délicieux."}
+{"kind": "accents", "text": "Tu peux me preter ton chargeur deux minutes ?", "expected": "Tu peux me prêter ton chargeur deux minutes ?"}
+{"kind": "accents", "text": "La securite du site a été renforcée cette année.", "expected": "La sécurité du site a été renforcée cette année."}
+{"kind": "accents", "text": "Mon frere arrive jeudi en fin d'après-midi.", "expected": "Mon frère arrive jeudi en fin d'après-midi."}
+{"kind": "accents", "text": "Il y a eu une greve des transports ce matin.", "expected": "Il y a eu une grève des transports ce matin."}
+{"kind": "accents", "text": "Je n'ai pas encore cree mon compte sur le site.", "expected": "Je n'ai pas encore créé mon compte sur le site."}
+{"kind": "accents", "text": "Tu peux me donner ton numero de téléphone ?", "expected": "Tu peux me donner ton numéro de téléphone ?"}
+{"kind": "accents", "text": "La tele est en panne depuis samedi.", "expected": "La télé est en panne depuis samedi."}
+{"kind": "accents", "text": "Je me suis leve trop tard ce matin.", "expected": "Je me suis levé trop tard ce matin."}
+{"kind": "accents", "text": "Elle a eu son diplome avec mention, on fête ça !", "expected": "Elle a eu son diplôme avec mention, on fête ça !"}
+{"kind": "correct_tricky", "text": "Elle s'est lavé les mains avant de passer à table.", "expected": "Elle s'est lavé les mains avant de passer à table."}
+{"kind": "correct_tricky", "text": "Ils se sont parlé pendant des heures hier soir au téléphone.", "expected": "Ils se sont parlé pendant des heures hier soir au téléphone."}
+{"kind": "correct_tricky", "text": "Je n'imagine pas les efforts qu'il a fallu pour finir à temps.", "expected": "Je n'imagine pas les efforts qu'il a fallu pour finir à temps."}
+{"kind": "correct_tricky", "text": "Quels que soient les résultats, on fêtera la fin du projet vendredi.", "expected": "Quels que soient les résultats, on fêtera la fin du projet vendredi."}
+{"kind": "correct_tricky", "text": "Quoi qu'il arrive, je serai là pour toi, tu le sais.", "expected": "Quoi qu'il arrive, je serai là pour toi, tu le sais."}
+{"kind": "correct_tricky", "text": "Bien qu'il soit tard, je t'appelle quand même pour le devis.", "expected": "Bien qu'il soit tard, je t'appelle quand même pour le devis."}
+{"kind": "correct_tricky", "text": "Si j'avais su que tu étais en ville, je t'aurais invité à dîner.", "expected": "Si j'avais su que tu étais en ville, je t'aurais invité à dîner."}
+{"kind": "correct_tricky", "text": "Après qu'il est parti, on a rangé la salle en vitesse.", "expected": "Après qu'il est parti, on a rangé la salle en vitesse."}
+{"kind": "correct_tricky", "text": "Ci-joint la facture du mois d'octobre, bonne réception.", "expected": "Ci-joint la facture du mois d'octobre, bonne réception."}
+{"kind": "correct_tricky", "text": "Je leur ai dit de passer vers 18h30 pour récupérer les cartons.", "expected": "Je leur ai dit de passer vers 18h30 pour récupérer les cartons."}
+{"kind": "correct_tricky", "text": "J'ai pas eu le temps de regarder ton mail, désolé, je fais ça ce soir.", "expected": "J'ai pas eu le temps de regarder ton mail, désolé, je fais ça ce soir."}
+{"kind": "correct_tricky", "text": "T'inquiète, je m'occupe de tout pour samedi.", "expected": "T'inquiète, je m'occupe de tout pour samedi."}
+{"kind": "correct_tricky", "text": "On fait un call à 15h pour préparer le kick-off ?", "expected": "On fait un call à 15h pour préparer le kick-off ?"}
+{"kind": "correct_tricky", "text": "On est allés au resto avec Julien et Sarah, c'était top.", "expected": "On est allés au resto avec Julien et Sarah, c'était top."}
+{"kind": "correct_tricky", "text": "Rendez-vous à 18h30 devant la mairie de Montreuil.", "expected": "Rendez-vous à 18h30 devant la mairie de Montreuil."}
+{"kind": "correct_tricky", "text": "Elles se sont succédé à la tribune toute la matinée.", "expected": "Elles se sont succédé à la tribune toute la matinée."}
+{"kind": "correct_tricky", "text": "Les trois heures qu'il a dormi ne lui ont pas suffi.", "expected": "Les trois heures qu'il a dormi ne lui ont pas suffi."}
+{"kind": "correct_tricky", "text": "Elle s'est fait couper les cheveux samedi, ça lui va super bien.", "expected": "Elle s'est fait couper les cheveux samedi, ça lui va super bien."}
+{"kind": "correct_tricky", "text": "Ils se sont téléphoné tous les jours pendant les vacances.", "expected": "Ils se sont téléphoné tous les jours pendant les vacances."}
+{"kind": "correct_tricky", "text": "Les chaleurs qu'il a fait cet été étaient insupportables.", "expected": "Les chaleurs qu'il a fait cet été étaient insupportables."}
+{"kind": "correct_tricky", "text": "Je me suis permis de vous relancer concernant notre échange de mardi.", "expected": "Je me suis permis de vous relancer concernant notre échange de mardi."}
+{"kind": "correct_tricky", "text": "Ci-joint les documents demandés pour le dossier de location.", "expected": "Ci-joint les documents demandés pour le dossier de location."}
+{"kind": "correct_tricky", "text": "Vous trouverez ci-jointe la copie du contrat signé.", "expected": "Vous trouverez ci-jointe la copie du contrat signé."}
+{"kind": "correct_tricky", "text": "Elle s'est rendu compte de son erreur trop tard.", "expected": "Elle s'est rendu compte de son erreur trop tard."}
+{"kind": "correct_tricky", "text": "Nous nous sommes souri sans rien dire, c'était un peu gênant.", "expected": "Nous nous sommes souri sans rien dire, c'était un peu gênant."}
+{"kind": "correct_tricky", "text": "Quelle que soit ta décision, je la respecterai.", "expected": "Quelle que soit ta décision, je la respecterai."}
+{"kind": "correct_tricky", "text": "Quelles que soient les conditions météo, le match aura lieu.", "expected": "Quelles que soient les conditions météo, le match aura lieu."}
+{"kind": "correct_tricky", "text": "Il faut que tu sois là à 9h, c'est vraiment important.", "expected": "Il faut que tu sois là à 9h, c'est vraiment important."}
+{"kind": "correct_tricky", "text": "Je doute qu'il vienne, il avait l'air crevé hier.", "expected": "Je doute qu'il vienne, il avait l'air crevé hier."}
+{"kind": "correct_tricky", "text": "Après qu'elle a signé le contrat, tout s'est accéléré.", "expected": "Après qu'elle a signé le contrat, tout s'est accéléré."}
+{"kind": "correct_tricky", "text": "Je leur donnerai la réponse demain matin, promis.", "expected": "Je leur donnerai la réponse demain matin, promis."}
+{"kind": "correct_tricky", "text": "Leurs enfants sont dans la même classe que les nôtres.", "expected": "Leurs enfants sont dans la même classe que les nôtres."}
+{"kind": "correct_tricky", "text": "Les deux sœurs se sont ressemblé toute leur vie.", "expected": "Les deux sœurs se sont ressemblé toute leur vie."}
+{"kind": "correct_tricky", "text": "Elle s'est acheté une nouvelle veste pour l'entretien.", "expected": "Elle s'est acheté une nouvelle veste pour l'entretien."}
+{"kind": "correct_tricky", "text": "La veste qu'elle s'est achetée est finalement trop grande.", "expected": "La veste qu'elle s'est achetée est finalement trop grande."}
+{"kind": "correct_tricky", "text": "Je les ai entendus chanter dans la salle de bain ce matin.", "expected": "Je les ai entendus chanter dans la salle de bain ce matin."}
+{"kind": "correct_tricky", "text": "La chanson que j'ai entendu chanter hier soir me trotte dans la tête.", "expected": "La chanson que j'ai entendu chanter hier soir me trotte dans la tête."}
+{"kind": "correct_tricky", "text": "Je pense pas qu'il soit au courant, tu devrais lui dire.", "expected": "Je pense pas qu'il soit au courant, tu devrais lui dire."}
+{"kind": "correct_tricky", "text": "Ça fait deux ans qu'on s'est pas vus, ça passe trop vite.", "expected": "Ça fait deux ans qu'on s'est pas vus, ça passe trop vite."}
+{"kind": "correct_tricky", "text": "Pas de souci, je te forward le mail dans la journée.", "expected": "Pas de souci, je te forward le mail dans la journée."}
+{"kind": "correct_tricky", "text": "Le meeting est décalé à 14h, check ton agenda.", "expected": "Le meeting est décalé à 14h, check ton agenda."}
+{"kind": "correct_tricky", "text": "Tu peux me faire un feedback sur la slide 3 avant ce soir ?", "expected": "Tu peux me faire un feedback sur la slide 3 avant ce soir ?"}
+{"kind": "correct_tricky", "text": "On a booké la salle pour le brainstorming de jeudi.", "expected": "On a booké la salle pour le brainstorming de jeudi."}
+{"kind": "correct_tricky", "text": "Marie-Hélène et Jean-Baptiste arrivent par le TGV de 17h42.", "expected": "Marie-Hélène et Jean-Baptiste arrivent par le TGV de 17h42."}
+{"kind": "correct_tricky", "text": "Les cours ont repris le 4 novembre après les vacances de la Toussaint.", "expected": "Les cours ont repris le 4 novembre après les vacances de la Toussaint."}
+{"kind": "correct_tricky", "text": "Si tu veux, on peut se retrouver chez Lucas vers 20h.", "expected": "Si tu veux, on peut se retrouver chez Lucas vers 20h."}
+{"kind": "correct_tricky", "text": "Je me demande si elle viendra à la soirée de vendredi.", "expected": "Je me demande si elle viendra à la soirée de vendredi."}
+{"kind": "correct_tricky", "text": "Je ne sais pas s'il pourra venir demain, il a l'air débordé.", "expected": "Je ne sais pas s'il pourra venir demain, il a l'air débordé."}
+{"kind": "correct_tricky", "text": "Dis-moi si tu serais dispo samedi au cas où Paul ne pourrait pas venir.", "expected": "Dis-moi si tu serais dispo samedi au cas où Paul ne pourrait pas venir."}
+{"kind": "correct_tricky", "text": "Ils ont dû partir plus tôt à cause de la grève.", "expected": "Ils ont dû partir plus tôt à cause de la grève."}
+{"kind": "correct_tricky", "text": "Il a fallu trois jours pour réparer la fuite dans la salle de bain.", "expected": "Il a fallu trois jours pour réparer la fuite dans la salle de bain."}
+{"kind": "correct_tricky", "text": "Nous nous sommes vus la semaine dernière à Lyon.", "expected": "Nous nous sommes vus la semaine dernière à Lyon."}
+{"kind": "correct_tricky", "text": "Elles se sont lancé des défis toute la soirée.", "expected": "Elles se sont lancé des défis toute la soirée."}
+{"kind": "correct_tricky", "text": "Elle s'est laissé convaincre par le vendeur, comme d'habitude.", "expected": "Elle s'est laissé convaincre par le vendeur, comme d'habitude."}
+{"kind": "correct_tricky", "text": "J'ai acheté des pommes et j'en ai mangé trois en rentrant.", "expected": "J'ai acheté des pommes et j'en ai mangé trois en rentrant."}
+{"kind": "correct_tricky", "text": "Des erreurs, j'en ai fait plein au début, c'est normal.", "expected": "Des erreurs, j'en ai fait plein au début, c'est normal."}
+{"kind": "correct_tricky", "text": "Tout le monde est arrivé à l'heure, même Kevin.", "expected": "Tout le monde est arrivé à l'heure, même Kevin."}
+{"kind": "correct_tricky", "text": "Elle est tout émue de te revoir après tant d'années.", "expected": "Elle est tout émue de te revoir après tant d'années."}
+{"kind": "correct_tricky", "text": "Elles sont toutes contentes du résultat de l'élection.", "expected": "Elles sont toutes contentes du résultat de l'élection."}
+{"kind": "correct_tricky", "text": "Elles sont tout heureuses d'avoir gagné le tournoi.", "expected": "Elles sont tout heureuses d'avoir gagné le tournoi."}
+{"kind": "correct_tricky", "text": "Il est midi et demi, on va manger ?", "expected": "Il est midi et demi, on va manger ?"}
+{"kind": "correct_tricky", "text": "Ça fait une heure et demie que j'attends devant la gare.", "expected": "Ça fait une heure et demie que j'attends devant la gare."}
+{"kind": "correct_tricky", "text": "Les chaussures marron sont en solde jusqu'à dimanche.", "expected": "Les chaussures marron sont en solde jusqu'à dimanche."}
+{"kind": "correct_tricky", "text": "Elle a les yeux bleu clair comme son père.", "expected": "Elle a les yeux bleu clair comme son père."}
+{"kind": "correct_tricky", "text": "J'ai reçu des fleurs orange pour mon anniversaire.", "expected": "J'ai reçu des fleurs orange pour mon anniversaire."}
+{"kind": "correct_tricky", "text": "Nous vous serions reconnaissants de nous répondre avant le 15.", "expected": "Nous vous serions reconnaissants de nous répondre avant le 15."}
+{"kind": "correct_tricky", "text": "Vous êtes priés de bien vouloir patienter dans le hall.", "expected": "Vous êtes priés de bien vouloir patienter dans le hall."}
+{"kind": "correct_tricky", "text": "Le stand-up de demain est annulé, Antoine est off.", "expected": "Le stand-up de demain est annulé, Antoine est off."}
+{"kind": "correct_tricky", "text": "On s'est loupés de peu à la gare, c'est bête.", "expected": "On s'est loupés de peu à la gare, c'est bête."}
+{"kind": "correct_tricky", "text": "Excuse-moi, je t'ai pas vu arriver tout à l'heure.", "expected": "Excuse-moi, je t'ai pas vu arriver tout à l'heure."}
+{"kind": "correct_tricky", "text": "Quand bien même il s'excuserait, je lui en voudrais encore.", "expected": "Quand bien même il s'excuserait, je lui en voudrais encore."}
+{"kind": "correct_tricky", "text": "Pour peu qu'il pleuve, la fête tombe à l'eau.", "expected": "Pour peu qu'il pleuve, la fête tombe à l'eau."}
+{"kind": "correct_tricky", "text": "Je te l'avais dit, mais tu m'as pas écouté.", "expected": "Je te l'avais dit, mais tu m'as pas écouté."}
+{"kind": "correct_tricky", "text": "Avant qu'il ne parte, demande-lui les clés du local.", "expected": "Avant qu'il ne parte, demande-lui les clés du local."}
+{"kind": "correct_tricky", "text": "J'ai peur qu'il ne soit déjà trop tard pour s'inscrire.", "expected": "J'ai peur qu'il ne soit déjà trop tard pour s'inscrire."}
+{"kind": "correct_tricky", "text": "Les quelque cinquante invités sont arrivés à l'heure.", "expected": "Les quelque cinquante invités sont arrivés à l'heure."}
+{"kind": "correct_tricky", "text": "Quelque difficiles que soient les débuts, on va y arriver.", "expected": "Quelque difficiles que soient les débuts, on va y arriver."}
+{"kind": "correct_tricky", "text": "Je lui ai donné rendez-vous à la brasserie Le Chantecler.", "expected": "Je lui ai donné rendez-vous à la brasserie Le Chantecler."}
+{"kind": "correct_tricky", "text": "Elle s'est plainte du bruit auprès du syndic.", "expected": "Elle s'est plainte du bruit auprès du syndic."}
+{"kind": "correct_tricky", "text": "Les vacances se sont bien passées, merci de demander !", "expected": "Les vacances se sont bien passées, merci de demander !"}
+{"kind": "correct_tricky", "text": "Ils se sont aperçus de l'erreur le lendemain matin.", "expected": "Ils se sont aperçus de l'erreur le lendemain matin."}
+{"kind": "correct_tricky", "text": "Les sommes que ce projet a coûté sont énormes.", "expected": "Les sommes que ce projet a coûté sont énormes."}
+{"kind": "correct_tricky", "text": "Vas-y, je te suis, j'ai le plan sur mon téléphone.", "expected": "Vas-y, je te suis, j'ai le plan sur mon téléphone."}
+{"kind": "correct_tricky", "text": "Donnes-en un peu à ta sœur, elle en a pas eu.", "expected": "Donnes-en un peu à ta sœur, elle en a pas eu."}
+{"kind": "correct_tricky", "text": "Penses-y avant de signer quoi que ce soit.", "expected": "Penses-y avant de signer quoi que ce soit."}
+{"kind": "correct_tricky", "text": "Quoi que tu fasses, fais-le bien et prends ton temps.", "expected": "Quoi que tu fasses, fais-le bien et prends ton temps."}
+{"kind": "correct_tricky", "text": "Je n'ai rien contre, mais je préférerais qu'on en reparle.", "expected": "Je n'ai rien contre, mais je préférerais qu'on en reparle."}
+{"kind": "correct_tricky", "text": "Il est 11h, la réunion commence à 11h15, tu viens ?", "expected": "Il est 11h, la réunion commence à 11h15, tu viens ?"}
+{"kind": "correct_tricky", "text": "On a été ravis de vous accueillir à Saint-Malo.", "expected": "On a été ravis de vous accueillir à Saint-Malo."}
+{"kind": "correct_tricky", "text": "C'est nous qui avons organisé la soirée cette année.", "expected": "C'est nous qui avons organisé la soirée cette année."}
+{"kind": "correct_tricky", "text": "C'est moi qui ai les clés, je t'attends en bas.", "expected": "C'est moi qui ai les clés, je t'attends en bas."}
+{"kind": "correct_tricky", "text": "Ni Paul ni Marie ne viendront ce soir, on sera trois.", "expected": "Ni Paul ni Marie ne viendront ce soir, on sera trois."}
+{"kind": "correct_tricky", "text": "La plupart des gens sont d'accord avec toi sur ce point.", "expected": "La plupart des gens sont d'accord avec toi sur ce point."}
+{"kind": "correct_tricky", "text": "Je me suis fait avoir comme un débutant avec cette arnaque.", "expected": "Je me suis fait avoir comme un débutant avec cette arnaque."}
+{"kind": "correct_tricky", "text": "Le dossier, je l'ai envoyé à 9h ce matin, t'as pas reçu ?", "expected": "Le dossier, je l'ai envoyé à 9h ce matin, t'as pas reçu ?"}
+{"kind": "correct_tricky", "text": "Elle et moi, on s'est connues au lycée à Toulouse.", "expected": "Elle et moi, on s'est connues au lycée à Toulouse."}
+{"kind": "correct_tricky", "text": "Je suis allée chez le coiffeur, il m'a coupé les cheveux trop court.", "expected": "Je suis allée chez le coiffeur, il m'a coupé les cheveux trop court."}
+{"kind": "correct_tricky", "text": "Ils ont l'air fatigués après leur semaine de séminaire.", "expected": "Ils ont l'air fatigués après leur semaine de séminaire."}
+{"kind": "correct_tricky", "text": "Je vous remercie par avance pour votre retour rapide.", "expected": "Je vous remercie par avance pour votre retour rapide."}

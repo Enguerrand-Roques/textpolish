@@ -1,0 +1,750 @@
+Bonjour Claire, je te confirme que la réunion de demain est décalée à 14h30 en salle Volta.
+Ok pour moi, je regarde ça cet aprèm et je te fais un retour avant 17h.
+Madame, je vous prie de trouver ci-joint mon attestation d'employeur ainsi que mes trois derniers bulletins de salaire. Je reste à votre disposition pour tout document complémentaire.
+Tu as pu jeter un œil aux slides que je t'ai envoyées hier soir ?
+Bonjour, je souhaiterais prendre rendez-vous avec le docteur Martin la semaine prochaine, de préférence en fin de journée. Je suis joignable au 06 45 22 18 90. Merci d'avance.
+Le ticket JIRA-482 est corrigé, il faut juste que quelqu'un le relise avant qu'on le passe en production.
+Merci pour ton feedback, j'ai repris les remarques sur le planning et mis à jour le fichier partagé.
+Bonjour Monsieur Lefèvre, je reviens vers vous concernant le devis n° 2026-118 que vous nous avez transmis le 3 novembre. Pourriez-vous nous confirmer le délai de livraison ? Nous devons planifier l'installation avant la fin de l'année.
+Je serai en retard de dix minutes au daily, commencez sans moi. Le métro est bloqué à Châtelet.
+Est-ce que quelqu'un sait où sont rangés les badges visiteurs ?
+Bonjour, je vous informe que je quitterai le logement situé au 12 rue des Lilas le 30 juin prochain, conformément au préavis d'un mois. Je vous remercie de me proposer une date pour l'état des lieux. Je suis disponible en semaine après 18h.
+Les chiffres de septembre sont meilleurs que prévu, on a dépassé l'objectif de 8 %.
+Je te laisse gérer le call avec le client, je suis bloquée sur la clôture comptable jusqu'à midi. On fait un point ensemble à 14h ?
+Bonjour Madame Durand, suite à notre entretien téléphonique de ce matin, je vous adresse le contrat signé. N'hésitez pas à me contacter si un document venait à manquer. Je vous souhaite une excellente journée.
+Quand tu auras fini la recette, préviens-moi pour que je puisse lancer le déploiement.
+Pourriez-vous m'indiquer la date à laquelle le virement de 1 450 € a été effectué ?
+La salle est réservée de 10h à 12h, j'ai prévu des cafés et des viennoiseries. Il ne manque plus que la liste des participants.
+Désolé pour le retard de réponse, j'étais en congé toute la semaine dernière.
+Bonjour, mon colis n'est toujours pas arrivé alors que le suivi indique qu'il a été livré hier. Pouvez-vous ouvrir une enquête auprès du transporteur ? Le numéro de suivi est le 6A 214 778 903.
+Tu peux me rappeler quand tu as deux minutes ? C'est au sujet du budget formation. Rien d'urgent, mais j'aimerais qu'on en parle avant vendredi.
+Je pense qu'il faudrait qu'on revoie l'ordre du jour avant d'envoyer l'invitation à toute l'équipe. Il y a trop de sujets pour une heure. On pourrait reporter le point budget à la semaine prochaine.
+Monsieur, je me permets de vous relancer au sujet de ma candidature au poste de chargé de communication, envoyée le 12 octobre.
+Nouvelle version du doc dispo sur le Drive, j'ai ajouté la partie sur les risques. Vos commentaires sont les bienvenus jusqu'à jeudi. Ensuite, je l'envoie au client.
+Les factures que vous nous avez envoyées ne mentionnent pas le numéro de commande, pourriez-vous les rééditer ?
+Bonjour, mon fils Lucas sera absent demain matin pour un rendez-vous chez l'orthodontiste. Il reviendra en classe à 13h30. Je vous remercie de votre compréhension.
+Petite question : est-ce qu'on garde le même format pour le reporting mensuel ou est-ce qu'on passe sur le nouveau template ?
+Je viens de recevoir les maquettes de l'agence, elles sont vraiment réussies. Je te les transfère tout de suite.
+Merci à tous pour votre présence à l'atelier de ce matin. Vous trouverez le compte rendu dans le dossier partagé d'ici ce soir. Les prochaines étapes y sont détaillées.
+Bonjour, je constate un prélèvement de 89,90 € que je ne reconnais pas sur mon compte. Pourriez-vous me dire à quoi il correspond ? Je n'ai souscrit aucun nouveau service récemment.
+On a reçu les retours du client : globalement ils sont satisfaits, mais ils voudraient revoir la page d'accueil.
+Tu veux qu'on déjeune ensemble jeudi pour préparer la présentation ?
+Je suis en télétravail aujourd'hui, joignable sur Teams toute la journée. En cas d'urgence, appelez-moi sur mon portable.
+Madame, Monsieur, je vous adresse ma déclaration de sinistre concernant le dégât des eaux survenu le 4 novembre dans ma salle de bains. Les photos sont jointes à ce message. Je reste joignable au 06 78 41 23 05 pour organiser le passage de l'expert.
+Le serveur de préprod est encore tombé, quelqu'un peut regarder les logs ?
+Bien que le délai soit serré, je pense que nous pourrons livrer la première version vendredi.
+Bonjour Julien, as-tu reçu le bon de commande que je t'ai transmis lundi ?
+Je vous remercie pour votre accueil lors de l'entretien de mardi, j'ai été ravi d'échanger avec vous sur le poste. Je reste disponible pour toute information complémentaire. Dans l'attente de votre retour, je vous souhaite une bonne journée.
+Les congés d'été doivent être posés avant le 15 avril, pensez-y. Passé cette date, les demandes seront traitées au cas par cas.
+J'ai oublié mon ordi au bureau, est-ce que tu peux me transférer le fichier par mail ?
+Bonjour, je vous contacte car la chaudière de l'appartement ne fonctionne plus depuis samedi. Pourriez-vous envoyer un technicien rapidement ? Il fait 15 degrés dans le salon et j'ai un bébé de six mois.
+Ça marche, je bloque le créneau de 16h dans ton agenda.
+Nous avons bien reçu votre réclamation et nous vous prions de nous excuser pour la gêne occasionnée. Un conseiller reviendra vers vous sous 48 heures. Votre numéro de dossier est le R-20413.
+Quant à la question du budget, on en reparlera au comité de jeudi.
+Les données que tu m'as envoyées ne correspondent pas à celles du tableau de bord, tu sais d'où vient l'écart ? J'ai trouvé une différence de 3 200 € sur le mois d'août.
+Bonjour Madame, je souhaiterais savoir si ma fille peut participer à la sortie scolaire bien qu'elle n'ait pas rendu l'autorisation à temps.
+Le sprint se termine mercredi, il reste encore quatre tickets en cours. Si on veut tout fermer, il faudra que chacun s'y mette. Je propose un point demain matin.
+J'ai mis à jour la roadmap, les dates de livraison ont été décalées d'une semaine.
+Pourrais-tu relire ma proposition commerciale avant que je l'envoie au client ? Je ne suis pas sûr du ton employé dans l'introduction. Je dois l'envoyer avant 16h.
+Bonjour, je vous confirme ma présence à la formation du 21 novembre à Lyon. Pourriez-vous m'indiquer l'adresse exacte du lieu ? Je n'ai reçu que l'horaire.
+Je n'ai pas encore reçu mon attestation de salaire pour la Sécurité sociale, est-ce que vous pourriez me l'envoyer ?
+Hello, la rétro est déplacée à demain 11h à cause de la panne de réseau.
+Ces chiffres sont provisoires, ne les partagez pas encore en dehors de l'équipe. Ils seront consolidés lundi.
+Bonjour, pourriez-vous m'envoyer un relevé d'identité bancaire au nom de la société ? Notre service comptable en a besoin pour enregistrer le paiement. Merci d'avance pour votre aide.
+Je suis passée voir les locaux ce matin, ils sont plus grands que ce qu'on imaginait.
+Merci de penser à remplir vos notes de frais avant la fin du mois. Les justificatifs doivent être scannés et joints à chaque dépense.
+Bonjour Sophie, je t'envoie la liste des participants au séminaire. Il manque encore les réponses de l'équipe marketing. Je les relance cet après-midi.
+Vous trouverez ci-joint la facture correspondant à la prestation de février.
+On peut se caler un point rapide après le déjeuner ?
+Bonjour, je suis locataire au 3e étage du 45 avenue Jean-Jaurès et l'ascenseur est en panne depuis une semaine. Plusieurs voisins âgés ne peuvent plus sortir de chez eux. Pourriez-vous contacter le réparateur en urgence ?
+Je t'ai ajouté au canal du projet, tu y trouveras tout l'historique.
+Il faut que tu valides la note de frais de Thomas avant vendredi, sinon elle ne passera pas sur la paie de ce mois.
+Merci pour votre réactivité, le problème est résolu de notre côté. Nous vous recontacterons si l'anomalie se reproduit.
+Bonjour, j'ai bien reçu votre offre de prêt et j'aurais quelques questions sur le taux appliqué. Seriez-vous disponible pour un appel cette semaine ? Je suis libre jeudi après 14h.
+Je me suis trompé de lien dans mon mail précédent, voici le bon.
+Est-ce que tu as prévenu les autres que le comité est annulé ?
+Les candidats que nous avons reçus cette semaine étaient tous très qualifiés. Il va être difficile de choisir. On se réunit jeudi pour en discuter ?
+Bonjour Monsieur, nous accusons réception de votre dossier et nous l'étudierons dans les meilleurs délais.
+Je pars plus tôt ce soir, j'ai un rendez-vous chez le médecin à 17h45. Je serai joignable sur mon portable jusqu'à 17h.
+Pour info, le client a signé ce matin, on démarre le projet le 2 décembre. Le kick-off aura lieu chez eux. Je vous envoie l'invitation dans la journée.
+Je vous remercie de bien vouloir annuler mon rendez-vous du jeudi 14 à 10h, je suis retenue par une obligation professionnelle.
+Le fichier est trop lourd pour passer par mail, je te le dépose sur le serveur. Préviens-moi si tu n'as pas les droits.
+Tu sais si la cantine est ouverte pendant les travaux ?
+Bonjour, je me permets de vous solliciter pour un stage de six mois à partir de février dans votre service juridique. Vous trouverez mon CV et ma lettre de motivation en pièces jointes. Je vous remercie par avance pour l'attention que vous porterez à ma demande.
+Aucun souci, on décale à la semaine prochaine. Repose-toi bien. On en reparle lundi.
+J'aurais aimé être prévenu plus tôt du changement de périmètre, ça aurait évité de refaire toute l'estimation.
+Bonjour, la carte bancaire que j'ai commandée il y a trois semaines ne m'est toujours pas parvenue. Pourriez-vous vérifier qu'elle a bien été expédiée ? Si elle a été perdue, je souhaiterais qu'elle soit bloquée et remplacée.
+Je crois que la clé de l'armoire est restée dans le tiroir de Paul. Il rentre de congé lundi.
+Nous serions heureux de vous compter parmi nous lors de notre soirée clients du 5 décembre. Merci de nous confirmer votre présence avant le 25 novembre. Le cocktail débutera à 19h dans nos locaux de la rue de Rivoli.
+Tu peux mettre Karim en copie du mail ? C'est lui qui suit le dossier maintenant. Je lui ai déjà transmis l'historique.
+Elle s'est occupée de toute la logistique du salon, il faudrait vraiment la remercier.
+Bonjour, pouvez-vous me dire si mon ordonnance est prête à être récupérée au cabinet ?
+La démo s'est bien passée, le client a posé beaucoup de questions sur l'intégration. Ils veulent une deuxième réunion avec leur DSI. Je m'occupe de proposer des dates.
+Je ne pourrai pas assister à la réunion de lundi, mais Camille me représentera. Elle a toutes les informations nécessaires.
+Merci de m'avoir mis en relation avec Nathalie, nous avons convenu d'un rendez-vous la semaine prochaine.
+Le prestataire nous a annoncé un retard de livraison de deux semaines. Je vais voir s'il est possible de prioriser une partie de la commande. Je te redis ça demain.
+Tu as raison, je n'avais pas vu que la colonne était filtrée.
+Bonjour, suite à mon déménagement, je vous prie de bien vouloir modifier l'adresse figurant sur mon contrat d'assurance habitation.
+Je t'envoie le lien de la visio, ça commence dans cinq minutes. Si tu n'arrives pas à te connecter, appelle-moi.
+Avant que tu partes en vacances, peux-tu me faire une passation sur les dossiers en cours ?
+Le comité de direction a validé le budget pour l'année prochaine.
+Bonjour Madame Roux, je vous informe que votre commande n° 58742 a été expédiée ce matin. Vous recevrez le numéro de suivi par SMS. Nous vous remercions pour votre confiance.
+On a un souci avec l'export CSV, les accents ne s'affichent pas correctement. Je pense que c'est un problème d'encodage. Je regarde ça après le déjeuner.
+J'ai relu ton article, il est très clair, j'ai juste corrigé deux ou trois tournures. Tu peux le publier quand tu veux.
+Pourriez-vous me faire parvenir les conditions générales de vente avant la signature ?
+Bonjour, je vous écris car je n'ai toujours pas reçu le remboursement de ma consultation du 8 octobre. Pourtant, j'avais bien envoyé la feuille de soins. Pourriez-vous vérifier si elle a été reçue ?
+Je me suis inscrite au webinaire de jeudi, tu veux que je t'ajoute ?
+Bravo pour la présentation d'hier, les retours de la direction sont très positifs.
+Le contrat arrive à échéance le 31 décembre, il faudrait qu'on décide rapidement si on le renouvelle. Les conditions proposées pour l'année prochaine sont moins avantageuses.
+Bonjour, je vous rappelle que la réunion parents-professeurs aura lieu le mardi 18 à partir de 17h.
+Il y a un bug sur la page de connexion depuis la dernière mise à jour, les utilisateurs ne reçoivent plus le code de vérification. Le support a déjà reçu une trentaine de tickets. On en fait la priorité absolue.
+J'ai pris note de vos disponibilités et je vous envoie une invitation pour mercredi 15h.
+On se retrouve directement chez le client ou on part ensemble du bureau ?
+Merci d'avoir pris le temps de répondre à mes questions lors du forum de recrutement. Votre présentation de l'entreprise m'a donné envie de postuler. Je vous enverrai ma candidature dans les prochains jours.
+Bonjour, je souhaiterais résilier mon abonnement à compter du mois prochain. Pouvez-vous me confirmer la marche à suivre ? Mon numéro de contrat est le 4471-B.
+J'ai l'impression que les chiffres de la slide 7 ne sont pas à jour. Tu peux vérifier avec Marie avant l'envoi ?
+Les nouveaux arrivants commenceront leur onboarding lundi à 9h, merci de leur réserver un bon accueil.
+Je vous confirme que la livraison aura lieu entre 8h et 12h, il faudra qu'une personne soit présente pour signer le bon.
+Tu me diras ce que tu en penses, je ne suis pas complètement convaincu par la nouvelle version.
+Bonjour Monsieur Garnier, je vous remercie pour votre retour rapide. Nous acceptons votre proposition et vous enverrons le bon de commande d'ici demain. Le démarrage des travaux pourrait ainsi avoir lieu début janvier.
+Je n'arrive pas à me connecter au VPN depuis ce matin, c'est pareil pour vous ? J'ai redémarré deux fois, rien n'y fait.
+Le rapport annuel a été envoyé à l'imprimeur, nous recevrons les exemplaires la semaine prochaine.
+Bonjour, la mutuelle m'a demandé une facture détaillée de mes lunettes, pourriez-vous me la transmettre ?
+Peux-tu vérifier que les accès ont bien été créés pour la nouvelle stagiaire ?
+On a perdu un peu de temps sur la migration, mais on devrait tenir la deadline. On reste vigilants sur les tests de non-régression.
+Je suis ravie de vous annoncer que Marion rejoint l'équipe en tant que responsable produit. Elle prendra ses fonctions le 6 janvier. Je compte sur vous pour lui réserver le meilleur accueil.
+Merci de ne plus utiliser l'ancienne adresse de facturation, elle n'est plus valable depuis le 1er octobre.
+Bonjour, je n'ai pas pu me rendre à la convocation de lundi pour raison médicale, je joins le certificat de mon médecin.
+Tu crois qu'on peut demander une rallonge de budget pour l'événement ? On est déjà à 90 % de l'enveloppe. Et il reste le traiteur à payer.
+Je reprends le dossier Bertin à partir de demain, Antoine m'a fait la passation ce matin. Tu peux donc m'adresser directement toutes les questions sur ce client.
+Les résultats de l'enquête interne seront présentés lors de la prochaine plénière. Le taux de participation a atteint 78 %. C'est un record pour nous.
+Bonjour Madame, j'ai bien reçu le planning des cours et je vous remercie. Ma fille sera présente dès la rentrée du 5 janvier. Pourriez-vous me dire quelles fournitures prévoir ?
+Je pense qu'on devrait ajouter une étape de validation avant l'envoi des newsletters.
+Vous pouvez compter sur nous pour la mise en place du nouveau logiciel de caisse.
+J'ai envoyé la relance au fournisseur, il m'a répondu qu'il livrerait jeudi au plus tard. Je lui ai rappelé que c'était la dernière fois qu'on acceptait un retard.
+Bonjour, est-il possible d'obtenir un duplicata de ma facture d'électricité de juillet ?
+C'est noté, je m'en occupe dès que j'ai fini le point avec Laura.
+Après avoir analysé les retours des utilisateurs, nous avons décidé de simplifier le parcours d'inscription. Les changements seront visibles dès la prochaine version. Merci à tous ceux qui ont participé aux tests.
+Je t'ai réservé une place de parking pour ta venue de mardi. C'est la place 14, au premier sous-sol. Tu donneras ton nom au gardien.
+Madame, je vous serais reconnaissant de bien vouloir m'accorder un délai supplémentaire pour le paiement de mon loyer de novembre. Ma situation devrait se régulariser d'ici la mi-décembre. Je vous remercie par avance de votre compréhension.
+Le lien que tu m'as envoyé ne fonctionne pas, il me demande des droits d'accès. Tu peux me partager le dossier entier ?
+Nous vous remercions de votre confiance et restons à votre disposition pour toute information complémentaire.
+Il faudrait que tout le monde ait lu la note avant la réunion de jeudi.
+Bonjour, je vous écris de la part de Mme Petit, qui m'a conseillé de prendre contact avec vous au sujet du poste de comptable.
+Je ne savais pas que tu étais aussi sur ce projet, c'est super. On va enfin pouvoir travailler ensemble.
+Vos identifiants vous seront communiqués par mail séparé, pour des raisons de sécurité.
+On devrait peut-être prévenir le support avant de couper le service ce soir.
+Je suis désolée, je n'ai pas pu finir la synthèse aujourd'hui. Je te l'envoie demain à la première heure. Désolée pour le contretemps.
+Bonjour, notre facture n° F-3391 reste impayée à ce jour malgré notre relance du 10 octobre. Merci de procéder au règlement dans les plus brefs délais. À défaut, nous serons contraints d'engager une procédure de recouvrement.
+Ça te dit de faire la revue de code ensemble demain matin ?
+Les clés du local seront disponibles à l'accueil à partir de 8h. Merci de les rendre au même endroit en fin de journée.
+J'espère que vous avez passé de bonnes fêtes, je reviens vers vous au sujet de notre projet de partenariat.
+Tu as le numéro du technicien qui est venu réparer la photocopieuse ? Elle refait le même bruit qu'avant. Je crois que la réparation n'a pas tenu.
+Bonjour, je vous confirme que l'état des lieux de sortie aura lieu le samedi 28 à 10h. Je serai présent avec les clés et les badges. Merci de prévoir le relevé des compteurs.
+Le client a refusé l'avenant, il va falloir renégocier les tarifs.
+Je reste à votre disposition pour convenir d'un rendez-vous à votre convenance.
+Tu peux m'expliquer comment tu as calculé la marge ? Je n'obtiens pas le même résultat. J'ai peut-être oublié les frais de transport.
+Toutes les tâches qu'on avait listées en début de sprint ont été terminées. Bravo à tous, c'est la première fois depuis le début de l'année.
+Bonjour, je suis toujours dans l'attente de mon attestation de fin de formation, pourriez-vous me l'envoyer ?
+On attend encore la validation juridique avant de publier l'offre.
+Bonne nouvelle : la subvention que nous avions demandée a été accordée. Je vous en dirai plus lundi. Le montant dépasse ce que nous espérions.
+Je regarde ça demain matin, là je suis en rendez-vous jusqu'à 18h. Si c'est urgent, appelle Sarah. Elle connaît bien le dossier.
+Bonjour Monsieur Benoît, je vous remercie de m'avoir accordé un entretien hier. Je reste très motivé par le poste et disponible pour un second échange. Vous trouverez ci-joint les références que vous m'aviez demandées.
+La mise en production est prévue ce soir à 22h, merci de ne rien merger d'ici là. Le gel du code est effectif dès 18h.
+Est-ce que vous auriez un créneau pour un vaccin contre la grippe la semaine du 17 ? Je suis disponible tous les jours après 17h. Merci beaucoup.
+Les badges que j'ai commandés pour l'équipe sont arrivés à l'accueil.
+Tu as bien fait de prévenir le client, il aurait mal pris qu'on lui annonce le retard la veille.
+Bonjour, je vous signale que le radiateur de la chambre fuit depuis plusieurs jours. J'ai posé une bassine en attendant votre intervention. Le parquet commence à gondoler.
+Si tu as besoin d'aide pour les entretiens annuels, n'hésite pas. J'ai déjà fait l'exercice plusieurs fois l'an dernier.
+Nous avons constaté une erreur dans le montant facturé : 2 340 € au lieu de 2 140 € comme convenu dans le devis.
+J'avais oublié que le pont du 11 novembre tombait cette semaine, il faut décaler la livraison. Le client est prévenu ? Sinon je l'appelle cet après-midi.
+Les participants recevront leur convocation par mail au plus tard vendredi.
+Hello tout le monde, quelqu'un aurait un chargeur USB-C à me prêter ?
+Je vous transmets les coordonnées de notre expert-comptable, qui pourra répondre à vos questions sur la TVA.
+Bonjour, je voudrais savoir si le cabinet est ouvert le samedi matin.
+On a enfin trouvé l'origine de la fuite mémoire, c'était une connexion qui n'était jamais fermée. Le correctif part en recette ce soir. Bravo à Karim, il a passé deux jours dessus.
+Je crains que nous ne puissions pas respecter le délai initial sans renfort sur l'équipe. Nous aurions besoin d'au moins un développeur supplémentaire pendant six semaines.
+Merci Hugo, c'est exactement ce qu'il me fallait.
+Bonjour, je souhaiterais connaître le solde de mes congés payés au 31 octobre.
+Pense à mettre à jour le statut des tickets avant la démo de sprint. Le client veut voir où on en est précisément.
+La réunion s'est éternisée, je n'ai pas eu le temps de passer te voir.
+Bonjour, nous avons bien reçu votre candidature et nous vous en remercions. Elle sera étudiée avec attention par notre équipe de recrutement. Nous reviendrons vers vous d'ici trois semaines.
+Tu as entendu parler de la réorganisation du service achats ? Il paraît que deux postes vont être supprimés. Je n'ai aucune information officielle pour l'instant.
+Je vous adresse mes excuses pour le malentendu lors de notre dernier échange.
+Les tests de charge ont révélé un ralentissement au-delà de 500 utilisateurs simultanés. Il faudra revoir la configuration du cache avant le lancement. Je vous envoie le rapport complet demain.
+Bonjour Madame Morel, l'enseignante de Léa m'a indiqué qu'elle avait des difficultés en lecture. Serait-il possible de vous rencontrer pour en parler ? Je suis disponible les mardis et jeudis après 16h30.
+Je t'envoie le planning de la semaine prochaine, dis-moi si ça te convient.
+La photocopieuse du deuxième étage est encore en panne, j'ai appelé le service technique. Ils passeront demain matin. En attendant, utilisez celle du premier.
+Pourriez-vous me confirmer que l'assurance couvre bien le bris de glace sur mon véhicule ?
+J'ai passé la matinée à préparer le dossier d'appel d'offres, il est presque prêt. Il manque juste les références clients et l'annexe financière.
+Faut-il que je prévienne les RH de mon absence ou est-ce que tu t'en charges ?
+Bonjour, mon conseiller est-il joignable cette semaine ? J'aurais besoin de faire le point sur mon épargne. Je souhaiterais aussi parler d'un éventuel prêt travaux.
+Les visiteurs doivent se présenter à l'accueil avec une pièce d'identité.
+Je viens de voir ton message, désolé, j'étais en atelier toute la matinée.
+Nous vous informons que nos bureaux seront fermés du 24 décembre au 2 janvier inclus.
+Ton analyse est pertinente, mais je pense qu'il manque une comparaison avec l'an dernier. Tu pourrais ajouter un graphique d'évolution sur trois ans ?
+Bonjour, je me permets de vous recontacter car le problème de connexion que j'avais signalé le 5 novembre n'est toujours pas résolu.
+On s'est mis d'accord avec Inès pour reprendre la maquette ensemble lundi.
+Le livreur est passé pendant la pause déjeuner, les cartons sont au sous-sol. Il faudrait les monter avant ce soir. Quelqu'un peut me donner un coup de main ?
+Je suis navré de ne pas avoir pu vous rappeler plus tôt, la journée a été très chargée.
+Quelle est la procédure pour demander un nouvel écran pour le télétravail ?
+Bonjour, je vous joins la copie de mon avis d'imposition comme demandé pour le dossier de location.
+La version 2.3 est sortie hier soir, aucun incident remonté pour l'instant. On continue de surveiller les métriques jusqu'à demain.
+Peut-être qu'on pourrait demander à Lucie, elle a déjà travaillé avec ce client. Elle connaît bien leurs attentes. Je lui envoie un message ?
+Je voulais vous remercier pour votre aide lors de la préparation de l'audit.
+Les objectifs du trimestre ont été atteints malgré un démarrage difficile. Merci à chacun pour son implication. Un petit-déjeuner est prévu vendredi pour fêter ça.
+Bonjour, pourriez-vous m'indiquer les horaires d'ouverture de l'agence pendant les vacances scolaires ?
+Tu as vu que le client a encore changé d'avis sur la charte graphique ?
+Je n'ai rien reçu de ta part, tu es sûr d'avoir envoyé le mail à la bonne adresse ?
+Nous souhaitons étendre notre contrat de maintenance à notre nouveau site de Nantes. Pourriez-vous nous faire parvenir une proposition chiffrée ? Le site compte environ 80 postes de travail.
+C'est bon pour moi, tu peux envoyer. Mets juste Clara en copie.
+Bonjour, mon mari et moi souhaiterions ouvrir un compte joint, quels documents devons-nous fournir ?
+J'ai réservé le train de 7h12 pour Bordeaux, on arrivera vers 9h30. Le retour est prévu à 19h05. Je t'envoie les billets par mail.
+Le prochain comité de pilotage aura lieu le 3 décembre à 15h en visio.
+Je vous serais reconnaissante de bien vouloir me transmettre le procès-verbal de l'assemblée générale.
+Désolée, j'ai cliqué trop vite, ignore le message précédent.
+Bonjour, ma fille a oublié son cahier de mathématiques en classe, pourrait-elle passer le récupérer ce soir ?
+Il faut que nous trouvions une solution avant que le client ne s'impatiente.
+Tu me dois toujours un café pour la dernière fois, je te rappelle. Et ne crois pas que j'ai oublié.
+Je vous informe que la mise à jour du logiciel de paie aura lieu ce week-end. Le service sera indisponible samedi de 8h à 14h. Pensez à saisir vos heures avant vendredi soir.
+Bonjour, le colis que j'ai reçu est endommagé et l'un des verres est cassé. Je joins des photos du carton et du contenu. Je souhaiterais un remplacement plutôt qu'un remboursement.
+Les entretiens individuels doivent être terminés avant le 20 décembre.
+Je pense qu'on a sous-estimé la charge de travail sur ce lot.
+Merci pour l'invitation, je serai ravi de participer à la table ronde. Pourriez-vous me préciser le thème exact de mon intervention ? J'aimerais préparer quelques exemples concrets.
+Tu peux me dire combien de jours de RTT il me reste ?
+Bonjour, je vous écris pour vous faire part de mon intérêt pour le poste de développeur front-end publié sur votre site.
+Les clients qui ont commandé avant le 15 recevront leur colis avant Noël. Au-delà, nous ne pouvons plus garantir les délais.
+J'ai fait le tour des services, tout le monde est d'accord pour avancer la réunion à 9h.
+La banque m'a demandé de passer en agence pour signer les documents, je serai absent entre 12h et 14h.
+Nous avons pris bonne note de votre demande de modification et vous enverrons un nouveau devis sous huit jours.
+Tu as eu le temps de regarder la PR ? Je voudrais la merger avant ce soir. Elle bloque la release de demain.
+Bonjour Docteur, je vous envoie les résultats de ma prise de sang comme convenu lors de la consultation.
+Il n'y a plus de papier dans l'imprimante de l'open space. J'ai passé une commande en urgence.
+Je propose qu'on fasse un point d'étape à mi-parcours pour vérifier que tout avance bien.
+Les dossiers qu'on m'a confiés la semaine dernière sont tous bouclés.
+Bonjour, je suis intéressé par l'appartement de la rue Victor-Hugo. Serait-il possible de le visiter cette semaine ? Je suis disponible en fin de journée et le samedi matin.
+Merci de ne pas laisser de vaisselle sale dans la cuisine, le personnel d'entretien n'est pas là pour ça.
+Il est possible que je sois un peu en retard, mon train a été supprimé. Je prends le suivant, à 8h52. Je vous préviens dès que je suis à la gare.
+On aurait dû anticiper ce problème dès la phase de conception. Retenons la leçon pour le prochain projet.
+Bonjour Madame, je vous confirme que votre dossier est complet. Il sera examiné par la commission du 12 décembre. Vous recevrez la décision par courrier.
+Tu sais qui s'occupe des réservations de salles maintenant que Marc est parti ?
+Je vous remercie d'avoir pensé à moi pour cette mission, mais je ne suis malheureusement pas disponible avant le printemps.
+La nouvelle procédure de validation des achats entrera en vigueur le 1er janvier. Tous les achats supérieurs à 500 € devront être approuvés par un manager. Le formulaire est disponible sur l'intranet.
+J'ai déposé les documents signés dans ta bannette. Il y en a trois. Celui du dessus est le plus urgent.
+Bonjour, je souhaiterais faire opposition sur ma carte bancaire, que je pense avoir perdue hier soir.
+Bien joué pour le salon, vous avez récolté plus de deux cents contacts.
+Je ne suis pas certaine que ce soit la meilleure période pour lancer la campagne. Les gens seront en vacances. On devrait attendre la mi-janvier.
+Pouvez-vous m'envoyer la notice de montage ? Elle ne figurait pas dans le carton. Il manque aussi deux vis de fixation.
+On a reçu une alerte de sécurité sur l'un des serveurs, je regarde ce qui se passe. Rien d'alarmant a priori.
+Bonjour, pourriez-vous me dire si la place en crèche que nous avions demandée pour janvier a été attribuée ?
+Je t'ai mis en copie pour que tu sois au courant, pas besoin de répondre.
+Votre demande de remboursement a été traitée, le virement apparaîtra sur votre compte sous trois à cinq jours ouvrés.
+Je reviens du rendez-vous chez le client, ils sont prêts à signer si on baisse le prix de 5 %. Je pense qu'on peut accepter. Qu'en penses-tu ?
+Merci de m'avoir prévenue, je vais décaler mon train.
+Les stagiaires présenteront leurs travaux vendredi après-midi, vous êtes tous les bienvenus.
+Bonjour Monsieur, je souhaiterais savoir où en est le traitement de mon dossier de sinistre n° 77-4521.
+Tu es dispo pour un call de quinze minutes vers 11h ? C'est au sujet de la facture Dumont.
+Le fournisseur a accepté de nous accorder une remise de 10 % sur la prochaine commande.
+J'ai noté que le compte rendu ne mentionne pas la décision sur le recrutement, peux-tu l'ajouter ?
+Bonjour, j'ai été prélevé deux fois pour le même mois d'abonnement. Pourriez-vous procéder au remboursement du prélèvement en double ? Je joins mon relevé de compte.
+Je pars en déplacement à Lille demain, on se voit jeudi. Je serai joignable par mail.
+Pensez à sauvegarder vos fichiers avant la migration de ce soir.
+Elles sont arrivées ce matin et ont déjà commencé leur formation. Leurs bureaux sont à côté du mien.
+Bonjour, je me permets de vous relancer concernant le paiement de la facture du mois de septembre, d'un montant de 3 600 €.
+Tu crois que ça vaut le coup de refaire toute l'interface ? Ça représente au moins trois mois de travail. Je ne suis pas sûr que le jeu en vaille la chandelle.
+La direction a décidé de reporter le séminaire au printemps.
+Je suis tombée malade hier soir, je ne viendrai pas aujourd'hui. J'envoie mon arrêt de travail dès que je l'ai. Désolée pour le désagrément.
+Pourrions-nous fixer un rendez-vous la semaine prochaine pour discuter du renouvellement du contrat ?
+Ok, je relance le build et je te tiens au courant. Ça devrait prendre une vingtaine de minutes.
+Bonjour, j'ai reçu un courrier m'indiquant que mon contrat d'assurance auto serait résilié. Pourriez-vous m'expliquer pourquoi ?
+L'équipe a fait un travail remarquable malgré les contraintes de calendrier.
+Je t'ai renvoyé l'invitation, tu ne l'avais apparemment pas reçue. Elle était peut-être dans tes spams.
+Nous vous prions de bien vouloir nous retourner le contrat paraphé et signé avant le 30 novembre.
+Tu penses pouvoir finir l'intégration d'ici jeudi ou c'est trop juste ? Dis-moi franchement. Je préfère prévenir le client tout de suite.
+Bonjour, je vous informe que mon enfant présente une allergie aux arachides. Je joins le protocole d'accueil signé par le médecin.
+Ce sont les mêmes erreurs qu'on avait corrigées le mois dernier, il y a eu une régression.
+J'aimerais beaucoup participer au projet, si vous avez besoin de renfort.
+La livraison est arrivée incomplète : il manque deux palettes sur les six commandées.
+Je viens d'avoir Mathieu au téléphone, il confirme sa venue lundi. Il arrivera vers 10h avec son associé.
+Bonjour, est-il possible de recevoir mes relevés de compte en version papier plutôt qu'en ligne ?
+On fera le point sur les résultats quand on aura reçu toutes les données.
+Je vous invite à consulter la nouvelle charte télétravail disponible sur l'intranet.
+Tu as une idée de qui a modifié le fichier de suivi ? Il manque toute une colonne.
+Bonjour Madame, je vous remercie pour la qualité de votre accompagnement tout au long de ma recherche d'emploi. J'ai accepté une offre et je commence le 2 décembre.
+Je préfère qu'on attende la réponse du client avant de lancer les développements. Inutile de travailler pour rien.
+Merci de votre patience, un conseiller vous recontactera dans la journée.
+Le budget alloué ne suffira pas si on garde toutes les fonctionnalités prévues.
+Je me suis permis d'ajouter quelques commentaires dans le document, n'hésite pas à les rejeter.
+Bonjour, j'aimerais modifier la date de mon rendez-vous chez le kinésithérapeute, initialement prévu le 22 à 18h.
+Tous les collaborateurs sont invités au pot de départ de Bernard vendredi à 17h30. Une cagnotte circule pour son cadeau. Voyez avec Mélanie.
+On n'a toujours pas de nouvelles du fournisseur, c'est inquiétant. Je l'ai relancé trois fois cette semaine. Je propose qu'on commence à chercher une alternative.
+Je vous adresse en pièce jointe le cahier des charges mis à jour. Les modifications apparaissent en rouge.
+Tu peux m'envoyer le récap de la réunion ? J'ai dû partir avant la fin.
+Bonjour, je souhaite contester l'avis de contravention reçu le 4 novembre, mon véhicule étant au garage ce jour-là.
+Les inscriptions à la formation management sont ouvertes jusqu'à vendredi. Il reste huit places. Les inscriptions se font sur l'intranet.
+Je trouve que le nouveau logo manque un peu de lisibilité sur fond sombre. On pourrait tester une version blanche.
+Merci pour le partage, je vais m'en inspirer pour notre propre présentation.
+Bonjour, la facture que vous m'avez adressée mentionne une ancienne adresse. Pourriez-vous la corriger avant que je la transmette à la comptabilité ?
+Il se peut que la réunion dure un peu plus longtemps que prévu.
+Je n'étais pas au courant de cette décision, qui l'a prise ? J'aurais aimé être consultée.
+Nous sommes heureux de vous informer que votre candidature a été retenue pour un second entretien.
+Tu peux passer à mon bureau quand tu as un moment ? J'ai un truc à te montrer.
+Le client souhaiterait que nous ajoutions un module de paiement en ligne, ce qui n'était pas prévu dans le contrat initial.
+Bonjour, je vous confirme la réservation de la salle de conférence pour 25 personnes le mardi 9 décembre.
+Je me suis aperçu que la page tarifs affichait encore les prix de l'an dernier.
+Désolé de te déranger pendant tes congés, mais j'ai besoin du mot de passe du compte fournisseur.
+Bonjour Madame, je vous prie de bien vouloir excuser l'absence de mon fils Hugo hier, il était souffrant.
+Je pense que tu devrais présenter toi-même les résultats, c'est ton travail. Je serai là pour répondre aux questions techniques.
+Les commandes passées avant 14h sont expédiées le jour même.
+On a eu un retour très positif de la cliente sur l'accompagnement de l'équipe support.
+Je vous souhaite une excellente fin de semaine et reste à votre disposition.
+Bonjour, je souhaiterais obtenir une attestation de domicile pour mon dossier de demande de logement social.
+Tu peux jeter un œil au mail de Sandrine ? Je ne sais pas trop quoi lui répondre.
+Le service informatique interviendra sur vos postes jeudi entre 12h et 14h. Pensez à laisser vos ordinateurs allumés. La mise à jour dure environ une heure.
+J'ai eu un échange un peu tendu avec le fournisseur ce matin, je t'en parle tout à l'heure. Rien de grave, mais il faudra qu'on clarifie les conditions de livraison.
+Nous avons le plaisir de vous adresser notre catalogue 2027, qui comprend une trentaine de nouveautés.
+Bonjour, mon remboursement de frais kilométriques n'apparaît pas sur ma fiche de paie d'octobre.
+Quand est-ce que tu reviens de congé ? J'ai besoin de toi pour la réunion avec le client.
+Je te confirme que la salle B est libre jeudi toute la journée.
+Il serait souhaitable que chacun prépare deux ou trois propositions avant l'atelier.
+On est tous d'accord pour garder la version actuelle du menu ? Si personne ne s'y oppose, je valide avec le designer.
+Bonjour Monsieur Vidal, je vous transmets le rapport d'intervention de notre technicien. La pièce défectueuse sera remplacée sous garantie.
+Je n'ai pas réussi à joindre le cabinet d'avocats, je réessaierai demain.
+Les heures supplémentaires effectuées en novembre seront payées sur le salaire de décembre.
+Tu as pensé à commander le cadeau pour le départ de Nicole ? La cagnotte est presque à 300 €.
+Bonjour, je vous écris pour signaler que mon voisin du dessus fait des travaux tous les soirs après 22h.
+Je suis bloqué dans les bouchons sur le périphérique, je serai là vers 9h45. Il y a eu un accident porte de Bagnolet. Désolé pour le retard.
+La présentation que tu as faite au comité a beaucoup plu, félicitations.
+Pourriez-vous m'adresser une copie du contrat que j'ai signé lors de mon embauche ?
+On pourrait mettre en place un roulement pour les astreintes du week-end. Chacun serait d'astreinte un week-end par mois. Je peux préparer une proposition de planning.
+Bonjour, j'ai bien reçu votre devis pour la rénovation de la cuisine et il me convient. Quand pourriez-vous commencer les travaux ?
+C'est la troisième fois cette semaine que le build échoue sur le même test. Je pense que le test est instable. Quelqu'un peut le regarder ?
+Merci de bien vouloir trouver ci-joint le bon de livraison signé.
+Tu peux me rappeler le nom du consultant qui était venu en septembre ? Il avait fait un super audit sur notre chaîne logistique.
+Je regrette de devoir annuler notre rendez-vous, mais un imprévu m'empêche de me déplacer jeudi. Pourrions-nous le reporter à la semaine prochaine ?
+Les résultats seront publiés sur l'intranet dès qu'ils auront été validés.
+Bonjour, je suis en arrêt maladie jusqu'au 20 novembre, je vous envoie le volet destiné à l'employeur.
+Je viens de terminer la relecture, il y avait quelques coquilles mais rien de grave. Tu peux l'envoyer à l'impression.
+On se fait un déj d'équipe vendredi pour fêter la fin du projet ? Je pensais au restaurant italien en bas de la rue. Il faut juste réserver avant mercredi.
+Nous vous confirmons la bonne réception de votre paiement de 780 € et vous en remercions.
+Le formulaire en ligne ne fonctionne pas sur mobile, j'ai fait une capture d'écran.
+Bonjour, je souhaiterais savoir si mon contrat d'assurance couvre les frais de rapatriement lors d'un voyage à l'étranger.
+Tu as fait du bon boulot sur le dossier Moreau, le client était ravi. Il a même parlé de nous confier un deuxième projet.
+Je me demandais si tu avais eu le temps d'avancer sur le business plan.
+Le séminaire aura lieu dans un domaine près d'Angers, le transport sera assuré en car depuis Paris.
+Bonjour, nous avons rencontré un souci technique lors de l'envoi de votre commande. Elle sera expédiée demain sans frais supplémentaires.
+Je suis d'accord avec Romain, il faut simplifier le formulaire. Douze champs, c'est beaucoup trop. Les utilisateurs abandonnent avant la fin.
+Les documents que vous m'avez demandés sont dans la pochette bleue sur mon bureau.
+Peux-tu préparer un tableau comparatif des trois offres avant vendredi ?
+Bonjour, je vous informe que le chèque de caution vous sera restitué après l'état des lieux de sortie.
+Il y a eu une coupure de courant cette nuit, certains serveurs ont redémarré. Tout est revenu à la normale.
+Je compte sur vous pour respecter les délais, c'est un client très important pour nous.
+Bonjour, je vous contacte car je ne parviens pas à accéder à mon espace client depuis la réinitialisation de mon mot de passe.
+Tu crois qu'il faut inviter la direction à la démo ou on reste entre nous ?
+Merci d'avoir répondu si vite, ça me débloque complètement. Je peux enfin terminer mon rapport.
+Nous avons décidé de ne pas donner suite à votre proposition, mais nous gardons vos coordonnées pour de futurs projets.
+Je mets la réunion en pause cinq minutes, le client a un souci de connexion.
+Bonjour Madame, pourriez-vous me dire si la cantine sera assurée pendant la grève de jeudi ?
+On a un nouveau process pour les demandes de congé, tout passe désormais par l'outil RH. Les demandes papier ne seront plus acceptées.
+J'ai vu que tu avais été promue, toutes mes félicitations !
+La mise à jour des tarifs sera effective à compter du 1er février. Les commandes en cours ne seront pas concernées.
+Bonjour, je souhaite déclarer la naissance de ma fille auprès de la mutuelle afin qu'elle soit rattachée à mon contrat.
+Je relis le compte rendu et je l'envoie à tout le monde. Si j'ai oublié quelque chose, signalez-le-moi.
+Est-ce qu'on a une date pour le prochain séminaire d'équipe ? Il faudrait qu'on réserve le lieu assez tôt. L'an dernier, on s'y était pris trop tard.
+Je t'envoie les accès au back-office, change le mot de passe à ta première connexion.
+Bonjour Monsieur, je me permets de vous solliciter pour un entretien informatif sur le métier de data analyst. Je suis actuellement en reconversion et votre parcours m'intéresse beaucoup.
+Les nouvelles chaises sont arrivées, elles sont beaucoup plus confortables.
+Il faudrait que tu signes l'avenant avant que je l'envoie au client.
+Bonjour, j'ai bien reçu la convocation pour la visite médicale du travail, mais je serai en déplacement ce jour-là.
+On a dépassé le budget de 12 %, je vais devoir justifier l'écart auprès de la finance. Les frais de déplacement ont explosé.
+Merci pour ta patience pendant cette période un peu compliquée.
+Je vous confirme que l'installation de la fibre est programmée pour le 2 décembre entre 13h et 17h.
+Tu préfères qu'on fasse le point en visio ou en présentiel ? Moi, je suis au bureau mardi et jeudi.
+Bonjour, pourriez-vous me dire quels sont les frais appliqués pour un virement vers un compte à l'étranger ?
+Les maquettes ont été validées par le client, on peut passer au développement. Le sprint 1 démarre lundi. Je vous envoie les tickets d'ici là.
+Je reviens vers toi dès que j'ai la réponse de Fabien.
+Pour des raisons de sécurité, les portes du parking seront fermées à partir de 20h.
+Bonjour Madame Lambert, je vous informe que le cours de piano de Chloé est annulé mercredi, le professeur étant malade.
+Je crois que tu t'es trompée de destinataire, ce mail était destiné à l'équipe vente. Je le leur transfère, ne t'en fais pas.
+Nous comptons sur votre présence à l'assemblée générale de la copropriété le 16 décembre.
+Tu as encore besoin de la salle ou je peux la libérer ?
+La formation s'est très bien passée, les participants ont apprécié les cas pratiques. On réfléchit à une deuxième session au printemps.
+Bonjour, j'ai constaté que le montant de mes charges avait augmenté de 40 € par mois sans que j'en sois informé. Pourriez-vous m'en expliquer la raison ?
+On ne pourra pas tout livrer pour la fin du mois, il faut prioriser.
+J'ai mis le contrat dans le parapheur du directeur, il devrait le signer cet après-midi.
+Bonjour, je suis disponible pour un entretien à partir de lundi, à l'heure qui vous conviendra.
+Les clients se plaignent du temps d'attente au téléphone, il faudrait renforcer l'équipe le lundi matin. C'est là qu'on reçoit le plus d'appels.
+Est-ce que tu as reçu le colis que je t'ai envoyé à l'agence de Marseille ?
+Je me charge de réserver le restaurant pour le dîner d'équipe, vous avez des préférences ? On sera quatorze. Je pensais à une brasserie près de la gare.
+Bonjour, je vous prie de bien vouloir me communiquer le montant restant dû sur mon prêt immobilier.
+La réunion d'hier a permis de clarifier les rôles de chacun. Il restait quelques zones de flou, mais on avance.
+Je n'ai pas eu le temps de déjeuner, je descends chercher un sandwich.
+Nous avons mis à jour notre politique de confidentialité, vous pouvez la consulter sur notre site.
+Tu as des nouvelles de la candidate qu'on a vue mardi ?
+Bonjour, mon ordonnance arrive à expiration et je souhaiterais la faire renouveler. Le docteur peut-il me rappeler ou dois-je prendre rendez-vous ?
+On a validé le choix du prestataire, le contrat sera signé la semaine prochaine. Il démarrera la mission en janvier.
+Je vous rappelle que les badges doivent être portés de manière visible dans les locaux.
+Je te transfère la réponse du client, je pense qu'on peut accepter ses conditions. Ils acceptent un paiement en deux fois. Donne-moi ton avis avant midi.
+Bonjour, nous serions intéressés par une démonstration de votre outil de gestion de projet pour une équipe d'une vingtaine de personnes.
+Je suis rentré de Berlin hier soir, la conférence était passionnante.
+Il faut absolument qu'on ait finalisé le budget avant le conseil d'administration.
+Merci de votre compréhension et à très bientôt.
+Le nouveau collègue arrive lundi, quelqu'un peut lui préparer un poste ? Il s'appelle Yanis et il rejoint l'équipe data.
+Bonjour, je souhaiterais savoir s'il reste des places pour l'atelier d'initiation à Excel du 27 novembre.
+On s'est rendu compte que la base de données n'était pas sauvegardée depuis trois jours. Le script de sauvegarde plantait en silence. C'est corrigé, mais il faut ajouter une alerte.
+J'ai bien noté ta remarque, je modifierai le planning en conséquence.
+Nous vous informons que votre abonnement sera automatiquement renouvelé le 1er décembre, sauf résiliation de votre part.
+Tu peux me confirmer l'adresse exacte du client ? Le GPS ne la trouve pas.
+Bonjour, je me permets de vous écrire car ma demande de mutation n'a toujours pas reçu de réponse.
+Les résultats du test A/B sont clairs : la nouvelle version convertit beaucoup mieux. Le taux de conversion passe de 2,1 % à 3,4 %. On généralise la semaine prochaine.
+Je voulais te dire que ton intervention en réunion m'a vraiment aidé. Je n'aurais pas osé dire la même chose.
+Bonjour, je suis votre nouvelle interlocutrice pour le suivi de votre compte, je remplace Mme Faure qui a quitté l'entreprise.
+Les clés de la voiture de service sont à l'accueil, pense à remplir le carnet de bord.
+J'aurais besoin que tu me valides le bon de commande avant midi.
+On vous attend pour commencer, vous êtes encore loin ? Le client est déjà installé en salle.
+Bonjour, pourriez-vous me transmettre un certificat de scolarité pour mon fils Théo, en classe de CM2 ?
+Le directeur financier souhaite qu'on lui présente les prévisions de trésorerie jeudi. Tu peux préparer les tableaux ? Je m'occupe des commentaires.
+Je n'arrive pas à ouvrir la pièce jointe, tu pourrais me la renvoyer en PDF ?
+Suite à votre réclamation, nous vous proposons un avoir de 50 € valable sur votre prochaine commande.
+Tu as eu le temps de déjeuner ou tu veux que je te ramène quelque chose ?
+Bonjour, nous avons bien reçu votre préavis de départ et nous vous contacterons pour fixer la date de l'état des lieux.
+La migration vers le nouveau CRM est terminée, les anciens accès seront désactivés vendredi. Si vous rencontrez un problème de connexion, contactez le support. Un guide d'utilisation est disponible sur l'intranet.
+Je pense que cette tâche serait plus adaptée à quelqu'un de l'équipe data. Ils ont l'habitude de manipuler ce type de données.
+Bonjour Madame Girard, je vous remercie de votre confiance et vous confirme la prise en charge de votre dossier.
+Les gens de la compta nous ont demandé de leur envoyer les justificatifs au plus vite.
+J'ai réglé le problème d'affichage, c'était une erreur dans la feuille de style. Le correctif sera en ligne d'ici une heure.
+Bonjour, je souhaiterais savoir si je peux bénéficier d'un report d'échéance pour mon crédit, suite à une perte d'emploi.
+Je suis passé à l'agence ce matin, ils m'ont dit que le dossier était complet.
+Merci de signaler toute anomalie au support avant 16h pour qu'elle soit traitée dans la journée.
+Tu viens à la conférence de jeudi soir ? On pourrait y aller ensemble.
+Nous avons le regret de vous informer que le produit commandé n'est plus disponible. Nous procédons au remboursement intégral de votre commande.
+Le client a demandé une réunion d'urgence, je ne sais pas encore à quel sujet. Je vous tiens au courant dès que j'en sais plus.
+Bonjour, je vous adresse mes disponibilités pour l'entretien : lundi après-midi, mardi toute la journée et jeudi matin.
+Les fichiers que j'ai partagés ce matin contiennent des données sensibles, merci de ne pas les diffuser.
+Je n'avais pas compris que la réunion était obligatoire, désolé.
+Pourriez-vous me confirmer par écrit l'accord que nous avons conclu par téléphone ?
+On est en train de finaliser la proposition, tu l'auras d'ici une heure. Il ne reste que la partie tarifaire à relire.
+Bonjour, mon véhicule a été accidenté sur le parking de mon travail. Quelles démarches dois-je effectuer pour la prise en charge ?
+Je t'ai laissé un message vocal, rappelle-moi quand tu peux.
+Cette année, le séminaire se tiendra à Annecy du 12 au 14 juin. Les inscriptions ouvriront en mars. Réservez déjà les dates dans vos agendas.
+Bonjour, je vous informe que je serai en congé maternité à partir du 3 février. Pendant mon absence, Élodie assurera le suivi de vos dossiers.
+Il manque encore la signature de deux participants sur la feuille d'émargement. Sans elle, l'organisme ne pourra pas facturer la formation.
+Tu veux que je m'occupe de la mise en page du rapport ?
+Je suis vraiment désolée pour cette erreur, je la corrige tout de suite.
+Bonjour, pouvez-vous me rappeler le montant de la franchise en cas de vol ?
+On a reçu la nouvelle version du contrat, l'avocat doit la relire avant mercredi. Elle a déjà repéré deux clauses problématiques.
+Les participants ont été très satisfaits de l'organisation, merci encore à toute l'équipe événementielle.
+Je ne trouve pas la facture de l'hôtel dans les justificatifs, tu l'as gardée ?
+Bonjour, je me permets de vous demander si le poste de chef de projet est toujours à pourvoir.
+Le serveur de messagerie sera redémarré ce soir à 23h, les mails pourront arriver avec du retard.
+J'ai l'impression qu'on tourne en rond sur ce sujet, on devrait trancher. Je propose qu'on vote jeudi. Au moins, on avancera.
+Bonjour, la fenêtre de la cuisine ne ferme plus correctement depuis le dernier orage. Pourriez-vous mandater un artisan ?
+Tu me fais signe quand tu es arrivé, je descends t'ouvrir. L'interphone ne marche plus.
+Merci de nous retourner le questionnaire de satisfaction avant la fin de la semaine.
+Il faut qu'on parle de la répartition des tâches, je me sens un peu débordé.
+Bonjour, je vous confirme que le paiement a été effectué ce matin par virement, référence 2026-0457.
+Le client trouve que les délais de réponse du support sont trop longs. Il n'a pas tort, la moyenne est passée de quatre à neuf heures.
+Je te propose qu'on reprenne le sujet à tête reposée lundi.
+Nous accueillerons une délégation japonaise la semaine prochaine, merci de garder les bureaux rangés.
+Bonjour, est-ce qu'il serait possible de décaler mon entretien annuel à la semaine suivante ?
+Les codes promo ne fonctionnent plus depuis ce matin, le service client est submergé d'appels.
+Je t'ai partagé le tableau, tu as les droits d'édition. Ajoute tes chiffres dans l'onglet Ventes.
+Bonjour Madame, je souhaiterais inscrire mes deux enfants à l'accueil périscolaire du mercredi.
+On a enfin reçu le feu vert de la direction pour le recrutement d'un alternant. Il commencera en septembre. On peut déjà publier l'offre.
+Pourriez-vous me préciser quelles pièces justificatives je dois fournir pour la demande d'aide au logement ?
+Elle m'a dit qu'elle passerait déposer les documents en fin de journée.
+Je serai absent demain matin pour un rendez-vous chez le dentiste, je rattraperai mes heures dans la semaine.
+Bonjour, je vous remercie pour votre devis. Pourriez-vous préciser si l'installation est incluse dans le prix ?
+Les chiffres que tu as cités en réunion étaient ceux de l'an dernier, attention. Je t'envoie les bons. Il faudra corriger le support avant de le diffuser.
+Tu peux me dire à quelle heure commence la formation demain ?
+Je vous informe que notre adresse de livraison a changé, merci de mettre à jour vos fichiers.
+On a eu un pic de trafic énorme hier soir après le passage à la télé. Les serveurs ont tenu, heureusement.
+Bonjour, je souhaiterais connaître les modalités de remboursement d'une séance d'ostéopathie par ma complémentaire santé.
+Je préfère t'appeler, ce sera plus simple que par écrit.
+La réunion de lancement s'est bien déroulée, tous les acteurs étaient présents. Le compte rendu suivra demain.
+Bonjour, notre équipe sera ravie de vous accueillir dans nos locaux mardi prochain à 10h. Le parking visiteurs se trouve à l'arrière du bâtiment.
+Tu as validé les congés de Julie ? Elle m'a posé la question ce matin.
+Je pense que nous devrions revoir notre stratégie de prix avant la négociation.
+Bonjour, je vous écris car je n'ai pas reçu le code d'activation de ma nouvelle carte.
+Les toilettes du premier étage sont hors service, utilisez celles du deuxième.
+J'ai fini plus tôt que prévu, je peux t'aider sur les tests si tu veux. Envoie-moi la liste de ceux qui restent.
+Nous vous remercions d'avoir choisi nos services et vous souhaitons une excellente journée.
+Il faudra qu'on soit prêts à présenter la démo dès 9h, le client arrive tôt.
+Bonjour, le docteur m'a prescrit des séances de kinésithérapie, est-ce que vous prenez de nouveaux patients ?
+Je viens de comprendre pourquoi les montants ne collaient pas, la TVA était comptée deux fois. Je corrige le fichier et je te le renvoie. Il faudra prévenir la compta.
+Tu sais si quelqu'un a déjà travaillé avec cette API ? On a besoin d'un exemple pour l'authentification.
+Bonjour, je souhaiterais savoir si la banque propose un accompagnement pour les créateurs d'entreprise.
+Je trouve que la réunion d'hier manquait d'objectifs clairs.
+Les inscriptions sont closes, nous avons reçu plus de cent cinquante candidatures. On commence le tri lundi. Chacun aura une trentaine de dossiers à lire.
+Peux-tu m'envoyer la dernière version du contrat ? Je veux vérifier la clause de résiliation.
+Bonjour Monsieur Caron, nous avons bien noté votre changement de coordonnées bancaires. Il sera pris en compte dès la prochaine échéance.
+On a oublié de prévenir le traiteur qu'on serait quarante au lieu de trente. Je l'appelle tout de suite.
+Je suis heureuse de t'annoncer que ta demande de formation a été acceptée. Elle commence le 12 janvier. Tu recevras la convocation par mail.
+Bonjour, je me permets de vous relancer car je n'ai toujours pas reçu mon dépôt de garantie, alors que j'ai quitté le logement il y a deux mois.
+Tu peux t'occuper de l'accueil des visiteurs pendant que je prépare la salle ?
+Merci de vérifier que vos coordonnées sont à jour dans l'annuaire interne.
+Je n'ai pas pu me connecter à la réunion, le lien était expiré. Tu peux me renvoyer une invitation ?
+Bonjour, nous souhaiterions organiser un séminaire de deux jours pour trente personnes en mars. Pourriez-vous nous envoyer vos tarifs ?
+La version que tu as envoyée au client n'était pas la bonne, il faut le prévenir.
+On commence à recevoir les premières commandes de la nouvelle gamme. Les précommandes ont dépassé nos prévisions de 20 %.
+Bonjour, pourriez-vous me dire si mon dossier de demande de prêt étudiant a bien été transmis au service concerné ?
+Je t'avoue que je ne m'attendais pas à une telle réaction du client. Il était pourtant d'accord sur tout la semaine dernière. Je vais essayer de comprendre ce qui a changé.
+Le rendez-vous avec l'expert de l'assurance est fixé au lundi 1er décembre à 9h.
+Tu as oublié ton badge sur la table de la salle de réunion.
+Bonjour, je vous remercie de bien vouloir m'inscrire sur la liste d'attente pour le créneau du mardi soir.
+Nous avons identifié la cause de l'incident et un correctif sera déployé dans l'heure. Nous vous tiendrons informés de son déploiement.
+Je pense qu'on peut clôturer le ticket, le client n'a plus de souci depuis lundi.
+Bonjour, mon fils a été malade cette nuit et ne pourra pas venir à l'école aujourd'hui.
+Les nouvelles recrues ont toutes reçu leur ordinateur et leurs accès. Il ne manque plus que les badges.
+Je me suis inscrit au marathon solidaire organisé par le CSE, qui veut me rejoindre ?
+Pourriez-vous nous indiquer si vos produits sont conformes à la nouvelle réglementation européenne ?
+Tu crois que je devrais demander une augmentation lors de mon entretien annuel ?
+Bonjour, je vous informe que l'interphone de l'immeuble ne fonctionne plus depuis lundi.
+On a reçu une offre plus intéressante d'un autre prestataire, il faut qu'on en discute. Leurs tarifs sont 15 % moins chers pour un service équivalent.
+Je viens de recevoir l'accord du client, on peut lancer la production. Je préviens l'usine. Les premières pièces devraient sortir la semaine prochaine.
+Bonjour Madame, je me permets de vous contacter car j'ai trouvé une erreur sur mon relevé de notes du premier semestre.
+Le partage d'écran ne marche pas, je t'envoie les slides par le chat.
+Merci pour votre accueil chaleureux lors de ma première semaine, je me sens déjà très bien dans l'équipe.
+Il serait temps qu'on mette à jour la documentation technique, elle date de deux ans. Plusieurs nouveaux arrivants s'y sont perdus.
+Bonjour, je souhaite souscrire une assurance pour mon nouveau scooter, pourriez-vous me faire un devis ?
+Tu sais à quelle heure ferme le bâtiment le vendredi ?
+Les factures doivent être envoyées à l'adresse de la comptabilité et non à mon adresse personnelle.
+J'ai pris l'initiative de contacter le client directement, j'espère que ça ne pose pas de problème.
+Bonjour, le rendez-vous de mon père chez le cardiologue a été annulé et nous aimerions en obtenir un nouveau rapidement.
+Je te laisse la main sur le dossier pendant mon absence, tout est documenté dans le Notion. En cas de besoin, je reste joignable par SMS.
+Nous avons bien reçu votre demande de stage et nous reviendrons vers vous d'ici la fin du mois.
+On s'est fait doubler par un concurrent sur l'appel d'offres de la région. Ils étaient 12 % moins chers. Il faudra revoir notre façon de chiffrer.
+Bonjour, pourriez-vous m'indiquer la date de la prochaine réunion d'information sur la VAE ?
+J'ai noté plusieurs incohérences dans les chiffres du rapport, je te les ai surlignées.
+Tu as pu parler à ton manager de ta demande de mobilité ? Il a l'air plutôt ouvert à ce genre de demandes.
+La cérémonie des vœux aura lieu le 9 janvier à 11h dans le hall principal.
+Bonjour, nous vous informons que l'entretien annuel de la chaudière aura lieu le 4 décembre entre 8h et 12h.
+Je ne pense pas que ce soit à nous de payer les frais de port, c'était une erreur du fournisseur. Je vais leur demander un avoir.
+Excellente idée, je la proposerai au prochain comité.
+Bonjour, je souhaiterais savoir si votre établissement accepte les chèques vacances.
+J'ai envoyé le récapitulatif des heures à la paie, elles seront réglées fin novembre. Vérifie que tes heures du 8 novembre y figurent bien.
+On attend le retour de Bérénice pour savoir si on maintient l'événement.
+Pourriez-vous me faire savoir si la commande peut être livrée en deux fois ?
+Je me suis rendu compte que j'avais oublié de te répondre, toutes mes excuses.
+Bonjour, je vous confirme la venue de nos deux techniciens jeudi matin pour l'installation des bornes de recharge.
+Les tests unitaires passent, mais il reste un souci sur les tests d'intégration. Je pense que c'est lié à la base de test. Je regarde avec Malik.
+Tu veux bien me remplacer à la permanence de mardi ? Je te rendrai la pareille.
+Nous avons pris connaissance de votre courrier et nous comprenons votre mécontentement.
+Bonjour, ma conseillère m'a demandé un justificatif de revenus, je vous le transmets en pièce jointe.
+Le planning des astreintes de décembre est en ligne, vérifiez vos dates. Les échanges doivent être validés par votre manager.
+Je trouve que c'est un peu tôt pour en parler à toute l'équipe.
+Bonjour, je souhaiterais être recontacté par un conseiller au sujet de l'assurance emprunteur.
+La salle de pause a été réaménagée, il y a maintenant un micro-ondes supplémentaire. Merci de la laisser propre.
+Tu peux mettre le compte rendu sur le Drive quand tu l'auras terminé ?
+Nous avons bien noté que vous ne souhaitiez plus recevoir notre newsletter.
+On a décroché le contrat avec la mairie, bravo à toute l'équipe commerciale !
+Bonjour, je voudrais savoir si le médecin peut me faire un certificat de non-contre-indication au sport.
+J'ai trouvé une erreur dans la formule de la colonne F, c'est pour ça que les totaux étaient faux. Je l'ai corrigée dans la version du Drive. Les chiffres du rapport sont donc à reprendre.
+Tu es sûre que le client a bien reçu notre proposition ? Il ne répond pas depuis dix jours.
+Bonjour Monsieur, nous vous remercions pour votre commande et vous confirmons qu'elle sera prête à être retirée en magasin dès jeudi.
+Je suis en train de rédiger la fiche de poste, tu veux la relire ? J'ai besoin d'un regard extérieur.
+Le stagiaire a fait un super travail sur l'analyse de la concurrence.
+Bonjour, je vous écris pour vous signaler un changement de situation familiale, suite à mon mariage en octobre.
+On pourrait proposer au client une remise s'il s'engage sur deux ans. On a fait la même chose avec Delmas l'an dernier.
+Je vous serais reconnaissant de me tenir informé de l'avancée du dossier.
+Tu as le contact de quelqu'un chez le fournisseur d'emballages ?
+Bonjour, la mairie m'a indiqué que le dossier d'inscription devait être déposé directement à l'école. Pouvez-vous me confirmer les horaires d'accueil ?
+Les fiches de paie seront désormais disponibles uniquement en version dématérialisée.
+Je ne suis pas sûr d'avoir bien compris ta demande, tu peux préciser ?
+Nous avons reçu votre message et un technicien prendra contact avec vous demain matin.
+On garde le créneau de 15h ou tu préfères qu'on le décale ?
+Bonjour, je suis à la recherche d'un poste de responsable logistique et j'ai vu que votre entreprise recrutait sur Lille.
+J'ai fait les calculs, on économiserait environ 18 000 € par an en changeant de fournisseur. Je te montre le détail demain. Il faudra aussi tenir compte des frais de transition.
+Tu as vu passer le mail de la direction sur les nouvelles règles de télétravail ? Deux jours par semaine maximum, à partir de janvier.
+Bonjour, je me permets de vous demander une attestation de versement des indemnités journalières pour le mois d'octobre.
+Le client a accepté de décaler la livraison au 15 janvier.
+J'aimerais que vous me fassiez un retour sur la proposition avant lundi.
+Bonjour Madame, votre colis vous attend au point relais depuis le 3 novembre. Sans retrait sous cinq jours, il nous sera retourné.
+Je vais demander à Alice si elle peut nous prêter son vidéoprojecteur. Le nôtre est en réparation.
+Tous les dossiers doivent être rangés dans les armoires avant le passage de l'auditeur. Il arrive lundi à 9h.
+Tu me préviens si tu as besoin d'un coup de main pour le déménagement du service ?
+Bonjour, je souhaiterais savoir si la pharmacie peut me commander un médicament qui n'est plus en stock.
+On a validé ensemble la nouvelle grille tarifaire, je l'envoie aux commerciaux. Elle entre en vigueur le 1er décembre.
+Je vous prie de m'excuser pour ce retard de paiement, indépendant de ma volonté.
+Tu peux regarder pourquoi le site met autant de temps à charger ? Les clients s'en plaignent depuis hier.
+Bonjour, notre entreprise souhaite mettre en place des titres-restaurant pour ses salariés, pourriez-vous nous présenter votre offre ?
+Je suis passée te voir mais tu étais déjà parti. Je repasserai demain matin.
+Le comité a retenu trois projets sur les douze qui ont été présentés. Les porteurs de projet seront prévenus vendredi.
+Bonjour, j'ai bien reçu le planning de mes cours de conduite, mais je ne suis pas disponible le samedi 22.
+Tu crois que Paul accepterait de présenter la partie technique ? Il maîtrise le sujet mieux que nous tous.
+La facture vous sera envoyée à la fin de la prestation, payable à trente jours.
+J'ai dû redémarrer mon ordi, je reviens dans la réunion dans deux minutes. Continuez sans moi.
+Bonjour, je souhaiterais savoir pourquoi ma demande de virement a été rejetée hier.
+On a besoin de quelqu'un pour tenir le stand samedi matin, des volontaires ? Je serai là l'après-midi.
+Je vous transmets le lien vers le formulaire d'inscription, à remplir avant mercredi.
+Tu as rangé les cartons de documentation dans la réserve ? On en aura besoin pour le salon.
+Bonjour, nous avons bien reçu le dossier de votre fille et nous vous proposons un rendez-vous le jeudi 20 à 16h30.
+Je ne pensais pas que le client serait aussi exigeant sur les délais. Il faudra intégrer une marge dans nos prochains plannings.
+Merci de nous indiquer vos éventuelles contraintes alimentaires pour le déjeuner du séminaire.
+Tu veux qu'on se partage les appels clients cet après-midi ? Il y en a une quarantaine à passer avant 18h.
+Bonjour, je vous informe que le loyer sera réglé avec quelques jours de retard ce mois-ci, mon salaire ayant été versé tardivement.
+Le module de reporting est prêt, on attend juste la validation de l'équipe finance. Dès qu'on l'a, on le met en production.
+Je t'ai laissé un post-it sur ton écran avec le numéro du client. Il attend ton appel avant 17h.
+Pourriez-vous nous faire parvenir une attestation d'assurance responsabilité civile professionnelle à jour ?
+On a eu beaucoup de retours positifs sur la nouvelle interface. Les utilisateurs apprécient surtout la nouvelle barre de recherche.
+Bonjour, je souhaiterais savoir si mon dossier de candidature est complet ou s'il manque des pièces.
+Il faudrait qu'on revoie les droits d'accès au dossier partagé, tout le monde peut tout modifier. Je m'en occupe demain si tu es d'accord.
+Je viens d'apprendre que le salon est annulé, je te transfère le mail des organisateurs. Ils proposent un remboursement intégral des stands.
+Bonjour Madame, je vous remercie d'avoir pris en charge ma demande si rapidement.
+Tu as eu des nouvelles de l'imprimeur pour les flyers ? On en a besoin pour le forum du 4 décembre.
+Les informations que vous nous avez communiquées resteront strictement confidentielles.
+On se cale une rétro vendredi pour tirer les leçons de cet incident ? Pas pour chercher un coupable, juste pour améliorer nos process.
+Bonjour, je souhaite obtenir le remboursement de mon billet de train, annulé en raison de la grève.
+Je pense que le problème vient du navigateur, essaie avec Firefox. Chez moi, ça marche sans problème.
+Nous avons bien reçu les échantillons et les avons transmis à notre laboratoire pour analyse.
+Merci à tous pour cette belle année, profitez bien de vos vacances. On se retrouve le 5 janvier en pleine forme.
+Bonjour Marc, je t'envoie le planning révisé. J'ai déplacé la réunion avec le client au mardi pour laisser plus de temps à l'équipe. Dis-moi si ça te va.
+La proposition que nous avons reçue hier est intéressante, mais le prix reste trop élevé. Je vais tenter de négocier une remise.
+Bonjour, je vous écris au sujet du contrat de location du local commercial. Nous souhaiterions le renouveler pour trois ans. Pourriez-vous nous adresser le nouveau bail ?
+Je suis à la gare, le train a quarante minutes de retard. Commencez la réunion sans moi, je vous rejoins dès que possible.
+Les candidatures que nous avons reçues pour le poste de juriste sont peu nombreuses. Il faudrait peut-être élargir la diffusion de l'annonce.
+Merci pour ton aide sur le dossier Lemaire. Sans toi, on n'aurait jamais tenu les délais.
+Bonjour, je suis la maman de Jules, en CE1. Il a perdu son gilet bleu marine à la récréation, l'auriez-vous retrouvé ?
+Le déploiement d'hier soir a cassé la recherche. On fait un rollback et on analyse demain matin.
+Nous vous remercions pour votre patience. Votre demande a été transmise au service compétent, qui vous répondra sous dix jours ouvrés.
+J'ai relu la convention de stage, tout me semble correct. Il ne manque plus que la signature du tuteur.
+Bonjour Madame Bernard, je me permets de vous recontacter au sujet de notre échange du mois dernier. Le poste dont nous avions parlé est-il toujours ouvert ?
+On a reçu les nouveaux ordinateurs, mais ils ne sont pas encore configurés. Ce sera fait d'ici mercredi.
+Je ne comprends pas pourquoi la facture n'a pas été réglée. Je l'avais pourtant validée il y a trois semaines.
+Bonjour, je souhaiterais savoir si vous effectuez des consultations à domicile. Ma mère ne peut plus se déplacer depuis son opération.
+Tu as bien reçu mes commentaires sur la présentation ? Je trouve que la conclusion pourrait être plus percutante.
+Nous avons le plaisir de vous informer que votre prêt a été accordé. Les fonds seront débloqués dès réception de l'offre signée.
+Petite précision : la réunion de demain aura lieu au 4e étage et non au 2e. La salle habituelle est en travaux.
+Bonjour, mon assurance m'a demandé un devis de réparation pour le pare-brise. Pourriez-vous me l'établir rapidement ?
+Je suis désolé, mais je ne pourrai pas tenir la deadline de vendredi. Est-ce qu'on peut repousser à mardi ?
+Les retours des utilisateurs bêta sont encourageants. Ils trouvent l'application intuitive, même si certains écrans sont encore lents.
+Bonjour Monsieur, j'ai bien reçu votre relance et je vous prie de m'excuser pour ce retard. Le règlement sera effectué avant la fin de la semaine.
+Il faut que tu saches que le client est assez pointilleux sur la mise en forme. Relis bien le document avant de l'envoyer.
+On pourrait organiser un petit-déjeuner pour accueillir les nouveaux. Qu'est-ce que vous en pensez ?
+Bonjour, je vous informe que j'ai changé de numéro de téléphone. Mon nouveau numéro est le 06 12 34 56 78.
+Je t'ai envoyé le contrat pour relecture. Les clauses que j'ai modifiées sont surlignées en jaune.
+Nous avons bien reçu votre demande d'annulation. Le remboursement sera effectué sur le moyen de paiement utilisé lors de la commande.
+Bonjour, je souhaiterais prendre rendez-vous pour un bilan de santé. Je suis disponible le matin, de préférence avant 10h.
+Le client nous a envoyé une liste de vingt modifications. Certaines sont mineures, mais d'autres remettent en cause l'architecture. Il faut qu'on en parle demain.
+Tu as raison, j'aurais dû te consulter avant de répondre. Je ferai plus attention la prochaine fois.
+Bonjour, nous organisons une collecte de jouets pour Noël au profit d'une association locale. Les dons peuvent être déposés à l'accueil jusqu'au 15 décembre.
+Je viens de signer la promesse d'embauche. Je commencerai le 5 janvier, donc je pose ma démission demain.
+Bonjour Madame, j'ai bien pris connaissance de votre courrier. Je conteste cependant le montant des réparations retenu sur ma caution.
+Les travaux de rénovation de l'étage commenceront lundi. Pendant trois semaines, les équipes seront installées au rez-de-chaussée.
+Tu peux me rendre un service ? J'ai besoin que quelqu'un récupère un colis à l'accueil avant 18h.
+Bonjour, mon conseiller m'avait promis un rappel la semaine dernière, mais je n'ai toujours pas eu de nouvelles. Pourriez-vous le relancer ?
+J'ai analysé les résultats de l'enquête. Les collaborateurs sont globalement satisfaits, mais ils réclament plus de visibilité sur la stratégie.
+Bonjour, je vous prie de trouver ci-joint mon relevé d'identité bancaire pour le versement de la prime.
+On a un client mécontent qui menace de publier un avis négatif. Je l'appelle tout de suite pour essayer de désamorcer la situation.
+Je ne savais pas qu'il fallait réserver la salle aussi longtemps à l'avance. Du coup, on va devoir faire la réunion dans mon bureau.
+Bonjour, nous avons bien reçu votre bon de commande. La livraison est prévue sous quinze jours, sous réserve de disponibilité des stocks.
+Les deux options ont leurs avantages, mais je pencherais pour la seconde. Elle est plus simple à maintenir sur le long terme.
+Bonjour Monsieur, vous trouverez ci-joint le compte rendu de notre réunion du 6 novembre. Merci de me signaler toute erreur ou omission.
+Tu as vu l'heure ? Rentre chez toi, ça peut attendre demain.
+Bonjour, nous sommes à la recherche d'un local de 200 m² dans le centre-ville. Avez-vous des biens correspondant à ce critère ?
+J'ai parlé avec le responsable du fournisseur, ils reconnaissent leur erreur. Ils nous enverront un avoir d'ici la fin du mois.
+Bonjour, je souhaiterais modifier la date de prélèvement de mon loyer, du 5 au 10 de chaque mois. Est-ce possible ?
+La campagne a généré trois fois plus de leads que la précédente. On devrait reconduire le même format au printemps.
+Je te transmets les coordonnées de la personne qui gère les partenariats chez eux. Tu peux la contacter de ma part.
+Bonjour, je me permets de vous adresser ma candidature spontanée pour un poste d'assistant de direction. Fort de cinq ans d'expérience, je serais ravi de mettre mes compétences au service de votre entreprise.
+Les badges des prestataires externes devront être restitués à la fin de chaque journée. Merci de le rappeler à vos interlocuteurs.
+On s'est trompés dans la commande, on a reçu cent stylos au lieu de mille. Je contacte le fournisseur pour corriger.
+Bonjour, la gardienne de l'immeuble m'a signalé une infiltration d'eau dans la cave. Pourriez-vous faire intervenir un plombier ?
+Je trouve que tu as très bien géré la réunion, malgré les tensions. Le client est reparti rassuré.
+Bonjour, je vous informe que nous avons reçu votre pièce de rechange. Vous pouvez venir déposer votre appareil à l'atelier dès demain.
+Il est indispensable que chaque chef de projet remette son rapport avant vendredi midi. Sans ces éléments, nous ne pourrons pas préparer le comité.
+Tu préfères que je t'envoie le fichier ou que je te le montre en partage d'écran ?
+Bonjour Madame, votre demande d'inscription en master a été examinée par la commission pédagogique. Nous avons le plaisir de vous annoncer qu'elle a été acceptée.
+Les objectifs de l'année prochaine seront fixés lors des entretiens individuels de janvier.
+J'ai eu le retour de l'expert-comptable : on peut déduire ces frais. Je mets à jour la déclaration.
+Bonjour, je vous contacte pour connaître l'état d'avancement de ma demande de carte grise, déposée il y a un mois.
+Ça fait deux jours que l'appli plante au démarrage sur Android, tu as une piste ? Les logs indiquent une erreur au chargement des polices.
+Nous avons décidé, d'un commun accord, de mettre fin à notre collaboration à la fin de l'année. Nous vous remercions pour le travail accompli ensemble.
+Je te remercie de m'avoir défendue en réunion, ça m'a beaucoup touchée. Je n'oublierai pas.
+Bonjour, le dossier médical de mon fils doit être transmis à son nouveau pédiatre. Comment dois-je procéder ?
+Les écrans de la salle de conférence ne s'allument plus. J'ai ouvert un ticket auprès de l'informatique.
+Bonjour, nous souhaitons vous informer d'une hausse de 3 % de nos tarifs à partir du 1er janvier, liée à l'augmentation du coût des matières premières.
+Tu as fait une super présentation, même la directrice a pris des notes. Elle veut qu'on en fasse une version pour le séminaire.
+Je vous propose de nous retrouver devant l'entrée principale à 8h45. Nous irons ensuite ensemble chez le client.
+Bonjour, la carte Vitale de ma fille n'a toujours pas été mise à jour. Pourriez-vous vérifier que son rattachement a bien été effectué ?
+On risque de manquer de stock avant Noël si on ne passe pas commande cette semaine. Le transporteur ferme le 20 décembre.
+Je vous remercie pour votre message et vous confirme que nous serons présents au salon de Lyon. Notre stand portera le numéro B42.
+Tu sais si les tickets de cantine sont toujours vendus à l'accueil ?
+Bonjour, je souhaiterais savoir s'il est possible de faire un stage d'observation dans votre service pendant les vacances de février.
+Les données ont été anonymisées avant d'être transmises au prestataire, conformément au RGPD.
+J'ai l'impression que personne n'a lu le brief, on part dans tous les sens. Je propose qu'on fasse une réunion de cadrage demain. Chacun viendra avec ses questions.
+Bonjour, l'entreprise de déménagement a abîmé la porte d'entrée lors de mon emménagement. Dois-je vous déclarer le sinistre ou passer par leur assurance ?
+On aurait pu éviter ce bug si on avait écrit des tests sur ce module. Je propose d'en faire une priorité pour le prochain sprint.
+Merci pour ces précisions, je transmets l'information à mon équipe.
+Bonjour Monsieur, je vous informe que les résultats de vos analyses sont disponibles au cabinet. Le docteur souhaiterait vous voir pour en discuter.
+Tu pourrais me donner ton avis sur le titre de l'article ? J'hésite entre deux formulations.
+Les salariés qui souhaitent bénéficier de la mutuelle familiale doivent en faire la demande avant le 31 décembre.
+J'ai reçu un mail bizarre qui me demande mes identifiants, je pense que c'est du phishing. Je l'ai signalé à la sécurité. Ne cliquez sur aucun lien si vous le recevez.
+Bonjour, nous avons constaté que votre abonnement n'avait pas été renouvelé. Souhaitez-vous que nous procédions au renouvellement ?
+Je te rappelle que tu présentes les résultats du trimestre jeudi à 10h. Tu veux qu'on fasse une répétition mercredi ?
+Bonjour Madame, pourriez-vous me dire si le bulletin du premier trimestre sera envoyé par courrier ou disponible en ligne ?
+Le projet a pris du retard à cause de la défaillance d'un sous-traitant. Nous avons trouvé une solution de remplacement et prévoyons de rattraper une partie du retard d'ici janvier.
+Tu veux que je m'occupe de réserver les billets pour le déplacement à Toulouse ?
+Bonjour, je souhaiterais savoir si mon contrat inclut une assistance dépannage en cas de panne à domicile.
+Je viens de finir l'audit des accès, une dizaine de comptes inactifs devront être supprimés. Je t'envoie la liste pour validation.
+Nous vous remercions de bien vouloir vous présenter dix minutes avant l'heure de votre rendez-vous.
+On ne pourra pas faire mieux sans augmenter l'effectif, j'en ai parlé à la direction. Elle doit me répondre d'ici la fin du mois.
+Bonjour, je vous adresse le formulaire de demande de congé parental, complété et signé.
+Les clients que j'ai appelés ce matin sont tous partants pour le programme de fidélité. Je leur envoie les conditions par mail.
+Tu as eu le temps de regarder les CV que je t'ai transférés ? J'aimerais organiser les premiers entretiens la semaine prochaine.
+Bonjour, je souhaiterais être remboursé de la différence de prix, puisque l'article a été soldé deux jours après mon achat.
+Je suis content qu'on ait enfin trouvé un terrain d'entente avec le client. Ça n'a pas été simple. Merci à tous pour votre patience.
+Bonjour, nous avons bien reçu votre dossier de demande de subvention. Il sera instruit par nos services dans un délai de deux mois.
+Il a fallu tout recommencer parce que le fichier source avait été écrasé. Désormais, je fais une sauvegarde tous les soirs.
+Tu penses qu'on peut proposer ce sujet pour la prochaine conférence interne ?
+Bonjour, mon propriétaire refuse de me rendre ma caution sans justification. Pouvez-vous m'indiquer quels recours sont possibles ?
+Je pars en réunion, je ne serai pas joignable avant 16h. Pour les urgences, voyez avec Jérôme.
+Bonjour, je souhaiterais réserver un taxi pour demain matin à 6h, départ du 18 rue Pasteur pour l'aéroport.
+Les factures de novembre ont toutes été saisies, il ne reste plus que les notes de frais. Je les traiterai lundi.
+Tu sais si le parking est accessible pendant les vacances de Noël ? Je pensais y laisser ma voiture.
+Bonjour, notre comptabilité a bien enregistré votre avoir. Il sera déduit de la prochaine facture.
+J'ai demandé au client de nous envoyer ses logos en haute définition. Ceux qu'il nous a envoyés sont inutilisables.
+Merci de prévenir l'accueil si vous attendez des visiteurs, ils doivent être enregistrés à l'entrée.
+Bonjour, je vous relance au sujet de l'attestation employeur que je vous ai demandée le 15 octobre. France Travail me la réclame pour finaliser mon dossier.
+On a fait le tour des options, je pense qu'on peut prendre une décision maintenant. Je résume et j'envoie à la direction.
+Bonjour Madame, je vous remercie pour l'envoi rapide des documents. Tout est en ordre.
+Tu veux qu'on reprenne ensemble la liste des actions à mener avant la fin de l'année ? Ça nous permettrait de partir en vacances l'esprit tranquille.
+Les accès au bâtiment seront restreints samedi en raison d'un exercice d'évacuation.
+Je n'ai pas réussi à finir la synthèse, j'ai été interrompue toute la journée. Je la termine demain matin.
+Bonjour, je souhaite signaler un problème sur la ligne de bus qui dessert notre zone d'activité, les horaires ne sont plus respectés depuis septembre.
+On peut se voir après ta réunion ? Il faut que je te parle du dossier Fournier.
+Bonjour, nous vous confirmons que votre véhicule est prêt. Vous pouvez venir le récupérer au garage à partir de 17h.
+J'ai l'impression que les commerciaux n'utilisent pas vraiment le CRM, il faudrait leur proposer une formation. Je vais en parler à leur responsable. Il faudrait au moins une session d'une demi-journée.
+Tu peux dire à Maxime que je l'attends en salle 3 ? Le candidat est déjà arrivé.
+Bonjour, je souhaiterais savoir quand l'école sera en mesure de nous communiquer les dates des sorties de l'année.
+Les comptes de l'exercice 2025 ont été approuvés par l'assemblée générale.
+Merci de me tenir au courant dès que vous aurez une date de livraison.
+On a un trou dans le planning de jeudi, tu veux que je t'y place un entretien ? Il y a de la place entre 14h et 16h.
+Bonjour, je vous écris car la porte du garage collectif reste bloquée en position ouverte depuis hier soir.
+Je suis très fière de ce que l'équipe a accompli cette année. Merci à chacun.
+Tu as pensé à prévenir le client que le support sera fermé le 26 décembre ? Il faudrait aussi mettre un message sur le site.
+Bonjour Monsieur, suite à notre entretien, je vous adresse les références de mes deux derniers employeurs.
+Je pense que la dernière version est plus claire, mais elle est un peu trop longue. On pourrait couper la partie historique.
+Bonjour, je n'ai pas reçu la facture correspondant à mon achat du 2 novembre, pourriez-vous me l'envoyer par mail ?
+On vient de recevoir le feu vert du service juridique, tu peux publier l'annonce. N'oublie pas de mentionner le télétravail possible.
+Il faudrait qu'on fixe une date pour le pot de fin d'année avant que tout le monde parte en vacances.
+Bonjour, je souhaiterais connaître le délai d'obtention d'un rendez-vous avec un dermatologue dans votre centre.
+Tu as fait des modifications sur la base de test ? Tous mes scripts plantent.
+Nous vous remercions de nous avoir fait part de vos remarques, elles nous aideront à améliorer nos services.
+Bonjour Madame, je me permets de vous signaler que le chauffage de la classe de mon fils ne fonctionne pas, les enfants ont froid.
+Je mets à jour le tableau de suivi et je te le renvoie avant midi. J'ai ajouté les dernières actions de la réunion.
+Bonjour, nous avons bien noté votre souhait de passer à temps partiel à compter de mars. Votre manager reviendra vers vous pour en discuter.
+Tu crois que je peux porter un jean pour la réunion avec le client ? Ils sont plutôt détendus d'habitude.
+Les intervenants ont été choisis, le programme de la conférence sera publié lundi.
+Je te confirme que j'ai bien transmis ta demande à la direction. Tu devrais avoir une réponse d'ici la fin de la semaine.
+Bonjour, je vous contacte car le montant de ma pension n'a pas été revalorisé en janvier, contrairement à ce qui avait été annoncé.
+On commence à être juste sur le budget communication, il faudra faire des choix. Le salon de mars risque de passer à la trappe.
+Je vous prie d'agréer, Madame, l'expression de mes salutations distinguées.
+Tu peux vérifier que le devis tient compte de la remise qu'on a négociée ? Il me semble qu'il manque les 5 %.
+Bonjour, je souhaiterais inscrire mon fils à l'étude du soir à partir de la rentrée de janvier.
+Le prestataire a livré le site avec trois semaines d'avance, c'est assez rare pour être souligné. Je leur ai envoyé un petit mot de remerciement.
+J'ai eu un souci avec mon train, je télétravaille ce matin et je viens au bureau cet après-midi. Je décale notre point à 14h.
+Bonjour, nous vous prions de bien vouloir nous transmettre votre attestation de vigilance URSSAF avant le démarrage de la mission.
+Tu as fini avec la salle ? On a une réunion qui commence à 14h.
+Bonjour, je vous remercie pour votre retour et je reste disponible pour un échange téléphonique à votre convenance.
+Belle fin de journée à tous, et encore merci pour votre engagement sur ce projet. Bonnes vacances à ceux qui partent dès demain.
