@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TextPolish UX</title>
-<meta name="description" content="A learning project: how I designed and evaluated TextPolish, a Mac menu bar tool that fixes selected text with a local AI model. Benchmark of 17 models, nine decisions with their cost, 802 test sentences and a severity rubric.">
+<meta name="description" content="A learning project: how I designed and evaluated TextPolish, a Mac menu bar tool that fixes selected text with a local AI model. Benchmark of 17 models, ten decisions with their cost, 1,002 test sentences, a severity rubric and a fine-tuned model.">
 <meta property="og:title" content="TextPolish — UX case study">
-<meta property="og:description" content="Benchmark of 17 local models, nine decisions with their cost, and eleven iterations of a Mac proofreading window.">
+<meta property="og:description" content="Benchmark of 17 local models, ten decisions with their cost, and eleven iterations of a Mac proofreading window.">
 <meta property="og:image" content="https://enguerrand-roques.github.io/textpolish/screenshots/video-poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,14 +196,14 @@
 <main>
 <section class="col tldr" aria-label="In short">
   <p><b>What:</b> a Mac tool that fixes the text you select, with an AI model running on your Mac. I designed both sides: the <b>interface</b> (a popup that adapts to the text, where each fix is accepted or ignored) and the <b>mechanism behind it</b> (a model chosen by benchmark, safety rules, a grammar checker).</p>
-  <p><b>Key number:</b> 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without a click.</p>
-  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.</p>
+  <p><b>Key number:</b> 97 % of new sentences come out right the first time, with a model fine-tuned for the task, and a fix the app isn't sure about is never applied without a click.</p>
+  <p><b>What it shows:</b> a personal learning project in product design and engineering: 17 models benchmarked, the chosen one fine-tuned on the Mac, test sets frozen before each change, every failure classified as grave, minor or missed.</p>
 </section>
 <section class="col">
   <h2>Why I built it</h2>
   <p>To fix a message I always did the same thing: copy the text, open an online checker, paste it, copy the result back, return to the app. Five steps for a comma, and my text went through someone else's servers.</p>
   <p>I wanted three things: never leave the app, never send anything online, and have a correction ready before I even wonder which setting to pick.</p>
-  <p>It is also a learning project: I wanted to learn how to build an AI product end to end, and how to know whether it works. Until the one-command install (v11) it was too hard to install for anyone else, so the evidence on this page comes from the real app on my Mac and from 802 test sentences, not from a user study.</p>
+  <p>It is also a learning project: I wanted to learn how to build an AI product end to end, and how to know whether it works. Until the one-command install (v11) it was too hard to install for anyone else, so the evidence on this page comes from the real app on my Mac and from 1,002 test sentences, not from a user study.</p>
   <p>It is built for the Mac first: the popup, the menu bar icon and every test on this page are macOS. A Windows version exists with a simpler window; it hasn't been tested since the redesign.</p>
 </section>
 
@@ -277,7 +277,7 @@
   <h2>The numbers</h2>
   <p>Measured on my MacBook Air M2, 16 GB, model running locally with Ollama.</p>
   <div class="stats">
-    <div><div class="stat">95 %</div><p>of new sentences corrected right the first time</p></div>
+    <div><div class="stat">97 %</div><p>of new sentences corrected right the first time</p></div>
     <div><div class="stat">~1 s</div><p>to correct or rewrite a sentence</p></div>
     <div><div class="stat">&lt; 1 s</div><p>to switch a sentence to Pro, down from 5 s</p></div>
     <div><div class="stat">1 command</div><p>to install; a setup window does the rest</p></div>
@@ -339,6 +339,7 @@
         <tr><td>The wrong fixes had a pattern: a rewording, removed punctuation, an informal word “fixed”, or one real word swapped for another nobody confuses.</td><td>Those are held for review (decision 8). On 182 sentences written before the rules: 1 wrong fix applied instead of 6.</td></tr>
         <tr><td>The misses left were grammar the model doesn't know: “si j'aurais”, “quand au”, “have ate”.</td><td>A rule-based checker (LanguageTool) runs after the model (decision 9).</td></tr>
         <tr><td>Pro and Custom were only checked on 16 cases. On 80, checked for lost facts and invented text, the first checker was too strict (it read “quinze heures” as a lost “15”), and one real problem showed: “make it more positive” erased a two-week delay.</td><td>Checker fixed and documented; the delay case stays listed as a known weakness.</td></tr>
+        <tr><td>The misses left (“si j'aurais”, the subjunctive, “less people”) resisted prompting: a wider prompt added wrong fixes.</td><td>The model was fine-tuned for the task (decision 10): 2 wrong fixes applied instead of 5 on 749 frozen sentences.</td></tr>
       </tbody>
     </table>
   </div>
@@ -348,7 +349,7 @@
       <table>
         <thead><tr><th>Model</th><th>Best result</th><th>Verdict</th></tr></thead>
         <tbody>
-          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">95 % FR · 93 % EN (130 and 123 messages) · ~1 s</td><td>Chosen for all three modes</td></tr>
+          <tr class="pick"><td><code>gemma4:e2b-it-qat</code></td><td class="num">95 % FR · 93 % EN (130 and 123 messages) · ~1 s</td><td>Chosen for all three modes, fine-tuned in round 12</td></tr>
           <tr><td><code>gemma4:e2b-nvfp4</code> (MLX)</td><td class="num">10/12 · 0.34 s</td><td>Fastest, but 7.4 GB of memory</td></tr>
           <tr><td><code>gemma4:e4b-it-qat</code></td><td class="num">5.00/5 Pro (judge)</td><td>Same quality, 1.6× slower</td></tr>
           <tr><td><code>ministral-3:3b</code></td><td class="num">10/12 · 0.67 s</td><td>Correction in round 5; wrote whole emails in Pro</td></tr>
@@ -406,8 +407,8 @@
         <thead><tr><th>Setting</th><th>Next request</th><th>Memory held</th></tr></thead>
         <tbody>
           <tr><td>Unload after each request</td><td class="num">3–6 s every time</td><td class="num">0</td></tr>
-          <tr class="pick"><td>Keep 5 minutes</td><td class="num">0.5–1.1 s, then 3–6 s after a pause</td><td class="num">4.3 GB while in use</td></tr>
-          <tr><td>Keep forever</td><td class="num">0.5–1.1 s</td><td class="num">4.3 GB always</td></tr>
+          <tr class="pick"><td>Keep 5 minutes</td><td class="num">0.5–1.1 s, then 3–6 s after a pause</td><td class="num">3.3 GB while in use</td></tr>
+          <tr><td>Keep forever</td><td class="num">0.5–1.1 s</td><td class="num">3.3 GB always</td></tr>
         </tbody>
       </table></div>
       <p class="verdict"><b>Chose:</b> 5 minutes. Fast while I'm writing, memory back when I stop.</p>
@@ -442,7 +443,7 @@
       <div class="table-wrap"><table>
         <thead><tr><th></th><th>Sentence</th><th>First request</th><th>Privacy</th><th>Limits</th></tr></thead>
         <tbody>
-          <tr class="pick"><td>Local (Gemma 4, Ollama)</td><td class="num">0.5–1.1 s</td><td class="num">3–6 s</td><td>nothing leaves the Mac</td><td>4.3 GB of RAM</td></tr>
+          <tr class="pick"><td>Local (Gemma 4, Ollama)</td><td class="num">0.5–1.1 s</td><td class="num">3–6 s</td><td>nothing leaves the Mac</td><td>3.3 GB of RAM</td></tr>
           <tr><td>Cloud (Gemini Flash-Lite)</td><td class="num">~0.5 s</td><td class="num">~0.5 s</td><td>text sent to Google</td><td>10 requests / minute free</td></tr>
         </tbody>
       </table></div>
@@ -475,6 +476,19 @@
       </table></div>
       <p class="verdict"><b>Chose:</b> add it, as an option. Out of the box its French checks took 700 ms each; one server setting (pipeline caching) brought them to 15 ms. Two French rules were turned off because they “fix” informal register (“j'ai pas” → “je n'ai pas”), and its one wrong fix on this set was a hint it returns in brackets, now skipped.</p>
       <p class="cost">Cost: half a gigabyte of RAM on a 16 GB Mac, and an extra install (<code>brew install languagetool</code>); without it the app works as before.</p>
+    </div>
+    <div class="decision">
+      <h3>10. A better prompt, or a trained model?</h3>
+      <p>A prompt that also asked for agreement and verb forms gained on the development sentences but doubled the wrong fixes on the frozen ones, so it was dropped. The other way was to teach the same model the task: 5,000 examples (correct messages with mistakes injected, harder cases, informal messages to leave alone, and rewrites to keep Pro and Custom as they were), trained on the Mac. The rule to adopt it and a new test set were committed before the training data. Judged the same day on 749 frozen sentences:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Right</th><th>Wrong fixes applied</th><th>Pro / Custom</th><th>Speed</th><th>Size</th></tr></thead>
+        <tbody>
+          <tr><td>Model in use</td><td class="num">709</td><td class="num">5</td><td class="num">48/50 · 30/30</td><td class="num">0.99 s</td><td class="num">4.3 GB</td></tr>
+          <tr class="pick"><td>Fine-tuned</td><td class="num">723</td><td class="num">2</td><td class="num">48/50 · 30/30</td><td class="num">1.00 s</td><td class="num">3.3 GB</td></tr>
+        </tbody>
+      </table></div>
+      <p class="verdict"><b>Chose:</b> the fine-tuned model. A control (the original weights through the same conversion, no training) scored like the model in use, so the gain is the training's. Most new fixes swap one real word for another, so they wait for a click: what is pasted without one rises by 2, not 14.</p>
+      <p class="cost">Cost: about a day of work and three hours of training on a 16 GB Mac (two runs stopped: too slow, then unstable), and a model to host: <a href="https://ollama.com/enguerrandroquesbdl/textpolish-gemma4">enguerrandroquesbdl/textpolish-gemma4</a>.</p>
     </div>
   </div>
 </section>
@@ -517,9 +531,9 @@
   <h2>What's next</h2>
   <p>What the numbers above don't cover yet, and what I would test next:</p>
   <ul>
-    <li><b>Real messages and real people.</b> The 802 test sentences were written for the test, not collected from real people. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
+    <li><b>Real messages and real people.</b> The 1,002 test sentences were written for the test, not collected from real people. Next: run real messages from friends through the app, and watch five people use it for ten minutes.</li>
     <li><b>Judging the style of Pro and Custom.</b> 80 rewrites are now checked for lost facts, invented greetings and unmet requests (1 real problem), but not for how good the tone is. That needs people, or another model with a fixed grid.</li>
-    <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 4.3 GB of RAM.</li>
+    <li><b>The first request after a pause.</b> It waits 3–6 s (9–15 s after a reboot) while the model loads. Keeping it loaded longer costs 3.3 GB of RAM.</li>
     <li><b>A Mac with more memory.</b> The MLX build answers in 0.34 s but needs 7.4 GB; it becomes the better choice from 24 GB of RAM.</li>
     <li><b>Windows.</b> The code runs there, but the new window has never been tested on a PC.</li>
   </ul>

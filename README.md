@@ -5,8 +5,8 @@
 
 > **In short**
 > - **What:** a Mac tool that fixes the text you select, with an AI model running on your Mac. It is built on two sides: the **interface** (a popup that adapts to the text and lets you accept or ignore each fix) and the **mechanism behind it** (a model chosen by benchmark, safety rules, a grammar checker).
-> - **Key number:** 95 % of new sentences come out right the first time, and a fix the app isn't sure about is never applied without your click.
-> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, test sets frozen before each change, every failure classified as grave, minor or missed.
+> - **Key number:** 97 % of new sentences come out right the first time, with a model fine-tuned for the task, and a fix the app isn't sure about is never applied without your click.
+> - **What it shows:** a personal learning project in product design *and* engineering: 17 models benchmarked, the chosen one fine-tuned on the Mac, test sets frozen before each change, every failure classified as grave, minor or missed.
 
 Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted back. Everything runs on your Mac: it works offline once installed, with no account, and your text is never sent anywhere. The demo below is the real app, filmed by `design/record_video.py` and edited with Remotion (`video/`).
 
@@ -20,9 +20,9 @@ Select text in any app, press ⌥⌘G, review the fixes, and the text is pasted 
 
 > **About this project.** A personal project: an AI product built end to end, and measured like one. What it shows:
 > - **Product and UX:** a popup that adapts to the text, three modes, English and French, a guided setup, eleven iterations ([case study](https://enguerrand-roques.github.io/textpolish/case-study.html)).
-> - **A model chosen by measurement:** 17 local models benchmarked against expected answers ([report](benchmarks/BENCHMARK_REPORT.md)).
+> - **A model chosen by measurement, then trained:** 17 local models benchmarked against expected answers, the chosen one fine-tuned on 5,000 examples on the Mac ([report](benchmarks/BENCHMARK_REPORT.md), [how](finetune/README.md)).
 > - **Safety over coverage:** a wrong fix is worse than a missed one, so doubtful fixes wait for a click, and every failure is classified as grave, minor or missed with a rubric written first.
-> - **Rigorous evaluation:** 802 test sentences, and three held-out sets each committed before the change it judges, so the scores can't be tuned to the test.
+> - **Rigorous evaluation:** 1,002 test sentences, and four held-out sets each committed before the change it judges, so the scores can't be tuned to the test.
 > - **AI and rules together:** the model, a review layer, then LanguageTool's grammar rules, each measured on its own.
 
 > **Built for macOS.** The popup, the menu bar icon, the screenshots and every real-app test are macOS (Apple Silicon, tested on an M2 with 16 GB); the unit tests also run on Linux CI. A lighter Windows version is included as an experiment.
@@ -70,7 +70,7 @@ On first launch, a setup window checks the three things TextPolish needs and fix
 | Step | What happens |
 |---|---|
 | Ollama running | started automatically |
-| The model (4.3 GB, once) | **Download** button, progress bar and time left; you can close the window, it goes on; an interrupted download resumes |
+| The model (3.3 GB, once) | **Download** button, progress bar and time left; you can close the window, it goes on; an interrupted download resumes |
 | Accessibility permission | **Open Settings** button; the step turns green as soon as you switch it on, and the shortcut starts working without a restart |
 
 <p align="center"><img src="docs/screenshots/onboarding-dark.png" width="460" alt="The setup window: Ollama running, the model downloading with a progress bar (2.5 of 4.3 GB, about 2 minutes left), and the Accessibility permission with an Open Settings button."></p>
@@ -85,7 +85,7 @@ Then select text in any app and press **⌥⌘G**.
 | The shortcut does nothing | The Accessibility permission is off. Quit and reopen TextPolish: the setup window comes back whenever something is missing. Or turn it on in System Settings → Privacy & Security → Accessibility |
 | Text not pasted back | Keep the app you were writing in focused until the popup closes |
 | Slow first correction | Normal after 5 minutes idle: the model reloads (3–6 s). Raise `OLLAMA_KEEP_ALIVE` in `config.py` to keep it loaded longer |
-| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` (0 frees the 4.3 GB at once, but every request then waits 3–6 s) |
+| High RAM after use | Lower `OLLAMA_KEEP_ALIVE` (0 frees the 3.3 GB at once, but every request then waits 3–6 s) |
 | Anything else | `~/Library/Logs/TextPolish/textpolish.log` |
 
 To start TextPolish when you log in: in `~/Library/LaunchAgents/com.user.textpolish.plist` set `RunAtLoad` to `<true/>`, then run `launchctl bootout gui/$(id -u)/com.user.textpolish && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.textpolish.plist`.
@@ -98,7 +98,7 @@ To start TextPolish when you log in: in `~/Library/LaunchAgents/com.user.textpol
 ```bash
 git clone https://github.com/Enguerrand-Roques/textpolish.git && cd textpolish
 bash setup.sh                    # venv, config.py, TextPolish.app on your Desktop
-ollama pull gemma4:e2b-it-qat    # the model, 4.3 GB, once
+ollama pull enguerrandroquesbdl/textpolish-gemma4   # the model, 3.3 GB, once
 brew install languagetool        # optional grammar checker
 ```
 
@@ -110,7 +110,7 @@ Then open **TextPolish.app** on your Desktop.
 git clone https://github.com/Enguerrand-Roques/textpolish.git && cd textpolish
 python -m venv venv && venv\Scripts\activate
 pip install -r requirements-windows.txt && copy config.example.py config.py
-ollama pull gemma4:e2b-it-qat
+ollama pull enguerrandroquesbdl/textpolish-gemma4
 python main.py
 ```
 
@@ -126,9 +126,9 @@ Edit `config.py` (excluded from Git — never committed):
 
 ```python
 OLLAMA_BASE_URL     = "http://localhost:11434"
-OLLAMA_MODEL_CASUAL = "gemma4:e2b-it-qat"   # Correction
-OLLAMA_MODEL_PRO    = "gemma4:e2b-it-qat"   # Pro
-OLLAMA_MODEL        = "gemma4:e2b-it-qat"   # Custom (your own request)
+OLLAMA_MODEL_CASUAL = "enguerrandroquesbdl/textpolish-gemma4"   # Correction
+OLLAMA_MODEL_PRO    = "enguerrandroquesbdl/textpolish-gemma4"   # Pro
+OLLAMA_MODEL        = "enguerrandroquesbdl/textpolish-gemma4"   # Custom (your own request)
 OLLAMA_TIMEOUT      = 60
 OLLAMA_KEEP_ALIVE   = 300
 UI_LANGUAGE         = "en"                # "en" or "fr", also from the menu bar icon → Language
@@ -150,7 +150,7 @@ Measured on an M2 with 16 GB:
 
 Time grows with the length of the answer (about 30–35 tokens per second). The 4,000-character input limit stays under the 60 s timeout.
 
-Cold happens on the first request and again after 5 minutes without use (`OLLAMA_KEEP_ALIVE = 300` frees the 4.3 GB of RAM). Right after a reboot, when macOS has not cached the model file yet, the first request took 9–15 s. Raise `OLLAMA_KEEP_ALIVE` if you prefer speed over free RAM.
+Cold happens on the first request and again after 5 minutes without use (`OLLAMA_KEEP_ALIVE = 300` frees the 3.3 GB of RAM). Right after a reboot, when macOS has not cached the model file yet, the first request took 9–15 s. Raise `OLLAMA_KEEP_ALIVE` if you prefer speed over free RAM.
 
 ---
 
@@ -196,22 +196,23 @@ textpolish/
 
 ## How models were chosen
 
-TextPolish uses one local model, `gemma4:e2b-it-qat`, for all three modes. That choice comes from six benchmark rounds and 17 models tested on an Apple M2 16 GB; five more rounds then tested it on 802 sentences (11 rounds in all, full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#the-17-models)).
+TextPolish uses one local model for all three modes: Gemma 4 E2B, chosen after six benchmark rounds and 17 models tested on an Apple M2 16 GB, tested on 802 sentences in five more rounds, then fine-tuned for the task in Round 12 (full list in the [benchmark report](benchmarks/BENCHMARK_REPORT.md#the-17-models)).
 
-**Current configuration:** one model, `gemma4:e2b-it-qat`, for the three modes.
+**Current configuration:** one model, [`enguerrandroquesbdl/textpolish-gemma4`](https://ollama.com/enguerrandroquesbdl/textpolish-gemma4), for the three modes: Gemma 4 E2B fine-tuned on 5,000 examples ([`finetune/`](finetune/README.md)), text only (3.3 GB instead of 4.3).
 
 | Mode | Tested on | How it is scored | Result | Warm | Cold |
 |------|-----------|------------------|-------:|-----:|-----:|
-| Correction | 174 sentences never seen before (86 FR, 88 EN) | the fix must match an expected answer | **165 / 174** (95 %) | 0.9 s | 5.0 s |
-| Pro | 50 messages (25 FR, 25 EN) | automatic checks: the facts are kept (names, days, times, amounts), no invented greeting, sign-off or placeholder, right language | **48 / 50**, every fact kept | 0.9 s | 3.4 s |
-| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list, one sentence, "vous"…) and the facts are kept | **29 / 30** | 0.8 s | 3.1 s |
+| Correction | 200 sentences never seen before (100 FR, 100 EN), written before the training data | the fix must match an expected answer | **194 / 200** (97 %) | 1.0 s | 3.5 s |
+| Pro | 50 messages (25 FR, 25 EN) | automatic checks: the facts are kept (names, days, times, amounts), no invented greeting, sign-off or placeholder, right language | **48 / 50**, every fact kept | 1.0 s | 3.5 s |
+| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list, one sentence, "vous"…) and the facts are kept | **30 / 30** | 1.0 s | 3.0 s |
 
-Correction is tested on 802 sentences with held-out sets frozen before each change. Pro and Custom are checked for what matters in a rewrite: no fact lost, nothing invented, the request met. Every result, failures included, is in the [report](benchmarks/BENCHMARK_REPORT.md).
+Correction is tested on 1,002 sentences with held-out sets frozen before each change; on the four held-out sets (749 sentences), the fine-tuned model gets 96.5 % right against 94.7 % before, with 2 wrong fixes applied instead of 5. Pro and Custom are checked for what matters in a rewrite: no fact lost, nothing invented, the request met. Every result, failures included, is in the [report](benchmarks/BENCHMARK_REPORT.md).
 
 Warm = median per sentence with the model in RAM. Cold = `ollama stop`, then one request, median of 3 runs (range 3.0–6.3 s); the model file was still in macOS's file cache, so a first request after a reboot is slower (9–15 s observed).
 
 Key findings that shaped this choice:
 
+- **Fine-tuning fixed what prompting could not.** A wider prompt had been tested and rejected (more wrong fixes). Training the same model on 5,000 examples did better, judged by a rule committed before the training data: on 749 frozen sentences, 723 right instead of 709 and 2 wrong fixes applied instead of 5, with Pro, Custom and speed unchanged. A control (Google's weights through the same conversion, no training) scored like the old model, so the gain comes from the training. It ran on the Mac itself (MLX, about 3 hours).
 - **One model beats two.** With a Correction model and a Pro model, every mode switch reloaded a model (~5 s on 16 GB). With one model, switching modes adds no wait (0.75–0.8 s for a sentence in Pro).
 - **Gemma 4 E2B matches the previous Correction model and is better at Pro and Custom.** `gemma3:4b` added "Dear [Recipient Name]" placeholders and once reversed the meaning of a sentence; `ministral-3:3b` answered a message instead of rewriting it.
 - **Hybrid-reasoning models need `"think": false`.** Gemma 4, Qwen 3.5 and LFM3 think by default on Ollama; without it a 1 s correction takes tens of seconds. LFM3 still printed its reasoning into the answer and was dropped.
@@ -222,7 +223,7 @@ Key findings that shaped this choice:
 - **Small rules on top of the model.** The model sometimes merged two questions by deleting a "?"; Correction now puts back any "?" or "!" it removed (`diff.keep_sentence_marks`), which brought the first test sets to 12/12 in both languages.
 - **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
 - **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
-- **Tuned for a 16 GB Mac.** Free RAM matters as much as the model: one 4.3 GB model, freed after 5 minutes idle, keeps the Mac fast (~35 tokens per second).
+- **Tuned for a 16 GB Mac.** Free RAM matters as much as the model: one 3.3 GB model, freed after 5 minutes idle, keeps the Mac fast (~35 tokens per second).
 - **Language detection built for short, informal messages:** unaccented French ("J'ai finit le rapport hier soir") and English full of words French shares ("on time as usual") are both recognized (`language.py`, with tests).
 - Earlier rounds: `gemma3:1b-it-qat` missed "opérationel" every time, which is how Correction moved to `ministral-3:3b` in Round 5 before this round replaced it.
 
@@ -237,7 +238,7 @@ This project started as a way to understand how to integrate a language model in
 Building it surfaced a few things that tutorials don't really cover:
 
 - **Model size vs. latency** — in early rounds a 4B model rewrote better but took 5–8 s, and a 1B model was fast but missed real typos. Gemma 4 E2B (2B effective) ended that trade-off at about 1 s, after disabling its "thinking" and fixing the temperature.
-- **Keeping a model in RAM** — loading the model takes 3–6 s (9–15 s after a reboot). `keep_alive` keeps it warm between requests but holds 4.3 GB of RAM; TextPolish frees it after 5 minutes idle. It's a trade-off you have to tune per machine.
+- **Keeping a model in RAM** — loading the model takes 3–6 s (9–15 s after a reboot). `keep_alive` keeps it warm between requests but holds 3.3 GB of RAM; TextPolish frees it after 5 minutes idle. It's a trade-off you have to tune per machine.
 - **Local vs. cloud latency** — once loaded, the local model answers a short sentence in about 0.5–1.1 s, close to Gemini Flash-Lite over the network (~0.5 s), with privacy and offline use on top.
 - **Integrating an LLM into an OS-level tool** — the LLM part ended up being the simplest piece. The hard parts were the global shortcut, clipboard handling, and making a window appear above fullscreen apps.
 

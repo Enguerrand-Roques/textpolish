@@ -163,7 +163,7 @@
     <div>
       <h2>English and French</h2>
       <p>TextPolish corrects and rewrites both languages; the model follows the language of the text, and Custom can translate between them. The interface itself is in English or French: pick one from the menu bar icon → Language and it is remembered.</p>
-      <p>Both were tested the same way, with expected answers: 95 % of 130 French messages and 93 % of 123 English ones corrected exactly as expected, and correct messages left alone. Fixes the app isn't sure about are shown, not applied.</p>
+      <p>Both were tested the same way, with expected answers: 98 % of 130 French messages and 96 % of 123 English ones corrected exactly as expected, and correct messages left alone. Fixes the app isn't sure about are shown, not applied.</p>
     </div>
     <img class="shot" src="screenshots/menu-language.png" alt="The TextPolish menu bar menu with the Language submenu open: English is checked, the cursor is on Français." loading="lazy">
   </div>
@@ -171,9 +171,9 @@
 
 <section class="col">
   <h2>Measured, not guessed</h2>
-  <p>17 models compared in six benchmark rounds on a MacBook Air M2 with 16 GB, then the chosen one tested in five more rounds on 802 test sentences. The last rounds score corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
+  <p>17 models compared in six benchmark rounds on a MacBook Air M2 with 16 GB, then the chosen one tested in five more rounds on 802 test sentences and fine-tuned for the task in a twelfth. The last rounds score corrections against expected answers, including sentences with no mistake that must stay untouched.</p>
   <div class="stats">
-    <div><div class="stat">95 %</div><p>of new sentences corrected right the first time</p></div>
+    <div><div class="stat">97 %</div><p>of new sentences corrected right the first time</p></div>
     <div><div class="stat">~1 s</div><p>to correct or rewrite a sentence</p></div>
     <div><div class="stat">0</div><p>doubtful fixes applied without your click</p></div>
     <div><div class="stat">0 bytes</div><p>of your text leave your Mac</p></div>
@@ -185,7 +185,7 @@
   <h2>Trade-offs</h2>
   <div class="trade">
     <div><h3>One model for every mode</h3><p>Two specialized models meant a ~5 s reload at each mode switch on 16 GB. Gemma 4 E2B is good enough at all three, so switching adds no wait.</p></div>
-    <div><h3>Free the memory after 5 minutes</h3><p>Keeping the model loaded holds 4.3 GB. TextPolish frees it after 5 minutes idle, so the next request waits 3–6 s. <code>OLLAMA_KEEP_ALIVE</code> changes the delay.</p></div>
+    <div><h3>Free the memory after 5 minutes</h3><p>Keeping the model loaded holds 3.3 GB. TextPolish frees it after 5 minutes idle, so the next request waits 3–6 s. <code>OLLAMA_KEEP_ALIVE</code> changes the delay.</p></div>
     <div><h3>Lighter build over the fastest one</h3><p>The MLX build answers in 0.34 s instead of about 0.9 s but needs ~7.4 GB and pushed this Mac into swap. It is the better pick with 24 GB or more.</p></div>
     <div><h3>Local over cloud</h3><p>Once loaded, the local model is about as fast as Gemini Flash-Lite (~0.5 s), and works offline with nothing leaving the Mac. The cost is the first-load wait and the RAM. <a href="https://github.com/Enguerrand-Roques/textpolish-cloud">TextPolish Cloud</a> makes the opposite choice.</p></div>
     <div><h3>A shortcut, not live underlining</h3><p>macOS's accessibility API doesn't give the caret position without a selection, and many apps (Slack, VS Code) don't expose their text well. A shortcut works everywhere.</p></div>
@@ -194,14 +194,14 @@
 
 <section class="col">
   <h2>About this project</h2>
-  <p>A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. So far it has mostly been used by me and measured with 802 test sentences; the one-command install is what makes testing with other people possible. What I worked on: a popup that adapts to the text, a model chosen by benchmark, safety over coverage (a wrong fix is worse than a missed one), test sets frozen before each change, and the model combined with grammar rules. The <a href="case-study.html">case study</a> shows each decision and what it cost.</p>
+  <p>A personal project to learn how to build an AI product end to end, and how to evaluate one honestly. So far it has mostly been used by me and measured with 1,002 test sentences; the one-command install is what makes testing with other people possible. What I worked on: a popup that adapts to the text, a model chosen by benchmark, safety over coverage (a wrong fix is worse than a missed one), test sets frozen before each change, and the model combined with grammar rules. The <a href="case-study.html">case study</a> shows each decision and what it cost.</p>
 </section>
 
 <section class="col" id="install">
   <h2>Install</h2>
   <p>macOS 13 or later, Apple Silicon recommended. Paste this in Terminal:</p>
   <pre><code>curl -fsSL https://raw.githubusercontent.com/Enguerrand-Roques/textpolish/main/install.sh | bash</code></pre>
-  <p>One command in Terminal installs what is missing (Python, Ollama) and opens the app. Its setup window then downloads the model (4.3 GB, once) with a progress bar, and takes you to the Accessibility permission with one button. No administrator password. Prefer to do it by hand? <a href="https://github.com/Enguerrand-Roques/textpolish#installation">Step-by-step install</a> · <a href="https://github.com/Enguerrand-Roques/textpolish/releases/latest">latest release</a> · <a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/CHANGELOG.md">what changed in each version</a>.</p>
+  <p>One command in Terminal installs what is missing (Python, Ollama) and opens the app. Its setup window then downloads the model (3.3 GB, once) with a progress bar, and takes you to the Accessibility permission with one button. No administrator password. Prefer to do it by hand? <a href="https://github.com/Enguerrand-Roques/textpolish#installation">Step-by-step install</a> · <a href="https://github.com/Enguerrand-Roques/textpolish/releases/latest">latest release</a> · <a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/CHANGELOG.md">what changed in each version</a>.</p>
   <p>Then select text anywhere and press <kbd>⌥⌘G</kbd>. TextPolish is built and tested for the Mac. A Windows version exists (<kbd>Ctrl+Alt+G</kbd>) with a simpler window; it is experimental and has not been tested since the redesign.</p>
 </section>
 

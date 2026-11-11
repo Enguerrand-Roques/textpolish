@@ -9,15 +9,20 @@ set kept in [`eval/`](eval/).
 
 | Mode | Tested on | How it is scored | Result |
 |---|---|---|---:|
-| Correction | 174 sentences never seen before (86 FR, 88 EN) | the fix must match an expected answer | **165 / 174** (95 %) |
-| Correction | all 802 test sentences, every failure classified | grave, minor or missed ([rubric](#severity-rubric-written-before-classifying-november-4-2026)) | 762 right, **1 grave** |
-| Pro | 50 messages (25 FR, 25 EN) | automatic checks: facts kept, no invented greeting or placeholder, right language | **48 / 50**, 0 real problem after reading |
-| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list…) and facts are kept | **29 / 30**, 1 real problem |
+| Correction | 200 sentences never seen before (100 FR, 100 EN), written before the training data | the fix must match an expected answer | **194 / 200** (97 %) |
+| Correction | the four held-out sets (749 sentences) | right answers, and wrong fixes the app applies without a click | **723 right** (94.7 % → 96.5 %), **2 wrong fixes applied** (was 5) |
+| Pro | 50 messages (25 FR, 25 EN) | automatic checks: facts kept, no invented greeting or placeholder, right language | **48 / 50**, every fact kept after reading |
+| Custom | 30 requests (15 FR, 15 EN) | the request is met (translated, shorter, a list…) and facts are kept | **30 / 30** |
+
+Model: Gemma 4 E2B fine-tuned for TextPolish in Round 12
+([`enguerrandroquesbdl/textpolish-gemma4`](https://ollama.com/enguerrandroquesbdl/textpolish-gemma4)).
+The every-failure classification below (802 sentences, 1 grave) is for the
+model before fine-tuning.
 
 Speed with the model loaded: 0.5–1.1 s per sentence, 3–4 s for a 370-character
 message; the first request after a pause waits 3–6 s while the model loads.
 
-**Three things the measurements changed:**
+**Four things the measurements changed:**
 1. **One model for every mode** (Gemma 4 E2B): as good at correcting as the
    best, better at rewriting, and switching modes no longer reloads a model.
 2. **A wrong fix is worse than a missed one:** fixes that aren't a known kind of
@@ -25,6 +30,9 @@ message; the first request after a pause waits 3–6 s while the model loads.
    from 6 to 1.
 3. **Rules on top of the model:** LanguageTool fixes the grammar the model
    misses ("quand au", "have ate") in about 15 ms.
+4. **Training beat prompting:** a wider prompt added wrong fixes and was
+   dropped; fine-tuning the same model on 5,000 examples, judged by a rule
+   committed first, raised right answers and cut wrong fixes from 5 to 2.
 
 ## How it is measured
 
@@ -34,7 +42,7 @@ message; the first request after a pause waits 3–6 s while the model loads.
   compared with the later ones.
 - **Test sets frozen before each change.** A change is tuned on development
   sentences, then judged once on a held-out set written and committed before
-  it, so the score can't be tuned to the test. Three held-out sets so far.
+  it, so the score can't be tuned to the test. Four held-out sets so far.
 - **Every failure classified.** Grave (meaning changed, mistake introduced),
   minor (partial fix, valid variant) or missed (left as written), with a
   rubric written before counting.
@@ -44,7 +52,7 @@ message; the first request after a pause waits 3–6 s while the model loads.
 - **Limits:** every test sentence was written for the test, not collected from
   users; Pro and Custom quality (tone, style) is not scored, only their errors.
 
-## The 11 rounds
+## The 12 rounds
 
 | Round | When | Question | Answer |
 |---|---|---|---|
@@ -59,6 +67,7 @@ message; the first request after a pause waits 3–6 s while the model loads.
 | 9 | Nov 4 | Known confusions and a dictionary? | Wrong fixes on unseen text: 6 → 1 |
 | 10 | Nov 4 | Does LanguageTool catch the misses? | English 84 → 86 / 88, French 78 → 79 / 86 |
 | 11 | Nov 4 | Pro and Custom on 80 cases? | 48 / 50 and 29 / 30; one real problem |
+| 12 | Nov 10 | Does fine-tuning beat the model in use? | Yes: 723 vs 709 / 749 right, 2 vs 5 wrong fixes applied; adopted |
 
 ## The 17 models
 
@@ -712,6 +721,54 @@ was run the same day as the current one, on every set, with LanguageTool.
 The gain on the development sets does not carry over to the held-out sets,
 and wrong fixes applied double, so the current prompt stays. Raw output:
 `results/prompt_check_20261104.md`.
+
+</details>
+
+<details>
+<summary><b>Round 12 — November 10, 2026: fine-tuning Gemma 4 E2B</b></summary>
+
+**Question.** The remaining misses are rarer constructions ("si j'aurais",
+subjunctive, "less people"), and a wider prompt made things worse. Does
+training the model on the task do better, at the same size and speed?
+
+**Method** (details and scripts in [`finetune/`](../finetune/README.md)):
+- A decision rule and a new held-out set (`holdout4`, 200 sentences) were
+  committed before any training data.
+- 5,267 examples: 3,000 correct messages with mistakes injected by rules (the
+  target is the original, so it is always right; a third stay unchanged), 900
+  harder pairs written by hand, 500 informal messages that must not change,
+  and 900 Pro and Custom rewrites by the current model that pass the Round 11
+  checks. Examples close to any test sentence were dropped (31).
+- LoRA on the Mac (MLX, 4-bit QAT build, last 16 layers, 1 epoch, ~3 h), merged
+  into Google's unquantized QAT weights, converted to Q4_0 like the model in use.
+  Two earlier runs were stopped: one was too slow for 16 GB, one unstable
+  (learning rate too high); the choice was made on the validation loss only.
+- Compared the same day: A (model in use), B (Google's weights through the same
+  conversion, no training) and C (fine-tuned).
+
+**Results** on the four held-out sets (749 sentences), with LanguageTool:
+
+| | A, in use | C, fine-tuned |
+|---|---:|---:|
+| Right answers | 709 (94.7 %) | **723 (96.5 %)** |
+| Wrong fixes applied | 5 | **2** |
+| Right without a click (doubtful fixes wait) | 705 | 707 |
+| `holdout4` (new) | 189 / 200 | **194 / 200** |
+| Pro / Custom | 48 / 50, 30 / 30 | 48 / 50, 30 / 30 |
+| Median latency | 0.99 s | 1.00 s |
+| Model file | 4.3 GB | 3.3 GB (text only) |
+
+B scored like A on `holdout4`, so the conversion changes nothing and the gain
+comes from the training. Most new fixes ("il faut que nous partions", "si
+j'avais") replace one real word with another, so the review layer shows them
+with "Check" and waits for a click: right answers rise by 14, what is pasted
+without a click by 2. The gains are mostly in English (+4 on `holdout`, +5 on
+`holdout2`, +4 on `holdout4`); French loses one sentence on `holdout` and on
+`holdout2`. The two Pro failures write a fact differently ("mille clients",
+"quotation") without losing it.
+
+**Decision:** C meets every condition of the rule and is the model in use.
+Raw output: `results/round12_20261110.md`.
 
 </details>
 

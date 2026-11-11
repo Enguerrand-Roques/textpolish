@@ -2,16 +2,30 @@
 
 All notable changes to TextPolish. Versions follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [2.3.0] — 2026-11-11
+
+A model trained for TextPolish.
+
+### Changed
+- **New model: Gemma 4 E2B fine-tuned for the task**
+  (`enguerrandroquesbdl/textpolish-gemma4`, text only, 3.3 GB instead of
+  4.3 GB). On 749 frozen test sentences: 723 right instead of 709, and 2
+  wrong fixes applied instead of 5; Pro, Custom and speed unchanged (Round 12
+  in the benchmark report). Existing installs keep their model until
+  `config.py` is updated.
 
 ### Added
+- `finetune/`: the training data, the scripts (data, LoRA on the Mac with
+  MLX, merge, conversion to Ollama) and the decision rule, committed before
+  the training data.
+- A fourth frozen test set (`holdout4`, 200 sentences).
+- `llm.build_prompt`: the exact prompt the app sends, used for training too.
+- A test of a wider Correction prompt, not adopted (more wrong fixes).
 - Larger Pro and Custom test sets (50 messages, 30 requests) with checks
   that the facts of a message survive a rewrite, and no greeting, sign-off or
   placeholder is invented (Round 11 in the benchmark report).
-
-### Changed
 - The benchmark report opens with the results at a glance, the method and
-  the eleven rounds in one table; each round's details are folded.
+  every round in one table; each round's details are folded.
 
 ## [2.2.0] — 2026-11-04
 
