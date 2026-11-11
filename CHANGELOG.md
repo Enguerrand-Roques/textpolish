@@ -2,6 +2,13 @@
 
 All notable changes to TextPolish. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] — 2026-11-11
+
+### Fixed
+- Running the install command again now moves an install from before v2.3
+  to the fine-tuned model (its `config.py` named the original one); a model
+  you chose yourself is kept.
+
 ## [2.3.0] — 2026-11-11
 
 A model trained for TextPolish.
@@ -12,7 +19,7 @@ A model trained for TextPolish.
   4.3 GB). On 749 frozen test sentences: 723 right instead of 709, and 2
   wrong fixes applied instead of 5; Pro, Custom and speed unchanged (Round 12
   in the benchmark report). Existing installs keep their model until
-  `config.py` is updated.
+  `config.py` is updated (fixed in 2.3.1).
 
 ### Added
 - `finetune/`: the training data, the scripts (data, LoRA on the Mac with
