@@ -4,18 +4,22 @@ train: true
 data: finetune/out/data
 fine_tune_type: lora
 mask_prompt: true          # the loss is on the answer, not on the prompt
-num_layers: -1             # every layer
+num_layers: 16             # the last 16 of 35: all 35 needed ~12 GB and swapped on 16 GB
 lora_parameters:
   rank: 16
   scale: 20.0
   dropout: 0.0
 optimizer: adamw
-learning_rate: 1.0e-4
-batch_size: 4
-grad_checkpoint: true
-max_seq_length: 768
-steps_per_report: 25
-steps_per_eval: 200
-val_batches: 25
-save_every: 200
+learning_rate: 2.0e-5     # 1e-4 was unstable (loss spikes) with scale 20
+lr_schedule:
+  name: cosine_decay
+  warmup: 100
+  arguments: [2.0e-5, 4741, 2.0e-6]
+batch_size: 1              # longer GPU steps were stopped by macOS ("Impacting Interactivity")
+grad_accumulation_steps: 4  # 4 examples per update
+max_seq_length: 448        # longest example: 434 tokens
+steps_per_report: 100
+steps_per_eval: 600
+val_batches: 100
+save_every: 600
 seed: 12

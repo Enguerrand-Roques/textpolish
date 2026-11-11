@@ -41,5 +41,24 @@ Step 0 (November 10, 2026) checked the chain: B scores like A on the French
 development set (125/130, 1 wrong fix applied, 0.86 s median), with a model
 file of the same size.
 
+## Result (Round 12, November 10, 2026)
+
+Run `essai3` (LoRA rank 16 on the last 16 layers, learning rate 2e-5 with
+warmup and cosine decay, batch 1 with 4-step accumulation, 1 epoch, ~3 h on an
+M2 with 16 GB; validation loss 2.11 → 0.033) passed every condition:
+
+| On the frozen sets (749) | A, in use | C, fine-tuned |
+|---|---:|---:|
+| Right answers | 709 | **723** |
+| Wrong fixes applied | 5 | **2** |
+| Pro / Custom | 48/50, 30/30 | 48/50, 30/30 |
+| Median latency | 0.99 s | 1.00 s |
+
+B (control) scored like A on `holdout4`. Two runs were stopped before it:
+all 35 layers with batch 4 needed ~12 GB and swapped (about 20 s per step),
+and a learning rate of 1e-4 made the loss spike. Published as
+[`enguerrandroquesbdl/textpolish-gemma4`](https://ollama.com/enguerrandroquesbdl/textpolish-gemma4);
+details in `benchmarks/BENCHMARK_REPORT.md` (Round 12).
+
 Downloads, the environment and trained weights live in `finetune/out/` and
 `finetune/.venv/` (not in git).
