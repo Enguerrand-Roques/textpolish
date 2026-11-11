@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TextPolish Model</title>
+<meta name="description" content="How TextPolish's model was chosen and improved: 17 local models benchmarked, then the best one fine-tuned on a MacBook Air. Before and after, on real test sentences.">
+<meta property="og:title" content="TextPolish — the model">
+<meta property="og:description" content="17 models benchmarked, the best one fine-tuned on the Mac: 97 % of new sentences right, wrong fixes cut from 5 to 2.">
+<meta property="og:image" content="https://enguerrand-roques.github.io/textpolish/screenshots/video-poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Same look as the case study: one reading column, proofreading marks. */
+  :root {
+    --paper:   #f3f5f9;
+    --sheet:   #ffffff;
+    --ink:     #14171d;
+    --muted:   #5b6474;
+    --rule:    #dde2ea;
+    --blue:    #0a64d6;
+    --red:     #d23a2f;
+    --green:   #1d8a4a;
+    --tint:    #e6eefb;
+    --display: "Bricolage Grotesque", "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
+    --body:    "Source Serif 4", "New York", Georgia, serif;
+    --mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #101318; --sheet: #181c23; --ink: #e9edf3; --muted: #9aa4b4;
+      --rule: #2a313c; --blue: #5aa2ff; --red: #ff7a6e; --green: #4cd287; --tint: #182538; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101318; --sheet: #181c23; --ink: #e9edf3; --muted: #9aa4b4;
+    --rule: #2a313c; --blue: #5aa2ff; --red: #ff7a6e; --green: #4cd287; --tint: #182538; color-scheme: dark;
+  }
+  body {
+    background: var(--paper); color: var(--ink);
+    font: 18px/1.62 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 72px;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .col { max-width: 44rem; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; letter-spacing: -0.02em; line-height: 1.08; }
+  h1 { font-size: clamp(2.3rem, 6vw, 3.8rem); margin: 14px 0 0; }
+  h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin: 0 0 0.6em; }
+  h3 { font-size: 1.1rem; margin: 0 0 0.3em; letter-spacing: -0.01em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--blue); }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+  .label { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  code { font: 0.85em var(--mono); background: var(--tint); padding: 0.08em 0.35em; border-radius: 4px; }
+  header { padding-block: 56px 0; }
+  .lede { font-size: 1.2rem; color: var(--muted); margin-top: 16px; }
+  section { padding-block: 56px 0; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 14px; margin-top: 28px; }
+  .stats > div { background: var(--sheet); padding: 16px 18px; border-radius: 12px; }
+  .stat { font: 700 2rem/1 var(--display); color: var(--blue); font-variant-numeric: tabular-nums; }
+  .stats p { font-size: 0.88rem; color: var(--muted); margin: 8px 0 0; line-height: 1.4; }
+  .was { font: 0.8rem var(--mono); color: var(--muted); }
+
+  .steps { display: grid; gap: 14px; margin-top: 8px; }
+  .step { background: var(--sheet); border-radius: 12px; padding: 18px 20px; display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: 4px 14px; }
+  .step .n { font: 700 1.6rem/1 var(--display); color: var(--blue); }
+  .step p { margin: 0; font-size: 0.98rem; }
+
+  .pairs { display: grid; gap: 12px; margin-top: 18px; }
+  .pair { background: var(--sheet); border-radius: 12px; padding: 14px 18px; display: grid; gap: 6px; }
+  .pair .in { font: 0.92rem/1.45 var(--mono); }
+  .pair .row { display: grid; grid-template-columns: 4.8rem minmax(0, 1fr); gap: 10px; font-size: 0.95rem; align-items: baseline; }
+  .pair .row b { font: 600 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .ok { color: var(--green); }
+  .ko { color: var(--red); }
+  .pair .why { font-size: 0.85rem; color: var(--muted); }
+
+  .table-wrap { overflow-x: auto; margin-top: 18px; }
+  table { border-collapse: collapse; width: 100%; min-width: 28rem; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font: 500 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.win { color: var(--blue); font-weight: 600; }
+  .note { font-size: 0.92rem; color: var(--muted); margin-top: 14px; }
+  ul.proof { padding-left: 1.1em; margin: 0; }
+  ul.proof li { margin-bottom: 10px; }
+
+  footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--rule); font: 0.85rem/1.6 var(--mono); color: var(--muted); }
+  @media (max-width: 520px) { .pair .row { grid-template-columns: 1fr; gap: 0; } }
+</style>
+</head>
+<body>
+
+<header class="col">
+  <div class="label">TextPolish · the model</div>
+  <h1>Pick the best model, then teach it the job</h1>
+  <p class="lede">First, 17 models that run on a Mac were compared on the same sentences. Then the best one was trained, on a MacBook Air, to do exactly what TextPolish asks of it.</p>
+  <div class="stats">
+    <div><div class="stat">97 %</div><p>of new sentences corrected right <span class="was">(94.5 % before)</span></p></div>
+    <div><div class="stat">2</div><p>wrong fixes applied in 749 sentences <span class="was">(5 before)</span></p></div>
+    <div><div class="stat">~1 s</div><p>per sentence, as before</p></div>
+    <div><div class="stat">3.3 GB</div><p>to download <span class="was">(4.3 GB before)</span></p></div>
+  </div>
+</header>
+
+<main>
+<section class="col">
+  <h2>Two steps</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div>
+      <h3>Benchmark: which model?</h3>
+      <p>17 local models, six rounds, each correction scored against an expected answer. Gemma 4 E2B won: good at correcting <em>and</em> rewriting, about a second per sentence, and small enough for a 16 GB Mac. <a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/benchmarks/BENCHMARK_REPORT.md">Benchmark report</a></p>
+    </div></div>
+    <div class="step"><div class="n">2</div><div>
+      <h3>Fine-tuning: teach it the job</h3>
+      <p>The misses left were rarer mistakes (“si j'aurais”, “would of”, the subjunctive), and a longer prompt made things worse. So the model was trained on 5,000 examples: messages with mistakes and their correction, informal messages to leave alone, and rewrites so Pro and Custom stay as good. Three hours on the Mac; only 0.6 % of the model was adjusted. <a href="https://github.com/Enguerrand-Roques/textpolish/tree/main/finetune">How it was done</a></p>
+    </div></div>
+  </div>
+</section>
+
+<section class="col">
+  <h2>Before and after, on real test sentences</h2>
+  <p>Sentences from the test sets, where the two models answered differently.</p>
+  <div class="pairs">
+    <div class="pair">
+      <div class="in">I didn't except the offer</div>
+      <div class="row"><b>Before</b><span class="ko">✗ I didn't expect the offer</span></div>
+      <div class="row"><b>After</b><span class="ok">✓ I didn't accept the offer</span></div>
+      <div class="why">The old model changed the meaning.</div>
+    </div>
+    <div class="pair">
+      <div class="in">The boxes is in the garage</div>
+      <div class="row"><b>Before</b><span class="ko">✗ The box is in the garage</span></div>
+      <div class="row"><b>After</b><span class="ok">✓ The boxes are in the garage</span></div>
+      <div class="why">One box instead of several: another change of meaning.</div>
+    </div>
+    <div class="pair">
+      <div class="in">Si j'aurais le temps, je t'aiderais</div>
+      <div class="row"><b>Before</b><span class="ko">✗ left as written</span></div>
+      <div class="row"><b>After</b><span class="ok">✓ Si j'avais le temps, je t'aiderais</span></div>
+    </div>
+    <div class="pair">
+      <div class="in">I've already wrote back to her</div>
+      <div class="row"><b>Before</b><span class="ko">✗ left as written</span></div>
+      <div class="row"><b>After</b><span class="ok">✓ I've already written back to her</span></div>
+    </div>
+    <div class="pair">
+      <div class="in">Jpp de ce taf</div>
+      <div class="row"><b>Before</b><span class="ko">✗ J'ai pas de ce taf</span></div>
+      <div class="row"><b>After</b><span class="ok">✓ unchanged</span></div>
+      <div class="why">Informal on purpose (“j'en peux plus”): it should stay as it is.</div>
+    </div>
+    <div class="pair">
+      <div class="in">The pants are to lose</div>
+      <div class="row"><b>Before</b><span class="ko">✗ left as written</span></div>
+      <div class="row"><b>After</b><span class="ok">✓ The pants are too loose</span></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:34px">Where it got worse</h3>
+  <div class="pairs">
+    <div class="pair">
+      <div class="in">Quelque soit ton choix, je te soutiens</div>
+      <div class="row"><b>Before</b><span class="ok">✓ Quel que soit ton choix…</span></div>
+      <div class="row"><b>After</b><span class="ko">✗ left as written</span></div>
+    </div>
+    <div class="pair">
+      <div class="in">J'ai pas eu le temps de lire ton mail, je le fait ce soir</div>
+      <div class="row"><b>Before</b><span class="ok">✓ …je le fais ce soir</span></div>
+      <div class="row"><b>After</b><span class="ko">✗ …je le ferai ce soir</span></div>
+      <div class="why">Right spelling, but a different tense than written.</div>
+    </div>
+    <div class="pair">
+      <div class="in">I am knowing the answer</div>
+      <div class="row"><b>Before</b><span class="ok">✓ I know the answer</span></div>
+      <div class="row"><b>After</b><span class="ko">✗ left as written</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="col">
+  <h2>The numbers</h2>
+  <p>Both models, the same day, on the four test sets frozen before each change (749 sentences).</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Sentences right</td><td class="num">709 (94.7 %)</td><td class="num win">723 (96.5 %)</td></tr>
+      <tr><td>Wrong fixes applied</td><td class="num">5</td><td class="num win">2</td></tr>
+      <tr><td>Newest test set (200, written before training)</td><td class="num">189</td><td class="num win">194</td></tr>
+      <tr><td>Pro rewrites (50)</td><td class="num">48</td><td class="num">48</td></tr>
+      <tr><td>Custom requests (30)</td><td class="num">30</td><td class="num">30</td></tr>
+      <tr><td>Time per sentence</td><td class="num">0.99 s</td><td class="num">1.00 s</td></tr>
+      <tr><td>Download</td><td class="num">4.3 GB</td><td class="num win">3.3 GB</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Most new fixes swap one real word for another (“except” → “accept”), so TextPolish shows them with an orange “Check” and waits for your click. Without any click, 707 sentences come out right instead of 705.</p>
+</section>
+
+<section class="col">
+  <h2>How we know the gain is real</h2>
+  <ul class="proof">
+    <li><b>The test came first.</b> A new test set and the rule to adopt the model (fewer wrong fixes, at least one point better, Pro and Custom unchanged) were published before any training data was written.</li>
+    <li><b>A control model.</b> Google's original weights went through the exact same conversion without training: they scored like the old model, so the gain comes from the training, not the conversion.</li>
+    <li><b>No test sentence in the training data.</b> Every example too close to a test sentence was removed (31 of them).</li>
+  </ul>
+  <p class="note" style="margin-top:22px">Every number comes from a raw output kept in the repository: <a href="https://github.com/Enguerrand-Roques/textpolish/blob/main/benchmarks/results/round12_20261110.md">Round 12 results</a> · the model: <a href="https://ollama.com/enguerrandroquesbdl/textpolish-gemma4">ollama.com/enguerrandroquesbdl/textpolish-gemma4</a></p>
+</section>
+</main>
+
+<footer class="col">
+  TextPolish · personal project, 2026 · <a href="./">project page and install</a> · <a href="case-study.html">UX case study</a> · code: <a href="https://github.com/Enguerrand-Roques/textpolish">github.com/Enguerrand-Roques/textpolish</a>
+</footer>
+</body>
+</html>
