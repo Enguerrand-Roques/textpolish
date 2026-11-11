@@ -3,6 +3,7 @@ docs/            export-ignore
 video/           export-ignore
 design/          export-ignore
 benchmarks/      export-ignore
+finetune/        export-ignore
 tests/           export-ignore
 .github/         export-ignore
 .gitattributes   export-ignore
