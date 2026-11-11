@@ -791,9 +791,10 @@ that is hard to decide goes to the more severe class.
 Rounds 8–10 were written before this rubric: their "wrong fixes applied" count
 grave and minor failures together. The table below separates them.
 
-### Every failure of the current version, classified
+### Every failure of the Round 10 version, classified
 
-Current version: `gemma4:e2b-it-qat`, review rules (Round 9) and LanguageTool
+Version: `gemma4:e2b-it-qat` before the Round 12 fine-tuning (not re-classified
+since), review rules (Round 9) and LanguageTool
 (Round 10, brackets skipped), on all 802 test sentences (the development
 sets, the three held-out sets). Re-scored from the saved model outputs; the
 model answers the same way every run (temperature 0).

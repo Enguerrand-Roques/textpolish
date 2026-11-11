@@ -187,6 +187,7 @@ textpolish/
 │
 ├── tests/               # pytest, runs on Linux CI (macOS APIs are stubbed)
 ├── benchmarks/          # Model research: report, harness, every raw output
+├── finetune/            # Round 12: training data, LoRA on the Mac (MLX), merge, export to Ollama
 ├── design/              # Dev tools: model eval, real-app timing, previews, recordings
 ├── video/               # Remotion project that edits the demo video
 └── docs/                # GitHub Pages: landing page, UX case study, media
@@ -219,7 +220,7 @@ Key findings that shaped this choice:
 - **MLX is faster but heavier.** Ollama 0.40 runs `gemma4:e2b-nvfp4` on Apple's MLX engine: 0.34 s per correction, but ~7.4 GB in RAM, which pushed this 16 GB Mac into swap. It is the better choice on 24 GB or more.
 - **A rule-based checker catches what the model misses.** LanguageTool runs locally after the model and fixes the grammar it knows by rule ("quand au" → "quant au", "have ate" → "have eaten"); only single-suggestion grammar rules are applied, and the French rules that "fix" informal register ("j'ai pas" → "je n'ai pas") are off. On unseen sentences it brought English to 86 of 88 and French to 79 of 86, for ~15 ms per correction.
 - **Safe by default.** A missed mistake leaves your text as written; a wrong fix changes what you meant. Fixes that are not a known kind of mistake (a rewording, removed punctuation, an informal word, a real word swapped for one nobody confuses it with, checked with the macOS dictionary) are shown with an orange "Check" and only applied if you click them. Judged on two test sets written before the rules: wrong fixes applied fell from 6 to 1 in 182 sentences.
-- **Measured at scale.** On 130 French and 123 English everyday messages (`benchmarks/eval/`), Correction gets 95 % and 93 %, with accents, agreement and spelling perfect in both languages.
+- **Measured at scale.** On 130 French and 123 English everyday messages (`benchmarks/eval/`), the fine-tuned model gets 98 % and 96 % (95 % and 93 % before), with accents, agreement and spelling perfect in both languages.
 - **Small rules on top of the model.** The model sometimes merged two questions by deleting a "?"; Correction now puts back any "?" or "!" it removed (`diff.keep_sentence_marks`), which brought the first test sets to 12/12 in both languages.
 - **Correction runs at temperature 0.** Gemma 4 defaults to 1, and the same test scored 9, 10 or 11/12 depending on the run. At 0 the same text always gets the same fix; Pro and Custom use 0.4.
 - **Tested in both languages.** The interface went bilingual, so the evaluation was repeated on an English set (their/they're, its/it's, then/than, subject-verb agreement…): 12/12 in Correction. It also caught Pro writing "Dear [Recipient Name]" on a two-line message; the Pro prompt now forbids invented greetings and placeholders.
