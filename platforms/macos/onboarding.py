@@ -1,6 +1,6 @@
 """First-launch window: the three things TextPolish needs (Ollama running, the
 model downloaded, the Accessibility permission), each with one button, and a
-progress bar for the 4.3 GB download. It checks every second, so a step turns
+progress bar for the 3.3 GB download. It checks every second, so a step turns
 green as soon as it is done, even in another window (System Settings).
 
 The checks and the download live in setup_check.py; this file is the window.

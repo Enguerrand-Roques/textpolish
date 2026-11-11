@@ -89,5 +89,5 @@ fi
 # ── 5. Open it: the setup window does the rest ──────────────────────────────
 open "$HOME/Desktop/TextPolish.app"
 bold "Done in $(( $(date +%s) - START )) s."
-echo "  TextPolish is open: its setup window downloads the model (4.3 GB, once)"
+echo "  TextPolish is open: its setup window downloads the model (3.3 GB, once)"
 echo "  and asks for the Accessibility permission. Then select text and press ⌥⌘G."

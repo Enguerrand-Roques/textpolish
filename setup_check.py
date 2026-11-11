@@ -18,7 +18,7 @@ import requests
 from config import OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_MODEL_CASUAL, OLLAMA_MODEL_PRO
 
 MIN_OLLAMA = (0, 40)  # Gemma 4 needs Ollama 0.40 or later
-MODEL_SPACE_GB = 5.0  # 4.3 GB model plus some margin
+MODEL_SPACE_GB = 4.5  # 3.3 GB model plus some margin
 _OLLAMA_APPS = ("/Applications/Ollama.app", os.path.expanduser("~/Applications/Ollama.app"))
 
 
