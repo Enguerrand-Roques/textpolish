@@ -70,6 +70,7 @@ import languagetool
 from diff import group_changes, apply_choices, choose_layout
 from platforms.macos.spelling import is_word
 from platforms.macos.ax_bounds import get_selection_bounds
+from platforms.macos import login_item
 
 
 _CONFIG_PATH = os.path.normpath(
@@ -672,7 +673,19 @@ class _LanguageHandler(NSObject):
         _retitle_menu()
 
 
+class _LoginHandler(NSObject):
+    def toggleLogin_(self, sender):
+        on = not login_item.enabled()
+        try:
+            login_item.set_enabled(on)
+        except Exception as e:
+            logging.error("Could not change Open at Login: %s", e)
+            return
+        sender.setState_(1 if on else 0)
+
+
 _language_handler: _LanguageHandler | None = None
+_login_handler: _LoginHandler | None = None
 _menu_items: dict = {}
 
 
@@ -689,8 +702,9 @@ def _retitle_menu() -> None:
 
 
 def setup() -> TextPolishPanel:
-    global _bridge, _status_item, _history_handler, _prefs_handler, _language_handler
+    global _bridge, _status_item, _history_handler, _prefs_handler, _language_handler, _login_handler
     _bridge = _MainThreadBridge.alloc().init()
+    _login_handler = _LoginHandler.alloc().init()
     _history_handler = _HistoryHandler.alloc().init()
     _prefs_handler = _PrefsHandler.alloc().init()
     _language_handler = _LanguageHandler.alloc().init()
@@ -731,6 +745,13 @@ def _create_status_item():
     menu.addItem_(lang_item)
     menu.setSubmenu_forItem_(lang_menu, lang_item)
     _menu_items["menu_language"] = lang_item
+
+    if login_item.available():
+        login = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(t("menu_login"), "toggleLogin:", "")
+        login.setTarget_(_login_handler)
+        login.setState_(1 if login_item.enabled() else 0)
+        menu.addItem_(login)
+        _menu_items["menu_login"] = login
     menu.addItem_(NSMenuItem.separatorItem())
 
     history_item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(t("menu_history"), None, "")
