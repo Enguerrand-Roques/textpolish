@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _config = types.ModuleType("config")
 _config.OLLAMA_BASE_URL = "http://localhost:11434"
 # Distinct names per mode so tests can check which model each mode picks
-# (the real config uses gemma4:e2b-it-qat for all three).
+# (the real config uses one model, enguerrandroquesbdl/textpolish-gemma4, for all three).
 _config.OLLAMA_MODEL = "test-model-custom"
 _config.OLLAMA_MODEL_PRO = "test-model-pro"
 _config.OLLAMA_MODEL_CASUAL = "test-model-casual"

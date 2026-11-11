@@ -129,7 +129,7 @@ fi
 echo ""
 echo "All done! What's next:"
 echo "  1. Make sure Ollama is running:  ollama serve"
-echo "  2. Pull the model:               ollama pull gemma4:e2b-it-qat"
+echo "  2. Pull the model:               ollama pull enguerrandroquesbdl/textpolish-gemma4"
 echo "  3. Double-click TextPolish.app on your Desktop"
 echo "  4. Look for the pencil icon in your menu bar — that means it's running"
 echo "  5. Select text anywhere, press Cmd+Option+G"

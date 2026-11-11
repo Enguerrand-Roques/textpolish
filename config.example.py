@@ -4,12 +4,13 @@
 # Ollama local backend
 OLLAMA_BASE_URL = "http://localhost:11434"
 # One model for every mode: no reload when switching Correction / Pro / Custom
-# (it cost ~5 s with two models on a 16 GB Mac). Round 6 benchmark:
-# design/model_eval.py. Faster option on Macs with 24 GB+:
-# "gemma4:e2b-nvfp4" runs on Ollama's MLX engine (2-3x faster, ~7.4 GB in RAM).
-OLLAMA_MODEL_CASUAL = "gemma4:e2b-it-qat"
-OLLAMA_MODEL_PRO = "gemma4:e2b-it-qat"
-OLLAMA_MODEL = "gemma4:e2b-it-qat"   # Custom (custom instructions)
+# (it cost ~5 s with two models on a 16 GB Mac). Gemma 4 E2B fine-tuned for
+# TextPolish (Round 12, finetune/README.md), text only, 3.3 GB. The original
+# "gemma4:e2b-it-qat" still works; on Macs with 24 GB+, "gemma4:e2b-nvfp4" runs
+# on Ollama's MLX engine (2-3x faster, ~7.4 GB in RAM).
+OLLAMA_MODEL_CASUAL = "enguerrandroquesbdl/textpolish-gemma4"
+OLLAMA_MODEL_PRO = "enguerrandroquesbdl/textpolish-gemma4"
+OLLAMA_MODEL = "enguerrandroquesbdl/textpolish-gemma4"   # Custom (custom instructions)
 OLLAMA_TIMEOUT = 60  # seconds
 OLLAMA_KEEP_ALIVE = 300  # keep the model in RAM for 5 min between requests
 
