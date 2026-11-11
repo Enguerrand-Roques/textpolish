@@ -11,8 +11,7 @@ A model trained for TextPolish.
   (`enguerrandroquesbdl/textpolish-gemma4`, text only, 3.3 GB instead of
   4.3 GB). On 749 frozen test sentences: 723 right instead of 709, and 2
   wrong fixes applied instead of 5; Pro, Custom and speed unchanged (Round 12
-  in the benchmark report). Existing installs keep their model until
-  `config.py` is updated.
+  in the benchmark report).
 
 ### Added
 - `finetune/`: the training data, the scripts (data, LoRA on the Mac with
