@@ -21,6 +21,9 @@ The 1-minute montage in `docs/textpolish-demo.mp4`, built with [Remotion](https:
 
    ```bash
    ffmpeg -i video/out/textpolish.mp4 -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p -movflags +faststart -an docs/textpolish-demo.mp4
+   # the case-study loop and the README GIF: from the end of the title to the translation
+   ffmpeg -ss 3.0 -t 33.2 -i video/out/textpolish.mp4 -vf scale=960:-2 -c:v libx264 -crf 26 -preset slow -pix_fmt yuv420p -movflags +faststart -an docs/demo-loop.mp4
+   ffmpeg -ss 3.0 -t 33.2 -i video/out/textpolish.mp4 -vf "fps=8,scale=960:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=5" docs/demo.gif
    ```
 
 Scene timings, captions and camera moves are in `src/Video.tsx`; key presses come from `public/raw/events.json`, written by the recorder. The raw clips are not committed (they show the desktop).

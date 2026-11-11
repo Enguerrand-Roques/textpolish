@@ -68,40 +68,40 @@ const TEXT_LINE: Omit<Cam, "at"> = { z: 1.26, fx: 980, fy: 305 };
 // Source times are events.json times minus OFFSET (see design/record_video.py).
 const SCENES: Scene[] = [
   {
-    clip: "demo", from: 0.6, to: 8.35, rate: 3, color: BLUE,
+    clip: "demo", from: 0.6, to: 8.19, rate: 3, color: BLUE,
     cams: [{ at: 0.6, ...WIDE }],
     captions: [{ at: 0.6, text: "Write anywhere on your Mac." }],
   },
   {
-    // the stopwatch starts when the text reaches the model (log: 3,516 ms)
-    clip: "demo", from: 8.35, to: 20.3, color: BLUE,
-    cams: [{ at: 8.35, ...WIDE }, { at: 9.0, ...PANEL }, { at: 18.6, ...TEXT_LINE }],
+    // the stopwatch starts when the text reaches the model (log: 3,677 ms)
+    clip: "demo", from: 8.19, to: 20.2, color: BLUE,
+    cams: [{ at: 8.19, ...WIDE }, { at: 8.9, ...PANEL }, { at: 18.5, ...TEXT_LINE }],
     captions: [
-      { at: 8.35, text: "Select the text, press ⌥⌘G." },
-      { at: 13.15, text: "11 mistakes found and labeled." },
+      { at: 8.19, text: "Select the text, press ⌥⌘G." },
+      { at: 13.16, text: "11 mistakes found and labeled." },
       { at: 15.4, text: "Grammar, agreement, conjugation, spelling…" },
-      { at: 18.1, text: "⌘↵ fixes them all in place." },
+      { at: 17.95, text: "⌘↵ fixes them all in place." },
     ],
-    waits: [{ start: 9.64, end: 13.155 }],
+    waits: [{ start: 9.48, end: 13.16 }],
   },
   {
-    clip: "demo", from: 26.3, to: 33.9, color: INDIGO,
-    cams: [{ at: 26.3, ...PANEL }],
+    clip: "demo", from: 25.45, to: 32.95, color: INDIGO,
+    cams: [{ at: 25.45, ...PANEL }],
     captions: [
-      { at: 26.3, text: "Already correct? It tells you." },
-      { at: 28.2, text: "⌘2 · Pro rewrites it for work." },
+      { at: 25.45, text: "Already correct? It tells you." },
+      { at: 27.3, text: "⌘2 · Pro rewrites it for work." },
     ],
-    waits: [{ start: 28.25, end: 31.45 }],
+    waits: [{ start: 27.44, end: 30.47 }],
   },
   {
-    clip: "demo", from: 33.9, to: 45.0, color: PURPLE,
-    cams: [{ at: 33.9, ...PANEL }, { at: 42.6, ...TEXT_LINE }],
+    clip: "demo", from: 32.95, to: 44.1, color: PURPLE,
+    cams: [{ at: 32.95, ...PANEL }, { at: 42.2, ...TEXT_LINE }],
     captions: [
-      { at: 33.9, text: "⌘3 · Custom: ask for anything." },
-      { at: 36.19, text: "Here: “translate into French”." },
-      { at: 42.4, text: "Translated and pasted back." },
+      { at: 32.95, text: "⌘3 · Custom: ask for anything." },
+      { at: 35.19, text: "Here: “translate into French”." },
+      { at: 42.0, text: "Translated and pasted back." },
     ],
-    waits: [{ start: 36.22, end: 39.99 }],
+    waits: [{ start: 35.21, end: 39.43 }],
   },
   {
     clip: "menu", from: 0.6, to: 7.0, color: TEAL,
@@ -120,22 +120,23 @@ const SCENES: Scene[] = [
     ],
   },
   {
-    // the stopwatch starts when the text reaches the model (log: 3,287 ms)
-    clip: "langWin", from: 6.4, to: 16.0, color: BLUE,
+    // the stopwatch starts when the text reaches the model (log: 4,235 ms)
+    clip: "langWin", from: 6.4, to: 16.9, color: BLUE,
     cams: [{ at: 6.4, z: 1.55, fx: 820, fy: 690 }, { at: 8.3, ...PANEL, fy: 900 }],
     captions: [
       { at: 6.4, text: "Now a message in French." },
-      { at: 11.77, text: "Same app in French: 13 fixes, each labeled." },
+      { at: 12.74, text: "Same app in French: 13 fixes, each labeled." },
     ],
-    waits: [{ start: 8.48, end: 11.77 }],
+    waits: [{ start: 8.51, end: 12.74 }],
   },
 ];
 
 const KEYS = new Set(["⌘A", "⌥⌘G", "↵", "⌘2", "⌘3", "⌘↵"]);
 const INTRO = 90;
+const MODEL = 150;
 const OUTRO = 120;
 const sceneFrames = (s: Scene) => Math.round(((s.to - s.from) / (s.rate ?? 1)) * FPS);
-export const TOTAL_FRAMES = INTRO + SCENES.reduce((n, s) => n + sceneFrames(s), 0) + OUTRO;
+export const TOTAL_FRAMES = INTRO + SCENES.reduce((n, s) => n + sceneFrames(s), 0) + MODEL + OUTRO;
 
 const ease = Easing.bezier(0.45, 0, 0.2, 1);
 const MOVE = 0.8; // seconds per camera move
@@ -306,7 +307,7 @@ const Title: React.FC<{ outro?: boolean }> = ({ outro }) => {
   const fadeIn = interpolate(frame, [0, 10], [0, 1], { extrapolateRight: "clamp" });
   const rise = (d: number) => ({ opacity: at(d), transform: `translateY(${(1 - at(d)) * 30}px)` });
   const chips = outro
-    ? ["Gemma 4 E2B via Ollama", "Runs offline", "Nothing leaves your Mac"]
+    ? ["Gemma 4, fine-tuned for TextPolish", "Runs offline", "Nothing leaves your Mac"]
     : ["Runs on your Mac", "Private by design", "Open source"];
 
   return (
@@ -334,6 +335,35 @@ const Title: React.FC<{ outro?: boolean }> = ({ outro }) => {
   );
 };
 
+// Benchmark, then fine-tuning: numbers from benchmarks/BENCHMARK_REPORT.md (Round 12).
+const ModelCard: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+  const at = (d: number) => spring({ frame: frame - d, fps, config: { damping: 18, stiffness: 120 } });
+  const rise = (d: number) => ({ opacity: at(d), transform: `translateY(${(1 - at(d)) * 30}px)` });
+  const fade = interpolate(frame, [0, 10, durationInFrames - 12, durationInFrames], [0, 1, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const stats = [["97 %", "of new sentences right"], ["5 → 2", "wrong fixes, before → after"]];
+  return (
+    <AbsoluteFill style={{ opacity: fade }}>
+      <Backdrop color={TEAL} drift={frame / durationInFrames} />
+      <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", gap: 26, fontFamily: FONT, color: "white" }}>
+        <div style={{ ...rise(0), fontSize: 76, fontWeight: 700, letterSpacing: -2 }}>17 AI models compared.</div>
+        <div style={{ ...rise(10), fontSize: 76, fontWeight: 700, letterSpacing: -2, color: "#7fe3f5" }}>The best one, trained on this Mac.</div>
+        <div style={{ display: "flex", gap: 40, marginTop: 34 }}>
+          {stats.map(([n, label], i) => (
+            <div key={n} style={{ ...rise(34 + i * 8), padding: "26px 44px", borderRadius: 28, textAlign: "center",
+              background: "rgba(255,255,255,.08)", boxShadow: "0 0 0 1px rgba(255,255,255,.14)" }}>
+              <div style={{ fontSize: 84, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{n}</div>
+              <div style={{ fontSize: 30, fontWeight: 500, color: "rgba(255,255,255,.72)" }}>{label}</div>
+            </div>
+          ))}
+        </div>
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
 export const TextPolishVideo: React.FC = () => {
   let start = INTRO;
   return (
@@ -348,7 +378,8 @@ export const TextPolishVideo: React.FC = () => {
           </Sequence>
         );
       })}
-      <Sequence from={start} durationInFrames={OUTRO}><Title outro /></Sequence>
+      <Sequence from={start} durationInFrames={MODEL}><ModelCard /></Sequence>
+      <Sequence from={start + MODEL} durationInFrames={OUTRO}><Title outro /></Sequence>
     </AbsoluteFill>
   );
 };
