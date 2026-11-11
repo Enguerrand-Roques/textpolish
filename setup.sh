@@ -40,12 +40,6 @@ if [ ! -f "$REPO_DIR/config.py" ]; then
     echo "  ✓ config.py created — edit it to configure your Ollama settings"
 else
     echo "  ✓ config.py already exists"
-    # Installs from before v2.3 still name the original model: move them to the
-    # fine-tuned one (the setup window then downloads it). Other models are kept.
-    if grep -qE '^OLLAMA_MODEL(_CASUAL|_PRO)? = "gemma4:e2b-it-qat"' "$REPO_DIR/config.py"; then
-        sed -i '' -E 's|^(OLLAMA_MODEL(_CASUAL\|_PRO)? = )"gemma4:e2b-it-qat"|\1"enguerrandroquesbdl/textpolish-gemma4"|' "$REPO_DIR/config.py"
-        echo "  ✓ config.py moved to the fine-tuned model (enguerrandroquesbdl/textpolish-gemma4)"
-    fi
 fi
 
 # ── 4. LaunchAgent plist ─────────────────────────────────────────────────────

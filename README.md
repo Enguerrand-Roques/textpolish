@@ -65,8 +65,6 @@ What the command does, in order:
 
 About 10 seconds when Python and Ollama are already there. Nothing asks for an administrator password, and you can [read the script](install.sh) before running it.
 
-**Already installed?** Run the same command again: it updates the app and keeps your settings. An install from before v2.3 moves to the fine-tuned model, which the setup window then downloads.
-
 On first launch, a setup window checks the three things TextPolish needs and fixes each with one button:
 
 | Step | What happens |
