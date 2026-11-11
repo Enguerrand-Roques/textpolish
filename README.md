@@ -39,6 +39,22 @@ It installs what is missing and opens TextPolish. A setup window then downloads 
 
 → **[The model: benchmark, fine-tuning, before and after](https://enguerrand-roques.github.io/textpolish/model.html)**
 
+## What this project taught me
+
+**Technically**
+- **The model is the easy part of an AI product.** Calling it took a day; the global shortcut, the clipboard, the Accessibility permission, a window above fullscreen apps and shortcuts on a French keyboard took weeks.
+- **Running AI locally is a memory problem.** On a 16 GB Mac, RAM decides more than speed: quantization, keeping the model loaded or not, and turning off "thinking" mattered more than the model's size.
+- **Measuring an AI is a skill of its own.** Scores against expected answers, not impressions; a test set frozen before each change; failures sorted by how much they hurt. A perfect 12/12 on twelve sentences became 95 % on 253.
+- **When to prompt and when to train.** A longer prompt made things worse; fine-tuning the model on 5,000 examples, on a laptop, made it better, once I had a control model and a rule written before the training.
+- **AI and rules each fail differently**, and both need testing: the grammar checker added after the model fixes real mistakes and invents a few of its own.
+
+**Beyond the code**
+- **Product:** removing a decision from the user helped more than adding a feature, and trust came from what the app *doesn't* do on its own.
+- **Deciding:** writing each choice with its cost made trade-offs explicit, and changing one thing at a time made results explainable.
+- **Honesty with numbers:** knowing exactly what a figure measures, and keeping the failures in the report.
+- **Shipping:** an install in one command, versions, a changelog and documentation turned a script on my Mac into something another person can use.
+- **Writing for a reader in a hurry:** this README went from 3,100 words to a page.
+
 ## Learn more
 
 - **[UX case study](https://enguerrand-roques.github.io/textpolish/case-study.html)**: eleven iterations of the window, ten decisions and what each cost.
