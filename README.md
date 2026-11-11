@@ -5,6 +5,8 @@
 
 **Fix the text you select, in any Mac app, with an AI that runs on your Mac.** Select, press **⌥⌘G**, accept the fixes, and the text is pasted back. Nothing leaves your Mac.
 
+> **What this project is, honestly.** A personal project I built to learn how an AI product is made end to end: the app and its interface, choosing a model, training it, and measuring whether it really works. It works and I use it myself, but it has not been used by other people yet, and its test sentences were written for the tests rather than collected from real messages. The numbers below come from those tests; how they were measured, and what they don't cover, is in the [benchmark report](benchmarks/BENCHMARK_REPORT.md).
+
 <p align="center">
   <img src="docs/demo.gif" width="720" alt="Demo in TextEdit: an English message with 11 mistakes is corrected with each fix labeled, rewritten in Pro with ⌘2, then translated into French with a Custom request and pasted back">
 </p>
@@ -44,4 +46,4 @@ It installs what is missing and opens TextPolish. A setup window then downloads 
 - **[Developer guide](DEVELOPMENT.md)**: troubleshooting, install by hand, settings, speed, code layout.
 - **[Changelog](CHANGELOG.md)** · **[TextPolish Cloud](https://github.com/Enguerrand-Roques/textpolish-cloud)**, the same tool with Google Gemini.
 
-*A personal project to learn how to build an AI product end to end, and how to measure it. MIT license.*
+*MIT license.*
